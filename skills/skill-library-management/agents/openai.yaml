@@ -1,0 +1,4 @@
+interface:
+  display_name: "分级 Skill 库管理"
+  short_description: "Manage shared skills with hierarchical indexes and checks"
+  default_prompt: "使用 $skill-library-management 整理当前技能库，建立分级索引并校验路径、数量和客户端链接。"

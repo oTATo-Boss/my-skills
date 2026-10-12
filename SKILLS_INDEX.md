@@ -1,6 +1,6 @@
 # my-skills 技能索引
 
-技能数量：14
+技能数量：15
 
 本索引登记本仓库维护的原创、二创与整合版本，用于项目技能选型与复用，随新增或修改增量维护。开发源码在本仓库，本机保留正常安装的独立副本。
 
@@ -23,3 +23,7 @@
 - [web-art-direction](skills/web-art-direction/SKILL.md) — 确定并实现网站整体视觉方向。
 - [web-motion](skills/web-motion/SKILL.md) — 设计和实现网页交互、文字揭示、滚动叙事与时间线动画。
 - [web-visual-effects](skills/web-visual-effects/SKILL.md) — 实现网页表面、纹理、粒子、WebGL 和三维视觉效果。
+
+## 技能库管理
+
+- [skill-library-management](skills/skill-library-management/SKILL.md) — 管理共享 Skill 的分级索引、用途归类、来源、客户端链接与针对性校验；当前 v1.0.0。

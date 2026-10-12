@@ -13,3 +13,9 @@
 - 六个网页技能：从用户收集的设计技能合集重组、编写，保留原模块的参考资料与示例目录。入口及本地组织不代表所有参考内容均为原创；参考中的来源、版权和许可说明应继续保留。
 
 第三方代码、文档、示例和素材按其自身许可处理。本文件记录来源范围，不替第三方资源授予新许可，也不设置统一覆盖全仓库的开源许可证。
+
+## 技能库管理工作流
+
+2026-10-13 从 `~/.agents/skills/meta/skill-library-management/` 引入本地编写的 `skill-library-management` 完整开发目录，保留入口、脚本、引用资料与 Agent 配置，排除 Python 缓存。本仓库现维护 15 个 Skill；本机安装副本与 Claude 入口沿用原位置。
+
+首次纳入仓库的版本为 v1.0.0，维护记录见 [CHANGELOG.md](skills/skill-library-management/CHANGELOG.md)。

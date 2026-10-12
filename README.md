@@ -20,8 +20,9 @@
 | [web-art-direction](skills/web-art-direction/SKILL.md) | 确定并实现网站整体视觉方向。 | `npx skills add oTATo-Boss/my-skills --skill web-art-direction -g -a codex --copy -y` |
 | [web-motion](skills/web-motion/SKILL.md) | 设计和实现网页交互、文字、滚动与时间线动画。 | `npx skills add oTATo-Boss/my-skills --skill web-motion -g -a codex --copy -y` |
 | [web-visual-effects](skills/web-visual-effects/SKILL.md) | 实现玻璃、纹理、粒子、WebGL 和三维网页效果。 | `npx skills add oTATo-Boss/my-skills --skill web-visual-effects -g -a codex --copy -y` |
+| [skill-library-management](skills/skill-library-management/SKILL.md) | 整理共享技能库、维护分级索引、安装归类与客户端链接。 | `npx skills add oTATo-Boss/my-skills --skill skill-library-management -g -a codex --copy -y` |
 
-一次安装全部 14 个：
+一次安装全部 15 个：
 
 ```bash
 npx skills add oTATo-Boss/my-skills --skill '*' -g -a codex --copy -y
