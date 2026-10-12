@@ -1,41 +1,30 @@
 # my-skills
 
-我的 Skill 开发仓库，集中维护自己开发及二创、整合编写的 Skill 源码、脚本、资源和版本。一个仓库包含多个独立、可复用的 Skill。
+我的原创及二创 Skill 仓库，集中维护源码、脚本和资源。
 
-当前维护 **14 个 Skill**，来自本机正在使用的安装版本。入口和用途见 [SKILLS_INDEX.md](SKILLS_INDEX.md)，来源说明见 [SOURCE_NOTES.md](SOURCE_NOTES.md)。
+以下命令全局安装到 **Codex**，使用文件复制方式。安装到 **Claude Code** 时，将 `-a codex` 改为 `-a claude-code`。需要本机已安装 Node.js；安装选项见 [skills CLI](https://github.com/vercel-labs/skills)。
 
-## 目录约定
+| Skill | 简单说明 | 安装命令 |
+| --- | --- | --- |
+| [ai-liveaction-fusion](skills/ai-liveaction-fusion/SKILL.md) | AI 与实拍融合：镜头分析、静态分镜、视频提示词、审片与返修。 | `npx skills add oTATo-Boss/my-skills --skill ai-liveaction-fusion -g -a codex --copy -y` |
+| [ai-video-prompt](skills/ai-video-prompt/SKILL.md) | 创作、修改和审查通用 AI 视频提示词。 | `npx skills add oTATo-Boss/my-skills --skill ai-video-prompt -g -a codex --copy -y` |
+| [json-prompt-system](skills/json-prompt-system/SKILL.md) | 生成或还原自拍、生活照、电商服装与试穿的 JSON 图像提示词。 | `npx skills add oTATo-Boss/my-skills --skill json-prompt-system -g -a codex --copy -y` |
+| [fashion-picture](skills/fashion-picture/SKILL.md) | 设计服装、四视图样衣、人物换装与妆造图片。 | `npx skills add oTATo-Boss/my-skills --skill fashion-picture -g -a codex --copy -y` |
+| [nsfw-seedance-prompt-skill](skills/nsfw-seedance-prompt-skill/SKILL.md) | 成人题材视频提示词的结构化编写与检查。 | `npx skills add oTATo-Boss/my-skills --skill nsfw-seedance-prompt-skill -g -a codex --copy -y` |
+| [social-media](skills/social-media/SKILL.md) | 制作社交媒体视频与图文，配齐封面、标题、正文和标签。 | `npx skills add oTATo-Boss/my-skills --skill social-media -g -a codex --copy -y` |
+| [codex-imagegen](skills/codex-imagegen/SKILL.md) | 让其他 Agent 通过本机 Codex CLI 生成和编辑图片。 | `npx skills add oTATo-Boss/my-skills --skill codex-imagegen -g -a codex --copy -y` |
+| [direct-video](skills/direct-video/SKILL.md) | 统筹视频创意、分镜、节奏、声音和成片验收。 | `npx skills add oTATo-Boss/my-skills --skill direct-video -g -a codex --copy -y` |
+| [design-review](skills/design-review/SKILL.md) | 审查已有界面的视觉层级、交互状态、动效与性能。 | `npx skills add oTATo-Boss/my-skills --skill design-review -g -a codex --copy -y` |
+| [ui-craft](skills/ui-craft/SKILL.md) | 精修界面的字体、颜色、间距、对齐和控件状态。 | `npx skills add oTATo-Boss/my-skills --skill ui-craft -g -a codex --copy -y` |
+| [visual-reference](skills/visual-reference/SKILL.md) | 分析图片、视频和网页参考，转成设计规格或界面实现。 | `npx skills add oTATo-Boss/my-skills --skill visual-reference -g -a codex --copy -y` |
+| [web-art-direction](skills/web-art-direction/SKILL.md) | 确定并实现网站整体视觉方向。 | `npx skills add oTATo-Boss/my-skills --skill web-art-direction -g -a codex --copy -y` |
+| [web-motion](skills/web-motion/SKILL.md) | 设计和实现网页交互、文字、滚动与时间线动画。 | `npx skills add oTATo-Boss/my-skills --skill web-motion -g -a codex --copy -y` |
+| [web-visual-effects](skills/web-visual-effects/SKILL.md) | 实现玻璃、纹理、粒子、WebGL 和三维网页效果。 | `npx skills add oTATo-Boss/my-skills --skill web-visual-effects -g -a codex --copy -y` |
 
-```text
-my-skills/
-├── README.md
-├── AGENTS.md
-├── SKILLS_INDEX.md
-└── skills/
-    └── <skill-name>/
-        ├── SKILL.md
-        ├── scripts/       # 可选：执行脚本
-        ├── references/    # 可选：参考文档
-        ├── assets/        # 可选：素材与资源
-        └── CHANGELOG.md   # 版本与变更记录
+一次安装全部 14 个：
+
+```bash
+npx skills add oTATo-Boss/my-skills --skill '*' -g -a codex --copy -y
 ```
 
-每个 Skill 保留自身所需的文件和目录；可选目录不要求全部建立。
-
-## 开发与安装
-
-本仓库是开发目录，本机安装目录保存独立实体副本，两处同时保留源码。安装目录不通过软链接指向开发仓库；已有 Claude 客户端链接继续指向本机安装目录。
-
-维护顺序：**在本仓库修改 → 针对性验证 → 提交并推送 → 同步更新本机安装副本 → 核验内容与入口**。
-
-[INSTALL_MAP.json](INSTALL_MAP.json) 记录每个 Skill 在 `~/.agents/skills/` 下的相对安装位置。同步完整资源和执行权限；若安装副本存在独立修改，先协调差异。具体执行约定见 [AGENTS.md](AGENTS.md)。
-
-## 新增与维护
-
-1. 在 `skills/<skill-name>/` 创建独立目录，使用小写字母与连字符命名。
-2. 在 `SKILL.md` 中声明 `name`、`description`，说明用途、使用条件、操作步骤和依赖。
-3. 将脚本、参考和资源放在所属 Skill 内，内部引用使用相对路径。
-4. 在 `SKILLS_INDEX.md` 登记名称、用途与入口；在该 Skill 的 `CHANGELOG.md` 记录版本、日期和变更。
-5. 提交前检查引用与依赖，并按改动风险验证脚本或工作流。
-
-收录本人原创及本人维护的二创、整合版本。引用外部代码或素材时保留来源、版本及适用许可，不将第三方参考资料标为原创。
+源码与参考资料的来源见 [SOURCE_NOTES.md](SOURCE_NOTES.md)；开发与本机同步约定见 [AGENTS.md](AGENTS.md)。
