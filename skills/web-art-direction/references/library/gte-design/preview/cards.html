@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Components" name="Cards" subtitle="default (elevated-2) / bordered" viewport="700x220" -->
+<!-- CANONICAL — rebuilt from src/ui/card. Copy-source for cards.
+     KIT DECISION: default bg = surface-elevated-2 so the card stands out from the elevated-1 canvas
+     (repo card.tsx uses elevated-1 — sync at source). radius 8 · subtle shadow · border OPT-IN (stroke-subtle) · p16.
+     header = button-1, body = paragraph-3 (lh 140%). Surfaces nested inside a card step further (elevated-3 / hairline). -->
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body{margin:0;padding:24px 28px;background:var(--surface-elevated-1);color:var(--text-high);font-family:var(--font-sans)}
+  .lbl{font-family:var(--font-mono);font-size:10px;color:var(--text-low);letter-spacing:.3px;margin:0 0 8px}
+  .row{display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap}
+  .cell{display:flex;flex-direction:column;gap:8px}
+  .card{background:var(--surface-elevated-2);border-radius:var(--radius-regular);box-shadow:0 1px 2px rgba(0,0,0,.4);width:260px;display:flex;flex-direction:column}
+  .card.bordered{border:1px solid var(--stroke-subtle)}
+  .card .hd{padding:16px;font-family:var(--font-sans);font-weight:500;font-size:13px;line-height:100%;letter-spacing:.26px}
+  .card .ct{padding:16px;color:var(--text-mid);font-size:12px;line-height:140%;letter-spacing:.48px}
+  .card .ft{padding:16px;padding-top:0;display:flex;gap:8px}
+  .mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums slashed-zero}
+  /* minimal button styles for the footer demo (see buttons.html for canonical) */
+  .b{flex:1;height:32px;border:0;border-radius:var(--radius-regular);font-family:var(--font-sans);font-weight:500;font-size:13px;letter-spacing:.26px;color:var(--text-high);cursor:pointer}
+  .b.pos{background:linear-gradient(65deg,var(--surface-action-positive),var(--surface-action-positive-hover));box-shadow:0 2px 12px var(--positive-muted)}
+  .b.ter{background:var(--surface-action-tertiary);color:var(--text-action-tertiary)}
+</style></head>
+<body>
+  <div class="row">
+    <div class="cell"><span class="lbl">default — borderless + subtle shadow, on elevated-2</span>
+      <div class="card"><div class="hd">Order summary</div><div class="ct">Card sits on elevated-2, one step up from the elevated-1 canvas, so it stands out. Separation is the brightness step plus a subtle shadow.</div></div>
+    </div>
+    <div class="cell"><span class="lbl">bordered (opt-in) + footer</span>
+      <div class="card bordered"><div class="hd">Confirm order</div><div class="ct mono">1.250 BTC &middot; 10x &middot; Long</div><div class="ft"><button class="b pos">Confirm</button><button class="b ter">Cancel</button></div></div>
+    </div>
+  </div>
+</body></html>

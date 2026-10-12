@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Brand" name="Brand · Logos" subtitle="Wordmark, flag, turbo mark" viewport="700x160" -->
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body {
+    margin: 0; padding: 24px 28px; background: var(--surface-default);
+    display: grid; grid-template-columns: repeat(4, auto); gap: 28px 32px;
+    align-items: end; justify-content: start;
+  }
+  .cell { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .lbl {
+    font-family: var(--font-mono); font-size: 10px; color: var(--text-low);
+    letter-spacing: 0.3px; text-transform: lowercase; white-space: nowrap;
+  }
+  .plate {
+    display: grid; place-items: center;
+    height: 72px; min-width: 132px; padding: 0 20px;
+    border-radius: 8px; border: 1px solid var(--stroke-default);
+  }
+  .plate.dark  { background: var(--surface-elevated-1); }
+  .plate.light { background: #f4f5f6; border-color: rgba(0,0,0,0.08); }
+  .plate img { display: block; }
+  .wordmark { height: 30px; }
+  .mark     { height: 26px; }
+</style></head>
+<body>
+
+  <div class="cell">
+    <div class="plate dark"><img class="wordmark" src="../assets/logos/gte-logo-white.svg" alt="GTE white"></div>
+    <div class="lbl">gte · white</div>
+  </div>
+
+  <div class="cell">
+    <div class="plate light"><img class="wordmark" src="../assets/logos/gte-logo-black.svg" alt="GTE black"></div>
+    <div class="lbl">gte · black</div>
+  </div>
+
+  <div class="cell">
+    <div class="plate dark"><img class="mark" src="../assets/logos/turbo-logo-white.svg" alt="Turbo white"></div>
+    <div class="lbl">turbo · white</div>
+  </div>
+
+  <div class="cell">
+    <div class="plate light"><img class="mark" src="../assets/logos/turbo-logo-black.svg" alt="Turbo black"></div>
+    <div class="lbl">turbo · black</div>
+  </div>
+
+</body></html>

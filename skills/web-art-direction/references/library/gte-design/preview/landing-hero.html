@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Marketing" name="Landing hero — image-led" subtitle="lifestyle photo + Ogg heading, copy on scrim" viewport="1440x780" -->
+<!-- MARKETING / NON-PRODUCT landing hero. Rules this encodes:
+     - HEADING SYSTEM: the whole headline in Ogg Text Light (weight 300), ONE typeface, ONE colour — all white on
+       dark. NEVER two colours, never an orange accent word.
+     - LEAD WITH HUMAN/LIFESTYLE imagery (people), not a globe/abstract — abstract/cosmic is for technical pages.
+     - Foundational rules STILL APPLY: mono is for NUMBERS ONLY (eyebrow/labels are Inter). No random embellishments.
+     - BUTTONS: primary CTA + a GHOST secondary (tertiary is too faint over a photo). Nav button = PRIMARY. NO icon on
+       the primary button. The primary CTA is ONE button — same copy ("Launch app") + size (lg) in nav and hero.
+     - Image-led: brand photo full-bleed + left scrim for legibility; copy sits directly on the scrim (NO frosted slab —
+       the frosted 23.43° slab belongs over a UI mockup in a feature/presentation section, not as a hero copy container).
+     - Generous spacing; large (40px) CTAs allowed in marketing. -->
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--surface-default);color:var(--text-high);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+  .hero{position:relative;min-height:760px;display:flex;flex-direction:column;overflow:hidden;
+    background:linear-gradient(100deg, rgba(1,3,4,.95) 0%, rgba(1,3,4,.82) 32%, rgba(1,3,4,.40) 64%, rgba(1,3,4,.08) 100%), url("../assets/brand-images/gte_-04 1.jpg") center/cover no-repeat;}
+  nav{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;padding:24px 48px}
+  nav .logo{height:26px;width:auto;display:block}
+  .nav-links{display:flex;gap:30px}
+  .nav-links a{color:var(--text-mid);font-size:14px;letter-spacing:.1px;text-decoration:none;transition:color .15s}
+  .nav-links a:hover{color:var(--text-high)}
+
+  .inner{position:relative;z-index:2;flex:1;display:flex;align-items:center;padding:8px 64px 96px 116px}
+  .copy{max-width:600px}
+  .eyebrow{font-size:13px;letter-spacing:.4px;color:var(--text-mid);margin-bottom:22px}
+  /* heading = Ogg Text Light only (one typeface, one colour) */
+  .headline{font-family:var(--font-display);font-weight:300;font-size:72px;line-height:1.08;letter-spacing:-.01em;color:var(--text-high);margin:0 0 26px}
+  .headline .em{font-family:var(--font-display);font-weight:300}
+  .sub{font-size:15px;line-height:1.6;color:var(--text-mid);max-width:430px;margin:0 0 34px}
+  .cta{display:flex;gap:12px}
+
+  /* buttons — reuse the locked system. Primary CTA + GHOST secondary (photo bg); nav = primary; no icon on primary */
+  .btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:var(--radius-regular);
+    font-family:var(--font-sans);font-weight:500;border:0;cursor:pointer;color:var(--text-color,#fff);background:var(--btn-bg,transparent);white-space:nowrap;
+    box-shadow:0 2px 12px 0 var(--shadow-color,transparent)}
+  .btn::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:linear-gradient(to bottom,var(--bf,transparent),var(--bt,transparent));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+  .btn svg{width:16px;height:16px;display:block}
+  .btn.lg{height:40px;padding:0 22px;font-size:14px;letter-spacing:.2px}
+  .btn.sm{height:32px;padding:0 14px;font-size:13px;letter-spacing:.24px}
+  .btn.primary{--btn-bg:linear-gradient(65deg,var(--surface-action-primary),var(--surface-action-primary-hover));--text-color:var(--text-high);--bf:var(--stroke-subtle);--bt:var(--stroke-subtle);--shadow-color:var(--orange-40)}
+  .btn.tertiary{--btn-bg:var(--surface-action-tertiary);--text-color:var(--text-action-tertiary);--bf:var(--stroke-default);--bt:var(--white-0)}
+  .btn.ghost{--btn-bg:transparent;--text-color:var(--text-high);box-shadow:none}
+</style></head>
+<body>
+  <section class="hero">
+    <nav>
+      <img class="logo" src="../assets/logos/gte-logo-white.png" alt="GTE">
+      <div class="nav-links"><a>Markets</a><a>Trade</a><a>Portfolio</a><a>Docs</a></div>
+      <a class="btn primary lg">Launch app</a>
+    </nav>
+    <div class="inner">
+      <div class="copy">
+        <div class="eyebrow">On-chain perps · Turbo orderbook</div>
+        <h1 class="headline">Trade perps<br>at <span class="em">terminal speed.</span></h1>
+        <p class="sub">A fully on-chain orderbook with the latency of a centralized exchange. Cross-margin, up to 50&times; leverage, and sub-millisecond matching — settled on Turbo.</p>
+        <div class="cta">
+          <a class="btn primary lg">Launch app</a>
+          <a class="btn ghost lg">Read the docs</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</body></html>

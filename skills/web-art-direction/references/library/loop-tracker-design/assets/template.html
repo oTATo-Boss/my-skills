@@ -1,0 +1,257 @@
+<title>LOOP NAME — Tracker</title>
+<style>
+  :root{
+    --accent:rgb(255,120,23); --orange-15:rgba(255,120,23,.15); --orange-400:rgb(255,147,69);
+    --positive:rgb(46,232,139); --green-15:rgba(16,198,107,.15);
+    --negative:rgb(255,102,125); --canvas:rgb(16,18,19); --card:rgb(24,26,27); --page:rgb(10,11,12);
+    --high:#fff; --mid:rgb(166,167,168); --low:rgb(106,110,113);
+    --stroke:rgba(255,255,255,.06); --stroke-sub:rgba(255,255,255,.15);
+    --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;
+    --sans:Inter,ui-sans-serif,system-ui,-apple-system,sans-serif;
+    color-scheme:dark;
+  }
+  html{background:var(--page)}
+  body{margin:0;background:var(--page);color:var(--mid);font:13px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+  .wrap{max-width:880px;margin:0 auto;padding:48px 24px 90px}
+  .eyebrow{font:10px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--low)}
+  h1{color:var(--high);font-size:23px;margin:8px 0 4px;letter-spacing:-.01em}
+  .sub{color:var(--low);font-size:12px}
+  .chip{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--stroke-sub);border-radius:4px;
+        padding:2px 8px;font:9px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--low)}
+  .chip .dot{width:5px;height:5px;border-radius:50%;background:var(--low)}
+  .chip.live{border-color:rgba(255,120,23,.4);background:var(--orange-15);color:var(--orange-400)}
+  .chip.live .dot{background:var(--accent);animation:pulse 1.6s ease-in-out infinite}
+  .chip.ok{border-color:rgba(46,232,139,.35);background:var(--green-15);color:var(--positive)}
+  .chip.ok .dot{background:var(--positive)}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  .head{display:flex;align-items:flex-start;gap:14px}
+  .head .sp{flex:1}
+  .keyline{display:flex;align-items:center;gap:10px;margin:26px 0 26px}
+  .keyline::after{content:"";flex:1;height:1px;background:var(--stroke-sub)}
+  .keyline .sq{width:5px;height:5px;background:var(--accent)}
+  .keyline b{font:10px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--low);font-weight:400}
+
+  .bar{height:8px;border:1px solid var(--stroke-sub);position:relative;margin:10px 0 6px;background:var(--canvas)}
+  .bar i{position:absolute;inset:1px auto 1px 1px;background:var(--positive);opacity:.8}
+  .bar em{position:absolute;top:1px;bottom:1px;background:var(--accent);animation:pulse 1.6s infinite}
+  .barmeta{display:flex;justify-content:space-between;font:9px var(--mono);letter-spacing:.1em;color:var(--low);text-transform:uppercase}
+
+  .now{border:1px solid rgba(255,120,23,.4);background:var(--orange-15);padding:14px 18px;margin:18px 0}
+  .now .nl{font:9px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--orange-400);margin-bottom:4px}
+  .now p{margin:0;color:var(--mid);font-size:12.5px;max-width:72ch}
+  .now p b{color:var(--high);font-weight:600}
+
+  table{width:100%;border-collapse:collapse;font-size:12px}
+  th{font:9px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--low);text-align:left;
+     padding:7px 10px;border-bottom:1px solid var(--stroke-sub);font-weight:400}
+  td{padding:6px 10px;border-bottom:1px solid var(--stroke);vertical-align:top}
+  td.id{font:11px var(--mono);color:var(--high);white-space:nowrap;width:44px}
+  td.st{white-space:nowrap;width:90px}
+  .done{color:var(--positive);font:10px var(--mono);letter-spacing:.1em}
+  .prog{color:var(--orange-400);font:10px var(--mono);letter-spacing:.1em}
+  .pend{color:var(--low);font:10px var(--mono);letter-spacing:.1em}
+  .fail{color:var(--negative);font:10px var(--mono);letter-spacing:.1em}
+
+  .tree{font:11px/1.9 var(--mono);border:1px solid var(--stroke);background:var(--canvas);padding:10px 14px;overflow-x:auto}
+  .tn{white-space:pre;display:flex;gap:8px;align-items:baseline}
+  .tn .g{color:var(--low)}                                  /* box-drawing guides ├─ └─ │ */
+  .tn .nid{color:var(--high)}
+  .tn .nm{color:var(--mid)}
+  .tn .s-dec{color:var(--positive);font-size:10px;letter-spacing:.1em;margin-left:auto}
+  .tn .s-live{color:var(--orange-400);font-size:10px;letter-spacing:.1em;margin-left:auto;animation:pulse 1.6s infinite}
+  .tn .s-ready{color:var(--high);font-size:10px;letter-spacing:.1em;margin-left:auto}
+  .tn .s-q{color:var(--low);font-size:10px;letter-spacing:.1em;margin-left:auto}
+  .tn .s-you{color:var(--orange-400);font-size:10px;letter-spacing:.1em;margin-left:auto;
+             border:1px solid rgba(255,120,23,.4);background:var(--orange-15);padding:0 5px}
+  .tn .col{color:var(--low);font-size:10px}
+
+  .dec{border:1px solid var(--stroke);background:var(--card);padding:12px 16px;margin-bottom:10px}
+  .dec .dh{display:flex;gap:10px;align-items:baseline}
+  .dec .dh b{color:var(--high);font-weight:600;font-size:13px}
+  .dec .dh span{font:9px var(--mono);color:var(--low);letter-spacing:.1em}
+  .dec p{margin:4px 0 0;font-size:12px;max-width:76ch}
+  .dec a{color:var(--orange-400);text-decoration:none}
+  .dec a:hover{text-decoration:underline}
+
+  .notes li{margin-bottom:6px;max-width:78ch}
+  .notes b{color:var(--high);font-weight:600}
+  .mo{font-family:var(--mono);font-size:11px;color:var(--mid)}
+  td .mo{font-size:11px}
+  .foot{margin-top:34px;font:9px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--low);
+        display:flex;gap:14px;flex-wrap:wrap}
+  @media (prefers-reduced-motion:reduce){.chip.live .dot,.bar em{animation:none}}
+
+  /* 9 · FEEDBACK LAYER — in-artifact feedback that compiles to a copy-paste packet.
+     CSP blocks all network: feedback NEVER phones home; it accumulates locally and
+     ships as ONE structured packet Enzo pastes into any session. */
+  .fb-pin{font:10px var(--mono);color:var(--low);background:none;border:1px solid var(--stroke-sub);
+          border-radius:4px;padding:1px 6px;cursor:pointer;margin-left:8px;flex:none}
+  .fb-pin:hover,.fb-pin:focus-visible{color:var(--orange-400);border-color:rgba(255,120,23,.4);outline:none}
+  .fb-pin.has{color:var(--orange-400);border-color:rgba(255,120,23,.4);background:var(--orange-15)}
+  .ny-opt{font:10px var(--mono);letter-spacing:.08em;color:var(--mid);border:1px solid var(--stroke-sub);
+          border-radius:4px;padding:1px 7px;cursor:pointer;background:var(--canvas);margin-left:6px}
+  .ny-opt:hover,.ny-opt:focus-visible{color:var(--orange-400);border-color:rgba(255,120,23,.4);outline:none}
+  .ny-opt.sel{color:var(--page);background:var(--accent);border-color:var(--accent)}
+  #fb-tray{position:fixed;right:18px;bottom:18px;width:300px;background:var(--card);
+           border:1px solid var(--stroke-sub);z-index:9;font-size:12px;display:none}
+  #fb-tray.open{display:block}
+  #fb-tray .fb-h{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--stroke);
+                 font:10px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--orange-400)}
+  #fb-tray .fb-h .n{margin-left:auto;color:var(--low)}
+  #fb-items{max-height:220px;overflow-y:auto;padding:6px 12px}
+  #fb-items div{padding:4px 0;border-bottom:1px solid var(--stroke);color:var(--mid)}
+  #fb-items b{color:var(--high);font:11px var(--mono)}
+  #fb-note{width:100%;box-sizing:border-box;background:var(--canvas);border:1px solid var(--stroke-sub);
+           color:var(--high);font:12px var(--sans);padding:6px 8px;margin:8px 0 0}
+  #fb-note:focus-visible{outline:1px solid rgba(255,120,23,.5)}
+  .fb-foot{display:flex;gap:8px;padding:10px 12px}
+  .fb-foot button{font:10px var(--mono);letter-spacing:.1em;text-transform:uppercase;cursor:pointer;
+                  padding:5px 10px;border-radius:4px;border:1px solid var(--stroke-sub);background:var(--canvas);color:var(--mid)}
+  .fb-foot .go{border-color:var(--accent);background:var(--accent);color:var(--page)}
+  #fb-open{position:fixed;right:18px;bottom:18px;z-index:8;font:10px var(--mono);letter-spacing:.1em;
+           text-transform:uppercase;padding:7px 12px;border-radius:4px;border:1px solid rgba(255,120,23,.4);
+           background:var(--orange-15);color:var(--orange-400);cursor:pointer}
+</style>
+
+<div class="wrap">
+  <!-- 1 · HEADER ROW — eyebrow, h1, updated-stamp sub, one status chip.
+       Chip variants: class="chip live" (running, pulsing) · "chip ok" (done) · "chip" (idle/paused). -->
+  <div class="head">
+    <div>
+      <div class="eyebrow">ORG · SYSTEM · LOOP NAME</div>
+      <h1>Loop name tracker</h1>
+      <div class="sub">Last updated <b class="mo">MMM D, HH:MM</b> · repo <b class="mo">~/repo-name</b> · one-line mission · updates continuously as work lands</div>
+    </div>
+    <span class="sp"></span>
+    <span class="chip live"><span class="dot"></span>RUNNING · ITERATION N</span>
+  </div>
+
+  <!-- 2 · PROGRESS BAR — <i> = green done fraction; <em> = pulsing orange in-progress segment,
+       positioned starting where the green ends. Update both widths every redeploy. -->
+  <div class="bar"><i style="width:25%"></i><em style="left:25%;width:12%"></em></div>
+  <div class="barmeta"><span>N / M pieces decided</span><span>K in progress · J queued</span></div>
+
+  <!-- 3 · HAPPENING NOW — always present, always true. Name the exact running step + what's next. -->
+  <div class="now">
+    <div class="nl">Happening now</div>
+    <p><b>ID · Current piece name</b> — one short paragraph: what is executing right this moment,
+       which agents/branches are involved (<span class="mo">mono for ids/paths</span>), and the next step.</p>
+  </div>
+
+  <!-- 4 · KEYLINE DIVIDER + 5 · DECISION CARDS — confirmed decisions / contract terms / landed milestones.
+       Stamp examples: "JUL 7 · ENZO CONFIRMED" · "BUILD GREEN · FABLE-VERIFIED". Append, never rewrite. -->
+  <div class="keyline"><span class="sq"></span><b>Decisions so far</b></div>
+  <div class="dec">
+    <div class="dh"><b>D1 · Decision title</b><span>MMM D · ENZO CONFIRMED</span></div>
+    <p>Winner / term in one or two sentences, <b>bold the load-bearing part</b>.
+       <a href="#">evidence →</a></p>
+  </div>
+
+  <!-- 6 · QUEUE TABLE — the backbone. Mono IDs; status verbs specific to the actual stage:
+       DONE (.done) · BUILDING/SHEET/REVIEW/MERGING (.prog) · QUEUED (.pend) · FAILED (.fail). -->
+  <div class="keyline"><span class="sq"></span><b>Queue · M pieces</b></div>
+  <table>
+    <tr><th>ID</th><th>Status</th><th>Piece</th></tr>
+    <tr><td class="id">A1</td><td class="st"><span class="done">DONE</span></td><td>A finished piece</td></tr>
+    <tr><td class="id">A2</td><td class="st"><span class="prog">BUILDING</span></td><td>The piece in flight (<span class="mo">mono for code/paths</span>)</td></tr>
+    <tr><td class="id">A3</td><td class="st"><span class="pend">QUEUED</span></td><td>A queued piece</td></tr>
+  </table>
+
+  <!-- 6b · NODE TREE — replaces the queue table on fractal/factory runs. Mirrors queue.md verbatim:
+       same ids, same nesting. Stage words: DECIDED ✓ (.s-dec) · live stage verb DESIGN/BUILD/REVIEW/ITERATE
+       (.s-live) · READY (.s-ready) · QUEUED/BLOCKED (.s-q) · NEEDS-YOU (.s-you, never bury it).
+       Decided subtrees may collapse to "(+N decided)" (.col); the live path never collapses.
+       One keyline + one tree per meta-run being tracked. -->
+  <div class="keyline"><span class="sq"></span><b>Node tree · the assignment</b></div>
+  <div class="tree">
+    <div class="tn"><span class="nid">N0</span><span class="nm">Product-level node</span><span class="s-dec">DECIDED ✓</span></div>
+    <div class="tn"><span class="g">├─</span><span class="nid">N1</span><span class="nm">Subsystem node</span><span class="s-live">BUILD</span></div>
+    <div class="tn"><span class="g">│&nbsp;&nbsp;├─</span><span class="nid">N1.1</span><span class="nm">Component node (<span class="mo">mono for paths</span>)</span><span class="s-dec">DECIDED ✓</span></div>
+    <div class="tn"><span class="g">│&nbsp;&nbsp;└─</span><span class="nid">N1.2</span><span class="nm">Component node</span><span class="s-live">REVIEW</span></div>
+    <div class="tn" data-fb-options="approve A|approve B|hold"><span class="g">├─</span><span class="nid">N2</span><span class="nm">Subsystem node <span class="col">(+3 decided)</span></span><span class="s-you">NEEDS-YOU</span></div>
+    <div class="tn"><span class="g">└─</span><span class="nid">N3</span><span class="nm">Subsystem node — blocked on N1</span><span class="s-q">QUEUED</span></div>
+  </div>
+
+  <!-- 7 · NOTES & RISKS — honest fences, hazards, policies, unverified assumptions. -->
+  <div class="keyline"><span class="sq"></span><b>Notes &amp; risks</b></div>
+  <ul class="notes">
+    <li><b>Lead-in:</b> the risk or note, with <span class="mo">mono</span> for anything technical.</li>
+  </ul>
+
+  <!-- 8 · FOOTER STRIP — 2–4 mono facts about the loop itself. -->
+  <div class="foot">
+    <span>LOOP STATE: ~/repo/.factory/&lt;node-id&gt;/</span>
+    <span>HARNESS: lint.sh · score.sh · status.sh</span>
+    <span>MODELS: WHO PROPOSES · WHO BUILDS · WHO JUDGES</span>
+  </div>
+
+  <!-- 9 · FEEDBACK LAYER — pins auto-attach to .dec cards, .now, and NEEDS-YOU tree rows.
+       NEEDS-YOU rows may declare data-fb-options="approve A|approve B|hold" for one-click choices.
+       Selections + notes accumulate in the tray (localStorage, keyed per artifact) and export as
+       ONE mono FEEDBACK PACKET via clipboard — Enzo pastes it into any session; the orchestrator
+       maps IDs to queue.md/decisions.md entries. No network: CSP-safe by construction. -->
+  <button id="fb-open">FEEDBACK · <span id="fb-count">0</span></button>
+  <div id="fb-tray" role="dialog" aria-label="Feedback tray">
+    <div class="fb-h">Feedback packet <span class="n" id="fb-n"></span></div>
+    <div id="fb-items"></div>
+    <div style="padding:0 12px"><input id="fb-note" placeholder="general note — Enter to add"></div>
+    <div class="fb-foot">
+      <button class="go" id="fb-copy">Copy packet</button>
+      <button id="fb-clear">Clear</button>
+      <button id="fb-close">Close</button>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var KEY='fb:'+document.title, S;
+  try{S=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){S={}}
+  S.items=S.items||[];
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}render()}
+  function idOf(el){var m=(el.textContent||'').match(/\b([A-Z]{1,3}[0-9]+(?:\.[0-9]+)?|NEEDS-YOU)\b/);return (el.dataset.fbId)||(m?m[1]:'SECTION');}
+  function labelOf(el){var b=el.querySelector('b');return ((b?b.textContent:el.textContent)||'').trim().slice(0,60);}
+  function add(id,label,verdict,note){S.items.push({id:id,label:label,verdict:verdict||'',note:note||'',t:new Date().toISOString().slice(0,16)});save();open(true);}
+  function render(){
+    var el=document.getElementById('fb-items');el.innerHTML='';
+    S.items.forEach(function(it,i){var d=document.createElement('div');
+      d.innerHTML='<b>'+it.id+'</b> '+(it.verdict?it.verdict+' ':'')+(it.note?'— '+it.note:'')+' <button data-i="'+i+'" style="float:right;background:none;border:0;color:var(--low);cursor:pointer">✕</button>';
+      el.appendChild(d);});
+    document.getElementById('fb-count').textContent=S.items.length;
+    document.getElementById('fb-n').textContent=S.items.length+' item'+(S.items.length===1?'':'s');
+    document.querySelectorAll('.fb-pin').forEach(function(p){p.classList.toggle('has',S.items.some(function(it){return it.id===p.dataset.for}))});
+  }
+  function open(v){document.getElementById('fb-tray').classList.toggle('open',v);document.getElementById('fb-open').style.display=v?'none':'block';}
+  // attach pins
+  document.querySelectorAll('.dec, .now').forEach(function(card){
+    var host=card.querySelector('.dh')||card.querySelector('.nl')||card, id=idOf(card), label=labelOf(card);
+    var b=document.createElement('button');b.className='fb-pin';b.dataset.for=id;b.textContent='✎ '+id;b.title='add feedback on '+id;
+    b.onclick=function(){var note=window.prompt('Feedback on '+id+' ('+label+') — leave empty to just flag:')||'';add(id,label,'NOTE',note);};
+    host.appendChild(b);
+  });
+  // NEEDS-YOU option chips: any element with data-fb-options="opt|opt|opt"
+  document.querySelectorAll('[data-fb-options]').forEach(function(row){
+    var id=idOf(row);
+    row.dataset.fbOptions.split('|').forEach(function(opt){
+      var c=document.createElement('button');c.className='ny-opt';c.textContent=opt;
+      c.onclick=function(){row.querySelectorAll('.ny-opt').forEach(function(x){x.classList.remove('sel')});c.classList.add('sel');
+        S.items=S.items.filter(function(it){return !(it.id===id&&it.verdict.indexOf('CHOSE')===0)});
+        add(id,labelOf(row),'CHOSE: '+opt,'');};
+      row.appendChild(c);
+    });
+  });
+  document.getElementById('fb-open').onclick=function(){open(true)};
+  document.getElementById('fb-close').onclick=function(){open(false)};
+  document.getElementById('fb-clear').onclick=function(){S.items=[];save();};
+  document.getElementById('fb-items').onclick=function(e){var i=e.target.dataset&&e.target.dataset.i;if(i!==undefined){S.items.splice(+i,1);save();}};
+  document.getElementById('fb-note').addEventListener('keydown',function(e){if(e.key==='Enter'&&this.value.trim()){add('GENERAL','',this.value.trim(),'' );this.value='';
+    var it=S.items[S.items.length-1];it.note=it.verdict;it.verdict='NOTE';save();}});
+  document.getElementById('fb-copy').onclick=function(){
+    var lines=['FEEDBACK PACKET · '+document.title+' · '+new Date().toISOString().slice(0,16)];
+    S.items.forEach(function(it){lines.push(it.id+': '+(it.verdict||'NOTE')+(it.note?' — '+it.note:'')+(it.label?'  ['+it.label+']':''));});
+    lines.push('— paste this to the orchestrator; IDs map to queue.md / decisions.md entries —');
+    navigator.clipboard.writeText(lines.join('\n')).then(function(){
+      var b=document.getElementById('fb-copy');b.textContent='Copied ✓';setTimeout(function(){b.textContent='Copy packet'},1400);});
+  };
+  render();
+})();
+</script>

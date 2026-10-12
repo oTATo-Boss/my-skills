@@ -1,0 +1,4 @@
+interface:
+  display_name: "社交媒体内容制作"
+  short_description: "统筹原创视频与图文、封面、标题正文标签和逐篇交付，按项目选择平台与工具"
+  default_prompt: "使用 $social-media 按当前目标、素材和平台要求制作完整社交媒体内容包，完成创意、制作、文案、验收与打包。"

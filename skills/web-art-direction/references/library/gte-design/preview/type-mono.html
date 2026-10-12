@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Type" name="Type · Mono" subtitle="JetBrains Mono — all numbers" viewport="700x180" -->
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+body { margin: 0; padding: 24px; background: var(--surface-default); color: var(--text-high); }
+.row { display: grid; gap: 12px; }
+.item { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 4px 0; border-bottom: 1px solid var(--stroke-default); }
+.item:last-child { border-bottom: none; }
+.lbl { font-family: var(--font-mono); font-size: 10px; color: var(--text-low); letter-spacing: 0.3px; }
+.pos { color: var(--text-positive); }
+.neg { color: var(--text-negative); }
+</style></head>
+<body>
+<div class="row">
+  <div class="item"><span class="mono-1">43,218.50</span><span class="lbl">mono-1 · 20px · price header</span></div>
+  <div class="item"><span class="mono-2 pos">+2.43%</span><span class="lbl">mono-2 · 15px · stats</span></div>
+  <div class="item"><span class="mono-3">0x4A2B…9F3E · 12:48:07 UTC</span><span class="lbl">mono-3 · 12px · body numeric</span></div>
+  <div class="item"><span class="mono-4 neg">-128.42</span><span class="lbl">mono-4 · 11px · table</span></div>
+</div>
+</body></html>

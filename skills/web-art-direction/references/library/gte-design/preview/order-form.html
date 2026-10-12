@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Templates" name="Order form (trade panel)" subtitle="composite — composes the locked atoms" viewport="420x860" -->
+<!-- CANONICAL COMPOSITE — the GTE perps order form, rebuilt from features/trading/trade-form (perps-trade-form.tsx + fields).
+     Assembled ONLY from locked atoms. Structure (Market state shown):
+       order-type tabs (tabs.html, slanted) → Long/Short segmented (positive/negative, full width) →
+       market header (avatar size-5 + symbol + leverage badge + mark price) →
+       MarginLeverageRow: two TERTIARY buttons — "Margin: Cross" (value text-high) + "Leverage: 10x" (value POSITIVE/green) →
+       Available margin / Max key-value rows (hairline divide) →
+       Size = input (Inter value, unit suffix) ; Amount = small % input + % slider (slider.html, ALWAYS grey→white, no marks) →
+       divider → Reduce-only checkbox → TP/SL checkbox →
+       overview rows (Order value, Liquidation price, Margin, Est. TP, Est. SL, slippage, fees) →
+       Submit = PRIMARY (orange), label "Place Long" (turns negative/red only on error — never green). Panel NOT rounded. -->
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;padding:24px;background:var(--surface-elevated-1);color:var(--text-high);font-family:var(--font-sans);
+       -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+  .panel{width:372px;background:var(--surface-elevated-1)}
+  .bar{position:relative;display:flex;align-items:stretch;height:var(--tab-bar-h)}
+  .htab{position:relative;display:inline-flex;align-items:center;padding:0 22px;cursor:pointer;font-size:12px;letter-spacing:.48px;color:var(--text-low)}
+  .htab+.htab{margin-left:-8px}
+  .htab.active{color:var(--text-high)}
+  .htab.active::before{content:"";position:absolute;inset:0;z-index:0;background:var(--surface-elevated-2);clip-path:polygon(var(--tab-slant-px) 0,100% 0,calc(100% - var(--tab-slant-px)) 100%,0 100%)}
+  .htab .lab{position:relative;z-index:1;display:inline-flex;align-items:center;gap:8px}
+  .htab svg{width:14px;height:14px;display:block}
+  .body{background:linear-gradient(180deg,var(--surface-elevated-2) 0%,var(--surface-elevated-1) 240px);padding:16px;display:flex;flex-direction:column;gap:12px}
+
+  /* Long/Short segmented */
+  .seg{display:flex;background:var(--surface-input);border-radius:var(--radius-regular);width:100%}
+  .seg .it{flex:1;position:relative;height:32px;display:flex;align-items:center;justify-content:center;font-size:13px;letter-spacing:.28px;color:var(--text-low);background:transparent;border:0;border-radius:var(--radius-regular);cursor:pointer}
+  .seg .it[class*="on-"]::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:linear-gradient(to bottom,var(--bd-from),var(--bd-to));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+  .seg .it.on-pos{background:var(--positive-muted);color:var(--positive);--bd-from:var(--positive-muted);--bd-to:var(--green-0)}
+  .seg .it.on-neg{background:var(--negative-muted);color:var(--negative);--bd-from:var(--negative-muted);--bd-to:var(--red-0)}
+
+  /* market header */
+  .mkt{display:flex;align-items:center;gap:8px}
+  .avatar{width:20px;height:20px;border-radius:50%;background:var(--accent);color:var(--text-action-primary);display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex:none}
+  .mkt .sym{font-size:14px;font-weight:600;color:var(--text-high)}
+  .mkt .lev{display:inline-flex;align-items:center;border:1px solid var(--positive-muted);color:var(--positive);border-radius:var(--radius-small);padding:0 4px;height:18px;font-family:var(--font-mono);font-size:11px;font-variant-numeric:slashed-zero}
+  .mkt .px{margin-left:auto;font-family:var(--font-mono);font-size:15px;color:var(--text-high);font-variant-numeric:tabular-nums slashed-zero}
+
+  /* margin / leverage row — two tertiary buttons */
+  .mlrow{display:flex;gap:6px}
+  .mlbtn{flex:1;position:relative;display:flex;align-items:center;justify-content:space-between;gap:8px;height:32px;padding:0 12px;border-radius:var(--radius-regular);background:var(--surface-action-tertiary);cursor:pointer;border:0;font-family:var(--font-sans)}
+  .mlbtn::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:linear-gradient(to bottom,var(--stroke-default),var(--white-0));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+  .mlbtn .k{color:var(--text-mid);font-size:12px;letter-spacing:.24px} .mlbtn .v{font-size:13px;color:var(--text-high)} .mlbtn .v.lev{color:var(--positive)}
+
+  /* available margin / max */
+  .kv{display:flex;flex-direction:column}
+  .kvrow{display:flex;justify-content:space-between;align-items:center;padding:8px 0;font-size:11px;letter-spacing:.44px}
+  .kvrow+.kvrow{border-top:1px solid rgba(255,255,255,.05)}
+  .kvrow .k{color:var(--text-low)} .kvrow .v{font-family:var(--font-mono);color:var(--text-high);font-variant-numeric:tabular-nums slashed-zero}
+
+  /* size input + amount % */
+  .flabel{display:flex;justify-content:space-between;align-items:baseline;font-size:11px;letter-spacing:.44px;color:var(--text-low);margin-bottom:6px}
+  .flabel .av{font-family:var(--font-mono);color:var(--text-mid);font-variant-numeric:tabular-nums slashed-zero}
+  .inp{display:flex;align-items:center;height:32px;border-radius:var(--radius-regular);background:var(--surface-input);border:1px solid transparent;padding:0 12px;font-family:var(--font-sans);font-size:13px;letter-spacing:.28px;color:var(--text-high)}
+  .inp .suf{margin-left:auto;color:var(--text-mid)}
+  .amount{display:flex;align-items:center;gap:10px;margin-top:10px}
+  .pct{width:72px;flex:none}
+  .slider{position:relative;height:12px;display:flex;align-items:center;flex:1}
+  .track{position:absolute;left:0;right:0;height:4px;background:var(--surface-input);border-radius:999px;overflow:hidden}
+  .srange{position:absolute;left:0;top:0;height:100%;background:linear-gradient(to right,var(--white-800),var(--white-200))}
+  .thumb{position:absolute;top:50%;width:12px;height:12px;border-radius:50%;background:var(--text-high);box-shadow:0 1px 2px rgba(0,0,0,.5);transform:translate(-50%,-50%);cursor:pointer}
+
+  .divider{border-top:1px solid var(--stroke-default);margin:4px 0}
+  /* checkbox (reduce only / TP-SL) */
+  .cbrow{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-mid);cursor:pointer}
+  .cb{position:relative;width:16px;height:16px;border-radius:var(--radius-small);overflow:hidden;flex:none}
+  .cb .fill{position:absolute;inset:0;background:var(--surface-action-tertiary)}
+  .cb .bd{position:absolute;inset:0;padding:1px;border-radius:inherit;background:linear-gradient(to bottom,var(--stroke-default),var(--white-0));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+
+  /* overview */
+  .ov{display:flex;flex-direction:column}
+  .ovrow{display:flex;justify-content:space-between;font-size:12px;padding:8px 0}
+  .ovrow+.ovrow{border-top:1px solid rgba(255,255,255,.05)}
+  .ovrow .k{color:var(--text-low);letter-spacing:.4px} .ovrow .v{font-family:var(--font-mono);color:var(--text-high);font-variant-numeric:tabular-nums slashed-zero}
+
+  /* submit = PRIMARY (orange) */
+  /* submit is size MEDIUM (32px) — product never uses larger than medium */
+  .submit{position:relative;width:100%;height:32px;border-radius:var(--radius-regular);border:0;cursor:pointer;color:var(--text-high);
+    font-family:var(--font-sans);font-weight:500;font-size:13px;letter-spacing:.26px;
+    background:linear-gradient(65deg,var(--surface-action-primary),var(--surface-action-primary-hover));box-shadow:0 2px 12px var(--orange-40)}
+  .submit::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:linear-gradient(to bottom,var(--stroke-subtle),var(--stroke-subtle));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+</style></head>
+<body>
+  <div class="panel">
+    <div class="bar">
+      <div class="htab active"><span class="lab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Market</span></div>
+      <div class="htab"><span class="lab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="3" x2="12" y2="7"/><line x1="12" y1="17" x2="12" y2="21"/><line x1="3" y1="12" x2="7" y2="12"/><line x1="17" y1="12" x2="21" y2="12"/></svg>Limit</span></div>
+      <div class="htab"><span class="lab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><line x1="12" y1="13" x2="12" y2="9"/><line x1="9" y1="2" x2="15" y2="2"/></svg>TWAP</span></div>
+    </div>
+    <div class="body">
+      <div class="seg"><button class="it on-pos">Long</button><button class="it">Short</button></div>
+
+      <div class="mkt"><span class="avatar">B</span><span class="sym">BTC</span><span class="lev">10x</span><span class="px">$58,497.00</span></div>
+
+      <div class="mlrow">
+        <button class="mlbtn"><span class="k">Margin</span><span class="v">Cross</span></button>
+        <button class="mlbtn"><span class="k">Leverage</span><span class="v lev">10x</span></button>
+      </div>
+
+      <div class="kv">
+        <div class="kvrow"><span class="k">Available margin</span><span class="v">$97.62</span></div>
+        <div class="kvrow"><span class="k">Max</span><span class="v">$976.23</span></div>
+      </div>
+
+      <div>
+        <div class="flabel"><span>Size</span></div>
+        <div class="inp">0.05<span class="suf">BTC</span></div>
+        <div class="amount">
+          <div class="inp pct">0<span class="suf">%</span></div>
+          <div class="slider"><div class="track"><div class="srange" style="width:34%"></div></div><div class="thumb" style="left:34%"></div></div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <label class="cbrow"><span class="cb"><span class="fill"></span><span class="bd"></span></span>Reduce only</label>
+      <label class="cbrow"><span class="cb"><span class="fill"></span><span class="bd"></span></span>Take Profit / Stop Loss</label>
+
+      <button class="submit">Place Long</button>
+
+      <div class="ov">
+        <div class="ovrow"><span class="k">Order value</span><span class="v">$2,160.92</span></div>
+        <div class="ovrow"><span class="k">Liquidation price</span><span class="v">$39,184.50</span></div>
+        <div class="ovrow"><span class="k">Margin</span><span class="v">$216.09</span></div>
+        <div class="ovrow"><span class="k">Estimated slippage</span><span class="v">-0.116%</span></div>
+        <div class="ovrow"><span class="k">Maker fee</span><span class="v">0.015%</span></div>
+      </div>
+    </div>
+  </div>
+</body></html>

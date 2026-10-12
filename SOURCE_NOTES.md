@@ -1,0 +1,15 @@
+# 来源与维护范围
+
+2026-10-12 从本机正在使用的安装版本迁入 14 个 Skill，保持技能文件内容与执行权限不变。开发目录与本机安装目录均保存实体源码；文件同步遵循 `AGENTS.md`，安装位置见 `INSTALL_MAP.json`。
+
+## 原创工作流
+
+`ai-liveaction-fusion`、`ai-video-prompt`、`json-prompt-system`、`fashion-picture` 有本地开发记录；`nsfw-seedance-prompt-skill`、`social-media` 由用户明确确认原创。`fashion-picture` 是原 `otato-fashion-design` 的当前安装版本。
+
+## 二创与整合版本
+
+- `codex-imagegen`：用户确认的二创版本，目标是让其他 Agent 通过 Codex CLI 调用生图能力。确切上游作者或仓库尚无完整记录，保留现有内容，不把上游部分声明为原创。
+- `direct-video`：本地编写的视频创作与验收工作流；参考来源保留在技能内的 `references/sources.md`。
+- 六个网页技能：从用户收集的设计技能合集重组、编写，保留原模块的参考资料与示例目录。入口及本地组织不代表所有参考内容均为原创；参考中的来源、版权和许可说明应继续保留。
+
+第三方代码、文档、示例和素材按其自身许可处理。本文件记录来源范围，不替第三方资源授予新许可，也不设置统一覆盖全仓库的开源许可证。

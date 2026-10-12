@@ -1,0 +1,4 @@
+interface:
+  display_name: "网页动效"
+  short_description: "设计并实现有目的的网页交互动画、文字揭示和滚动叙事，兼顾可中断性与减少动态效果设置。"
+  default_prompt: "使用 $web-motion，为指定页面实现有目的的网页动效，并检查中断、响应式和减少动态效果设置。"

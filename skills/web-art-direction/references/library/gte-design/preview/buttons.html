@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Brand" name="Button variant sheet" subtitle="6 variants × rest/hover/focus/disabled + icons + sizes" viewport="900x520" -->
+<!-- CANONICAL — rebuilt from src/ui/button + src/shared/styles/button.css. This is the copy-source for buttons. -->
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body{margin:0;padding:28px 32px;background:var(--surface-elevated-1);color:var(--text-high);font-family:var(--font-sans)}
+  .lbl{font-family:var(--font-mono);font-size:10px;color:var(--text-low);letter-spacing:.3px;margin:18px 0 8px}
+  .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+
+  /* base */
+  .btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:var(--radius-regular);
+    font-family:var(--font-sans);font-weight:500;font-size:13px;line-height:100%;letter-spacing:.26px;
+    height:32px;padding:0 16px;border:0;cursor:pointer;white-space:nowrap;
+    color:var(--text-color,#fff);background:var(--btn-bg,transparent);
+    box-shadow:0 2px 12px 0 var(--shadow-color,transparent);
+    transition:filter .2s ease-out,background .2s ease-out,color .2s ease-out,box-shadow .2s ease-out}
+  .btn.sm{height:28px;padding:0 12px} .btn.lg{height:40px}
+  /* gradient border (every variant except ghost) */
+  .btn::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;padding:1px;
+    background:linear-gradient(to bottom,var(--border-from,transparent) 0%,var(--border-to,transparent) 100%);
+    -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;mask-clip:content-box,border-box;mask-repeat:no-repeat}
+  /* inner depth shadow */
+  .btn::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;box-shadow:0 4px 8px 0 var(--shadow-over,transparent)}
+  .btn svg{width:16px;height:16px;display:block;flex:none}
+  .btn.iconly{padding:0;width:32px}.btn.iconly.sm{width:28px}.btn.iconly.lg{width:40px}
+
+  .btn.primary{--btn-bg:linear-gradient(65deg,var(--surface-action-primary) 0%,var(--surface-action-primary-hover) 100%);
+    --text-color:var(--text-high);--border-from:var(--stroke-subtle);--border-to:var(--stroke-subtle);--shadow-color:var(--orange-40);--shadow-over:var(--black-800)}
+  .btn.primary:hover,.btn.primary.hv{filter:brightness(1.2);box-shadow:0 2px 16px 0 var(--orange-40)}
+  .btn.secondary{--btn-bg:var(--surface-action-secondary);--text-color:var(--accent-light);--border-from:var(--accent-muted);--border-to:var(--accent-transparent)}
+  .btn.secondary:hover,.btn.secondary.hv{--btn-bg:var(--surface-action-secondary-hover)}
+  .btn.tertiary{--btn-bg:var(--surface-action-tertiary);--text-color:var(--text-action-tertiary);--border-from:var(--stroke-default);--border-to:var(--white-0)}
+  .btn.tertiary:hover,.btn.tertiary.hv{--btn-bg:var(--surface-action-tertiary-hover);--text-color:var(--text-action-tertiary-hover)}
+  /* ghost: no border, no shadow; hover is TEXT-ONLY (no bg fill) — GTE kit decision */
+  .btn.ghost{--btn-bg:transparent;--text-color:var(--text-action-tertiary);box-shadow:none}
+  .btn.ghost::before,.btn.ghost::after{display:none}
+  .btn.ghost:hover,.btn.ghost.hv{--btn-bg:transparent;--text-color:var(--text-action-tertiary-hover)}
+  .btn.positive{--btn-bg:linear-gradient(65deg,var(--surface-action-positive) 0%,var(--surface-action-positive-hover) 100%);
+    --text-color:var(--text-high);--border-from:var(--stroke-subtle);--border-to:var(--stroke-subtle);--shadow-color:var(--positive-muted);--shadow-over:var(--black-800)}
+  .btn.positive:hover,.btn.positive.hv{filter:brightness(1.2)}
+  .btn.negative{--btn-bg:linear-gradient(65deg,var(--surface-action-negative) 0%,var(--surface-action-negative-hover) 100%);
+    --text-color:var(--text-high);--border-from:var(--stroke-subtle);--border-to:var(--stroke-subtle);--shadow-color:var(--negative-muted);--shadow-over:var(--black-800)}
+  .btn.negative:hover,.btn.negative.hv{filter:brightness(1.2)}
+  .btn:disabled,.btn.dis{opacity:.5;cursor:not-allowed}
+  /* focus: 1px offset ring, per-variant color */
+  .btn:focus-visible,.btn.fc{outline:1px solid var(--ring,var(--accent));outline-offset:2px}
+  .btn.secondary.fc{--ring:var(--accent-light)}.btn.tertiary.fc,.btn.ghost.fc{--ring:var(--text-low)}
+  .btn.positive.fc{--ring:var(--green-600)}.btn.negative.fc{--ring:var(--negative)}
+</style></head>
+<body>
+  <div class="lbl">rest</div>
+  <div class="row"><button class="btn primary">Place order</button><button class="btn secondary">Secondary</button><button class="btn tertiary">Tertiary</button><button class="btn ghost">Ghost</button><button class="btn positive">Long</button><button class="btn negative">Short</button></div>
+  <div class="lbl">hover</div>
+  <div class="row"><button class="btn primary hv">Place order</button><button class="btn secondary hv">Secondary</button><button class="btn tertiary hv">Tertiary</button><button class="btn ghost hv">Ghost</button><button class="btn positive hv">Long</button><button class="btn negative hv">Short</button></div>
+  <div class="lbl">focus (1px offset ring)</div>
+  <div class="row"><button class="btn primary fc">Place order</button><button class="btn secondary fc">Secondary</button><button class="btn tertiary fc">Tertiary</button><button class="btn ghost fc">Ghost</button><button class="btn positive fc">Long</button><button class="btn negative fc">Short</button></div>
+  <div class="lbl">disabled (per type)</div>
+  <div class="row"><button class="btn primary dis">Place order</button><button class="btn secondary dis">Secondary</button><button class="btn tertiary dis">Tertiary</button><button class="btn ghost dis">Ghost</button><button class="btn positive dis">Long</button><button class="btn negative dis">Short</button></div>
+  <div class="lbl">with icon — leading · trailing · icon-only md/sm (icon buttons inherit ALL variant + state rules; just square + 16px glyph + aria-label)</div>
+  <div class="row">
+    <button class="btn primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Place order</button>
+    <button class="btn secondary">Deposit<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></button>
+    <button class="btn tertiary iconly" aria-label="More"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg></button>
+    <button class="btn ghost iconly" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <button class="btn tertiary iconly sm" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+  </div>
+  <div class="lbl">sizes — sm 28 / md 32 / lg 40 · PRODUCT UI never exceeds medium (32); large is marketing/landing only</div>
+  <div class="row"><button class="btn primary sm">Small</button><button class="btn primary">Medium</button><button class="btn primary lg">Large</button></div>
+</body></html>

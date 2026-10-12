@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI Video Prompt"
+  short_description: "以简洁导演角色和通用模板创作视频提示词，保留创意与设计自由"
+  default_prompt: "Use $ai-video-prompt to create, revise, or review a video prompt with creative direction and the user's requirements; use the general template for a new complete prompt."

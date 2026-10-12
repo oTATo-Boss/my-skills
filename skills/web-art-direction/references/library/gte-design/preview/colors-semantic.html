@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Colors" name="Colors · Semantic" subtitle="Green = long, red = short" viewport="700x130" -->
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+body { margin: 0; padding: 24px; background: var(--surface-default); display: grid; gap: 20px; }
+.group { display: grid; gap: 8px; }
+.lbl { font-family: var(--font-mono); font-size: 10px; color: var(--text-low); letter-spacing: 0.4px; text-transform: uppercase; }
+.grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+.sw { border-radius: 6px; border: 1px solid var(--stroke-default); padding: 10px; height: 68px; display: flex; flex-direction: column; justify-content: space-between; }
+.sw .hex { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.3px; }
+.sw .nm  { font-family: var(--font-sans); font-size: 10px; font-weight: 500; }
+.on-dark  { color: var(--text-high); }
+.on-dark  .hex { color: var(--text-mid); }
+.on-light { color: #010304; }
+.on-light .hex { color: #010304; }
+.checker { background-image: linear-gradient(45deg, rgba(255,255,255,0.04) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.04) 75%), linear-gradient(45deg, rgba(255,255,255,0.04) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.04) 75%); background-size: 8px 8px; background-position: 0 0, 4px 4px; }
+</style></head>
+<body>
+
+<div class="group">
+  <div class="lbl">Green · long / bid / up</div>
+  <div class="grid">
+    <div class="sw on-light" style="background:#008A45"><div class="nm">green-1000</div><div class="hex">#008A45</div></div>
+    <div class="sw on-light" style="background:#09AA59"><div class="nm">green-800</div><div class="hex">#09AA59</div></div>
+    <div class="sw on-light" style="background:#10C66B"><div class="nm">green-600</div><div class="hex">#10C66B</div></div>
+    <div class="sw on-light" style="background:#2EE88B"><div class="nm">green-400</div><div class="hex">#2EE88B</div></div>
+    <div class="sw on-light" style="background:#7CF8BA"><div class="nm">green-200</div><div class="hex">#7CF8BA</div></div>
+  </div>
+  <div class="grid">
+    <div class="sw on-dark checker" style="background-color:rgba(16,198,107,0.25)"><div class="nm">green-25</div><div class="hex">#10C66B40</div></div>
+    <div class="sw on-dark checker" style="background-color:rgba(16,198,107,0.15)"><div class="nm">green-15</div><div class="hex">#10C66B26</div></div>
+    <div class="sw on-dark checker" style="background-color:rgba(16,198,107,0)"><div class="nm">green-0</div><div class="hex">#10C66B00</div></div>
+    <div class="sw" style="border:1px dashed var(--stroke-default); background:transparent; grid-column: span 2"><div class="nm" style="color:var(--text-low)">alpha family</div><div class="hex" style="color:var(--text-low)">base #10C66B</div></div>
+  </div>
+</div>
+
+<div class="group">
+  <div class="lbl">Red · short / ask / down</div>
+  <div class="grid">
+    <div class="sw on-light" style="background:#D91230"><div class="nm">red-1000</div><div class="hex">#D91230</div></div>
+    <div class="sw on-light" style="background:#F12241"><div class="nm">red-800</div><div class="hex">#F12241</div></div>
+    <div class="sw on-light" style="background:#F8445F"><div class="nm">red-600</div><div class="hex">#F8445F</div></div>
+    <div class="sw on-light" style="background:#FF667D"><div class="nm">red-400</div><div class="hex">#FF667D</div></div>
+    <div class="sw on-light" style="background:#FF8FA0"><div class="nm">red-200</div><div class="hex">#FF8FA0</div></div>
+  </div>
+  <div class="grid">
+    <div class="sw on-dark checker" style="background-color:rgba(248,68,95,0.25)"><div class="nm">red-25</div><div class="hex">#F8445F40</div></div>
+    <div class="sw on-dark checker" style="background-color:rgba(248,68,95,0.15)"><div class="nm">red-15</div><div class="hex">#F8445F26</div></div>
+    <div class="sw on-dark checker" style="background-color:rgba(248,68,95,0)"><div class="nm">red-0</div><div class="hex">#F8445F00</div></div>
+    <div class="sw" style="border:1px dashed var(--stroke-default); background:transparent; grid-column: span 2"><div class="nm" style="color:var(--text-low)">alpha family</div><div class="hex" style="color:var(--text-low)">base #F8445F</div></div>
+  </div>
+</div>
+
+</body></html>

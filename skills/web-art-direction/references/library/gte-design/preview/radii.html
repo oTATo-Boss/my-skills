@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Spacing" name="Corner radii" subtitle="4 / 8 / 12 / 16" viewport="700x140" -->
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+body { margin: 0; padding: 24px; background: var(--surface-default); color: var(--text-high); }
+.row { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+.s { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.box { width: 72px; height: 54px; background: var(--surface-elevated-1); border: 1px solid var(--stroke-subtle); }
+.lbl { font-family: var(--font-mono); font-size: 10px; color: var(--text-mid); }
+</style></head>
+<body>
+<div class="row">
+  <div class="s"><div class="box" style="border-radius:4px"></div><span class="lbl">4 small</span></div>
+  <div class="s"><div class="box" style="border-radius:8px"></div><span class="lbl">8 regular / button</span></div>
+  <div class="s"><div class="box" style="border-radius:12px"></div><span class="lbl">12 complementary</span></div>
+  <div class="s"><div class="box" style="border-radius:16px"></div><span class="lbl">16 large</span></div>
+</div>
+</body></html>

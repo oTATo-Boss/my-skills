@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Colors" name="Colors · Accent" subtitle="Orange scale — brand + CTA" viewport="700x130" -->
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+body { margin: 0; padding: 24px; background: var(--surface-default); }
+.grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+.grid + .grid { margin-top: 8px; }
+.sw { border-radius: 6px; border: 1px solid var(--stroke-default); padding: 10px; height: 72px; display: flex; flex-direction: column; justify-content: space-between; }
+.sw .hex { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.3px; }
+.sw .nm  { font-family: var(--font-sans); font-size: 10px; font-weight: 500; }
+.on-dark { color: var(--text-high); }
+.on-dark .hex { color: var(--text-mid); }
+.on-light { color: #010304; }
+.on-light .hex { color: #010304; }
+.checker { background-image: linear-gradient(45deg, rgba(255,255,255,0.04) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.04) 75%), linear-gradient(45deg, rgba(255,255,255,0.04) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.04) 75%); background-size: 8px 8px; background-position: 0 0, 4px 4px; }
+</style></head>
+<body>
+
+<div class="grid">
+  <div class="sw on-light" style="background:#BD4F00"><div class="nm">orange-1000</div><div class="hex">#BD4F00</div></div>
+  <div class="sw on-light" style="background:#EB6200"><div class="nm">orange-800</div><div class="hex">#EB6200</div></div>
+  <div class="sw on-light" style="background:#FF7817"><div class="nm">orange-600 · brand</div><div class="hex">#FF7817</div></div>
+  <div class="sw on-light" style="background:#FF9345"><div class="nm">orange-400</div><div class="hex">#FF9345</div></div>
+  <div class="sw on-light" style="background:#FFB27A"><div class="nm">orange-200</div><div class="hex">#FFB27A</div></div>
+</div>
+
+<div class="grid">
+  <div class="sw on-dark checker" style="background-color:rgba(255,120,23,0.40)"><div class="nm">orange-40</div><div class="hex">#FF781766</div></div>
+  <div class="sw on-dark checker" style="background-color:rgba(255,120,23,0.25)"><div class="nm">orange-25</div><div class="hex">#FF781740</div></div>
+  <div class="sw on-dark checker" style="background-color:rgba(255,120,23,0.15)"><div class="nm">orange-15</div><div class="hex">#FF781726</div></div>
+  <div class="sw on-dark checker" style="background-color:rgba(255,120,23,0)"><div class="nm">orange-0</div><div class="hex">#FF781700</div></div>
+  <div class="sw" style="border:1px dashed var(--stroke-default); background:transparent"><div class="nm" style="color:var(--text-low)">alpha family</div><div class="hex" style="color:var(--text-low)">base #FF7817</div></div>
+</div>
+
+</body></html>

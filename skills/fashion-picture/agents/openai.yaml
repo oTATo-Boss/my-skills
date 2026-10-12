@@ -1,0 +1,4 @@
+interface:
+  display_name: "Fashion Picture"
+  short_description: "Design realistic outfits, try-ons, and styled fashion pictures"
+  default_prompt: "Use $fashion-picture to design a realistic outfit, prepare its four-view sample, and create a controlled try-on and styling picture for the selected person or character."

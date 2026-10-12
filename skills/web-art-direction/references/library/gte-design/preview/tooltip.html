@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Components" name="Tooltip" subtitle="dark bubble + arrow on a dotted-underline trigger" viewport="520x200" -->
+<!-- CANONICAL — rebuilt from src/ui/tooltip/tooltip.tsx. Copy-source for tooltips.
+     Bubble: bg = --color-tooltip (black-800 / #181a1b), text-high, typography-paragraph-3 (12px), rounded-md (6px),
+     px-3 py-2, max-width 270px, strong drop shadow. Arrow = a 10px square rotated 45°, same bg, rounded 2px.
+     Trigger pattern in product: a dotted underline under the term (or an info/value), text-mid. -->
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;padding:110px 28px 40px;background:var(--surface-elevated-1);color:var(--text-high);font-family:var(--font-sans);
+       -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;display:flex;flex-direction:column;align-items:center}
+  .lbl{font-family:var(--font-mono);font-size:10px;color:var(--text-low);letter-spacing:.3px;position:absolute;top:24px;left:28px}
+  .trigwrap{position:relative;display:inline-block}
+  /* dotted-underline trigger (the product pattern for explained terms) */
+  .trigger{color:var(--text-mid);font-size:13px;letter-spacing:.28px;cursor:default;
+    background-image:linear-gradient(to right,var(--text-low) 1px,transparent 1px);background-size:3px 1px;background-repeat:repeat-x;background-position:0 100%;padding-bottom:3px}
+  /* tooltip bubble shown above the trigger */
+  .tip{position:absolute;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%);
+    background:var(--color-tooltip,#181a1b);color:var(--text-high);font-size:12px;line-height:140%;letter-spacing:.48px;
+    border-radius:6px;padding:8px 12px;max-width:270px;width:max-content;box-shadow:0 12px 32px rgba(0,0,0,.5)}
+  .tip .arrow{position:absolute;top:100%;left:50%;width:10px;height:10px;background:var(--color-tooltip,#181a1b);
+    border-radius:2px;transform:translate(-50%,-50%) rotate(45deg)}
+</style></head>
+<body>
+  <div class="lbl">tooltip — dark bubble + arrow (shown open above a dotted-underline trigger)</div>
+  <div class="trigwrap">
+    <span class="trigger">Open interest</span>
+    <div class="tip">Two-sided open interest: longs + shorts.<span class="arrow"></span></div>
+  </div>
+</body></html>

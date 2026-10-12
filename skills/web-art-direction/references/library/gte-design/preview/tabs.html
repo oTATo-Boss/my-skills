@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Components" name="Tabs" subtitle="slanted HeaderTab (23.43°) glued to the top of a panel" viewport="820x440" -->
+<!-- CANONICAL — rebuilt from src/ui/tab/header-tab.tsx + features/.../tabs-layout-tab-bar.tsx. Copy-source for tabs.
+     ONE tab type: the slanted HeaderTab (23.43°). Section/view nav (with count badges) AND order-type.
+     MECHANICS: bar height = var(--tab-bar-h) (32 / 40 at 1512+); slant = var(--tab-slant-px) (= tab-bar-h × tan23.43);
+       active fill = a ::before behind the label (flat surface-elevated-2, clip-path parallelogram), so text padding isn't eaten.
+     USAGE (3 rules):
+       1. Tabs head BIG panels/blocks — footer, sidebars, any large panel split into views.
+       2. NEVER standalone/floating. The tab BAR sits ABOVE the block and is GLUED to its top edge; the bar itself has no
+          fill, so behind inactive tabs you see the app's global background. Only the ACTIVE tab is filled.
+       3. The block body is a vertical gradient surface-elevated-2 → surface-elevated-1, starting elevated-2 at the bar's
+          bottom edge, so the active tab (elevated-2) merges seamlessly into the panel.
+     TABS switch sections/views. (Segmented controls filter / switch modes — see segmented-buttons.html.) -->
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  *{box-sizing:border-box}
+  /* page = the app global background (canvas = elevated-1); inactive tabs sit directly on it */
+  body{margin:0;padding:24px 28px;background:var(--surface-elevated-1);color:var(--text-high);font-family:var(--font-sans)}
+  .lbl{font-family:var(--font-mono);font-size:10px;color:var(--text-low);letter-spacing:.3px;margin:22px 0 10px}
+  .lbl:first-child{margin-top:0}
+  .group{max-width:760px}
+
+  /* tab BAR: transparent, glued above the block. height var(--tab-bar-h). NO own background. */
+  .bar{position:relative;display:flex;align-items:stretch;height:var(--tab-bar-h)}
+  .htab{position:relative;display:inline-flex;align-items:center;padding:0 24px;cursor:pointer;
+    font-family:var(--font-sans);font-size:12px;font-weight:400;letter-spacing:.48px;
+    color:var(--text-low);transition:color .15s}
+  /* keep the roomy interior padding (24) but pull tabs back together so the inter-tab gap stays tight */
+  .htab + .htab{margin-left:-8px}
+  .htab:hover{color:var(--text-mid)}
+  .htab.active{color:var(--text-high)}
+  /* active fill: flat elevated-2 parallelogram; bottom-left sits at the block's very left edge (x=0) */
+  .htab.active::before{content:"";position:absolute;inset:0;z-index:0;background:var(--surface-elevated-2);
+    clip-path:polygon(var(--tab-slant-px) 0, 100% 0, calc(100% - var(--tab-slant-px)) 100%, 0 100%)}
+  .htab .lab{position:relative;z-index:1;display:inline-flex;align-items:center;gap:8px}
+  .htab svg{width:14px;height:14px;display:block}
+
+  /* the block/panel: NOT rounded; vertical gradient starting elevated-2 at the top edge (glued to the bar) */
+  .block{background:linear-gradient(180deg,var(--surface-elevated-2) 0%,var(--surface-elevated-1) 100%);min-height:96px}
+
+  /* count badge — identical to badges.html .badge.count (square 20x20, mono, slashed-zero) */
+  .count{display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 4px;
+    border:1px solid var(--stroke-subtle);border-radius:var(--radius-regular);color:var(--text-mid);
+    font-family:var(--font-mono);font-size:12px;line-height:1;letter-spacing:0;
+    font-variant-numeric:tabular-nums slashed-zero;font-feature-settings:"zero" 1}
+  .htab.active .count{border-color:var(--accent-muted);color:var(--accent-light)}
+  .cols{display:flex;gap:40px;padding:14px 20px;color:var(--text-low);font-size:12px}
+</style></head>
+<body>
+  <div class="lbl">footer / panel — section navigation (active = Positions), with count badges</div>
+  <div class="group">
+    <div class="bar">
+      <div class="htab active"><span class="lab">Positions <span class="count">1</span></span></div>
+      <div class="htab"><span class="lab">Open orders <span class="count">4</span></span></div>
+      <div class="htab"><span class="lab">TWAP <span class="count">0</span></span></div>
+      <div class="htab"><span class="lab">Trade history</span></div>
+      <div class="htab"><span class="lab">Funding history</span></div>
+    </div>
+    <div class="block"><div class="cols"><span>Asset</span><span>Size</span><span>Position value</span><span>Entry price</span><span>Unrealized PnL</span></div></div>
+  </div>
+
+  <div class="lbl">sidebar / panel — order type (active = Market), same tab with icons</div>
+  <div class="group" style="max-width:380px">
+    <div class="bar">
+      <div class="htab active"><span class="lab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Market</span></div>
+      <div class="htab"><span class="lab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="3" x2="12" y2="7"/><line x1="12" y1="17" x2="12" y2="21"/><line x1="3" y1="12" x2="7" y2="12"/><line x1="17" y1="12" x2="21" y2="12"/></svg>Limit</span></div>
+      <div class="htab"><span class="lab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><line x1="12" y1="13" x2="12" y2="9"/><line x1="9" y1="2" x2="15" y2="2"/></svg>TWAP</span></div>
+    </div>
+    <div class="block"></div>
+  </div>
+</body></html>

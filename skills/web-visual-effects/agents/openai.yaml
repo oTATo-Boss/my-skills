@@ -1,0 +1,4 @@
+interface:
+  display_name: "视觉效果与 3D"
+  short_description: "按需实现玻璃、阴影、渐变、粒子、地球及三维背景等网页效果，控制性能和内容可读性。"
+  default_prompt: "使用 $web-visual-effects，实现指定的网页视觉效果，保持内容清晰并提供适当的静态降级方案。"

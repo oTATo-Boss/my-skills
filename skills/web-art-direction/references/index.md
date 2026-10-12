@@ -1,0 +1,35 @@
+# 按需参考索引
+
+下表按原模块保留有用做法。只选当前目标需要的条目，不逐项执行。数值和审美配方可调整；入口的范围与执行规则优先。
+
+| 原模块 / 搜索词 | 用途 | 参考 |
+| --- | --- | --- |
+| `agency-grid-layout-minimal` | Create a minimal agency design system with a disciplined editorial grid, oversized typography, quiet uppercase utility labels, restrained image blocks, and subtle structural detail. | [guide](library/agency-grid-layout-minimal/guide.md) |
+| `blue-cloudy-clean-modern` | Create a clean modern design system with a luminous blue sky atmosphere, soft drifting cloud light, minimal white framing, and serene premium typography. | [guide](library/blue-cloudy-clean-modern/guide.md) |
+| `blue-laser-clean-glass-layout` | Create a clean dark glass layout system with a thin blue laser atmosphere, frosted premium shells, and polished dashboard structure. | [guide](library/blue-laser-clean-glass-layout/guide.md) |
+| `book-serif-index` | Create an archival book-reader design system with serif-led pages, mono index navigation, aged paper surfaces, margin notes, and a premium catalog frame. | [guide](library/book-serif-index/guide.md) |
+| `bright-green-tech-system-webgl` | Create a bright-green technical design system with structured split layouts, hard-framed dark surfaces, mono utility labels, and a prominent WebGL visualization zone. | [guide](library/bright-green-tech-system-webgl/guide.md) |
+| `clean-minimal-beige-light-mode` | Create a clean minimal beige light-mode design system with warm neutral shells, quiet process grids, restrained accent color, and elegant low-contrast structure. | [guide](library/clean-minimal-beige-light-mode/guide.md) |
+| `dark-blue-contrasting-clean` | Create a dark-blue clean design system with strong contrast, cobalt gradient feature blocks, crisp framed structure, and restrained premium glow. | [guide](library/dark-blue-contrasting-clean/guide.md) |
+| `dark-glass-clean-layout` | Create a dark glass layout system with frosted premium shells, clean multi-column workspace structure, floating data cards, and restrained atmospheric depth. | [guide](library/dark-glass-clean-layout/guide.md) |
+| `design-taste-frontend` | Anti-slop frontend skill for landing pages, portfolios, and redesigns | [guide](library/design-taste-frontend/guide.md) |
+| `editorial-tech` | Blend editorial magazine composition with precision product-tech detailing using asymmetrical grids, cinematic media bands, mono utility labels, and restrained accent color. | [guide](library/editorial-tech/guide.md) |
+| `framed-grid-layout` | Create minimal framed grid layouts with thin visible boundary lines, L-shaped corner brackets, subtle diagonal line texture, and strict section alignment | [guide](library/framed-grid-layout/guide.md) |
+| `framed-tech-dark-border-gradient` | Create a framed dark technical design system with border-gradient shells, asymmetrical grid panels, mono utility labeling, and restrained monochrome atmosphere. | [guide](library/framed-tech-dark-border-gradient/guide.md) |
+| `funky-purple-container-tech` | Create a dark container-led technical design system with fuchsia-purple accents, layered rounded shells, crisp frame lines, and playful futuristic focal objects. | [guide](library/funky-purple-container-tech/guide.md) |
+| `glass-dark-mode-clock` | Create a dark glass design system with frosted shells, soft beam grids, circular clock-like calibration dials, and precise sci-fi instrument framing. | [guide](library/glass-dark-mode-clock/guide.md) |
+| `gte-design` | Build any GTE UI or brand asset with correct tokens, density, type, color, and component structure | [guide](library/gte-design/guide.md) |
+| `high-contrast-skeuomorphic-clean` | Create a high-contrast clean skeuomorphic design system with molded dark surfaces, crisp light separation, tactile inset depth, and restrained signal accents. | [guide](library/high-contrast-skeuomorphic-clean/guide.md) |
+| `image-first-grid-layout` | Create an image-led grid design system with full-bleed photography, structural guide lines, anchored content blocks, and restrained technical overlays. | [guide](library/image-first-grid-layout/guide.md) |
+| `landing-page` | Use when designing or rewriting a high-converting landing page (single-offer page) for SaaS/apps/services | [guide](library/landing-page/guide.md) |
+| `light-mode-paper-technical` | Create a light-mode technical design system with warm paper surfaces, dark outer framing, subtle diagonal texture, precise bracketed geometry, and restrained accent signals. | [guide](library/light-mode-paper-technical/guide.md) |
+| `loop-tracker-design` | Enzo's canonical visual system for live work-tracker artifacts (loop trackers, run trackers, project status pages) | [guide](library/loop-tracker-design/guide.md) |
+| `mesh-gradient-dark-blue-clean` | Create a futuristic, premium, clean dark-blue mesh-gradient design system across background rendering, hero shell, navigation, floating nodes, framed sections, CTAs, and motion | [guide](library/mesh-gradient-dark-blue-clean/guide.md) |
+| `nested-container-clean-agency` | Create a clean agency design system built from nested containers, with an outer editorial shell, inset dark feature blocks, rounded premium cards, and restrained accent color. | [guide](library/nested-container-clean-agency/guide.md) |
+| `nested-container-frames` | Create a container-in-container layout system using nested frames | [guide](library/nested-container-frames/guide.md) |
+| `orange-clean-paper-saas` | Create a clean paper-toned SaaS design system with warm neutrals, orange accent signals, rounded premium forms, and polished product illustration surfaces. | [guide](library/orange-clean-paper-saas/guide.md) |
+| `pricing-page` | Use when designing or rewriting a high-converting SaaS pricing page (structure, plan design, copywriting, SEO/AEO, FAQs, layout patterns, experiments) | [guide](library/pricing-page/guide.md) |
+| `split-layout-technical` | Create a technical split-screen design system with dual panels, fine frame lines, mono metadata, quiet editorial typography, and premium inset surfaces. | [guide](library/split-layout-technical/guide.md) |
+| `stitch-design-taste` | Semantic Design System Skill for Google Stitch | [guide](library/stitch-design-taste/guide.md) |
+| `tech-green-dark-mode-modern` | Create a modern dark-mode technical design system with matte-black surfaces, emerald signal accents, mono system labeling, framed dashboard cards, and restrained glow. | [guide](library/tech-green-dark-mode-modern/guide.md) |
+| `technical-wireframe-info-layout` | Create a monochrome technical wireframe design system with exploded 3D structure, connector annotations, sparse information labels, and precise dark diagnostic framing. | [guide](library/technical-wireframe-info-layout/guide.md) |

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Components" name="Segmented buttons" subtitle="data filter / mode switch / directional" viewport="760x300" -->
+<!-- CANONICAL — rebuilt from src/ui/toggle (ToggleGroup). Copy-source for segmented controls.
+     USE for filtering data or switching modes ONLY — never section nav or order types (those = tabs).
+     Track = surface-input, 0 inset. Inactive = default-input look (text-low → text-mid on hover; a SELECTED item never changes on hover).
+     Active neutral = tertiary button (white-6 + stroke-default→0 gradient border) + text-high (NO orange).
+     Active long/short = secondary button in positive/negative hues. -->
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body{margin:0;padding:24px 28px;background:var(--surface-elevated-1);color:var(--text-high);font-family:var(--font-sans)}
+  .lbl{font-family:var(--font-mono);font-size:10px;color:var(--text-low);letter-spacing:.3px;margin:0 0 8px}
+  .grid{display:flex;flex-direction:column;gap:18px}
+  .seg{display:inline-flex;background:var(--surface-input);border-radius:var(--radius-regular);padding:0;gap:0;width:fit-content}
+  .seg .it{position:relative;height:32px;padding:0 14px;display:flex;align-items:center;justify-content:center;
+    font-family:var(--font-sans);font-weight:400;font-size:13px;letter-spacing:.28px;
+    color:var(--text-low);background:transparent;border:0;border-radius:var(--radius-regular);cursor:pointer;transition:color .15s,background .15s}
+  .seg .it:not([class*="on-"]):hover,.seg .it.hv{color:var(--text-mid)}
+  .seg .it[class*="on-"]::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;padding:1px;
+    background:linear-gradient(to bottom,var(--bd-from) 0%,var(--bd-to) 100%);
+    -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;mask-clip:content-box,border-box}
+  .seg .it.on-neu{background:var(--surface-action-tertiary);color:var(--text-high);--bd-from:var(--stroke-default);--bd-to:var(--white-0)}
+  .seg .it.on-pos{background:var(--positive-muted);color:var(--positive);--bd-from:var(--positive-muted);--bd-to:var(--green-0)}
+  .seg .it.on-neg{background:var(--negative-muted);color:var(--negative);--bd-from:var(--negative-muted);--bd-to:var(--red-0)}
+</style></head>
+<body>
+  <div class="grid">
+    <div><div class="lbl">data filter — active reads like a tertiary button (no orange)</div>
+      <div class="seg"><button class="it">1D</button><button class="it">1W</button><button class="it on-neu">1M</button><button class="it">3M</button><button class="it">YTD</button><button class="it">1Y</button></div></div>
+    <div><div class="lbl">mode switch</div>
+      <div class="seg"><button class="it on-neu">Cross</button><button class="it">Isolated</button></div></div>
+    <div><div class="lbl">directional — long (positive) / short (negative)</div>
+      <div class="seg" style="margin-right:12px"><button class="it on-pos">Long</button><button class="it">Short</button></div>
+      <div class="seg"><button class="it">Long</button><button class="it on-neg">Short</button></div></div>
+  </div>
+</body></html>

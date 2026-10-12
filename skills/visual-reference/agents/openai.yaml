@@ -1,0 +1,4 @@
+interface:
+  display_name: "视觉参考与转译"
+  short_description: "分析图片视频及网页参考，整理设计提示词与素材，并将明确的视觉来源转译为可实现的界面。"
+  default_prompt: "使用 $visual-reference，分析给定视觉参考，提取布局、字体、色彩和交互规则，再完成指定交付。"

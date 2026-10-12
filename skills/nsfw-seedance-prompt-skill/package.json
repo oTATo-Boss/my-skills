@@ -1,0 +1,9 @@
+{
+  "name": "nsfw-seedance-prompt-skill",
+  "version": "1.0.0",
+  "description": "面向 Seedance 2.5 的纯 NSFW 私密自拍提示词生成器：12 栏单段公式完整提示词 + 唯一摄影机合同 + 结构 QC + 两轴模式仲裁。",
+  "license": "MIT",
+  "engines": {
+    "python": ">=3.9"
+  }
+}

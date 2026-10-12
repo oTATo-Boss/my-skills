@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Type" name="Type · Body" subtitle="Inter 400/600 — p1/p2/p3" viewport="700x180" -->
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+body { margin: 0; padding: 24px; background: var(--surface-default); color: var(--text-high); }
+.row { display: grid; gap: 10px; }
+.item { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 6px 0; border-bottom: 1px solid var(--stroke-default); }
+.item:last-child { border-bottom: none; }
+.lbl { font-family: var(--font-mono); font-size: 10px; color: var(--text-low); letter-spacing: 0.3px; }
+</style></head>
+<body>
+<div class="row">
+  <div class="item"><span class="p1">Paragraph 1 — opens a position and routes through the orderbook</span><span class="lbl">p1 · 15 / 160%</span></div>
+  <div class="item"><span class="p1-bold">Paragraph 1 bold — emphasis within long-form copy</span><span class="lbl">p1-bold · 600</span></div>
+  <div class="item"><span class="p2">Paragraph 2 — reduce-only orders skip size-up checks.</span><span class="lbl">p2 · 14 / 160%</span></div>
+  <div class="item"><span class="p2-bold">Paragraph 2 bold — inline labels, form hints</span><span class="lbl">p2-bold · 600</span></div>
+  <div class="item"><span class="p3">Paragraph 3 — funding paid every 8 h. Small body copy.</span><span class="lbl">p3 · 12 / 140%</span></div>
+  <div class="item"><span class="p3-bold">Paragraph 3 bold — section labels, column headers</span><span class="lbl">p3-bold · 600</span></div>
+</div>
+</body></html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Components" name="Toggles · Checks · Radios" subtitle="checkbox / radio / switch" viewport="700x260" -->
+<!-- CANONICAL — rebuilt from src/ui/checkbox, radio-group, switch. Copy-source for controls.
+     checkbox: size-4, masked gradient border (off) -> gradient fill + check (on).
+     radio: outer 24 / white dot 12.
+     switch: KIT UPDATE — enlarged to 16px (matches checkbox) + green-600 on-track + green glow (diverges from app h-3 w-6). -->
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body{margin:0;padding:24px 28px;background:var(--surface-elevated-1);color:var(--text-high);font-family:var(--font-sans)}
+  .lbl{font-family:var(--font-mono);font-size:10px;color:var(--text-low);letter-spacing:.3px;margin:0 0 8px}
+  .grid{display:flex;flex-wrap:wrap;gap:28px 40px}
+  .cell{display:flex;flex-direction:column;gap:10px}
+  .row{display:flex;gap:14px;align-items:center}
+  /* checkbox */
+  .cb{position:relative;width:16px;height:16px;border-radius:var(--radius-small);overflow:hidden;cursor:pointer}
+  .cb .fill{position:absolute;inset:0;background:var(--surface-action-tertiary)}
+  .cb .bd{position:absolute;inset:0;padding:1px;border-radius:inherit;
+    background:linear-gradient(to bottom,var(--stroke-default),var(--white-0));
+    -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+  .cb.hv .fill{background:var(--surface-action-tertiary-hover)}
+  .cb.on .fill{background:linear-gradient(to bottom,var(--text-high),var(--text-mid))}
+  .cb.on .bd{opacity:0}
+  .cb .chk{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--text-action-primary)}
+  .cb:not(.on) .chk{display:none}
+  /* radio */
+  .radio{width:24px;height:24px;border-radius:50%;background:var(--surface-action-tertiary-hover);display:flex;align-items:center;justify-content:center;cursor:pointer}
+  .radio .dot{width:12px;height:12px;border-radius:50%;background:var(--white-200);box-shadow:0 4px 4px rgba(5,8,10,.5);display:none}
+  .radio.on .dot{display:block}
+  /* switch — 16px tall (match checkbox), green-600 on, green glow */
+  .sw{width:28px;height:16px;border-radius:999px;background:var(--surface-input);position:relative;cursor:pointer;transition:background .15s,box-shadow .15s}
+  .sw .th{position:absolute;top:2px;left:2px;width:12px;height:12px;border-radius:50%;background:var(--text-mid);transition:transform .15s,background .15s;box-shadow:0 2px 4px var(--surface-elevated-1)}
+  .sw.on{background:var(--green-600);box-shadow:0 2px 12px var(--green-25)} .sw.on .th{transform:translateX(12px);background:var(--text-high)}
+</style></head>
+<body>
+  <div class="grid">
+    <div class="cell"><span class="lbl">checkbox — off / hover / on</span>
+      <div class="row">
+        <span class="cb"><span class="fill"></span><span class="bd"></span></span>
+        <span class="cb hv"><span class="fill"></span><span class="bd"></span></span>
+        <span class="cb on"><span class="fill"></span><span class="bd"></span><span class="chk"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></span>
+      </div>
+    </div>
+    <div class="cell"><span class="lbl">radio — off / on</span>
+      <div class="row"><span class="radio"><span class="dot"></span></span><span class="radio on"><span class="dot"></span></span></div>
+    </div>
+    <div class="cell"><span class="lbl">switch — off / on</span>
+      <div class="row"><span class="sw"><span class="th"></span></span><span class="sw on"><span class="th"></span></span></div>
+    </div>
+  </div>
+</body></html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Components" name="Badges · Pills" subtitle="small (default) / medium / count · inline-only · semantic direction" viewport="760x260" -->
+<!-- CANONICAL — rebuilt from src/ui/badge. Copy-source for badges.
+     Border-only, never filled. SMALL is the default; medium only with breathing room (tables, landing/marketing).
+     Normal/sentence case (acronyms only for caps). NEVER standalone — always inline next to other content.
+     Direction = semantic: Long/Buy → positive, Short/Sell → negative (never grey for a side).
+     Count badge = square 20x20 mono slashed-zero (kept square <=99). Height is line-height-driven (paragraph-3, lh 140%). -->
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;padding:24px 28px;background:var(--surface-elevated-1);color:var(--text-high);font-family:var(--font-sans)}
+  .lbl{font-family:var(--font-mono);font-size:10px;color:var(--text-low);letter-spacing:.3px;margin:0 0 8px}
+  .grid{display:flex;flex-wrap:wrap;gap:20px 28px}
+  .cell{display:flex;flex-direction:column;gap:8px}
+  .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .badge{display:inline-flex;align-items:center;justify-content:center;gap:4px;border:1px solid;border-radius:var(--radius-regular);
+    padding:4px 8px;font-family:var(--font-sans);font-size:12px;font-weight:400;line-height:1.4;letter-spacing:.48px;white-space:nowrap}
+  .badge.sm{padding:0 4px;border-radius:var(--radius-small)}
+  .badge.count{min-width:20px;height:20px;padding:0 4px;border-radius:var(--radius-regular);line-height:1;letter-spacing:0;
+    font-family:var(--font-mono);font-variant-numeric:tabular-nums slashed-zero;font-feature-settings:"zero" 1}
+  .badge.primary{border-color:var(--accent-muted);color:var(--accent-light)}
+  .badge.secondary{border-color:var(--stroke-subtle);color:var(--text-mid)}
+  .badge.positive{border-color:var(--positive-muted);color:var(--positive)}
+  .badge.negative{border-color:var(--negative-muted);color:var(--negative)}
+  .badge svg{width:12px;height:12px}
+  .inline{display:inline-flex;align-items:center;gap:8px;color:var(--text-high);font-size:13px}
+  .inline.mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums slashed-zero}
+</style></head>
+<body>
+  <div class="grid">
+    <div class="cell"><span class="lbl">small (default — go-to in most cases) · with icon</span>
+      <div class="row"><span class="badge positive sm">Long</span><span class="badge negative sm">Short</span><span class="badge primary sm">Cross</span><span class="badge secondary sm">Reduce only</span><span class="badge secondary sm">GTC</span>
+        <span class="badge primary sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Turbo</span></div>
+    </div>
+    <div class="cell"><span class="lbl">medium — only with breathing room (table cells, landing/marketing)</span>
+      <div class="row"><span class="badge positive">Long</span><span class="badge negative">Short</span><span class="badge primary">Cross</span><span class="badge secondary">Reduce only</span><span class="badge secondary">GTC</span></div>
+    </div>
+    <div class="cell"><span class="lbl">count — square 20x20, mono, slashed zero (tab/section counts, square &le;99)</span>
+      <div class="row"><span class="badge secondary count">0</span><span class="badge secondary count">1</span><span class="badge primary count">2</span><span class="badge secondary count">99</span></div>
+    </div>
+    <div class="cell"><span class="lbl">always inline, never standalone</span>
+      <div class="row" style="gap:22px">
+        <span class="inline">Open Orders <span class="badge secondary count">4</span></span>
+        <span class="inline mono">BTC-USD-PERP <span class="badge positive">Long</span></span>
+        <span class="inline mono">ETH <span class="badge primary">25x</span></span>
+      </div>
+    </div>
+  </div>
+</body></html>

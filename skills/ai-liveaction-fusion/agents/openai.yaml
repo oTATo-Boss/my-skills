@@ -1,0 +1,6 @@
+interface:
+  display_name: "AI + 实拍融合"
+  short_description: "静态分镜前置的 AI 实拍融合、批量生产与返修流程"
+  default_prompt: "Use $ai-liveaction-fusion to analyze this live-action project, prepare storyboard-image tasks, review candidates, and compile approved shots for video generation."
+policy:
+  allow_implicit_invocation: true

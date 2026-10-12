@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Components" name="Dropdown / select" subtitle="tertiary-button trigger + overlay panel" viewport="520x300" -->
+<!-- CANONICAL — rebuilt from src/ui/popover/popover.tsx + popover-select.tsx. Copy-source for dropdowns/selects.
+     Trigger matches the INPUT field states: surface-input bg, 1px border transparent -> stroke-subtle (hover) -> stroke-strong (open),
+     + a ChevronDown (size-3, rotates when open). Panel (PopoverContent) = bg surface-overlay (#181a1b), rounded-md (6px),
+     strong overlay shadow + 1px ring, py-2. Rows: flex items-center gap-2, px-3 py-1, hover surface-action-tertiary-hover;
+     selected option = text-high (+ accent check), others = text-mid -> text-high on hover. Optional group label = paragraph-3 text-low. -->
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;padding:28px;background:var(--surface-elevated-1);color:var(--text-high);font-family:var(--font-sans);
+       -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+  .lbl{font-family:var(--font-mono);font-size:10px;color:var(--text-low);letter-spacing:.3px;margin:0 0 8px}
+  .states{display:flex;gap:24px;align-items:flex-start;margin-bottom:18px}
+  .st{font-family:var(--font-mono);font-size:10px;color:var(--text-low);margin-bottom:6px}
+  /* trigger = INPUT-style field + chevron (default / hover / open border states) */
+  .trigger{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;border-radius:var(--radius-regular);
+    background:var(--surface-input);color:var(--text-high);border:1px solid transparent;cursor:pointer;
+    font-family:var(--font-sans);font-size:13px;letter-spacing:.28px;transition:border-color .1s}
+  .trigger.hv{border-color:var(--stroke-subtle)}
+  .trigger.open{border-color:var(--stroke-strong)}
+  .trigger svg{width:12px;height:12px;color:var(--text-mid);transition:transform .15s}
+  .trigger.open svg{transform:rotate(180deg)}
+  /* overlay panel */
+  .panel{margin-top:6px;width:180px;background:var(--surface-overlay);border-radius:6px;padding:6px 0;
+    box-shadow:0 16px 48px rgba(0,0,0,.6),0 0 0 1px var(--stroke-subtle)}
+  .grouplabel{padding:4px 12px;font-size:12px;letter-spacing:.48px;color:var(--text-low)}
+  .row{display:flex;align-items:center;gap:8px;padding:6px 12px;cursor:pointer;font-size:13px;letter-spacing:.28px;
+    color:var(--text-mid);transition:color .12s,background .12s}
+  .row:hover{background:var(--surface-action-tertiary-hover);color:var(--text-high)}
+  .row.selected{color:var(--text-high)}
+  .row .check{margin-left:auto;color:var(--accent-light);opacity:0}
+  .row.selected .check{opacity:1}
+  .row .check svg{width:14px;height:14px;display:block}
+</style></head>
+<body>
+  <div class="lbl">trigger — matches input field states</div>
+  <div class="states">
+    <div><div class="st">default</div><button class="trigger">All<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button></div>
+    <div><div class="st">hover</div><button class="trigger hv">All<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button></div>
+    <div><div class="st">open</div><button class="trigger open">All<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button></div>
+  </div>
+  <div class="lbl">open panel</div>
+  <div class="panel">
+    <div class="grouplabel">Markets</div>
+    <div class="row selected">All<span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
+    <div class="row">Favorites</div>
+    <div class="row">Perps</div>
+    <div class="row">Spot</div>
+  </div>
+</body></html>

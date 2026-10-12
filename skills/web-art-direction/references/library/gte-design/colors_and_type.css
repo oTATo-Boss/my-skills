@@ -1,0 +1,377 @@
+/* ──────────────────────────────────────────────────────────────
+   GTE Design System — Colors & Typography
+   Source of truth: Supernova tokens from gte-web
+   /src/shared/styles/generated/supernova-tokens.desktop.css
+   ─────────────────────────────────────────────────────────── */
+
+/* Inter via CDN (used for heading + body per Supernova).
+   Must stay the first rule in the file: browsers ignore @import
+   placed after any other at-rule (including @font-face). */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+/* Webfonts (local) */
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("./fonts/JetBrainsMono-VariableFont_wght.ttf") format("truetype-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Ogg Text";
+  src: url("./fonts/OggText-Light.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* ─── BRAND / ACCENT ─────────────────────────────────────── */
+  --accent:            rgb(255, 120,  23);  /* orange-600 — GTE signature */
+  --accent-light:      rgb(255, 147,  69);  /* orange-400 */
+  --accent-muted:      rgba(255, 120, 23, 0.15);
+  --accent-transparent:rgba(255, 120, 23, 0);
+  --text-accent:       rgb(255, 147,  69);  /* orange used as TEXT (links, accent numerals): bright on dark.
+                                               Darkens under data-theme="light" for contrast. Orange FILLS (buttons) unaffected. */
+
+  /* INTENTIONAL hue split (faithful to Supernova): solid semantic text/icon
+     uses the -400 step; muted tint fills derive from the -600 step. So a tint
+     behind solid semantic text is a deeper shade of the same family, by design.
+     Do NOT "correct" these to match — it would diverge from the repo. */
+  --positive:          rgb(46, 232, 139);   /* green-400 — long / bid / up (solid) */
+  --positive-muted:    rgba(16, 198, 107, 0.15); /* green-600 @15% — tint fill */
+  --negative:          rgb(255, 102, 125);  /* red-400 — short / ask / down (solid) */
+  --negative-muted:    rgba(248,  68,  95, 0.15); /* red-600 @15% — tint fill */
+
+  /* ─── ORANGE SCALE ───────────────────────────────────────── */
+  --orange-0:    rgba(255, 120, 23, 0);
+  --orange-15:   rgba(255, 120, 23, 0.15);
+  --orange-25:   rgba(255, 120, 23, 0.25);
+  --orange-40:   rgba(255, 120, 23, 0.4);
+  --orange-200:  rgb(255, 178, 122);
+  --orange-400:  rgb(255, 147,  69);
+  --orange-600:  rgb(255, 120,  23);
+  --orange-800:  rgb(235,  98,   0);
+  --orange-1000: rgb(189,  79,   0);
+
+  /* ─── GREEN SCALE ────────────────────────────────────────── */
+  --green-0:    rgba(16, 198, 107, 0);
+  --green-15:   rgba(16, 198, 107, 0.15);
+  --green-25:   rgba(16, 198, 107, 0.25);
+  --green-200:  rgb(124, 248, 186);
+  --green-400:  rgb(46,  232, 139);
+  --green-600:  rgb(16,  198, 107);
+  --green-800:  rgb(9,   170,  89);
+  --green-1000: rgb(0,   138,  69);
+
+  /* ─── RED SCALE ──────────────────────────────────────────── */
+  --red-0:    rgba(248, 68, 95, 0);
+  --red-15:   rgba(248, 68, 95, 0.15);
+  --red-25:   rgba(248, 68, 95, 0.25);
+  --red-200:  rgb(255, 143, 160);
+  --red-400:  rgb(255, 102, 125);
+  --red-600:  rgb(248,  68,  95);
+  --red-800:  rgb(241,  34,  65);
+  --red-1000: rgb(217,  18,  48);
+
+  /* ─── BLACK SCALE (surfaces + overlays) ──────────────────── */
+  --black-0:    rgba(1, 3, 4, 0);
+  --black-8:    rgba(1, 3, 4, 0.08);
+  --black-15:   rgba(1, 3, 4, 0.15);
+  --black-30:   rgba(1, 3, 4, 0.3);
+  --black-50:   rgba(1, 3, 4, 0.5);
+  --black-200:  rgb(64, 69, 73);
+  --black-400:  rgb(48, 52, 54);
+  --black-600:  rgb(31, 34, 35);
+  --black-800:  rgb(24, 26, 27);
+  --black-900:  rgb(16, 18, 19);
+  --black-1000: rgb( 1,  3,  4);
+
+  /* ─── WHITE SCALE (text + strokes) ───────────────────────── */
+  --white-0:    rgba(255,255,255,0);
+  --white-6:    rgba(255,255,255,0.06);
+  --white-15:   rgba(255,255,255,0.15);
+  --white-50:   rgba(255,255,255,0.5);
+  --white-200:  rgb(255,255,255);
+  --white-400:  rgb(211,212,212);
+  --white-600:  rgb(166,167,168);
+  --white-800:  rgb(106,110,113);
+  --white-1000: rgb( 84, 87, 90);
+
+  /* ─── SEMANTIC — TEXT (dark mode · default) ──────────────── */
+  --text-high:              rgb(255,255,255);   /* white-200 */
+  --text-mid:               rgb(166,167,168);   /* white-600 */
+  --text-low:               rgb(106,110,113);   /* white-800 */
+  --text-positive:          rgb(46,232,139);    /* green-400 */
+  --text-negative:          rgb(255,102,125);   /* red-400 */
+  --text-action-primary:       rgb( 1,  3,  4); /* black-1000 — on orange CTAs */
+  --text-action-primary-hover: rgb(24, 26, 27); /* black-800 */
+  --text-action-positive:       rgb(16,198,107); /* green-600 */
+  --text-action-positive-hover: rgb(124,248,186);/* green-200 */
+  --text-action-negative:       rgb(248, 68, 95);/* red-600 */
+  --text-action-negative-hover: rgb(255,102,125);/* red-400 */
+  --text-action-tertiary:       rgb(166,167,168);/* white-600 */
+  --text-action-tertiary-hover: rgb(211,212,212);/* white-400 */
+
+  /* ─── SEMANTIC — SURFACES (dark mode — default theme) ───── */
+  /* Per spec: surface-default = black-1000, reserved for future layouts
+     that want a deeper floor. For now the product canvas renders on
+     surface-elevated-1 (cards on surface-default become elevated-2). */
+  --surface-default:      rgb( 1,  3,  4);   /* black-1000 — reserved */
+  --surface-elevated-1:   rgb(16, 18, 19);   /* black-900 — app canvas (default) */
+  --surface-elevated-2:   rgb(24, 26, 27);   /* black-800 — cards / panels */
+  --surface-overlay:      rgb(24, 26, 27);   /* black-800 — popovers / dropdowns */
+  --surface-input:        rgba(255,255,255,0.06);
+
+  --surface-action-primary:         rgb(235, 98, 0);     /* orange-800 */
+  --surface-action-primary-hover:   rgb(255,120,23);      /* orange-600 */
+  --surface-action-secondary:       rgba(255,120,23,0.15); /* orange-15 */
+  --surface-action-secondary-hover: rgba(255,120,23,0.25); /* orange-25 */
+  --surface-action-tertiary:        rgba(255,255,255,0.06); /* white-6 */
+  --surface-action-tertiary-hover:  rgba(255,255,255,0.15); /* white-15 */
+  --surface-action-positive:        rgb(0,138,69);        /* green-1000 */
+  --surface-action-positive-hover:  rgb(16,198,107);      /* green-600 */
+  --surface-action-positive-secondary:       rgba(16,198,107,0.15); /* green-15 */
+  --surface-action-positive-secondary-hover: rgba(16,198,107,0.25); /* green-25 */
+  --surface-action-negative:        rgb(217,18,48);       /* red-1000 */
+  --surface-action-negative-hover:  rgb(248,68,95);       /* red-600 */
+  --surface-action-negative-secondary:       rgba(248,68,95,0.15);  /* red-15 */
+  --surface-action-negative-secondary-hover: rgba(248,68,95,0.25);  /* red-25 */
+
+  /* ─── LEGACY ALIASES — DO NOT USE IN NEW WORK ────────────────
+     These do NOT exist in the gte-web Supernova export. They were
+     invented for the older preview cards only. New surfaces must use
+     the canonical set above (surface-default / -elevated-1 / -elevated-2
+     / -overlay / -input). Mapping if you hit one in old preview markup:
+       surface-elevated-3/4 → step further with surface-elevated-2 + a
+         hairline stroke; the system separates by brightness, not by
+         inventing more elevation steps.
+       surface-deep / surface-scrim → surface-default (#010304) + opacity.
+       surface-hover        → white-6 / white-15 action-tertiary surfaces.
+       surface-selected     → --orange-15 (selected/brand tint).
+       surface-input-hover  → surface-input lightened in :hover. */
+  --surface-elevated-3:   rgb(48, 52, 54);
+  --surface-elevated-4:   rgb(64, 69, 73);
+  --surface-scrim:        rgba( 1,  3,  4, 0.8);
+  --surface-deep:         rgb( 1,  3,  4);
+  --surface-hover:        rgba(255,255,255,0.04);
+  --surface-selected:     rgba(255,120,23,0.08);
+  --surface-input-hover:  rgba(255,255,255,0.10);
+
+  /* ─── SEMANTIC — STROKES ─────────────────────────────────── */
+  --stroke-default:         rgba(255,255,255,0.06);
+  --stroke-subtle:          rgba(255,255,255,0.15);
+  --stroke-strong:          rgba(255,255,255,0.5);
+  --stroke-primary:         rgb(16,198,107);
+  --stroke-primary-muted:   rgba(16,198,107,0.25);
+  --stroke-primary-subtle:  rgba(16,198,107,0.15);
+  --stroke-primary-invisible: rgba(16,198,107,0);
+  --stroke-negative:        rgb(248,68,95);
+  --stroke-negative-muted:  rgba(248,68,95,0.25);
+  --stroke-negative-subtle: rgba(248,68,95,0.15);
+  --stroke-negative-invisible: rgba(248,68,95,0);
+
+  /* ─── GRADIENTS ──────────────────────────────────────────── */
+  --gradient-brand:    linear-gradient(180deg, rgba(255,120,23,0.15) 0%, rgba(255,120,23,0) 100%);
+  --gradient-positive: linear-gradient(180deg, rgba(16,198,107,0.15) 0%, rgba(16,198,107,0) 100%);
+  --gradient-negative: linear-gradient(180deg, rgba(248,68,95,0.15)  0%, rgba(248,68,95,0)  100%);
+  --gradient-button-primary: linear-gradient(65deg, var(--surface-action-primary) 0%, var(--surface-action-primary-hover) 100%);
+
+  /* ─── TYPEFACES ──────────────────────────────────────────── */
+  --font-sans:    "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono:    "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace; /* slash zeroes enabled */
+  --font-display: "Ogg Text", Georgia, "Times New Roman", serif;
+
+  /* ─── RADII (Supernova) ──────────────────────────────────── */
+  --radius-small:         4px;
+  --radius-regular:       8px;
+  --radius-button:        8px;
+  --radius-complementary: 12px;
+  --radius-large:         16px;
+
+  /* ─── SPACING (Supernova) ────────────────────────────────── */
+  --space-xs:    4px;
+  --space-sm:    8px;
+  --space-md:    12px;
+  --space-lg:    16px;
+  --space-xl:    24px;
+  --space-xxl:   32px;
+  --space-huge:  48px;
+
+  /* ─── ELEVATION ──────────────────────────────────────────── */
+  --shadow-button:        0 2px 12px var(--orange-40);
+  --shadow-button-hover:  0 2px 16px var(--orange-40);
+  --shadow-button-over:   0 4px 8px var(--black-800);
+  --shadow-overlay:       0 16px 48px rgba(0,0,0,0.6), 0 0 0 1px var(--stroke-subtle);
+  --shadow-card:          0 1px 0 var(--stroke-default);
+
+  /* ─── LAYOUT (Supernova) ─────────────────────────────────── */
+  --sidebar-width: 80px;
+  --header-height: 48px;
+  --banner-height: 28px;
+  --footer-height: 56px;
+
+  /* ─── 23.43° AXIAL TILT (brand geometry) ─────────────────────
+     GTE's signature slant. Shipped in product on the active-tab /
+     sidebar indicator and in marketing grid backgrounds. The slant
+     offset is derived from the chrome height, never hand-tuned:
+     --tab-slant-px = --tab-bar-h × tan(23.43°). See the 23.43° section
+     in README.md for where it is allowed and at what scale. */
+  --axial-tilt:   23.43deg;
+  --tab-bar-h:    2rem;       /* 32px below widescreen; 40px at 1512+ (see density tiers) */
+  --tab-slant-px: 13.87px;    /* 32px × tan(23.43°); 17.34px at 1512+ */
+}
+
+/* ══════════════════════════════════════════════════════════════
+   DENSITY TIERS — type sizes are NOT fixed in the real app.
+   Mirrors gte-web `src/shared/styles/density.css`. Two tiers:
+   a denser baseline on :root for everything below the `widescreen`
+   breakpoint (1512px) — this is what MOST screens render — and the
+   full Supernova "Desktop" snapshot at 1512px and above. The .h*/.p*/
+   .mono*/.btn* classes below consume these variables, so every text
+   surface responds without per-element changes.
+
+   DEFAULT TO THE BASELINE TIER. Body text is 11px (.p3 / .mono-3),
+   not 12px, on the overwhelming majority of viewports. Only design
+   for the 1512+ tier when explicitly targeting widescreen.
+   ══════════════════════════════════════════════════════════ */
+:root {
+  /* baseline tier (< 1512px) — one step down from Supernova */
+  --text-heading-1-size: 42px;  --text-heading-1-tracking: -0.84px;
+  --text-heading-2-size: 32px;  --text-heading-2-tracking: -0.64px;
+  --text-heading-3-size: 25px;  --text-heading-3-tracking: -0.5px;
+  --text-heading-4-size: 21px;  --text-heading-4-tracking: -0.42px;
+  --text-heading-5-size: 18px;  --text-heading-5-tracking: -0.36px;
+  --text-heading-6-size: 16px;  --text-heading-6-tracking: -0.32px;
+
+  --text-paragraph-1-size: 14px; --text-paragraph-1-tracking: 0.14px;
+  --text-paragraph-2-size: 13px; --text-paragraph-2-tracking: 0.26px;
+  --text-paragraph-3-size: 11px; --text-paragraph-3-tracking: 0.44px;  /* dominant body size */
+
+  --text-mono-1-size: 18px; --text-mono-1-tracking: -0.36px;
+  --text-mono-2-size: 14px; --text-mono-2-tracking: 0.42px;
+  --text-mono-3-size: 11px; --text-mono-3-tracking: 0.33px;            /* dominant numeric size */
+  --text-mono-4-size: 10px; --text-mono-4-tracking: 0.27px;
+  --text-mono-line-height: 16px;  /* single line-height for ALL mono sizes — see note on .mono-1 */
+
+  --text-button-1-size: 12px; --text-button-1-tracking: 0.24px;
+  --text-button-2-size: 11px; --text-button-2-tracking: 0.22px;
+  --text-button-3-size: 11px; --text-button-3-tracking: 0.22px;
+}
+
+@media (min-width: 1512px) {
+  :root {
+    /* widescreen+ : full Supernova desktop snapshot */
+    --tab-bar-h: 2.5rem;  --tab-slant-px: 17.34px;  /* 40px × tan(23.43°) */
+
+    --text-heading-1-size: 48px; --text-heading-1-tracking: -0.96px;
+    --text-heading-2-size: 36px; --text-heading-2-tracking: -0.72px;
+    --text-heading-3-size: 28px; --text-heading-3-tracking: -0.56px;
+    --text-heading-4-size: 24px; --text-heading-4-tracking: -0.48px;
+    --text-heading-5-size: 20px; --text-heading-5-tracking: -0.4px;
+    --text-heading-6-size: 18px; --text-heading-6-tracking: -0.36px;
+
+    --text-paragraph-1-size: 15px; --text-paragraph-1-tracking: 0.15px;
+    --text-paragraph-2-size: 14px; --text-paragraph-2-tracking: 0.28px;
+    --text-paragraph-3-size: 12px; --text-paragraph-3-tracking: 0.48px;
+
+    --text-mono-1-size: 20px; --text-mono-1-tracking: -0.4px;
+    --text-mono-2-size: 15px; --text-mono-2-tracking: 0.45px;
+    --text-mono-3-size: 12px; --text-mono-3-tracking: 0.36px;
+    --text-mono-4-size: 11px; --text-mono-4-tracking: 0.3px;
+
+    --text-button-1-size: 13px; --text-button-1-tracking: 0.26px;
+    --text-button-2-size: 12px; --text-button-2-tracking: 0.24px;
+    --text-button-3-size: 11px; --text-button-3-tracking: 0.22px;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   TYPOGRAPHY — classes mirror gte-web's `.typography-*`
+   ══════════════════════════════════════════════════════════ */
+
+html, body { font-family: var(--font-sans); background: var(--surface-elevated-1); color: var(--text-high); font-feature-settings: "zero" 1; }
+
+/* Light-mode opt-in. Apply `data-theme="light"` to <html> or a scoped
+   container to flip surface tokens — text tokens stay semantic via
+   their own overrides below. */
+[data-theme="light"] {
+  --surface-default:      rgb(250,250,250);                /* white-200 — reserved */
+  --surface-elevated-1:   rgb(240,240,240);                /* white-600 — canvas */
+  --surface-elevated-2:   rgb(246,246,246);                /* white-800 — cards */
+  --surface-overlay:      rgb(244,244,244);                /* white-400 — popovers */
+  --surface-input:        rgba(1,3,4,0.08);                /* black-8 */
+
+  --surface-action-tertiary:        rgba(1,3,4,0.08);      /* black-8 */
+  --surface-action-tertiary-hover:  rgba(1,3,4,0.15);      /* black-15 */
+
+  --text-high:            rgb(1,3,4);                      /* black-900 — primary */
+  --text-mid:             rgb(106,110,113);                /* white-800 — secondary */
+  --text-low:             rgb(166,167,168);                /* white-600 — tertiary, very soft */
+  --text-positive:        rgb(9, 170, 89);                 /* green-800 — darker for light bg */
+  --text-negative:        rgb(248, 68, 95);                /* red-600 — darker for light bg */
+  --text-accent:          rgb(189, 79, 0);                 /* orange-1000 — orange TEXT darkened for contrast on light */
+  --text-action-positive-hover: rgb(9, 170, 89);           /* green-800 — darken on hover */
+  --text-action-negative-hover: rgb(241, 34, 65);          /* red-800 — darken on hover */
+  --text-action-tertiary:       rgb(84, 87, 90);           /* white-1000 */
+  --text-action-tertiary-hover: rgb(1, 3, 4);              /* black-1000 — darken on hover */
+
+  --stroke-default:       rgba(1,3,4,0.08);
+  --stroke-subtle:        rgba(1,3,4,0.15);
+  --stroke-strong:        rgba(1,3,4,0.5);
+
+  background: var(--surface-elevated-1);
+  color: var(--text-high);
+}
+
+/* Display (Ogg Text — used sparingly for editorial moments) */
+.display-1 { font-family: var(--font-display); font-weight: 300; font-size: 64px; line-height: 1.05; letter-spacing: -0.01em; }
+.display-2 { font-family: var(--font-display); font-weight: 300; font-size: 40px; line-height: 1.1;  letter-spacing: -0.005em; }
+
+/* Headings — Inter 700. Sizes come from the density tiers above
+   (baseline < 1512px, Supernova at 1512+). Reserve .h1/.h2 for hero /
+   landing / empty-state moments — never product chrome. */
+.h1 { font-family: var(--font-sans); font-weight: 700; font-size: var(--text-heading-1-size); line-height: 100%; letter-spacing: var(--text-heading-1-tracking); }
+.h2 { font-family: var(--font-sans); font-weight: 700; font-size: var(--text-heading-2-size); line-height: 100%; letter-spacing: var(--text-heading-2-tracking); }
+.h3 { font-family: var(--font-sans); font-weight: 700; font-size: var(--text-heading-3-size); line-height: 100%; letter-spacing: var(--text-heading-3-tracking); }
+.h4 { font-family: var(--font-sans); font-weight: 700; font-size: var(--text-heading-4-size); line-height: 100%; letter-spacing: var(--text-heading-4-tracking); }
+.h5 { font-family: var(--font-sans); font-weight: 700; font-size: var(--text-heading-5-size); line-height: 100%; letter-spacing: var(--text-heading-5-tracking); }
+.h6 { font-family: var(--font-sans); font-weight: 700; font-size: var(--text-heading-6-size); line-height: 100%; letter-spacing: var(--text-heading-6-tracking); }
+
+/* Paragraphs — Inter 400 / 600. .p3 is the default body size in product. */
+.p1      { font-size: var(--text-paragraph-1-size); line-height: 160%; letter-spacing: var(--text-paragraph-1-tracking); font-weight: 400; }
+.p1-bold { font-size: var(--text-paragraph-1-size); line-height: 160%; letter-spacing: var(--text-paragraph-1-tracking); font-weight: 600; }
+.p2      { font-size: var(--text-paragraph-2-size); line-height: 160%; letter-spacing: var(--text-paragraph-2-tracking); font-weight: 400; }
+.p2-bold { font-size: var(--text-paragraph-2-size); line-height: 160%; letter-spacing: var(--text-paragraph-2-tracking); font-weight: 600; }
+.p3      { font-size: var(--text-paragraph-3-size); line-height: 140%; letter-spacing: var(--text-paragraph-3-tracking); font-weight: 400; }
+.p3-bold { font-size: var(--text-paragraph-3-size); line-height: 140%; letter-spacing: var(--text-paragraph-3-tracking); font-weight: 600; }
+
+/* Mono — JetBrains Mono 400 (numbers, prices, hashes, timestamps).
+   .mono-3 is the default numeric size in product. NOTE: all mono sizes
+   share one 16px line-height by design — so .mono-1 (18–20px) is
+   INTENTIONALLY set tighter than its font-size, for single-line big-number
+   readouts (price headers, PnL). It is faithful to the repo, not a bug.
+   Only use .mono-1 for one-line numeric display; never for wrapping text. */
+.mono-1 { font-family: var(--font-mono); font-size: var(--text-mono-1-size); line-height: var(--text-mono-line-height); letter-spacing: var(--text-mono-1-tracking); }
+.mono-2 { font-family: var(--font-mono); font-size: var(--text-mono-2-size); line-height: var(--text-mono-line-height); letter-spacing: var(--text-mono-2-tracking); }
+.mono-3 { font-family: var(--font-mono); font-size: var(--text-mono-3-size); line-height: var(--text-mono-line-height); letter-spacing: var(--text-mono-3-tracking); }
+.mono-4 { font-family: var(--font-mono); font-size: var(--text-mono-4-size); line-height: var(--text-mono-line-height); letter-spacing: var(--text-mono-4-tracking); }
+
+/* Buttons */
+.btn-1 { font-family: var(--font-sans); font-weight: 500; font-size: var(--text-button-1-size); line-height: 100%; letter-spacing: var(--text-button-1-tracking); }
+.btn-2 { font-family: var(--font-sans); font-weight: 500; font-size: var(--text-button-2-size); line-height: 100%; letter-spacing: var(--text-button-2-tracking); }
+.btn-3 { font-family: var(--font-sans); font-weight: 400; font-size: var(--text-button-3-size); line-height: 100%; letter-spacing: var(--text-button-3-tracking); }
+
+/* Utility: flash on change for live numbers */
+@keyframes alpha-flash {
+  0%,15% { background-color: var(--surface-elevated-2); }
+  100%   { background-color: transparent; }
+}
+.alpha-highlight { animation: alpha-flash 1.5s ease-out; }
+
+/* Tabular numerals + slashed zero — always on for mono (GTE renders slashed
+   zeros everywhere numbers appear; never plain 0 in JetBrains Mono). */
+.mono-1, .mono-2, .mono-3, .mono-4 {
+  font-variant-numeric: tabular-nums slashed-zero;
+  font-feature-settings: "zero" 1, "tnum" 1;
+}

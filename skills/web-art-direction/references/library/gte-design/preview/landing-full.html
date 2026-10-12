@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Marketing" name="Landing page — full (agentic focus)" subtitle="lifestyle hero · product-UI · dark/light mix · slanted feature cards · animated multi-asset ticker" viewport="1440x4600" -->
+<!-- MARKETING / NON-PRODUCT full landing page (broad conversion). Composed from the skill's locked patterns
+     (see references/marketing.md). Rules enforced:
+     - HEADINGS = Ogg Text Light only. Eyebrows/labels/body = Inter. Mono = numbers only.
+     - BUTTONS only in the hero, the final CTA, and the nav. On photo backgrounds the secondary is a GHOST (tertiary is
+       too faint over imagery). Nav button = PRIMARY. NO icons on primary buttons. The PRIMARY CTA is ONE button —
+       same copy ("Launch app") + same size (lg) in nav, hero, and closer.
+     - FEATURE/CONTENT sections use TEXT LINKS, never buttons: orange primary link ("Open a position →"),
+       text-mid secondary link ("See all markets").
+     - REAL UI reuses the prebuilt Product atoms (order form → trade panel, table → positions, orderbook). The positions
+       table follows the canonical table (side = colored left ray + muted-border leverage chip; NOT bright Long/Short badges).
+       Dark product mockups shown inside LIGHT sections are wrapped in .dark-scope so product stays dark (product is always dark).
+     - DARK/LIGHT: agentic/API/developer = DARK; general trading + brand + onboarding can be LIGHT. Light = trade ticket,
+       feature grid, Why-GTE, How-it-works. Dark = hero, ticker, agentic, console, orderbook, stats, closer.
+     - 23.43° slant: the ONE frosted slab (over the agent console) + slanted FEATURE CARDS (both dark capability cards AND
+       light feature grid; light cards get a much softer shadow) + slanted stat dividers.
+     - Stats and the ticker are never adjacent (clutter) — stats is its own lively band far below the ticker. Dark bands
+       use surface-elevated-1, NOT the extra-black surface-default (reserved for dark-only pages).
+     - Orange TEXT (links, step numbers, stat units) uses var(--text-accent) — bright on dark, orange-1000 on light for contrast.
+     - Ticker: multi-asset (crypto + stocks + commodities + indices), slow sideways marquee, subtle live pulse.
+     - ONE spacing system: a single .wrap; content width 1200 default, 1400 at ≥1512px. Full-bleed bg, inset content. -->
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  *{box-sizing:border-box}
+  :root{--page-max:1200px}
+  @media(min-width:1512px){:root{--page-max:1400px}}
+  body{margin:0;background:var(--surface-elevated-1);color:var(--text-high);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+  a{text-decoration:none;color:inherit}
+
+  /* ===== ONE spacing system ===== */
+  .wrap{max-width:var(--page-max);margin:0 auto;padding:0 56px}
+  .section{padding:112px 0}
+
+  /* dark-scope: re-assert dark tokens for a product mockup placed inside a light section (product is always dark) */
+  .dark-scope{--surface-elevated-1:rgb(16,18,19);--surface-elevated-2:rgb(24,26,27);--surface-input:rgba(255,255,255,0.06);
+    --surface-action-tertiary:rgba(255,255,255,0.06);--surface-action-tertiary-hover:rgba(255,255,255,0.15);
+    --text-high:rgb(255,255,255);--text-mid:rgb(166,167,168);--text-low:rgb(106,110,113);
+    --stroke-default:rgba(255,255,255,0.06);--stroke-subtle:rgba(255,255,255,0.15)}
+
+  /* ===== shared type ===== */
+  .eyebrow{font-size:13px;letter-spacing:.4px;color:var(--text-mid);margin:0 0 22px}
+  .display{font-family:var(--font-display);font-weight:300;letter-spacing:-.01em;color:var(--text-high);margin:0}
+  .display.xl{font-size:76px;line-height:1.06}
+  .display.lg{font-size:50px;line-height:1.1}
+  .sub{font-size:15px;line-height:1.6;color:var(--text-mid);margin:18px 0 0;max-width:440px}
+  .lead{max-width:660px}
+  .center{text-align:center;margin-left:auto;margin-right:auto}
+  .pos{color:var(--positive)} .neg{color:var(--negative)}
+
+  /* ===== buttons (hero / final CTA / nav only) ===== */
+  .btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:var(--radius-regular);
+    font-family:var(--font-sans);font-weight:500;border:0;cursor:pointer;color:var(--text-color,#fff);background:var(--btn-bg,transparent);white-space:nowrap;box-shadow:0 2px 12px 0 var(--shadow-color,transparent)}
+  .btn::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:linear-gradient(to bottom,var(--bf,transparent),var(--bt,transparent));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+  .btn.lg{height:40px;padding:0 22px;font-size:14px;letter-spacing:.2px}
+  .btn.sm{height:32px;padding:0 16px;font-size:13px;letter-spacing:.24px}
+  .btn.primary{--btn-bg:linear-gradient(65deg,var(--surface-action-primary),var(--surface-action-primary-hover));--text-color:var(--text-high);--bf:var(--stroke-subtle);--bt:var(--stroke-subtle);--shadow-color:var(--orange-40)}
+  .btn.ghost{--btn-bg:transparent;--text-color:var(--text-high);box-shadow:none}
+  [data-theme="light"] .btn.primary{--text-color:var(--white-200)}
+
+  /* ===== text links (feature/content sections) ===== */
+  .links{display:flex;gap:28px;align-items:center;margin-top:30px}
+  .tlink{font-family:var(--font-sans);font-weight:500;font-size:14px;letter-spacing:.2px;display:inline-flex;align-items:center;gap:7px}
+  .tlink.primary{color:var(--text-accent)}  /* adaptive orange: bright on dark, darkened on light for contrast */
+  .tlink.secondary{color:var(--text-mid)}
+  .tlink svg{width:15px;height:15px}
+
+  /* ===== nav ===== */
+  nav{position:absolute;top:0;left:0;right:0;z-index:5}
+  nav .bar{max-width:var(--page-max);margin:0 auto;padding:26px 56px;display:flex;align-items:center;justify-content:space-between}
+  nav .logo{height:26px;width:auto;display:block}
+  .nav-links{display:flex;gap:30px}
+  .nav-links a{color:var(--text-mid);font-size:14px;letter-spacing:.1px;transition:color .15s}
+  .nav-links a:hover{color:var(--text-high)}
+
+  /* ===== hero (dark surface, LIFESTYLE image) ===== */
+  .hero{position:relative;min-height:800px;display:flex;flex-direction:column;overflow:hidden;
+    background:linear-gradient(100deg, rgba(1,3,4,.95) 0%, rgba(1,3,4,.80) 34%, rgba(1,3,4,.40) 66%, rgba(1,3,4,.10) 100%), url("../assets/brand-images/gte_-04 1.jpg") center/cover no-repeat}
+  .hero .inner{position:relative;z-index:2;flex:1;display:flex;align-items:center;padding:96px 0}
+  .hero .inner>.wrap{width:100%}
+  .hero .copy{max-width:620px}
+  .hero .cta{display:flex;gap:16px;align-items:center;margin-top:36px}
+
+  /* ===== markets ticker (multi-asset, animated marquee) ===== */
+  .ticker{border-top:1px solid var(--stroke-default);border-bottom:1px solid var(--stroke-default);background:var(--surface-elevated-1);overflow:hidden}
+  .ticker .track{display:flex;width:max-content;animation:tkscroll 72s linear infinite}
+  .ticker:hover .track{animation-play-state:paused}
+  @keyframes tkscroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .ticker .tk{display:flex;align-items:baseline;gap:10px;padding:14px 24px;border-right:1px solid var(--stroke-default);white-space:nowrap}
+  .ticker .cls{font-size:10px;color:var(--text-low);letter-spacing:.3px;text-transform:uppercase;align-self:center}
+  .ticker .sym{font-size:12px;color:var(--text-mid);letter-spacing:.2px}
+  .ticker .px{font-family:var(--font-mono);font-variant-numeric:tabular-nums slashed-zero;font-size:13px;color:var(--text-high)}
+  .ticker .ch{font-family:var(--font-mono);font-variant-numeric:tabular-nums slashed-zero;font-size:12px}
+  .ticker .blink{animation:blink 5s ease-in-out infinite}
+  @keyframes blink{0%,88%,100%{opacity:1}93%{opacity:.25}}
+
+  /* ===== two-column ===== */
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+  .frame{border-radius:var(--radius-large);overflow:hidden;border:1px solid var(--stroke-subtle);box-shadow:0 28px 64px rgba(1,3,4,.5)}
+  .frame img{display:block;width:100%;height:440px;object-fit:cover}
+
+  /* ===== trade panel mockup ===== */
+  .panel{background:var(--surface-elevated-2);border-radius:var(--radius-large);box-shadow:0 24px 60px rgba(1,3,4,.5);padding:16px;max-width:392px;margin:0 auto}
+  .seg{display:grid;grid-template-columns:1fr 1fr;background:var(--surface-input);border-radius:8px;padding:2px;gap:2px;margin-bottom:16px}
+  .seg b{height:34px;display:flex;align-items:center;justify-content:center;border-radius:6px;font-family:var(--font-sans);font-weight:500;font-size:13px;letter-spacing:.24px;color:var(--text-low)}
+  .seg .on{position:relative;color:var(--positive);background:var(--positive-muted)}
+  .seg .on::before{content:"";position:absolute;inset:0;border-radius:6px;padding:1px;background:linear-gradient(to bottom,rgba(46,232,139,.4),rgba(46,232,139,0));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+  .prow{display:flex;align-items:center;gap:9px;padding:2px 2px 14px}
+  .prow .av{width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#f7931a,#b86c12);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#1a1205}
+  .prow .sym{font-weight:600;font-size:14px}
+  .prow .lev{font-family:var(--font-mono);font-variant-numeric:tabular-nums slashed-zero;font-size:11px;color:var(--text-mid);border:1px solid var(--stroke-default);border-radius:5px;padding:1px 6px}
+  .prow .mk{margin-left:auto;font-family:var(--font-mono);font-variant-numeric:tabular-nums slashed-zero;font-size:14px;color:var(--positive)}
+  .lab{font-size:11px;color:var(--text-low);margin:10px 2px 6px}
+  .field{height:38px;background:var(--surface-input);border-radius:8px;display:flex;align-items:center;padding:0 12px;font-family:var(--font-sans)}
+  .field .ph{color:var(--text-low);font-size:14px}
+  .field .val{color:var(--text-high);font-size:14px}
+  .field .unit{margin-left:auto;font-size:12px;color:var(--text-low)}
+  .slider{padding:16px 2px 6px}
+  .track2{height:4px;border-radius:2px;background:var(--surface-input);position:relative}
+  .track2 .fill{position:absolute;left:0;top:0;bottom:0;width:45%;border-radius:2px;background:linear-gradient(90deg,#6a6e71,#d3d4d4)}
+  .track2 .knob{position:absolute;left:45%;top:50%;width:12px;height:12px;border-radius:50%;background:#fff;transform:translate(-50%,-50%);box-shadow:0 1px 4px rgba(0,0,0,.5)}
+  .ov{display:flex;justify-content:space-between;padding:9px 2px;font-size:12px;color:var(--text-mid);border-top:1px solid var(--stroke-default)}
+  .ov:first-of-type{margin-top:14px}
+  .ov .mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums slashed-zero;color:var(--text-high)}
+  .submit{margin-top:14px;width:100%;height:40px;border:0;border-radius:8px;font-family:var(--font-sans);font-weight:500;font-size:14px;color:#fff;cursor:pointer;
+    background:linear-gradient(65deg,var(--surface-action-primary),var(--surface-action-primary-hover));box-shadow:0 2px 12px var(--orange-40);position:relative}
+  .submit::before{content:"";position:absolute;inset:0;border-radius:8px;padding:1px;background:linear-gradient(to bottom,var(--stroke-subtle),var(--stroke-subtle));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+
+  /* ===== positions table mockup (canonical: side = colored ray + muted lev chip) ===== */
+  .ptable{background:var(--surface-elevated-2);border-radius:var(--radius-large);box-shadow:0 24px 60px rgba(1,3,4,.5);overflow:hidden}
+  .ptable .th,.ptable .row{display:grid;grid-template-columns:1.7fr 1fr 1fr 1.2fr;align-items:center}
+  .ptable .th{height:36px;font-size:12px;letter-spacing:.48px;color:var(--text-low);font-weight:400;border-bottom:1px solid var(--stroke-default)}
+  .ptable .th span{padding:0 18px}
+  .ptable .th span:nth-child(n+2){text-align:right}
+  .ptable .row{height:54px;border-bottom:1px solid var(--stroke-default)}
+  .ptable .row:last-child{border-bottom:0}
+  .ptable .asset{height:100%;display:flex;align-items:center;gap:8px;border-left:2px solid var(--side);padding-left:16px;
+    background:linear-gradient(to right,color-mix(in srgb,var(--side) 14%,transparent),transparent 58%)}
+  .ptable .asset.long{--side:var(--positive)} .ptable .asset.short{--side:var(--negative)}
+  .ptable .av{width:18px;height:18px;border-radius:50%;background:var(--accent);color:#1a1205;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;flex:none}
+  .ptable .sym{font-family:var(--font-mono);font-size:12px;color:var(--text-high)}
+  .ptable .lev{display:inline-flex;align-items:center;border:1px solid;border-radius:var(--radius-small);padding:0 4px;height:18px;font-family:var(--font-mono);font-variant-numeric:slashed-zero;font-size:11px}
+  .ptable .lev.long{border-color:var(--positive-muted);color:var(--positive)} .ptable .lev.short{border-color:var(--negative-muted);color:var(--negative)}
+  .ptable .num{font-family:var(--font-mono);font-variant-numeric:tabular-nums slashed-zero;font-size:12px;color:var(--text-high);text-align:right;padding:0 18px}
+  .ptable .pnl{font-family:var(--font-mono);font-variant-numeric:tabular-nums slashed-zero;font-size:12px;text-align:right;padding:0 18px}
+  .ptable .pnl .pct{color:var(--text-low);font-size:11px;margin-left:6px}
+
+  /* ===== cards ===== */
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:56px}
+  .card{background:var(--surface-elevated-2);border:1px solid var(--stroke-default);border-radius:var(--radius-large);box-shadow:0 16px 40px rgba(1,3,4,.28);padding:28px}
+  [data-theme="light"] .card{box-shadow:0 6px 20px rgba(1,3,4,.05)}  /* much softer shadow on light */
+  .card .ic{width:34px;height:34px;border-radius:9px;background:var(--surface-action-tertiary);display:flex;align-items:center;justify-content:center;color:var(--text-mid);margin-bottom:20px}
+  .card .ic svg{width:18px;height:18px}
+  .card h3{font-family:var(--font-sans);font-weight:600;font-size:16px;letter-spacing:-.01em;color:var(--text-high);margin:0 0 8px}
+  .card p{font-size:13px;line-height:1.55;color:var(--text-mid);margin:0}
+  /* slanted feature cards — the clever 23.43° use (content counter-skewed upright) */
+  .grid-3.slant{gap:30px}
+  .grid-3.slant .card{transform:skewX(-23.43deg)}
+  .grid-3.slant .card>*{transform:skewX(23.43deg)}
+
+  /* ===== agent console + frosted slab ===== */
+  .showcase{position:relative}
+  .console{position:relative;background:var(--surface-elevated-2);border-radius:var(--radius-large);box-shadow:0 28px 64px rgba(1,3,4,.55);overflow:hidden}
+  .console .cbar{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--stroke-default)}
+  .console .dot{width:9px;height:9px;border-radius:50%;background:var(--surface-action-tertiary-hover)}
+  .console .title{margin-left:8px;font-size:12px;color:var(--text-low);letter-spacing:.2px}
+  .console .live{margin-left:auto;display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text-mid)}
+  .console .live .pulse{width:7px;height:7px;border-radius:50%;background:var(--positive);box-shadow:0 0 0 3px var(--positive-muted);animation:pulse 2.4s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+  .feed{padding:8px 4px 18px;font-family:var(--font-mono);font-variant-numeric:tabular-nums slashed-zero;font-size:12.5px;line-height:1.9}
+  .feed .ln{display:grid;grid-template-columns:96px 132px 44px 96px 1fr auto;gap:14px;padding:0 18px;align-items:baseline}
+  .feed .t{color:var(--text-low)}
+  .feed .ag{color:var(--text-mid)}
+  .feed .side.buy{color:var(--positive)} .feed .side.sell{color:var(--negative)}
+  .feed .mk{color:var(--text-high)}
+  .feed .px{color:var(--text-mid);text-align:right}
+  .feed .st{color:var(--text-low);text-align:right;letter-spacing:.2px}
+  .slab{position:absolute;left:-30px;right:-30px;bottom:58px;height:104px;transform:skewX(-23.43deg);
+    background:rgba(16,18,19,.5);-webkit-backdrop-filter:blur(9px);backdrop-filter:blur(9px);
+    border-top:1px solid var(--stroke-default);border-bottom:1px solid var(--stroke-default);box-shadow:0 12px 40px rgba(1,3,4,.4);display:flex;align-items:center}
+  .slab .label{transform:skewX(23.43deg);padding-left:72px;font-family:var(--font-display);font-weight:300;font-size:34px;letter-spacing:-.01em;color:var(--text-high)}
+
+  /* ===== orderbook showcase ===== */
+  .ob-card{position:relative;background:var(--surface-elevated-2);border-radius:var(--radius-large);box-shadow:0 24px 60px rgba(1,3,4,.5);padding:18px 4px 8px}
+  .ob-head{display:flex;align-items:center;gap:10px;padding:0 18px 14px}
+  .ob-head .av{width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#f7931a,#b86c12);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#1a1205}
+  .ob-head .sym{font-weight:600;font-size:14px}
+  .ob-head .px{margin-left:auto;font-family:var(--font-mono);font-variant-numeric:tabular-nums slashed-zero;font-size:14px;color:var(--positive)}
+  .book{width:100%;padding:0 14px 6px}
+  .book .hd{display:grid;grid-template-columns:1fr 1fr 1fr;padding:0 10px 6px;font-size:11px;color:var(--text-low);letter-spacing:.1px;font-weight:500;border-bottom:1px solid var(--stroke-default)}
+  .book .hd span:nth-child(2),.book .hd span:nth-child(3){text-align:right}
+  .book .rows{display:flex;flex-direction:column;gap:2px;padding-top:2px}
+  .book .r{display:grid;grid-template-columns:1fr 1fr 1fr;padding:3px 10px;position:relative;font-family:var(--font-mono);font-size:12px;font-variant-numeric:tabular-nums slashed-zero;isolation:isolate}
+  .book .r::before{content:"";position:absolute;top:0;bottom:0;left:0;border-radius:2px;z-index:0}
+  .book .ask::before{background:var(--red-15);width:var(--w)} .book .bid::before{background:var(--green-15);width:var(--w)}
+  .book .r>span{position:relative;z-index:2}
+  .book .ask>span:nth-child(1){color:var(--negative);font-weight:500} .book .bid>span:nth-child(1){color:var(--positive);font-weight:500}
+  .book .r>span:nth-child(2),.book .r>span:nth-child(3){text-align:right;color:var(--text-high)}
+  .book .mid{display:grid;grid-template-columns:1fr 1fr 1fr;padding:6px 10px;font-size:11px;color:var(--text-low);border-top:1px solid var(--stroke-default);border-bottom:1px solid var(--stroke-default)}
+  .book .mid>span:nth-child(2),.book .mid>span:nth-child(3){text-align:right;font-family:var(--font-mono);color:var(--text-mid);font-variant-numeric:tabular-nums slashed-zero}
+  .check{display:flex;gap:16px;margin-top:30px}
+  .check .li{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--text-mid)}
+  .check .li svg{width:16px;height:16px;color:var(--positive)}
+
+  /* ===== stats band (dark, slanted 23.43° dividers) ===== */
+  /* stats band bg = elevated-1, NOT the extra-black surface-default (that reads ugly on a mixed light/dark page;
+     surface-default is reserved for dark-theme-only landings). */
+  .band{background:var(--surface-elevated-1);border-top:1px solid var(--stroke-default);border-bottom:1px solid var(--stroke-default)}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr)}
+  .stats .st{position:relative;padding:72px 40px}
+  .stats .st + .st::before{content:"";position:absolute;left:0;top:26px;bottom:26px;width:1px;background:var(--stroke-subtle);transform:skewX(-23.43deg)}
+  .stats .v{font-family:var(--font-mono);font-variant-numeric:tabular-nums slashed-zero;font-size:48px;line-height:1;color:var(--text-high);letter-spacing:-.01em}
+  .stats .v .u{color:var(--text-accent);font-size:28px}
+  .stats .l{font-size:13px;color:var(--text-low);margin-top:16px}
+
+  /* ===== how it works ===== */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px}
+  .step .n{font-family:var(--font-mono);font-variant-numeric:tabular-nums slashed-zero;font-size:13px;color:var(--text-accent);letter-spacing:.3px}
+  .step h3{font-family:var(--font-sans);font-weight:600;font-size:20px;letter-spacing:-.01em;margin:16px 0 8px;color:var(--text-high)}
+  .step p{font-size:13px;line-height:1.55;color:var(--text-mid);margin:0}
+  .step .bar{height:1px;background:var(--stroke-default);margin-top:18px}
+
+  /* ===== closing CTA ===== */
+  .closer{position:relative;overflow:hidden;border-top:1px solid var(--stroke-default);
+    background:linear-gradient(180deg, rgba(1,3,4,.78), rgba(1,3,4,.55)), url("../assets/brand-images/gte_-12 1.jpg") center/cover no-repeat}
+  .closer .inner{position:relative;z-index:2;text-align:center;padding:140px 0}
+  .closer .cta{display:flex;gap:16px;justify-content:center;align-items:center;margin-top:36px}
+
+  /* ===== footer ===== */
+  footer{background:var(--surface-elevated-1);border-top:1px solid var(--stroke-default);padding:64px 0 40px}
+  .foot{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px}
+  .foot .logo{height:24px;margin-bottom:18px}
+  .foot .tag{font-size:13px;color:var(--text-low);line-height:1.6;max-width:260px}
+  .foot h4{font-size:12px;color:var(--text-mid);font-weight:600;letter-spacing:.3px;margin:0 0 16px}
+  .foot ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:11px}
+  .foot ul a{font-size:13px;color:var(--text-low)}
+  .foot ul a:hover{color:var(--text-mid)}
+  .foot-base{display:flex;align-items:center;justify-content:space-between;margin-top:56px;padding-top:24px;border-top:1px solid var(--stroke-default)}
+  .foot-base .cc{font-family:var(--font-sans);font-size:12px;letter-spacing:.1px;color:var(--text-low)}
+  .foot-base .chains{display:flex;align-items:center;gap:16px}
+  .foot-base .chains span{font-size:12px;color:var(--text-low)}
+  .foot-base .chains img{height:16px;width:16px;opacity:.7}
+</style></head>
+<body>
+
+  <!-- ============ HERO (dark surface, LIFESTYLE image) ============ -->
+  <section class="hero">
+    <nav>
+      <div class="bar">
+        <img class="logo" src="../assets/logos/gte-logo-white.png" alt="GTE">
+        <div class="nav-links"><a>Product</a><a>Agents</a><a>Markets</a><a>Developers</a><a>Docs</a></div>
+        <a class="btn primary lg">Launch app</a>
+      </div>
+    </nav>
+    <div class="inner">
+      <div class="wrap">
+        <div class="copy">
+          <div class="eyebrow">On-chain perpetuals · built for autonomous trading</div>
+          <h1 class="display xl">Perps that move<br>at agent speed.</h1>
+          <p class="sub" style="max-width:480px">A fully on-chain limit orderbook with the latency of a centralized exchange — and a first-class API for the agents trading on it. Cross-margin, up to 50&times; leverage, settled on Turbo.</p>
+          <div class="cta">
+            <a class="btn primary lg">Launch app</a>
+            <a class="btn ghost lg">Read the docs</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MARKETS TICKER (multi-asset, animated marquee) ============ -->
+  <div class="ticker">
+    <div class="track">
+      <div class="tk"><span class="cls">Crypto</span><span class="sym">BTC-PERP</span><span class="px">77,486</span><span class="ch pos blink">+2.31%</span></div>
+      <div class="tk"><span class="sym">ETH-PERP</span><span class="px">3,418.20</span><span class="ch pos">+1.07%</span></div>
+      <div class="tk"><span class="sym">SOL-PERP</span><span class="px">182.04</span><span class="ch neg">&minus;0.84%</span></div>
+      <div class="tk"><span class="cls">Stocks</span><span class="sym">NVDA</span><span class="px">138.07</span><span class="ch pos">+1.94%</span></div>
+      <div class="tk"><span class="sym">AAPL</span><span class="px">229.87</span><span class="ch neg blink">&minus;0.42%</span></div>
+      <div class="tk"><span class="sym">TSLA</span><span class="px">351.44</span><span class="ch pos">+3.10%</span></div>
+      <div class="tk"><span class="cls">Index</span><span class="sym">SPX</span><span class="px">5,969.34</span><span class="ch pos">+0.55%</span></div>
+      <div class="tk"><span class="sym">NDX</span><span class="px">21,188.10</span><span class="ch pos">+0.72%</span></div>
+      <div class="tk"><span class="cls">Commod</span><span class="sym">XAU</span><span class="px">2,662.40</span><span class="ch pos blink">+0.38%</span></div>
+      <div class="tk"><span class="sym">WTI</span><span class="px">68.91</span><span class="ch neg">&minus;1.12%</span></div>
+      <div class="tk"><span class="cls">Crypto</span><span class="sym">HYPE-PERP</span><span class="px">38.92</span><span class="ch pos">+5.62%</span></div>
+      <div class="tk"><span class="sym">DOGE-PERP</span><span class="px">0.16284</span><span class="ch pos">+3.45%</span></div>
+      <!-- duplicate set for seamless marquee -->
+      <div class="tk"><span class="cls">Crypto</span><span class="sym">BTC-PERP</span><span class="px">77,486</span><span class="ch pos">+2.31%</span></div>
+      <div class="tk"><span class="sym">ETH-PERP</span><span class="px">3,418.20</span><span class="ch pos">+1.07%</span></div>
+      <div class="tk"><span class="sym">SOL-PERP</span><span class="px">182.04</span><span class="ch neg">&minus;0.84%</span></div>
+      <div class="tk"><span class="cls">Stocks</span><span class="sym">NVDA</span><span class="px">138.07</span><span class="ch pos">+1.94%</span></div>
+      <div class="tk"><span class="sym">AAPL</span><span class="px">229.87</span><span class="ch neg">&minus;0.42%</span></div>
+      <div class="tk"><span class="sym">TSLA</span><span class="px">351.44</span><span class="ch pos">+3.10%</span></div>
+      <div class="tk"><span class="cls">Index</span><span class="sym">SPX</span><span class="px">5,969.34</span><span class="ch pos">+0.55%</span></div>
+      <div class="tk"><span class="sym">NDX</span><span class="px">21,188.10</span><span class="ch pos">+0.72%</span></div>
+      <div class="tk"><span class="cls">Commod</span><span class="sym">XAU</span><span class="px">2,662.40</span><span class="ch pos">+0.38%</span></div>
+      <div class="tk"><span class="sym">WTI</span><span class="px">68.91</span><span class="ch neg">&minus;1.12%</span></div>
+      <div class="tk"><span class="cls">Crypto</span><span class="sym">HYPE-PERP</span><span class="px">38.92</span><span class="ch pos">+5.62%</span></div>
+      <div class="tk"><span class="sym">DOGE-PERP</span><span class="px">0.16284</span><span class="ch pos">+3.45%</span></div>
+    </div>
+  </div>
+
+  <!-- ============ TRADE TICKET (LIGHT — general trading; dark product mockup in .dark-scope) ============ -->
+  <section class="section" data-theme="light">
+    <div class="wrap two">
+      <div>
+        <div class="eyebrow">One ticket, every market</div>
+        <h2 class="display lg">Long or short,<br>in two clicks.</h2>
+        <p class="sub">Pick a side, size it, send it. Cross-margin by default, leverage per market, and a live estimate of your order value and liquidation price before anything hits the book.</p>
+        <div class="links">
+          <a class="tlink primary">Open a position <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          <a class="tlink secondary">See all markets</a>
+        </div>
+      </div>
+      <div class="panel dark-scope">
+        <div class="seg"><b class="on">Long</b><b>Short</b></div>
+        <div class="prow"><span class="av">฿</span><span class="sym">BTC-PERP</span><span class="lev">10×</span><span class="mk">77,486</span></div>
+        <div class="lab">Size</div>
+        <div class="field"><span class="ph">0.00</span><span class="unit">BTC</span></div>
+        <div class="lab">Amount</div>
+        <div class="field"><span class="val">45%</span><span class="unit">of buying power</span></div>
+        <div class="slider"><div class="track2"><div class="fill"></div><div class="knob"></div></div></div>
+        <div class="ov"><span>Order value</span><span class="mono">$34,868.70</span></div>
+        <div class="ov"><span>Est. liquidation</span><span class="mono">71,204.10</span></div>
+        <button class="submit">Place Long</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ AGENTIC INTRO (DARK — agentic; canonical positions table) ============ -->
+  <section class="section">
+    <div class="wrap two">
+      <div>
+        <div class="eyebrow">Agentic trading</div>
+        <h2 class="display lg">Strategies that<br>run without you.</h2>
+        <p class="sub">GTE was designed for traders that aren't human. Connect a wallet, deploy a strategy, and let it work the book directly — every position on-chain, every fill verifiable, no off-chain sequencer in the loop.</p>
+        <div class="links">
+          <a class="tlink primary">Deploy an agent <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          <a class="tlink secondary">View the SDK</a>
+        </div>
+      </div>
+      <div class="ptable">
+        <div class="th"><span>Position</span><span>Size</span><span>Entry</span><span>Unrealized PnL</span></div>
+        <div class="row">
+          <div class="asset long"><span class="av">B</span><span class="sym">BTC-USD</span><span class="lev long">10×</span></div>
+          <span class="num">0.85</span><span class="num">77,412</span>
+          <span class="pnl pos">+$1,284<span class="pct">+3.9%</span></span>
+        </div>
+        <div class="row">
+          <div class="asset short"><span class="av">E</span><span class="sym">ETH-USD</span><span class="lev short">5×</span></div>
+          <span class="num">12.40</span><span class="num">3,418</span>
+          <span class="pnl pos">+$642<span class="pct">+1.5%</span></span>
+        </div>
+        <div class="row">
+          <div class="asset long"><span class="av">S</span><span class="sym">SOL-USD</span><span class="lev long">10×</span></div>
+          <span class="num">340</span><span class="num">182.10</span>
+          <span class="pnl neg">&minus;$213<span class="pct">&minus;0.7%</span></span>
+        </div>
+        <div class="row">
+          <div class="asset long"><span class="av">H</span><span class="sym">HYPE-USD</span><span class="lev long">3×</span></div>
+          <span class="num">512</span><span class="num">38.40</span>
+          <span class="pnl pos">+$1,940<span class="pct">+9.8%</span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ AGENTIC CAPABILITIES (DARK, slanted cards) ============ -->
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="grid-3 slant" style="margin-top:0">
+        <div class="card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 9 12 4 17"/><line x1="12" y1="17" x2="20" y2="17"/></svg></div>
+          <h3>Deploy in minutes</h3>
+          <p>A typed SDK plus REST and WebSocket endpoints. Sign with the wallet you already have, stream the book, and route orders — no market-maker agreement, no whitelist.</p>
+        </div>
+        <div class="card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+          <h3>Sub-millisecond execution</h3>
+          <p>Agents quote, cancel, and replace against a real central limit orderbook at exchange-grade latency. Your fills are deterministic, not best-effort.</p>
+        </div>
+        <div class="card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 4v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V7z"/><polyline points="9 12 11 14 15 10"/></svg></div>
+          <h3>On-chain &amp; non-custodial</h3>
+          <p>Every order, fill, and balance settles on Turbo and stays in your control. Agents trade your funds without ever taking custody of them.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ AGENT CONSOLE (DARK, frosted slab — the page's ONE slab) ============ -->
+  <section class="section" style="padding-top:24px">
+    <div class="wrap">
+      <div class="lead" style="margin-bottom:48px">
+        <div class="eyebrow">Live agent activity</div>
+        <h2 class="display lg">Watch the book fill<br>while you do nothing.</h2>
+      </div>
+      <div class="showcase">
+        <div class="console">
+          <div class="cbar">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <span class="title">agents · execution log</span>
+            <span class="live"><span class="pulse"></span>live</span>
+          </div>
+          <div class="feed">
+            <div class="ln"><span class="t">14:02:11.204</span><span class="ag">momentum-01</span><span class="side buy">BUY</span><span class="mk">BTC-PERP</span><span class="px">0.85 @ 77,412</span><span class="st">filled</span></div>
+            <div class="ln"><span class="t">14:02:11.198</span><span class="ag">basis-eth</span><span class="side sell">SELL</span><span class="mk">ETH-PERP</span><span class="px">12.40 @ 3,418</span><span class="st">filled</span></div>
+            <div class="ln"><span class="t">14:02:11.041</span><span class="ag">mm-sol</span><span class="side buy">BID</span><span class="mk">SOL-PERP</span><span class="px">340 @ 181.96</span><span class="st">resting</span></div>
+            <div class="ln"><span class="t">14:02:10.887</span><span class="ag">funding-arb</span><span class="side sell">ASK</span><span class="mk">HYPE-PERP</span><span class="px">512 @ 38.95</span><span class="st">resting</span></div>
+            <div class="ln"><span class="t">14:02:10.620</span><span class="ag">momentum-01</span><span class="side sell">SELL</span><span class="mk">SOL-PERP</span><span class="px">120 @ 182.18</span><span class="st">filled</span></div>
+            <div class="ln"><span class="t">14:02:10.418</span><span class="ag">mm-btc</span><span class="side buy">BID</span><span class="mk">BTC-PERP</span><span class="px">1.20 @ 77,388</span><span class="st">resting</span></div>
+            <div class="ln"><span class="t">14:02:10.205</span><span class="ag">basis-eth</span><span class="side buy">BUY</span><span class="mk">ETH-PERP</span><span class="px">8.10 @ 3,416</span><span class="st">filled</span></div>
+            <div class="ln"><span class="t">14:02:09.961</span><span class="ag">liq-guard</span><span class="side sell">SELL</span><span class="mk">ARB-PERP</span><span class="px">4,000 @ 0.9041</span><span class="st">filled</span></div>
+          </div>
+          <div class="slab"><span class="label">Runs while you sleep.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ORDERBOOK (DARK, product-UI) ============ -->
+  <section class="section">
+    <div class="wrap two">
+      <div>
+        <div class="eyebrow">The orderbook</div>
+        <h2 class="display lg">Real depth,<br>matched in microseconds.</h2>
+        <p class="sub">Not an AMM and not an off-chain matcher — a true central limit orderbook living fully on-chain. Tight spreads, deterministic priority, and depth you can route size into.</p>
+        <div class="check">
+          <span class="li"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Price-time priority</span>
+          <span class="li"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Verifiable fills</span>
+          <span class="li"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>No MEV reorder</span>
+        </div>
+      </div>
+      <div class="ob-card">
+        <div class="ob-head"><span class="av">฿</span><span class="sym">BTC-PERP</span><span class="px">77,486</span></div>
+        <div class="book">
+          <div class="hd"><span>Price</span><span>Size (USD)</span><span>Total (USD)</span></div>
+          <div class="rows">
+            <div class="r ask" style="--w:26%"><span>77,597</span><span>114,684.49</span><span>453,614.95</span></div>
+            <div class="r ask" style="--w:18%"><span>77,593</span><span>87,015.12</span><span>338,930.46</span></div>
+            <div class="r ask" style="--w:11%"><span>77,591</span><span>41,660.94</span><span>251,915.34</span></div>
+            <div class="r ask" style="--w:22%"><span>77,581</span><span>87,001.66</span><span>157,083.17</span></div>
+            <div class="r ask" style="--w:18%"><span>77,577</span><span>70,081.51</span><span>70,081.51</span></div>
+            <div class="mid"><span>Spread</span><span>177</span><span>0.2282%</span></div>
+            <div class="r bid" style="--w:28%"><span>77,400</span><span>103,676.53</span><span>103,676.53</span></div>
+            <div class="r bid" style="--w:32%"><span>77,398</span><span>120,551.25</span><span>224,227.78</span></div>
+            <div class="r bid" style="--w:36%"><span>77,382</span><span>136,605.54</span><span>360,833.32</span></div>
+            <div class="r bid" style="--w:14%"><span>77,377</span><span>53,028.01</span><span>413,861.33</span></div>
+            <div class="r bid" style="--w:23%"><span>77,360</span><span>86,753.82</span><span>500,615.15</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STATS BAND (DARK, slanted 23.43° dividers) ============ -->
+  <div class="band">
+    <div class="wrap">
+      <div class="stats">
+        <div class="st"><div class="v">$4.2<span class="u">B</span></div><div class="l">24h trading volume</div></div>
+        <div class="st"><div class="v">0.8<span class="u">ms</span></div><div class="l">median match latency</div></div>
+        <div class="st"><div class="v">12,400<span class="u">+</span></div><div class="l">agents deployed</div></div>
+        <div class="st"><div class="v">$38<span class="u">B</span></div><div class="l">settled on-chain to date</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ FEATURE GRID (LIGHT, slanted 23.43° cards) ============ -->
+  <section class="section" data-theme="light">
+    <div class="wrap">
+      <div class="lead center" style="text-align:center">
+        <div class="eyebrow">The exchange underneath</div>
+        <h2 class="display lg">Everything a serious<br>desk expects.</h2>
+      </div>
+      <div class="grid-3 slant">
+        <div class="card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="7" rx="1.5"/><rect x="3" y="14" width="18" height="7" rx="1.5"/></svg></div>
+          <h3>Cross-margin</h3>
+          <p>One collateral pool backs every position. Capital works across markets instead of sitting idle in silos.</p>
+        </div>
+        <div class="card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a9 9 0 1 0-9-9"/><polyline points="3 12 3 7 8 7"/><line x1="12" y1="12" x2="16" y2="9"/></svg></div>
+          <h3>Up to 50&times; leverage</h3>
+          <p>Granular leverage per market with transparent, on-chain margin and liquidation logic you can audit.</p>
+        </div>
+        <div class="card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+          <h3>Sub-ms matching</h3>
+          <p>A purpose-built engine clears orders at centralized-exchange speed, then commits the result on-chain.</p>
+        </div>
+        <div class="card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6z"/></svg></div>
+          <h3>Fully on-chain book</h3>
+          <p>Bids, asks, and fills are all settled state — no trusted sequencer, no off-chain order database.</p>
+        </div>
+        <div class="card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg></div>
+          <h3>MEV-resistant</h3>
+          <p>Deterministic price-time priority leaves no room to reorder, sandwich, or front-run your flow.</p>
+        </div>
+        <div class="card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 7 4 12 8 17"/><polyline points="16 7 20 12 16 17"/></svg></div>
+          <h3>API &amp; agent SDK</h3>
+          <p>Typed SDK, REST, and streaming WebSockets — the same surface the terminal uses, open to every builder.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WHY GTE (LIGHT — the one human/lifestyle moment) ============ -->
+  <section class="section" data-theme="light">
+    <div class="wrap two">
+      <div class="frame"><img src="../assets/brand-images/gte_-06 1.jpg" alt="people around a table"></div>
+      <div>
+        <div class="eyebrow">Why GTE</div>
+        <h2 class="display lg">Serious markets,<br>made for humans too.</h2>
+        <p class="sub">Behind the agents and the orderbooks is a product real people use every day — to hedge, to speculate, to put capital to work. Fast enough for a machine, simple enough to trade from your phone on a Sunday.</p>
+        <div class="links">
+          <a class="tlink primary">Open the app <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          <a class="tlink secondary">See the markets</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HOW IT WORKS (LIGHT — onboarding is human-facing) ============ -->
+  <section class="section" data-theme="light">
+    <div class="wrap">
+      <div class="lead">
+        <div class="eyebrow">How it works</div>
+        <h2 class="display lg">From wallet to<br>working in three steps.</h2>
+      </div>
+      <div class="steps">
+        <div class="step"><div class="n">01</div><h3>Connect</h3><p>Bring any wallet and deposit collateral. Balances stay non-custodial and on-chain from the first block.</p><div class="bar"></div></div>
+        <div class="step"><div class="n">02</div><h3>Deploy</h3><p>Trade by hand in the terminal, or point an agent at the SDK and let it quote, hedge, and rebalance.</p><div class="bar"></div></div>
+        <div class="step"><div class="n">03</div><h3>Settle</h3><p>Every fill clears on Turbo in milliseconds, fully verifiable. Withdraw to your wallet whenever you want.</p><div class="bar"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CLOSING CTA (dark image) ============ -->
+  <section class="closer">
+    <div class="wrap">
+      <div class="inner">
+        <div class="eyebrow" style="text-align:center">Open · permissionless · on-chain</div>
+        <h2 class="display lg">Bring your <span class="em">agents</span> on-chain.</h2>
+        <p class="sub center" style="max-width:520px;text-align:center">Spin up a strategy against the fastest orderbook in DeFi, or trade it yourself. Either way, the market is already running.</p>
+        <div class="cta">
+          <a class="btn primary lg">Launch app</a>
+          <a class="btn ghost lg">Read the docs</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer>
+    <div class="wrap">
+      <div class="foot">
+        <div>
+          <img class="logo" src="../assets/logos/gte-logo-white.png" alt="GTE">
+          <p class="tag">The on-chain perpetuals exchange built for humans and the agents trading beside them.</p>
+        </div>
+        <div><h4>Product</h4><ul><li><a>Trade</a></li><li><a>Markets</a></li><li><a>Portfolio</a></li><li><a>Fees</a></li></ul></div>
+        <div><h4>Developers</h4><ul><li><a>Documentation</a></li><li><a>Agent SDK</a></li><li><a>API reference</a></li><li><a>Status</a></li></ul></div>
+        <div><h4>Company</h4><ul><li><a>About</a></li><li><a>Blog</a></li><li><a>Careers</a></li><li><a>Brand</a></li></ul></div>
+      </div>
+      <div class="foot-base">
+        <span class="cc">© 2026 GTE Labs · All rights reserved</span>
+        <div class="chains">
+          <span>Live on</span>
+          <img src="../assets/chains/ethereum.svg" alt="Ethereum">
+          <img src="../assets/chains/arbitrum.svg" alt="Arbitrum">
+          <img src="../assets/chains/base.svg" alt="Base">
+          <img src="../assets/chains/optimism.svg" alt="Optimism">
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body></html>

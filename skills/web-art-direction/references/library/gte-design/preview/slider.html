@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Components" name="Slider" subtitle="leverage slider — track, range, thumb, marks" viewport="520x150" -->
+<!-- CANONICAL — rebuilt from src/ui/slider/slider.tsx. Copy-source for sliders (leverage etc).
+     Track: 4px (h-1), surface-input, rounded-full. Range fill: gradient white-800 -> white-200 (grey->white), NOT orange.
+     Thumb: 12px white circle, drop shadow; ring (4px, stroke-subtle) appears ONLY on hover/focus — none at rest.
+     Marks below in text-low (paragraph-3), clickable, EVENLY spaced (discrete leverage stops, not linear by value).
+     The range fill is ALWAYS grey->white — never recolor it to the side. -->
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;padding:28px;background:var(--surface-elevated-1);color:var(--text-high);font-family:var(--font-sans);
+       -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+  .lbl{font-family:var(--font-mono);font-size:10px;color:var(--text-low);letter-spacing:.3px;margin:0 0 22px}
+  .wrap{max-width:360px}
+  .slider{position:relative;height:12px;display:flex;align-items:center}
+  .track{position:absolute;left:0;right:0;height:4px;background:var(--surface-input);border-radius:999px;overflow:hidden}
+  .range{position:absolute;left:0;top:0;height:100%;background:linear-gradient(to right,var(--white-800),var(--white-200))}
+  .thumb{position:absolute;top:50%;width:12px;height:12px;border-radius:50%;background:var(--text-high);
+    box-shadow:0 1px 2px rgba(0,0,0,.5);transform:translate(-50%,-50%);cursor:pointer;transition:box-shadow .12s}
+  .thumb:hover{box-shadow:0 0 0 4px var(--stroke-subtle),0 1px 2px rgba(0,0,0,.5)}
+  .marks{position:relative;height:16px;margin-top:4px}
+  .mark{position:absolute;transform:translateX(-50%);font-family:var(--font-mono);font-size:11px;color:var(--text-low);cursor:pointer;
+    font-variant-numeric:slashed-zero;font-feature-settings:"zero" 1}
+  .mark:first-child{left:0;transform:none} .mark:last-child{right:0;left:auto;transform:none}
+</style></head>
+<body>
+  <div class="lbl">leverage slider — value 10x (marks evenly spaced: 1 / 5 / 10 / 25 / 50)</div>
+  <div class="wrap">
+    <div class="slider">
+      <div class="track"><div class="range" style="width:50%"></div></div>
+      <div class="thumb" style="left:50%"></div>
+    </div>
+    <div class="marks">
+      <span class="mark">1x</span>
+      <span class="mark" style="left:25%">5x</span>
+      <span class="mark" style="left:50%">10x</span>
+      <span class="mark" style="left:75%">25x</span>
+      <span class="mark">50x</span>
+    </div>
+  </div>
+</body></html>

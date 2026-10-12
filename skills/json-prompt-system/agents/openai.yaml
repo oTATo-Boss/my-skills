@@ -1,0 +1,4 @@
+interface:
+  display_name: "JSON Prompt System"
+  short_description: "生成、还原、修复和路由动作变量层 JSON 提示词"
+  default_prompt: "Use $json-prompt-system to generate a pure action-variable-layer JSON prompt from my text or reference image."

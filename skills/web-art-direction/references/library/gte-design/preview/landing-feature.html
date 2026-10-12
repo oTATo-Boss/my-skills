@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Marketing" name="Landing feature — UI mockup + frosted slab" subtitle="product orderbook mockup with a 23.43° frosted slab overlay" viewport="1440x720" -->
+<!-- MARKETING / NON-PRODUCT feature section (dark — the mockup is a product surface, so this section stays dark).
+     Rules this encodes (see references/marketing.md):
+     - HEADING SYSTEM: the whole headline in Ogg Text Light, ONE typeface, ONE colour (white). (The old Inter+Ogg mix is retired.)
+     - Mono is for NUMBERS ONLY — eyebrow is Inter. The orderbook numbers are mono (tabular + slashed zero).
+     - Reuse the locked atoms: orderbook rows copied verbatim from preview/orderbook.html. FEATURE-section CTA = a
+       TEXT LINK (orange primary link via --text-accent), never a button — buttons live only in the hero/final-CTA/nav.
+     - FROSTED 23.43° SLAB — the ONLY marketing home for the tilt. It is overlaid ON the product UI mockup
+       (never a hero copy container). Parallelogram via skewX(-23.43°); inner text counter-skewed upright
+       (NEVER skew type). Carries a SINGLE headline — never body copy or data. backdrop-blur lets the
+       colored depth rows show through. ONE slant per composition; no slanted-grid background (that's retired). -->
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--surface-elevated-1);color:var(--text-high);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+  .section{min-height:720px;display:grid;grid-template-columns:1fr 620px;gap:80px;align-items:center;padding:96px 116px}
+
+  /* ---- copy column ---- */
+  .eyebrow{font-size:13px;letter-spacing:.4px;color:var(--text-mid);margin-bottom:22px}
+  /* heading = Ogg Text Light only (one typeface, one colour) */
+  .headline{font-family:var(--font-display);font-weight:300;font-size:60px;line-height:1.09;letter-spacing:-.01em;color:var(--text-high);margin:0 0 26px}
+  .headline .em{font-family:var(--font-display);font-weight:300}
+  .sub{font-size:15px;line-height:1.6;color:var(--text-mid);max-width:440px;margin:0 0 34px}
+
+  /* feature-section CTA = a TEXT LINK, not a button. Primary link = orange via --text-accent (adaptive). */
+  .tlink{font-family:var(--font-sans);font-weight:500;font-size:14px;letter-spacing:.2px;display:inline-flex;align-items:center;gap:7px}
+  .tlink.primary{color:var(--text-accent)}
+  .tlink svg{width:15px;height:15px}
+
+  /* ---- mockup column: order book in a Card (elevated-2, borderless + shadow) ---- */
+  .mock{position:relative}
+  .card{position:relative;background:var(--surface-elevated-2);border-radius:var(--radius-large);box-shadow:0 24px 60px rgba(1,3,4,.45);padding:18px 4px 4px;overflow:hidden}
+  .mhead{display:flex;align-items:center;gap:10px;padding:0 16px 14px}
+  .mhead .sym{font-family:var(--font-sans);font-weight:600;font-size:14px;color:var(--text-high)}
+  .mhead .px{margin-left:auto;font-family:var(--font-mono);font-variant-numeric:tabular-nums slashed-zero;font-size:14px;color:var(--positive)}
+  .av{width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#f7931a,#b86c12);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#1a1205}
+
+  .book{width:100%;padding:0 12px 8px}
+  .hd{display:grid;grid-template-columns:1fr 1fr 1fr;padding:0 10px 6px;font-family:var(--font-sans);font-size:11px;color:var(--text-low);letter-spacing:.1px;font-weight:500;border-bottom:1px solid var(--stroke-default)}
+  .hd span:nth-child(2),.hd span:nth-child(3){text-align:right}
+  .rows{display:flex;flex-direction:column;gap:2px;padding-top:2px}
+  .row{display:grid;grid-template-columns:1fr 1fr 1fr;padding:3px 10px;position:relative;font-family:var(--font-mono);font-size:12px;font-variant-numeric:tabular-nums slashed-zero;isolation:isolate}
+  .row::before{content:"";position:absolute;top:0;bottom:0;left:0;pointer-events:none;border-radius:2px;z-index:0}
+  .ask::before{background:var(--red-15);width:var(--w)}
+  .bid::before{background:var(--green-15);width:var(--w)}
+  .row>span{position:relative;z-index:2}
+  .row>span:nth-child(1){font-weight:500}
+  .ask>span:nth-child(1){color:var(--negative)}
+  .bid>span:nth-child(1){color:var(--positive)}
+  .row>span:nth-child(2),.row>span:nth-child(3){text-align:right;color:var(--text-high)}
+  .mid{display:grid;grid-template-columns:1fr 1fr 1fr;padding:6px 10px;font-family:var(--font-sans);font-size:11px;color:var(--text-low);border-top:1px solid var(--stroke-default);border-bottom:1px solid var(--stroke-default)}
+  .mid>span:nth-child(2),.mid>span:nth-child(3){text-align:right;font-family:var(--font-mono);color:var(--text-mid);font-variant-numeric:tabular-nums slashed-zero}
+
+  /* ---- frosted 23.43° slab, overlaid on the mockup ---- */
+  .slab{position:absolute;left:-28px;right:-28px;bottom:64px;height:96px;
+    transform:skewX(-23.43deg);
+    background:rgba(20,23,24,.55);
+    -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+    border-top:1px solid var(--stroke-default);border-bottom:1px solid var(--stroke-default);
+    box-shadow:0 12px 40px rgba(1,3,4,.35);
+    display:flex;align-items:center}
+  /* inner text counter-skewed back to upright — never skew type */
+  .slab .label{transform:skewX(23.43deg);padding-left:64px;
+    font-family:var(--font-display);font-weight:300;font-size:32px;line-height:1.05;letter-spacing:-.01em;color:var(--text-high)}
+  .slab .label .em{font-family:var(--font-display);font-weight:300}
+</style></head>
+<body>
+  <section class="section">
+    <div class="copy">
+      <div class="eyebrow">The orderbook</div>
+      <h1 class="headline">Real depth,<br>matched in <span class="em">microseconds.</span></h1>
+      <p class="sub">A fully on-chain limit orderbook — every bid and ask settled on Turbo, with the matching latency of a centralized exchange. No market-maker black box, no off-chain sequencer.</p>
+      <a class="tlink primary">See how it works <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+    </div>
+
+    <div class="mock">
+      <div class="card">
+        <div class="mhead">
+          <span class="av">฿</span>
+          <span class="sym">BTC-PERP</span>
+          <span class="px">77,486</span>
+        </div>
+        <div class="book">
+          <div class="hd"><span>Price</span><span>Size (USD)</span><span>Total (USD)</span></div>
+          <div class="rows">
+            <div class="row ask" style="--w:26%"><span>77,597</span><span>114,684.49</span><span>453,614.95</span></div>
+            <div class="row ask" style="--w:18%"><span>77,593</span><span>87,015.12</span><span>338,930.46</span></div>
+            <div class="row ask" style="--w:11%"><span>77,591</span><span>41,660.94</span><span>251,915.34</span></div>
+            <div class="row ask" style="--w:14%"><span>77,586</span><span>53,171.24</span><span>210,254.41</span></div>
+            <div class="row ask" style="--w:22%"><span>77,581</span><span>87,001.66</span><span>157,083.17</span></div>
+            <div class="row ask" style="--w:18%"><span>77,577</span><span>70,081.51</span><span>70,081.51</span></div>
+            <div class="mid"><span>Spread</span><span>177</span><span>0.2282%</span></div>
+            <div class="row bid" style="--w:28%"><span>77,400</span><span>103,676.53</span><span>103,676.53</span></div>
+            <div class="row bid" style="--w:32%"><span>77,398</span><span>120,551.25</span><span>224,227.78</span></div>
+            <div class="row bid" style="--w:36%"><span>77,382</span><span>136,605.54</span><span>360,833.32</span></div>
+            <div class="row bid" style="--w:14%"><span>77,377</span><span>53,028.01</span><span>413,861.33</span></div>
+            <div class="row bid" style="--w:23%"><span>77,360</span><span>86,753.82</span><span>500,615.15</span></div>
+            <div class="row bid" style="--w:19%"><span>77,358</span><span>69,883.67</span><span>570,498.82</span></div>
+          </div>
+        </div>
+        <div class="slab"><span class="label">Depth that <span class="em">never blinks.</span></span></div>
+      </div>
+    </div>
+  </section>
+</body></html>

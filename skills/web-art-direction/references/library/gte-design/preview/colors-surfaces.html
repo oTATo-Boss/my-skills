@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Colors" name="Colors · Surfaces" subtitle="Near-black elevation ramp" viewport="700x130" -->
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body {
+    margin: 0; padding: 24px; background: var(--surface-elevated-1);
+    color: var(--text-high); font-family: var(--font-sans);
+    display: grid; gap: 18px;
+  }
+  .group { display: grid; gap: 8px; }
+  .lbl {
+    font-family: var(--font-mono); font-size: 10px; color: var(--text-low);
+    text-transform: uppercase; letter-spacing: 0.4px;
+  }
+  .table {
+    display: grid; grid-template-columns: 220px 1fr 1fr;
+    background: var(--surface-elevated-2);
+    border: 1px solid var(--stroke-default); border-radius: 8px;
+    overflow: hidden;
+  }
+  .td {
+    padding: 8px 12px; font-size: 11px;
+    border-bottom: 1px solid var(--stroke-default);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .th {
+    padding: 8px 12px;
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.4px;
+    text-transform: uppercase; color: var(--text-low);
+    background: rgba(255,255,255,0.02);
+    border-bottom: 1px solid var(--stroke-default);
+    display: flex; align-items: center;
+  }
+  /* Light-mode cells: force a light-paper background + dark text so the
+     values are readable inside the otherwise-dark page. */
+  .td.light {
+    background: #F0F0F0; color: #010304;
+    border-bottom-color: rgba(0,0,0,0.08);
+  }
+  .td.light .name { color: #6A6E71; }
+  .td.light .ref { color: #010304; }
+  .td.light .ref .dim { color: #6A6E71; }
+  .th.light {
+    background: rgba(1,3,4,0.04); color: #6A6E71;
+    border-bottom-color: rgba(0,0,0,0.08);
+  }
+  .table > *:nth-last-child(-n+3) { border-bottom: 0; }
+  .name {
+    font-family: var(--font-mono); font-size: 11px; color: var(--text-mid);
+    letter-spacing: 0.3px;
+  }
+  .chip {
+    width: 20px; height: 20px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.1);
+    flex-shrink: 0;
+  }
+  .chip.light-border { border-color: rgba(0,0,0,0.08); }
+  .ref { color: var(--text-high); font-size: 11px; }
+  .ref .dim { color: var(--text-low); }
+
+  .checker {
+    background-image:
+      linear-gradient(45deg, rgba(255,255,255,0.04) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.04) 75%),
+      linear-gradient(45deg, rgba(255,255,255,0.04) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.04) 75%);
+    background-size: 8px 8px; background-position: 0 0, 4px 4px;
+  }
+</style></head>
+<body>
+
+<div class="group">
+  <div class="lbl">Canvas &amp; elevation · body background = surface-elevated-1 (surface-default reserved)</div>
+  <div class="table">
+    <div class="th">Token</div><div class="th">Dark mode</div><div class="th light">Light mode</div>
+
+    <div class="td"><div class="name">surface-default</div></div>
+    <div class="td"><div class="chip" style="background:#010304"></div><div class="ref">black-1000 <span class="dim">· #010304 · reserved</span></div></div>
+    <div class="td light"><div class="chip light-border" style="background:#FAFAFA"></div><div class="ref" style="color:#010304">white-200 <span style="color:#6A6E71">· #FAFAFA · reserved</span></div></div>
+
+    <div class="td"><div class="name">surface-elevated-1 <span style="color:var(--text-low)">· canvas</span></div></div>
+    <div class="td"><div class="chip" style="background:#101213"></div><div class="ref">black-900 <span class="dim">· #101213</span></div></div>
+    <div class="td light"><div class="chip light-border" style="background:#F0F0F0"></div><div class="ref" style="color:#010304">white-600 <span style="color:#6A6E71">· #F0F0F0</span></div></div>
+
+    <div class="td"><div class="name">surface-elevated-2 <span style="color:var(--text-low)">· cards</span></div></div>
+    <div class="td"><div class="chip" style="background:#181A1B"></div><div class="ref">black-800 <span class="dim">· #181A1B</span></div></div>
+    <div class="td light"><div class="chip light-border" style="background:#F6F6F6"></div><div class="ref" style="color:#010304">white-800 <span style="color:#6A6E71">· #F6F6F6</span></div></div>
+
+    <div class="td"><div class="name">surface-overlay <span style="color:var(--text-low)">· popovers</span></div></div>
+    <div class="td"><div class="chip" style="background:#181A1B"></div><div class="ref">black-800</div></div>
+    <div class="td light"><div class="chip light-border" style="background:#F4F4F4"></div><div class="ref" style="color:#010304">white-400</div></div>
+
+    <div class="td"><div class="name">surface-input</div></div>
+    <div class="td"><div class="chip checker" style="background-color:rgba(255,255,255,0.06)"></div><div class="ref">white / 6%</div></div>
+    <div class="td light"><div class="chip checker" style="background-color:rgba(1,3,4,0.08)"></div><div class="ref" style="color:#010304">black / 8%</div></div>
+  </div>
+</div>
+
+<div class="group">
+  <div class="lbl">Action surfaces</div>
+  <div class="table">
+    <div class="th">Token</div><div class="th">Dark mode</div><div class="th light">Light mode</div>
+
+    <div class="td"><div class="name">action-primary</div></div>
+    <div class="td"><div class="chip" style="background:#EB6200"></div><div class="ref">orange-800</div></div>
+    <div class="td light"><div class="chip" style="background:#EB6200"></div><div class="ref" style="color:#010304">orange-800</div></div>
+
+    <div class="td"><div class="name">action-primary-hover</div></div>
+    <div class="td"><div class="chip" style="background:#FF7817"></div><div class="ref">orange-600</div></div>
+    <div class="td light"><div class="chip" style="background:#FF7817"></div><div class="ref" style="color:#010304">orange-600</div></div>
+
+    <div class="td"><div class="name">action-secondary</div></div>
+    <div class="td"><div class="chip checker" style="background-color:rgba(255,120,23,0.15)"></div><div class="ref">orange / 15%</div></div>
+    <div class="td light"><div class="chip checker" style="background-color:rgba(255,120,23,0.15)"></div><div class="ref" style="color:#010304">orange / 15%</div></div>
+
+    <div class="td"><div class="name">action-secondary-hover</div></div>
+    <div class="td"><div class="chip checker" style="background-color:rgba(255,120,23,0.25)"></div><div class="ref">orange / 25%</div></div>
+    <div class="td light"><div class="chip checker" style="background-color:rgba(255,120,23,0.25)"></div><div class="ref" style="color:#010304">orange / 25%</div></div>
+
+    <div class="td"><div class="name">action-tertiary</div></div>
+    <div class="td"><div class="chip checker" style="background-color:rgba(255,255,255,0.06)"></div><div class="ref">white / 6%</div></div>
+    <div class="td light"><div class="chip checker" style="background-color:rgba(1,3,4,0.08)"></div><div class="ref" style="color:#010304">black / 8%</div></div>
+
+    <div class="td"><div class="name">action-tertiary-hover</div></div>
+    <div class="td"><div class="chip checker" style="background-color:rgba(255,255,255,0.15)"></div><div class="ref">white / 15%</div></div>
+    <div class="td light"><div class="chip checker" style="background-color:rgba(1,3,4,0.15)"></div><div class="ref" style="color:#010304">black / 15%</div></div>
+
+    <div class="td"><div class="name">action-positive</div></div>
+    <div class="td"><div class="chip" style="background:#008A45"></div><div class="ref">green-1000</div></div>
+    <div class="td light"><div class="chip" style="background:#008A45"></div><div class="ref" style="color:#010304">green-1000</div></div>
+
+    <div class="td"><div class="name">action-positive-hover</div></div>
+    <div class="td"><div class="chip" style="background:#10C66B"></div><div class="ref">green-600</div></div>
+    <div class="td light"><div class="chip" style="background:#10C66B"></div><div class="ref" style="color:#010304">green-600</div></div>
+
+    <div class="td"><div class="name">action-positive-secondary</div></div>
+    <div class="td"><div class="chip checker" style="background-color:rgba(16,198,107,0.15)"></div><div class="ref">green / 15%</div></div>
+    <div class="td light"><div class="chip checker" style="background-color:rgba(16,198,107,0.15)"></div><div class="ref" style="color:#010304">green / 15%</div></div>
+
+    <div class="td"><div class="name">action-positive-secondary-hover</div></div>
+    <div class="td"><div class="chip checker" style="background-color:rgba(16,198,107,0.25)"></div><div class="ref">green / 25%</div></div>
+    <div class="td light"><div class="chip checker" style="background-color:rgba(16,198,107,0.25)"></div><div class="ref" style="color:#010304">green / 25%</div></div>
+
+    <div class="td"><div class="name">action-negative</div></div>
+    <div class="td"><div class="chip" style="background:#D91230"></div><div class="ref">red-1000</div></div>
+    <div class="td light"><div class="chip" style="background:#D91230"></div><div class="ref" style="color:#010304">red-1000</div></div>
+
+    <div class="td"><div class="name">action-negative-hover</div></div>
+    <div class="td"><div class="chip" style="background:#F8445F"></div><div class="ref">red-600</div></div>
+    <div class="td light"><div class="chip" style="background:#F8445F"></div><div class="ref" style="color:#010304">red-600</div></div>
+
+    <div class="td"><div class="name">action-negative-secondary</div></div>
+    <div class="td"><div class="chip checker" style="background-color:rgba(248,68,95,0.15)"></div><div class="ref">red / 15%</div></div>
+    <div class="td light"><div class="chip checker" style="background-color:rgba(248,68,95,0.15)"></div><div class="ref" style="color:#010304">red / 15%</div></div>
+
+    <div class="td"><div class="name">action-negative-secondary-hover</div></div>
+    <div class="td"><div class="chip checker" style="background-color:rgba(248,68,95,0.25)"></div><div class="ref">red / 25%</div></div>
+    <div class="td light"><div class="chip checker" style="background-color:rgba(248,68,95,0.25)"></div><div class="ref" style="color:#010304">red / 25%</div></div>
+  </div>
+</div>
+
+</body></html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Components" name="Order book" subtitle="Left-aligned depth bars, Inter labels, colored prices only" viewport="700x440" -->
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+body { margin: 0; padding: 20px 24px; background: var(--surface-default); color: var(--text-high); font-family: var(--font-sans); }
+.book { width: 100%; }
+.hd {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; padding: 0 10px 6px;
+  font-family: var(--font-sans); font-size: 11px; color: var(--text-low); letter-spacing: 0.1px; font-weight: 500;
+  border-bottom: 1px solid var(--stroke-default);
+}
+.hd span:nth-child(2) { text-align: right; }
+.hd span:nth-child(3) { text-align: right; }
+.rows { display: flex; flex-direction: column; gap: 2px; padding-top: 2px; }
+.row {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; padding: 3px 10px; position: relative;
+  font-family: var(--font-mono); font-size: 12px; font-variant-numeric: tabular-nums;
+  isolation: isolate;
+}
+.row::before {
+  content:""; position: absolute; top: 0; bottom: 0; left: 0;
+  pointer-events: none; border-radius: 2px;
+  z-index: 0;
+}
+/* Flash overlay — full-width bright wash that decays */
+.row::after {
+  content:""; position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background: transparent; border-radius: 2px;
+}
+.row.flash.ask::after { animation: flashAsk 1.4s ease-out forwards; }
+.row.flash.bid::after { animation: flashBid 1.4s ease-out forwards; }
+@keyframes flashAsk {
+  0%   { background: rgba(248,68,95,0.45); }
+  100% { background: rgba(248,68,95,0); }
+}
+@keyframes flashBid {
+  0%   { background: rgba(16,198,107,0.45); }
+  100% { background: rgba(16,198,107,0); }
+}
+.ask::before { background: var(--red-15); width: var(--w); }
+.bid::before { background: var(--green-15); width: var(--w); }
+.row > span { position: relative; z-index: 2; }
+.row > span:nth-child(1) { font-weight: 500; }
+.ask > span:nth-child(1) { color: var(--negative); }
+.bid > span:nth-child(1) { color: var(--positive); }
+.row > span:nth-child(2) { text-align: right; color: var(--text-high); }
+.row > span:nth-child(3) { text-align: right; color: var(--text-high); }
+.mid {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; padding: 6px 10px;
+  font-family: var(--font-sans); font-size: 11px; color: var(--text-low);
+  border-top: 1px solid var(--stroke-default);
+  border-bottom: 1px solid var(--stroke-default);
+}
+.mid > span:nth-child(2), .mid > span:nth-child(3) { text-align: right; font-family: var(--font-mono); color: var(--text-mid); font-variant-numeric: tabular-nums; }
+.row.flash.ask::after { animation: flashAsk 1.4s ease-out forwards; animation-iteration-count: infinite; animation-duration: 3.2s; }
+.row.flash.bid::after { animation: flashBid 1.4s ease-out forwards; animation-iteration-count: infinite; animation-duration: 3.2s; animation-delay: 1.4s; }
+@keyframes flashAsk { 0% { background: rgba(248,68,95,0.45); } 45% { background: rgba(248,68,95,0); } 100% { background: rgba(248,68,95,0); } }
+@keyframes flashBid { 0% { background: rgba(16,198,107,0.45); } 45% { background: rgba(16,198,107,0); } 100% { background: rgba(16,198,107,0); } }
+</style></head>
+<body>
+<div class="book">
+  <div class="hd"><span>Price</span><span>Size (USD)</span><span>Total (USD)</span></div>
+  <div class="rows">
+    <div class="row ask" style="--w:26%"><span>77,597</span><span>114,684.49</span><span>453,614.95</span></div>
+    <div class="row ask" style="--w:18%"><span>77,593</span><span>87,015.12</span><span>338,930.46</span></div>
+    <div class="row ask" style="--w:11%"><span>77,591</span><span>41,660.94</span><span>251,915.34</span></div>
+    <div class="row ask flash" style="--w:14%"><span>77,586</span><span>53,171.24</span><span>210,254.41</span></div>
+    <div class="row ask" style="--w:22%"><span>77,581</span><span>87,001.66</span><span>157,083.17</span></div>
+    <div class="row ask" style="--w:18%"><span>77,577</span><span>70,081.51</span><span>70,081.51</span></div>
+    <div class="mid"><span>Spread</span><span>177</span><span>0.2282%</span></div>
+    <div class="row bid" style="--w:28%"><span>77,400</span><span>103,676.53</span><span>103,676.53</span></div>
+    <div class="row bid flash" style="--w:32%"><span>77,398</span><span>120,551.25</span><span>224,227.78</span></div>
+    <div class="row bid" style="--w:36%"><span>77,382</span><span>136,605.54</span><span>360,833.32</span></div>
+    <div class="row bid" style="--w:14%"><span>77,377</span><span>53,028.01</span><span>413,861.33</span></div>
+    <div class="row bid" style="--w:23%"><span>77,360</span><span>86,753.82</span><span>500,615.15</span></div>
+    <div class="row bid" style="--w:19%"><span>77,358</span><span>69,883.67</span><span>570,498.82</span></div>
+  </div>
+</div>
+</body></html>

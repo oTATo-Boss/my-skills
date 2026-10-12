@@ -1,0 +1,20 @@
+{
+  "installed_root": "~/.agents/skills",
+  "mode": "independent-copy",
+  "skills": {
+    "ai-liveaction-fusion": "video/ai-liveaction-fusion",
+    "ai-video-prompt": "video/ai-video-prompt",
+    "json-prompt-system": "image/json-prompt-system",
+    "fashion-picture": "image/fashion-picture",
+    "nsfw-seedance-prompt-skill": "video/nsfw-seedance-prompt-skill",
+    "social-media": "social-media/social-media",
+    "codex-imagegen": "image/codex-imagegen",
+    "direct-video": "video/direct-video",
+    "design-review": "web design/design-review",
+    "ui-craft": "web design/ui-craft",
+    "visual-reference": "web design/visual-reference",
+    "web-art-direction": "web design/web-art-direction",
+    "web-motion": "web design/web-motion",
+    "web-visual-effects": "web design/web-visual-effects"
+  }
+}

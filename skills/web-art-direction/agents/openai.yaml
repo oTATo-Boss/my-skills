@@ -1,0 +1,4 @@
+interface:
+  display_name: "网页视觉方向"
+  short_description: "为新网页或明确授权的视觉改版选择整体方向，建立协调的布局、字体、色彩与素材语言。"
+  default_prompt: "使用 $web-art-direction，根据项目目标选择一个网页视觉方向，并落实为可实现的布局与设计规则。"

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Components" name="Table row" subtitle="header + rows · positions table" viewport="900x220" -->
+<!-- CANONICAL — rebuilt from src/ui/table/table.tsx + data-table.tsx + shared/components/columns (ColumnPerpAsset).
+     Header: thead bg surface-elevated-2; th = typography-paragraph-3 (12px) text-mid, font-normal, h-8, left-aligned.
+     Body row: border-b stroke-default; ~38px tall (td py-[6.5px] px-4); hover = surface-action-tertiary; selected = elevated-1.
+     Numbers are mono (tabular + slashed zero); secondary text (units) = text-mid. The asset cell carries the side-colored
+     left edge + fade (green long / red short) and a leverage badge; PnL is green/red by sign.
+     Row buttons are ALWAYS tertiary. Asset content is flexed in an INNER span so the <td> stays a normal cell (aligned). -->
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;padding:24px 28px;background:var(--surface-elevated-1);color:var(--text-high);font-family:var(--font-sans);
+       -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+  table{width:100%;border-collapse:collapse}
+  thead{background:var(--surface-elevated-2)}
+  th{height:32px;padding:0 16px;text-align:left;font-family:var(--font-sans);font-weight:400;font-size:12px;letter-spacing:.48px;
+     color:var(--text-low);white-space:nowrap;cursor:pointer;transition:color .12s}
+  th:hover{color:var(--text-mid)}
+  .hi{display:inline-flex;align-items:center;gap:6px}
+  .hi svg{width:12px;height:12px;color:currentColor;opacity:0;transition:opacity .12s}
+  th:hover .hi svg{opacity:1}
+  tbody tr{border-bottom:1px solid var(--stroke-default);transition:background .12s}
+  tbody tr:hover{background:var(--surface-action-tertiary)}
+  td{padding:6.5px 16px;vertical-align:middle;white-space:nowrap;font-size:12px}
+  .num{font-family:var(--font-mono);font-weight:400;font-variant-numeric:tabular-nums slashed-zero;font-feature-settings:"zero" 1;color:var(--text-high)}
+  .unit{color:var(--text-low)}
+  .pos{color:var(--positive)} .neg{color:var(--negative)}
+  /* asset cell: <td> stays a normal cell; the colored ray (border+fade) is on the td, content flexed in an inner span */
+  .asset{border-left:2px solid var(--side);padding-left:14px!important;
+    background:linear-gradient(to right, color-mix(in srgb, var(--side) 14%, transparent), transparent 60%)}
+  .asset.long{--side:var(--positive)} .asset.short{--side:var(--negative)}
+  .ai{display:inline-flex;align-items:center;gap:8px;vertical-align:middle}
+  .avatar{width:16px;height:16px;border-radius:50%;background:var(--accent);color:var(--text-action-primary);
+    display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:600;flex:none}
+  .sym{font-family:var(--font-mono);color:var(--text-high)}
+  .lev{display:inline-flex;align-items:center;border:1px solid;border-radius:var(--radius-small);padding:0 4px;height:18px;
+    font-family:var(--font-mono);font-size:11px;font-variant-numeric:slashed-zero;font-feature-settings:"zero" 1}
+  .lev.long{border-color:var(--positive-muted);color:var(--positive)} .lev.short{border-color:var(--negative-muted);color:var(--negative)}
+  /* row buttons are tertiary (white-6 fill, text-mid) */
+  .btn-row{display:inline-flex;align-items:center;height:28px;padding:0 12px;border-radius:var(--radius-regular);
+    background:var(--surface-action-tertiary);color:var(--text-action-tertiary);border:0;cursor:pointer;
+    font-family:var(--font-sans);font-weight:500;font-size:13px;letter-spacing:.26px}
+</style></head>
+<body>
+  <table>
+    <thead><tr>
+      <th>Asset</th>
+      <th><span class="hi">Size <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg></span></th>
+      <th><span class="hi">Position value <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg></span></th>
+      <th><span class="hi">Entry price <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg></span></th>
+      <th><span class="hi">Mark price <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg></span></th>
+      <th><span class="hi">Unrealized PnL <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg></span></th>
+      <th><span class="hi">Liq. price <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg></span></th>
+      <th></th>
+    </tr></thead>
+    <tbody>
+      <tr>
+        <td class="asset long"><span class="ai"><span class="avatar">B</span><span class="sym">BTC-USD</span><span class="lev long">10x</span></span></td>
+        <td class="num">0.00025 <span class="unit">BTC</span></td>
+        <td class="num">$14.61</td>
+        <td class="num">$58,518.00</td>
+        <td class="num">$58,602.40</td>
+        <td class="num pos">+$1.24 <span class="pos">+8.51%</span></td>
+        <td class="num">$41,907.00</td>
+        <td><button class="btn-row">Close</button></td>
+      </tr>
+      <tr>
+        <td class="asset short"><span class="ai"><span class="avatar" style="background:var(--negative)">E</span><span class="sym">ETH-USD</span><span class="lev short">5x</span></span></td>
+        <td class="num">1.40 <span class="unit">ETH</span></td>
+        <td class="num">$2,180.40</td>
+        <td class="num">$1,561.30</td>
+        <td class="num">$1,558.06</td>
+        <td class="num neg">-$4.53 <span class="neg">-2.08%</span></td>
+        <td class="num">$1,902.55</td>
+        <td><button class="btn-row">Close</button></td>
+      </tr>
+    </tbody>
+  </table>
+</body></html>

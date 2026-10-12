@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Components" name="Price change" subtitle="Directional % + PnL patterns" viewport="700x160" -->
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  :root {
+    --pc-stroke-up:    rgb(16,198,107);
+    --pc-stroke-up-a:  1;
+    --pc-stroke-dn:    rgb(248,68,95);
+    --pc-stroke-dn-a:  1;
+    --pc-stroke-flat:  rgb(255,255,255);
+    --pc-stroke-flat-a: 0.3;
+    --price-weight: 400;
+    --price-size: 20px;
+    --price-letter: -0.4px;
+    --pc-size: 14px;
+    --pc-letter: 0.28px;
+  }
+  body {
+    margin: 0; padding: 28px; background: var(--surface-default);
+    color: var(--text-high); font-family: var(--font-sans);
+    display: grid; gap: 28px; max-width: 560px;
+  }
+  .section-lbl {
+    font-size: 10px; color: var(--text-low); letter-spacing: 0.4px;
+    text-transform: uppercase; font-weight: 500; margin-bottom: 8px;
+  }
+  .row { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+  .stack { display: grid; gap: 10px; }
+  .variant { display: flex; align-items: center; gap: 12px; }
+  .caption { font-size: 10px; color: var(--text-low); letter-spacing: 0.3px; text-transform: uppercase; min-width: 92px; }
+
+  /* ─── Price change component ──────────────────────────── */
+  .pc {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--font-mono); font-variant-numeric: tabular-nums;
+    font-size: var(--pc-size, 14px); letter-spacing: var(--pc-letter, 0.28px);
+    font-weight: 500;
+  }
+  .pc .tri { width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; }
+  .pc.up  { color: var(--text-positive); }
+  .pc.up .tri { border-bottom: 5px solid var(--positive); }
+  .pc.dn  { color: var(--text-negative); }
+  .pc.dn .tri { border-top: 5px solid var(--negative); }
+  .pc.flat { color: var(--text-low); }
+  .pc.flat .tri { display: none; }
+
+  /* Stroked variant (no fill — stroke only, gradient fade top→bottom) */
+  .pc.filled { padding: 4px 8px; border-radius: 8px; position: relative; }
+  .pc.filled::before {
+    content:""; position: absolute; inset: 0; border-radius: 8px; pointer-events: none;
+    padding: 1px;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+  }
+  .pc.filled.up::before   {
+    background: color-mix(in srgb, var(--pc-stroke-up) calc(var(--pc-stroke-up-a) * 100%), transparent);
+  }
+  .pc.filled.dn::before   {
+    background: color-mix(in srgb, var(--pc-stroke-dn) calc(var(--pc-stroke-dn-a) * 100%), transparent);
+  }
+  .pc.filled.flat::before {
+    background: color-mix(in srgb, var(--pc-stroke-flat) calc(var(--pc-stroke-flat-a) * 100%), transparent);
+  }
+
+  /* ─── Composition: price + change ─────────────────────── */
+  .quote {
+    display: inline-flex; align-items: center; gap: 14px;
+    font-family: var(--font-mono); font-variant-numeric: tabular-nums;
+  }
+  .quote .price {
+    font-size: var(--price-size, 20px); font-weight: var(--price-weight);
+    letter-spacing: var(--price-letter, -0.4px); color: var(--text-high);
+    transition: color 80ms ease-out;
+  }
+  .quote .price.flash-up { color: var(--text-positive); }
+  .quote .price.flash-dn { color: var(--text-negative); }
+
+  .demo-label { font-size: 11px; color: var(--text-low); margin-top: 14px; }
+
+  /* Tweaks panel */
+  #tweaks {
+    position: fixed; bottom: 20px; right: 20px;
+    background: var(--surface-elevated-2); border-radius: 10px;
+    padding: 14px; display: none; z-index: 9999;
+    box-shadow: var(--shadow-overlay);
+    font-family: var(--font-sans); min-width: 280px;
+  }
+  #tweaks::before {
+    content:""; position: absolute; inset: 0; border-radius: 10px; pointer-events: none;
+    padding: 1px; background: rgba(255,255,255,0.1);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude;
+  }
+  #tweaks.on { display: block; }
+  #tweaks h4 { margin: 0 0 8px; font-size: 10px; color: var(--text-low); letter-spacing: 0.4px; text-transform: uppercase; font-weight: 500; }
+  #tweaks h5 { margin: 10px 0 6px; font-size: 11px; color: var(--text-high); font-weight: 500; }
+  #tweaks .tw-row { display: flex; align-items: center; gap: 8px; padding: 4px 0; font-size: 11px; color: var(--text-mid); }
+  #tweaks .tw-row > span { flex: 1; }
+  #tweaks input[type="color"] {
+    appearance: none; -webkit-appearance: none; border: none; padding: 0;
+    width: 24px; height: 20px; border-radius: 4px; background: transparent;
+    cursor: pointer; overflow: hidden;
+  }
+  #tweaks input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+  #tweaks input[type="color"]::-webkit-color-swatch { border: 1px solid rgba(255,255,255,0.15); border-radius: 4px; }
+  #tweaks input[type="range"] {
+    appearance: none; -webkit-appearance: none;
+    width: 60px; height: 3px; background: rgba(255,255,255,0.15); border-radius: 2px; outline: none;
+  }
+  #tweaks input[type="range"]::-webkit-slider-thumb {
+    appearance: none; -webkit-appearance: none;
+    width: 11px; height: 11px; border-radius: 50%;
+    background: var(--text-high); cursor: pointer;
+  }
+  #tweaks input[type="number"] {
+    width: 44px; padding: 3px 5px; border-radius: 4px;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+    color: var(--text-high); font-family: var(--font-mono); font-size: 10px;
+    text-align: right; outline: none; -moz-appearance: textfield;
+  }
+  #tweaks input[type="number"]::-webkit-outer-spin-button,
+  #tweaks input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  #tweaks select {
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+    color: var(--text-high); font-family: var(--font-sans); font-size: 11px;
+    padding: 3px 6px; border-radius: 4px; outline: none;
+  }
+</style></head>
+<body>
+
+<!-- ───────── Component variants ───────── -->
+<div>
+  <div class="section-lbl">Price change · variants</div>
+  <div class="stack">
+    <div class="variant">
+      <div class="caption">Stroked ↑</div>
+      <span class="pc filled up"><span class="tri"></span>42000%</span>
+    </div>
+    <div class="variant">
+      <div class="caption">Stroked ↓</div>
+      <span class="pc filled dn"><span class="tri"></span>42000%</span>
+    </div>
+    <div class="variant">
+      <div class="caption">Stroked flat</div>
+      <span class="pc filled flat"><span class="tri"></span>42000%</span>
+    </div>
+    <div class="variant">
+      <div class="caption">Bare ↑</div>
+      <span class="pc up"><span class="tri"></span>42000%</span>
+    </div>
+    <div class="variant">
+      <div class="caption">Bare ↓</div>
+      <span class="pc dn"><span class="tri"></span>42000%</span>
+    </div>
+    <div class="variant">
+      <div class="caption">Bare flat</div>
+      <span class="pc flat"><span class="tri"></span>42000%</span>
+    </div>
+  </div>
+</div>
+
+<!-- ───────── Composition: price + change (live demo) ───────── -->
+<div>
+  <div class="section-lbl">Composition · price + change</div>
+  <div class="stack">
+    <div class="quote">
+      <span class="price" id="price-1">$77,565</span>
+      <span class="pc up" id="pc-1"><span class="tri"></span>0.08%</span>
+    </div>
+    <div class="quote">
+      <span class="price" id="price-2">$2,284.17</span>
+      <span class="pc dn" id="pc-2"><span class="tri"></span>1.08%</span>
+    </div>
+    <div class="quote">
+      <span class="price" id="price-3">$142.94</span>
+      <span class="pc flat" id="pc-3"><span class="tri"></span>0.00%</span>
+    </div>
+  </div>
+  <div class="demo-label">↑ prices blink text-positive / text-negative on tick</div>
+</div>
+
+<div id="tweaks">
+  <h4>Tweaks</h4>
+
+  <h5>Stroked variant · stroke gradient</h5>
+  <div class="tw-row"><span>Up</span><input type="color" data-color="upStroke"><input type="range" min="0" max="100" data-alpha="upStrokeA"><input type="number" min="0" max="100" data-alpha-num="upStrokeA"></div>
+  <div class="tw-row"><span>Down</span><input type="color" data-color="dnStroke"><input type="range" min="0" max="100" data-alpha="dnStrokeA"><input type="number" min="0" max="100" data-alpha-num="dnStrokeA"></div>
+  <div class="tw-row"><span>Flat</span><input type="color" data-color="flatStroke"><input type="range" min="0" max="100" data-alpha="flatStrokeA"><input type="number" min="0" max="100" data-alpha-num="flatStrokeA"></div>
+
+  <h5>Price change component</h5>
+  <div class="tw-row"><span>Size</span>
+    <select data-size="pcSize">
+      <option value="mono-4">mono-4 / 11px</option>
+      <option value="mono-3">mono-3 / 12px</option>
+      <option value="pc-default">default / 14px</option>
+      <option value="mono-2">mono-2 / 15px</option>
+      <option value="mono-1">mono-1 / 20px</option>
+      <option value="h5">h5 / 20px</option>
+      <option value="h4">h4 / 24px</option>
+    </select>
+  </div>
+
+  <h5>Current price</h5>
+  <div class="tw-row"><span>Size</span>
+    <select data-size="priceSize">
+      <option value="mono-1">mono-1 / 20px</option>
+      <option value="mono-2">mono-2 / 15px</option>
+      <option value="mono-3">mono-3 / 12px</option>
+      <option value="mono-4">mono-4 / 11px</option>
+      <option value="h5">h5 / 20px</option>
+      <option value="h4">h4 / 24px</option>
+      <option value="h3">h3 / 28px</option>
+      <option value="h2">h2 / 36px</option>
+    </select>
+  </div>
+  <div class="tw-row"><span>Weight</span>
+    <select data-weight="priceWeight">
+      <option value="300">300 Light</option>
+      <option value="400">400 Regular</option>
+      <option value="500">500 Medium</option>
+      <option value="600">600 Semibold</option>
+      <option value="700">700 Bold</option>
+    </select>
+  </div>
+</div>
+
+<script>
+  const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+    "upStroke": "#10c66b",
+    "upStrokeA": 15,
+    "dnStroke": "#f8445f",
+    "dnStrokeA": 15,
+    "flatStroke": "#ffffff",
+    "flatStrokeA": 6,
+    "priceWeight": 300,
+    "priceSize": "mono-2",
+    "pcSize": "mono-3"
+  }/*EDITMODE-END*/;
+
+  const SIZE_PRESETS = {
+    'mono-1': { size: '20px', letter: '-0.4px' },
+    'mono-2': { size: '15px', letter: '0.45px' },
+    'mono-3': { size: '12px', letter: '0.36px' },
+    'mono-4': { size: '11px', letter: '0.3px'  },
+    'pc-default': { size: '14px', letter: '0.28px' },
+    'h5':     { size: '20px', letter: '-0.4px' },
+    'h4':     { size: '24px', letter: '-0.48px' },
+    'h3':     { size: '28px', letter: '-0.56px' },
+    'h2':     { size: '36px', letter: '-0.72px' },
+  };
+
+  const KEY_TO_VAR = {
+    upStroke: '--pc-stroke-up',       upStrokeA: '--pc-stroke-up-a',
+    dnStroke: '--pc-stroke-dn',       dnStrokeA: '--pc-stroke-dn-a',
+    flatStroke: '--pc-stroke-flat',   flatStrokeA: '--pc-stroke-flat-a',
+    priceWeight: '--price-weight',
+  };
+
+  const state = { ...TWEAK_DEFAULTS };
+
+  function apply(key, value) {
+    state[key] = value;
+    if (key === 'priceSize') {
+      const p = SIZE_PRESETS[value] || SIZE_PRESETS['mono-1'];
+      document.documentElement.style.setProperty('--price-size', p.size);
+      document.documentElement.style.setProperty('--price-letter', p.letter);
+      return;
+    }
+    if (key === 'pcSize') {
+      const p = SIZE_PRESETS[value] || SIZE_PRESETS['pc-default'];
+      document.documentElement.style.setProperty('--pc-size', p.size);
+      document.documentElement.style.setProperty('--pc-letter', p.letter);
+      return;
+    }
+    const v = KEY_TO_VAR[key];
+    if (!v) return;
+    if (key.endsWith('A')) {
+      document.documentElement.style.setProperty(v, (Number(value) / 100).toString());
+    } else {
+      document.documentElement.style.setProperty(v, value);
+    }
+  }
+
+  function persist(key, value) {
+    window.parent.postMessage({ type: '__edit_mode_set_keys', edits: { [key]: value } }, '*');
+  }
+
+  Object.keys(state).forEach(k => apply(k, state[k]));
+
+  document.querySelectorAll('#tweaks input[type="color"]').forEach(inp => {
+    const key = inp.dataset.color;
+    inp.value = state[key];
+    inp.addEventListener('input', e => { apply(key, e.target.value); persist(key, e.target.value); });
+  });
+
+  function setAlpha(key, pct) {
+    const v = Math.max(0, Math.min(100, Number(pct)));
+    apply(key, v);
+    const rng = document.querySelector(`#tweaks input[type="range"][data-alpha="${key}"]`);
+    const num = document.querySelector(`#tweaks input[type="number"][data-alpha-num="${key}"]`);
+    if (rng) rng.value = v;
+    if (num) num.value = v;
+    persist(key, v);
+  }
+  document.querySelectorAll('#tweaks input[type="range"][data-alpha]').forEach(inp => {
+    const key = inp.dataset.alpha;
+    inp.value = state[key];
+    inp.addEventListener('input', e => setAlpha(key, e.target.value));
+  });
+  document.querySelectorAll('#tweaks input[type="number"][data-alpha-num]').forEach(inp => {
+    const key = inp.dataset.alphaNum;
+    inp.value = state[key];
+    inp.addEventListener('input', e => setAlpha(key, e.target.value));
+  });
+
+  document.querySelectorAll('#tweaks select[data-weight]').forEach(sel => {
+    const key = sel.dataset.weight;
+    sel.value = String(state[key]);
+    sel.addEventListener('change', e => { apply(key, e.target.value); persist(key, Number(e.target.value)); });
+  });
+
+  document.querySelectorAll('#tweaks select[data-size]').forEach(sel => {
+    const key = sel.dataset.size;
+    sel.value = String(state[key]);
+    sel.addEventListener('change', e => { apply(key, e.target.value); persist(key, e.target.value); });
+  });
+
+  window.addEventListener('message', (e) => {
+    if (!e.data || typeof e.data !== 'object') return;
+    if (e.data.type === '__activate_edit_mode') document.getElementById('tweaks').classList.add('on');
+    if (e.data.type === '__deactivate_edit_mode') document.getElementById('tweaks').classList.remove('on');
+  });
+  window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+</script>
+
+<script>
+  // Simulate price ticks — blink the price text color on each update.
+  const rows = [
+    { el: document.getElementById('price-1'), val: 77565, pc: document.getElementById('pc-1') },
+    { el: document.getElementById('price-2'), val: 2284.17, pc: document.getElementById('pc-2') },
+    { el: document.getElementById('price-3'), val: 142.94, pc: document.getElementById('pc-3') },
+  ];
+  function tick() {
+    rows.forEach(r => {
+      const dir = Math.random() < 0.5 ? -1 : 1;
+      const delta = (Math.random() * 0.0008 + 0.0001) * r.val * dir;
+      r.val += delta;
+      r.el.textContent = '$' + r.val.toLocaleString('en-US', { minimumFractionDigits: r.val > 1000 ? 0 : 2, maximumFractionDigits: r.val > 1000 ? 0 : 2 });
+      r.el.classList.remove('flash-up','flash-dn');
+      void r.el.offsetWidth;
+      r.el.classList.add(dir > 0 ? 'flash-up' : 'flash-dn');
+      setTimeout(() => r.el.classList.remove('flash-up','flash-dn'), 180);
+    });
+  }
+  setInterval(tick, 1400);
+</script>
+</body></html>

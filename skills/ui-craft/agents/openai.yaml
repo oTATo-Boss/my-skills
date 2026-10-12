@@ -1,0 +1,4 @@
+interface:
+  display_name: "UI 基础与精修"
+  short_description: "在现有设计系统内精修排版配色与控件细节，提高界面清晰度、一致性和交互完成度。"
+  default_prompt: "使用 $ui-craft，精修指定界面的排版、间距和控件状态，沿用现有设计系统。"
