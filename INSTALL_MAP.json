@@ -21,6 +21,7 @@
     "asset-generation": "social-media/asset-generation",
     "content-production": "social-media/content-production",
     "publishing-delivery": "social-media/publishing-delivery",
-    "performance-analysis": "social-media/performance-analysis"
+    "performance-analysis": "social-media/performance-analysis",
+    "rh-minimax-h3": "video/ai/rh-minimax-h3"
   }
 }

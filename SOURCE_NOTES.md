@@ -31,3 +31,5 @@
 2026-10-13 按用户要求将项目开发目录重排为与本机安装分类一致的路径：`video/ai/`、`video/creative/`、`image/`、`web design/design/`、`web design/effects/`、`Rules/`；`social-media/` 套件保持现状。整包移动 14 个 Skill，保留文件内容、执行权限与版本，更新项目分级索引、README、来源记录链接和项目目录约定；项目仍维护 20 个 Skill。
 
 2026-10-13 将 `Rules/skill-library-management` 升级至 v1.1.0，按已确认的一级分类／可选二级分类更新管理模型、索引模板、整包迁移与副本同步指南，扩展只读审计至任意深度分类、导航数量、开发安装映射和内容权限比较，并加入行为回归用例；不把当前整库分类清单复制进 Skill。
+
+2026-10-13 按用户要求将 oTATo 项目的 RunningHub MiniMax H3 工具整合为 `RH-minimax-H3` v1.0.0（标识 `rh-minimax-h3`），新增凭据存入、任务构造和离线恢复验证；详细来源、未知作者与许可边界见 [sources.md](skills/video/ai/rh-minimax-h3/references/sources.md)。本仓库当前维护 21 个 Skill。先按可用本机技能请求进行本地安装同步，再按用户后续授权提交与推送；密钥存本机私有配置，不在源码与安装包内。
