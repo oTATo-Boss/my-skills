@@ -21,3 +21,5 @@
 首次纳入仓库的版本为 v1.0.0，维护记录见 [CHANGELOG.md](skills/skill-library-management/CHANGELOG.md)。
 
 2026-10-13 按用户要求卸载通用 `social-media`：删除开发源码、GitHub 当前分支内容、本机安装副本与 Claude 入口，并移除对应索引、安装映射和安装说明。本仓库当前维护 14 个 Skill；保留 `personal/otato-social-media`。
+
+2026-10-13 按用户要求从 `Social Media.zip` 导入 6 个 Skill 到 `skills/social-media/`，完整保留原包 19 个文件与共享配置，新增分类索引、来源与导入记录；原包未声明作者、版本和许可证，不标为原创。本机安装映射统一为 `social-media/<skill-name>/`，本仓库当前维护 20 个 Skill。

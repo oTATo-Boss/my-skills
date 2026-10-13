@@ -15,6 +15,12 @@
     "web-art-direction": "web design/web-art-direction",
     "web-motion": "web design/web-motion",
     "web-visual-effects": "web design/web-visual-effects",
-    "skill-library-management": "meta/skill-library-management"
+    "skill-library-management": "meta/skill-library-management",
+    "social-media-router": "social-media/social-media-router",
+    "content-planning": "social-media/content-planning",
+    "asset-generation": "social-media/asset-generation",
+    "content-production": "social-media/content-production",
+    "publishing-delivery": "social-media/publishing-delivery",
+    "performance-analysis": "social-media/performance-analysis"
   }
 }

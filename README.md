@@ -1,6 +1,6 @@
 # my-skills
 
-我的原创及二创 Skill 仓库，集中维护源码、脚本和资源。
+我的原创、二创及用户指定套件仓库，集中维护源码、脚本、资源与来源记录。
 
 以下命令全局安装到 **Codex**，使用文件复制方式。安装到 **Claude Code** 时，将 `-a codex` 改为 `-a claude-code`。需要本机已安装 Node.js；安装选项见 [skills CLI](https://github.com/vercel-labs/skills)。
 
@@ -20,8 +20,16 @@
 | [web-motion](skills/web-motion/SKILL.md) | 设计和实现网页交互、文字、滚动与时间线动画。 | `npx skills add oTATo-Boss/my-skills --skill web-motion -g -a codex --copy -y` |
 | [web-visual-effects](skills/web-visual-effects/SKILL.md) | 实现玻璃、纹理、粒子、WebGL 和三维网页效果。 | `npx skills add oTATo-Boss/my-skills --skill web-visual-effects -g -a codex --copy -y` |
 | [skill-library-management](skills/skill-library-management/SKILL.md) | 整理共享技能库、维护分级索引、安装归类与客户端链接。 | `npx skills add oTATo-Boss/my-skills --skill skill-library-management -g -a codex --copy -y` |
+| [social-media-router](skills/social-media/social-media-router/SKILL.md) | 按目标路由并串联社交内容各阶段，保持交付范围。 | `npx skills add oTATo-Boss/my-skills --skill social-media-router -g -a codex --copy -y` |
+| [content-planning](skills/social-media/content-planning/SKILL.md) | 研究参考、选择创意并编写脚本、分镜和素材简报。 | `npx skills add oTATo-Boss/my-skills --skill content-planning -g -a codex --copy -y` |
+| [asset-generation](skills/social-media/asset-generation/SKILL.md) | 整理身份资产、补图、编写生成提示词并验收源素材。 | `npx skills add oTATo-Boss/my-skills --skill asset-generation -g -a codex --copy -y` |
+| [content-production](skills/social-media/content-production/SKILL.md) | 剪辑、声音处理、成片验收与封面制作。 | `npx skills add oTATo-Boss/my-skills --skill content-production -g -a codex --copy -y` |
+| [publishing-delivery](skills/social-media/publishing-delivery/SKILL.md) | 撰写标题正文标签并整理逐篇待发布文件夹。 | `npx skills add oTATo-Boss/my-skills --skill publishing-delivery -g -a codex --copy -y` |
+| [performance-analysis](skills/social-media/performance-analysis/SKILL.md) | 采集和比较后台数据，给出有证据边界的分析与实验。 | `npx skills add oTATo-Boss/my-skills --skill performance-analysis -g -a codex --copy -y` |
 
-一次安装全部 14 个：
+Social Media 套件的来源和维护范围见 [SOURCES.md](skills/social-media/SOURCES.md)，完整分工见 [套件说明](skills/social-media/README.md)。
+
+一次安装全部 20 个：
 
 ```bash
 npx skills add oTATo-Boss/my-skills --skill '*' -g -a codex --copy -y

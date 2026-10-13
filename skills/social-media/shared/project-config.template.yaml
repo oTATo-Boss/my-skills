@@ -1,0 +1,98 @@
+# 复制到自己的项目目录后填写；空值表示未知，不表示零、禁止或允许。
+# 这是一份数据模板，不授予付费、上传、登录、发布或持续运行权限。
+schema_version: 1
+project:
+  name: null
+  goal: null
+  audience: null
+  language: null
+  timezone: null
+  project_root: null
+  delivery_root: null
+identity:
+  creator_voice: null
+  subject_or_brand: null
+  invariant_features: []
+  identity_reference_paths: []
+  style_constraints: []
+  prohibited_claims_or_uses: []
+platforms: []
+content:
+  form: null
+  tone: null
+  topic_boundaries: []
+  approved_brief_path: null
+  recent_work_index_path: null
+video:
+  target_duration_seconds: null
+  duration_tolerance_seconds: null
+  aspect_ratio: null
+  width_px: null
+  height_px: null
+  frame_rate: null
+  format: null
+  video_codec: null
+  audio_codec: null
+generation:
+  provider_reference: null
+  model_or_workflow_reference: null
+  official_documentation_url: null
+  runtime_credential_reference: null
+  supported_clip_duration_seconds: null
+  desired_clip_duration_seconds: null
+  maximum_concurrent_tasks: null
+  cost_unit: null
+  proposed_per_task_limit: null
+  proposed_batch_limit: null
+  proposed_task_count: null
+audio:
+  voice_policy: null
+  permitted_voice_sources: []
+  music_policy: null
+  sound_effects_policy: null
+  loudness_target: null
+  peak_limit: null
+cover:
+  required: null
+  aspect_ratio: null
+  width_px: null
+  height_px: null
+  format: null
+  design_language: null
+  safe_area_reference: null
+assets:
+  source_manifest_path: null
+  approved_source_locations: []
+  rights_constraints: []
+tools:
+  research: null
+  image_generation: null
+  video_generation: null
+  editing: null
+  audio_inspection: null
+  video_inspection: null
+  media_probe: null
+  backend_data: null
+delivery:
+  folder_name_pattern: null
+  timestamp_basis: null
+  video_filename: null
+  cover_filename: null
+  copy_filename: null
+  additional_required_files: []
+  overwrite_policy: null
+analytics:
+  platform: null
+  account_reference: null
+  source_locations: []
+  reporting_period_start: null
+  reporting_period_end: null
+  reporting_timezone: null
+  extraction_time: null
+  comparison_window_hours: null
+  goal_metric: null
+  metric_dictionary_path: null
+  paid_content_handling: null
+  pinned_content_handling: null
+  moderation_handling: null
+  cohort_definition: null
