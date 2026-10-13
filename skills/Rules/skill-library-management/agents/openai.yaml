@@ -1,0 +1,4 @@
+interface:
+  display_name: "分级 Skill 库管理"
+  short_description: "Organize skill categories, indexes and install mappings"
+  default_prompt: "使用 $skill-library-management 按当前用途分类和可选二级分类维护技能库，核对索引、完整包、开发安装映射与客户端入口。"

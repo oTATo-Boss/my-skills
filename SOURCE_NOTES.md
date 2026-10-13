@@ -18,8 +18,16 @@
 
 2026-10-13 从 `~/.agents/skills/meta/skill-library-management/` 引入本地编写的 `skill-library-management` 完整开发目录，保留入口、脚本、引用资料与 Agent 配置，排除 Python 缓存。本仓库现维护 15 个 Skill；本机安装副本与 Claude 入口沿用原位置。
 
-首次纳入仓库的版本为 v1.0.0，维护记录见 [CHANGELOG.md](skills/skill-library-management/CHANGELOG.md)。
+首次纳入仓库的版本为 v1.0.0，维护记录见 [CHANGELOG.md](skills/Rules/skill-library-management/CHANGELOG.md)。
+
+2026-10-13 按用户要求将本机分类目录 `meta/` 更名为 `Rules/`；当前安装位置为 `~/.agents/skills/Rules/skill-library-management/`。同步总索引、分类索引、安装映射与 Claude 发现软链接；Skill 版本仍为 v1.0.0，技能文件内容与执行权限保持不变。
 
 2026-10-13 按用户要求卸载通用 `social-media`：删除开发源码、GitHub 当前分支内容、本机安装副本与 Claude 入口，并移除对应索引、安装映射和安装说明。本仓库当前维护 14 个 Skill；保留 `personal/otato-social-media`。
 
 2026-10-13 按用户要求从 `Social Media.zip` 导入 6 个 Skill 到 `skills/social-media/`，完整保留原包 19 个文件与共享配置，新增分类索引、来源与导入记录；原包未声明作者、版本和许可证，不标为原创。本机安装映射统一为 `social-media/<skill-name>/`，本仓库当前维护 20 个 Skill。
+
+2026-10-13 按用户确认方案为本机 `video/`、`blender/`、`threejs/`、`web design/` 增加 27 个二级分类，整包迁移 183 个目录（包含 189 个 Skill），同步分级索引、跨技能路径引用、Claude 发现软链接和项目安装映射；`cloudflare/` 及其余分类保持原目录结构。本机仍为 223 个 Skill，项目仍维护 20 个；迁移只调整路径及管理记录，不改变工作流版本。
+
+2026-10-13 按用户要求将项目开发目录重排为与本机安装分类一致的路径：`video/ai/`、`video/creative/`、`image/`、`web design/design/`、`web design/effects/`、`Rules/`；`social-media/` 套件保持现状。整包移动 14 个 Skill，保留文件内容、执行权限与版本，更新项目分级索引、README、来源记录链接和项目目录约定；项目仍维护 20 个 Skill。
+
+2026-10-13 将 `Rules/skill-library-management` 升级至 v1.1.0，按已确认的一级分类／可选二级分类更新管理模型、索引模板、整包迁移与副本同步指南，扩展只读审计至任意深度分类、导航数量、开发安装映射和内容权限比较，并加入行为回归用例；不把当前整库分类清单复制进 Skill。
