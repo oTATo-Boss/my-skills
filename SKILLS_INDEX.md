@@ -1,6 +1,6 @@
 # my-skills 技能索引
 
-技能数量：15
+技能数量：14
 
 本索引登记本仓库维护的原创、二创与整合版本，用于项目技能选型与复用，随新增或修改增量维护。开发源码在本仓库，本机保留正常安装的独立副本。
 
@@ -11,7 +11,6 @@
 - [json-prompt-system](skills/json-prompt-system/SKILL.md) — 生成或还原自拍、生活照、电商服装与试穿的分层 JSON 图像提示词。
 - [fashion-picture](skills/fashion-picture/SKILL.md) — 服装设计、四视图样衣、人物换装与受控妆造；原名 otato-fashion-design。
 - [nsfw-seedance-prompt-skill](skills/nsfw-seedance-prompt-skill/SKILL.md) — 成人题材视频提示词的专项结构与检查流程。
-- [social-media](skills/social-media/SKILL.md) — 社交媒体选题、内容、封面、发布文案、验收及逐篇交付。
 
 ## 二创与本地整合编写
 

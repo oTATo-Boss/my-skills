@@ -4,7 +4,7 @@
 
 ## 原创工作流
 
-`ai-liveaction-fusion`、`ai-video-prompt`、`json-prompt-system`、`fashion-picture` 有本地开发记录；`nsfw-seedance-prompt-skill`、`social-media` 由用户明确确认原创。`fashion-picture` 是原 `otato-fashion-design` 的当前安装版本。
+`ai-liveaction-fusion`、`ai-video-prompt`、`json-prompt-system`、`fashion-picture` 有本地开发记录；`nsfw-seedance-prompt-skill` 由用户明确确认原创。`fashion-picture` 是原 `otato-fashion-design` 的当前安装版本。
 
 ## 二创与整合版本
 
@@ -19,3 +19,5 @@
 2026-10-13 从 `~/.agents/skills/meta/skill-library-management/` 引入本地编写的 `skill-library-management` 完整开发目录，保留入口、脚本、引用资料与 Agent 配置，排除 Python 缓存。本仓库现维护 15 个 Skill；本机安装副本与 Claude 入口沿用原位置。
 
 首次纳入仓库的版本为 v1.0.0，维护记录见 [CHANGELOG.md](skills/skill-library-management/CHANGELOG.md)。
+
+2026-10-13 按用户要求卸载通用 `social-media`：删除开发源码、GitHub 当前分支内容、本机安装副本与 Claude 入口，并移除对应索引、安装映射和安装说明。本仓库当前维护 14 个 Skill；保留 `personal/otato-social-media`。
