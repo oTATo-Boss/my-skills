@@ -42,3 +42,5 @@
 2026-10-14 用户确认 `social-media/` 六个 Skill 由本人编写（此前按导入包记为作者、许可未知）；按用户决定在 `skills/social-media/LICENSE` 以 MIT 许可发布，同步更新套件 `SOURCES.md` 和六个 `SOURCE.md`。本机安装副本待来源记录同步时一并更新。
 
 2026-10-14 修正来源补录的确认口径：本仓库 21 个 Skill 的用户自研／二创整合归属均已确认（13 个本地编写、8 个二创整合）。此前 8 个二创标记 partial，是把上游作者、原始仓库或许可缺口混入了当前版本归属判断；现改为 confirmed，并在作者字段与说明中单独保留第三方资料缺口。管理技能升级 v1.2.1。
+
+2026-10-14 按用户决定，`rh-minimax-h3`、`direct-video`、`codex-imagegen`、`skill-library-management` 各自新增 MIT `LICENSE` 并更新 `SOURCE.md`。两个二创技能注明许可只覆盖用户编写和修改的部分，上游与 RunningHub 服务条款不在范围内。
