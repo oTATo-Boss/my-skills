@@ -34,5 +34,9 @@
 
 2026-10-13 按用户要求将 oTATo 项目的 RunningHub MiniMax H3 工具整合为 `RH-minimax-H3` v1.0.0（标识 `rh-minimax-h3`），新增凭据存入、任务构造和离线恢复验证；详细来源、未知作者与许可边界见 [sources.md](skills/video/ai/rh-minimax-h3/references/sources.md)。本仓库当前维护 21 个 Skill。先按可用本机技能请求进行本地安装同步，再按用户后续授权提交与推送；密钥存本机私有配置，不在源码与安装包内。
 
+2026-10-14 按用户要求卸载本机安装的 `personal/otato-social-media`（它不在本仓库维护，上面"保留"的说法到此为止）：安装副本、Claude 入口和空的 `personal/` 分类移入废纸篓；项目用到的打包脚本和品牌规则已并入 @土豆老板oTATo 项目。同日更新 `rh-minimax-h3/references/sources.md` 的原客户端位置说明。
+
 
 2026-10-14 为本仓库 21 个 Skill 补充独立 `SOURCE.md`，并为本机共享库全部 223 个独立技能（含嵌套技能）建档，区分原始来源、维护仓库、参考资源和未知信息；管理技能升级 v1.2.0，新增来源记录指南与只读 `--check-sources` 检查。此资料补录不改变其他技能工作流版本；源码、安装同步和来源待确认状态分别核对。
+
+2026-10-14 用户确认 `social-media/` 六个 Skill 由本人编写（此前按导入包记为作者、许可未知）；按用户决定在 `skills/social-media/LICENSE` 以 MIT 许可发布，同步更新套件 `SOURCES.md` 和六个 `SOURCE.md`。本机安装副本待来源记录同步时一并更新。

@@ -1,15 +1,15 @@
 # 来源记录
 
 - skill: `asset-generation`
-- kind: `collected`
+- kind: `local`
 - status: `confirmed`
-- source: 用户提供的 `Social Media.zip`；上游仓库与作者未声明。
+- source: 本人编写，2026-10-13 以 `Social Media.zip` 导入；维护目录 `skills/social-media/asset-generation`；当前维护仓库 https://github.com/oTATo-Boss/my-skills
 - version: unknown；原包未声明版本。
-- author: unknown；原包未声明作者。
-- license: unknown；原包未声明许可证。
+- author: 本人（2026-10-14 在对话中确认由本人编写）
+- license: MIT（2026-10-14 本人决定，见 [LICENSE](<../LICENSE>)）
 - collected_at: 2026-10-13（导入记录）
 - recorded_at: `2026-10-14`
-- evidence: [SOURCES.md](<../SOURCES.md>)；当前入口 SHA-256 `4d7ebfd957df89f8cb609b81e979c0983e5c3c89eacbaea51efc419440fb89ff`（本次记录快照）。
+- evidence: [SOURCES.md](<../SOURCES.md>)；当前入口 SHA-256 `4d7ebfd957df89f8cb609b81e979c0983e5c3c89eacbaea51efc419440fb89ff`（本次记录快照）。；本人 2026-10-14 确认作者身份并决定以 MIT 许可发布。
 
 ## 本地调整与边界
 
