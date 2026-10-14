@@ -86,6 +86,46 @@ class LibraryAuditTests(unittest.TestCase):
         self.page(self.index, 1, [("one", "skills/one/SKILL.md", "Workflow.")])
         self.assertTrue(self.check()["ok"])
 
+    def source_record(self, folder, name, status="confirmed"):
+        fields = {"skill": name, "kind": "collected", "status": status,
+                  "source": "https://example.com/upstream" if status == "confirmed" else "unknown",
+                  "version": "unknown", "author": "unknown", "license": "unknown",
+                  "collected_at": "unknown", "recorded_at": "2026-10-14",
+                  "evidence": "Retained installation receipt."}
+        (folder / "SOURCE.md").write_text("# Source\n\n" + "".join(f"- {k}: `{v}`\n" for k, v in fields.items()))
+
+    def test_source_record_coverage_includes_nested_skills(self):
+        self.layout()
+        self.source_record(self.root / "documentation/pack", "router")
+        result = self.check(check_source_records=True)
+        self.fails_with(result, "Missing source record")
+        self.assertTrue(any("pack/topic/SOURCE.md" in e for e in result["errors"]))
+
+    def test_unknown_origin_is_explicit_and_does_not_fail_coverage(self):
+        folder = self.skill("one", "one")
+        self.page(self.index, 1, [("one", "skills/one/SKILL.md", "Workflow.")])
+        self.source_record(folder, "one", "unknown")
+        result = self.check(check_source_records=True)
+        self.assertTrue(result["ok"], result)
+        self.assertEqual(result["sources"]["statuses"]["unknown"], 1)
+        self.assertTrue(result["warnings"])
+
+    def test_source_record_cannot_be_copied_to_wrong_skill(self):
+        folder = self.skill("one", "one")
+        self.page(self.index, 1, [("one", "skills/one/SKILL.md", "Workflow.")])
+        self.source_record(folder, "another-skill")
+        self.fails_with(self.check(check_source_records=True), "Wrong source identity")
+
+    def test_invalid_or_missing_source_fields_fail(self):
+        folder = self.skill("one", "one")
+        self.page(self.index, 1, [("one", "skills/one/SKILL.md", "Workflow.")])
+        self.source_record(folder, "one")
+        p = folder / "SOURCE.md"
+        p.write_text(p.read_text().replace("- license: `unknown`\n", "").replace("2026-10-14", "yesterday").replace("`confirmed`", "`verified-by-name`"))
+        result = self.check(check_source_records=True)
+        for reason in ["Incomplete source record", "Invalid source record date", "Invalid source status"]:
+            self.fails_with(result, reason)
+
     def test_spaces_case_backlinks_and_code_examples(self):
         self.layout()
         self.skill("web design/effects/visual", "visual")

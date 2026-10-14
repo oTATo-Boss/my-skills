@@ -7,6 +7,7 @@ import os
 import re
 import stat
 from collections import defaultdict
+from datetime import date
 from pathlib import Path
 from urllib.parse import unquote
 
@@ -94,6 +95,53 @@ def file_manifest(root):
     return result
 
 
+def check_sources(actual, errors, warnings):
+    """Check portable per-skill records without inferring or fetching origins."""
+    required = {"skill", "kind", "status", "source", "version", "author", "license",
+                "collected_at", "recorded_at", "evidence"}
+    statuses = {"confirmed": 0, "partial": 0, "unknown": 0}
+    records = 0
+    for info in actual.values():
+        path = Path(info["path"]).parent / "SOURCE.md"
+        if not path.is_file():
+            errors.append(f"Missing source record: {path}")
+            continue
+        records += 1
+        try:
+            text = without_code_blocks(path.read_text(encoding="utf-8"))
+        except (OSError, UnicodeError) as exc:
+            errors.append(f"Unreadable source record: {path}: {exc}")
+            continue
+        fields = {}
+        for key, value in re.findall(r"^- ([a-z_]+):[ \t]*(.*)$", text, re.M):
+            if key in fields:
+                errors.append(f"Duplicate source field: {path}: {key}")
+            fields[key] = value.strip().strip("`")
+        missing = sorted(key for key in required if not fields.get(key))
+        if missing:
+            errors.append(f"Incomplete source record: {path}: {missing}")
+        if fields.get("skill") != info["name"]:
+            errors.append(f"Wrong source identity: {path}: expected {info['name']}")
+        if fields.get("kind") not in {"collected", "adapted", "local", "unknown"}:
+            errors.append(f"Invalid source kind: {path}")
+        status = fields.get("status")
+        if status not in statuses:
+            errors.append(f"Invalid source status: {path}")
+        else:
+            statuses[status] += 1
+        try:
+            recorded = fields.get("recorded_at", "")
+            if date.fromisoformat(recorded).isoformat() != recorded:
+                raise ValueError("Expected YYYY-MM-DD")
+        except ValueError:
+            errors.append(f"Invalid source record date: {path}")
+        if status == "confirmed" and fields.get("source", "").lower() == "unknown":
+            errors.append(f"Confirmed source has no origin: {path}")
+    if statuses["partial"] or statuses["unknown"]:
+        warnings.append(f"Sources needing confirmation: {statuses['partial']} partial, {statuses['unknown']} unknown")
+    return {"records": records, "statuses": statuses}
+
+
 def check_install_map(skills_root, actual, map_path, installed_root, compare, errors):
     data = json.loads(map_path.read_text(encoding="utf-8"))
     if not isinstance(data, dict) or not isinstance(data.get("skills"), dict):
@@ -145,7 +193,8 @@ def check_install_map(skills_root, actual, map_path, installed_root, compare, er
     return len(mapping)
 
 
-def audit(skills_root, root_index, link_dirs=(), install_map=None, installed_root=None, compare_installed=False):
+def audit(skills_root, root_index, link_dirs=(), install_map=None, installed_root=None, compare_installed=False,
+          check_source_records=False):
     skills_root, root_index = Path(skills_root).absolute(), Path(root_index).absolute()
     link_dirs = [Path(path).expanduser() for path in link_dirs]
     errors, warnings = [], []
@@ -240,9 +289,11 @@ def audit(skills_root, root_index, link_dirs=(), install_map=None, installed_roo
     mapped = None
     if install_map is not None:
         mapped = check_install_map(skills_root, actual, Path(install_map), installed_root, compare_installed, errors)
+    sources = check_sources(actual, errors, warnings) if check_source_records else None
     return {"ok": not errors, "skills": len(actual), "reachable_skills": len(registered),
             "indexes": len(pages), "counts": counts, "install_map_skills": mapped,
             "installed_compared": bool(install_map is not None and compare_installed),
+            "sources": sources,
             "errors": errors, "warnings": warnings}
 
 
@@ -254,6 +305,7 @@ def main():
     parser.add_argument("--install-map", type=Path)
     parser.add_argument("--installed-root", type=Path)
     parser.add_argument("--compare-installed", action="store_true")
+    parser.add_argument("--check-sources", action="store_true", help="Check per-skill SOURCE.md records and report unresolved origins")
     parser.add_argument("--json", action="store_true")
     args = parser.parse_args()
     if not args.skills_root.is_dir():
@@ -262,7 +314,7 @@ def main():
         parser.error("--installed-root and --compare-installed require --install-map")
     try:
         result = audit(args.skills_root, args.root_index, args.link_dir,
-                       args.install_map, args.installed_root, args.compare_installed)
+                       args.install_map, args.installed_root, args.compare_installed, args.check_sources)
     except (OSError, UnicodeError, ValueError) as exc:
         result = {"ok": False, "errors": [str(exc)]}
     if args.json:
@@ -272,6 +324,8 @@ def main():
               f"{result.get('reachable_skills', 0)} reachable, {result.get('indexes', 0)} indexes")
         for message in result["errors"]:
             print(message)
+        for message in result.get("warnings", []):
+            print(f"WARNING: {message}")
     return 0 if result["ok"] else 1
 
 
