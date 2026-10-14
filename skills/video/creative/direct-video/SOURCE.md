@@ -5,7 +5,7 @@
 - status: `confirmed`
 - source: 本地开发／维护目录 `skills/video/creative/direct-video`；当前维护仓库 https://github.com/oTATo-Boss/my-skills
 - version: unknown；未找到技能版本或上游提交声明。
-- author: unknown；未找到作者声明，仓库所有者不自动视为作者。
+- author: 用户自研工作流（含 Agent 辅助编写）；未单独声明公开作者署名。
 - license: unknown；当前保留资料未包含足以确认的技能许可声明。
 - collected_at: unknown；没有可靠安装／导入日期。
 - recorded_at: `2026-10-14`

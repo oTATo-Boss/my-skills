@@ -2,7 +2,7 @@
 name: skill-library-management
 description: Organize and maintain skill libraries with purpose-based categories, package indexes, provenance records, development/install mappings and client links. Use for installing, classifying, migrating, updating, removing or auditing skills and reusable resources; ordinary use of a selected skill does not require a library audit.
 metadata:
-  version: "1.2.0"
+  version: "1.2.1"
 ---
 
 # 分级 Skill 库管理
@@ -17,6 +17,8 @@ metadata:
 - **两种项目索引分开使用。** 普通工作项目只登记选用的入口；技能开发仓库只登记其维护的源码，并按安装映射沿用本机分类路径。
 
 普通共享技能维护其真实来源；自研或明确纳入开发仓库的技能保留开发与安装两份独立实体副本。Codex 读取共享库，Claude 的逐技能软链接指向安装副本。系统、插件技能沿用发行渠道，不搬入共享库。
+
+本地原创／二创归属与上游资料完整度分别记录：用户自研或二创已经确认时，来源状态记为已确认；缺失的上游作者、原始仓库或许可写在相应字段中，不把当前本地版本的归属降为未知。
 
 ## 按任务执行
 
