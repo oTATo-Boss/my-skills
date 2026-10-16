@@ -7,6 +7,8 @@
 - version: `2.0.0`
 - author: oTATo-Boss，Agent 辅助编写；历史版本的第三方原始出处未完整记录。
 - license: 当前 v2 文档与脚本为本次重新编写的 MIT 实现，见 [LICENSE](LICENSE)。历史版本的未知上游许可不由此追溯变更。
+- collected_at: 2026-10-16（本次重写 v2 可分发版本）
+- evidence: `tests/test_codex_imagegen.py` 的八项离线行为测试；入口 SHA-256 `024cae653df07f817e13dbe2eab877e092583996afd12da0f872d31d2aaf1acb`。
 - recorded_at: `2026-10-16`
 
 ## 当前包边界

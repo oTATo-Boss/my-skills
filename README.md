@@ -34,7 +34,7 @@
 
 Social Media 套件的来源和维护范围见 [SOURCES.md](skills/social-media/SOURCES.md)，完整分工见 [套件说明](skills/social-media/README.md)。
 
-一次安装全部 25 个：
+一次安装全部 28 个：
 
 ```bash
 npx skills add oTATo-Boss/my-skills --skill '*' -g -a codex --copy -y
