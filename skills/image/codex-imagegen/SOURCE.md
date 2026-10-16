@@ -3,19 +3,14 @@
 - skill: `codex-imagegen`
 - kind: `adapted`
 - status: `confirmed`
-- source: 已确认的用户二创／整合版本；本地开发／维护目录 `skills/image/codex-imagegen`；当前维护仓库 https://github.com/oTATo-Boss/my-skills
-- version: unknown；未找到技能版本或上游提交声明。
-- author: 用户（本地二创／整合部分）；第三方原作者信息未完整记录。
-- license: MIT（2026-10-14 本人决定，见 [LICENSE](<LICENSE>)）
-- collected_at: unknown；没有可靠安装／导入日期。
-- recorded_at: `2026-10-14`
-- evidence: [SOURCE_NOTES.md](</Users/griffith/Desktop/AI/我的项目/my skills/SOURCE_NOTES.md>)；[INSTALL_MAP.json](</Users/griffith/Desktop/AI/我的项目/my skills/INSTALL_MAP.json>)；当前入口 SHA-256 `1abe6516b9ae901f93c7c7f12684e0feba439bc08e035dea49cae826d2ed9fe3`（本次记录快照）。；本人 2026-10-14 决定以 MIT 许可发布。
+- source: https://github.com/oTATo-Boss/my-skills/tree/main/skills/image/codex-imagegen
+- version: `2.0.0`
+- author: oTATo-Boss，Agent 辅助编写；历史版本的第三方原始出处未完整记录。
+- license: 当前 v2 文档与脚本为本次重新编写的 MIT 实现，见 [LICENSE](LICENSE)。历史版本的未知上游许可不由此追溯变更。
+- recorded_at: `2026-10-16`
 
-## 本地调整与边界
+## 当前包边界
 
-- MIT 只覆盖本人编写和修改的部分；上游部分（作者未记录）仍按其原条款。
-- 用户已确认二创；确切上游作者与仓库尚无完整记录。
-- 开发目录与本机安装目录保留独立实体副本，来源资料按项目约定同步。
-- 本次仅补录来源资料；来源确认状态不等于版本、作者、许可或运行能力全部已确认。
+当前 SKILL.md、Python 脚本和 shell 兼容层均在本次从头编写；没有随包复制历史未知上游源码。保留通过 Codex CLI 生图的原用途和参数兼容。Codex 服务、客户端与账户权限不由此许可证授予，也不随技能分发。
 
-归属说明：当前用户二创／整合版本已确认；上游作者、仓库或许可缺口仅表示第三方资料不全。
+公开文档仅提供安装／运行方法；Python/macOS 预检与 mock 测试不证明 Windows/Linux 生图或账户实际调用可用。真实图片仍须实际生成及视觉验收。

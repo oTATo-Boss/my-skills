@@ -44,3 +44,7 @@
 2026-10-14 修正来源补录的确认口径：本仓库 21 个 Skill 的用户自研／二创整合归属均已确认（13 个本地编写、8 个二创整合）。此前 8 个二创标记 partial，是把上游作者、原始仓库或许可缺口混入了当前版本归属判断；现改为 confirmed，并在作者字段与说明中单独保留第三方资料缺口。管理技能升级 v1.2.1。
 
 2026-10-14 按用户决定，`rh-minimax-h3`、`direct-video`、`codex-imagegen`、`skill-library-management` 各自新增 MIT `LICENSE` 并更新 `SOURCE.md`。两个二创技能注明许可只覆盖用户编写和修改的部分，上游与 RunningHub 服务条款不在范围内。
+
+2026-10-16 为 AI-SMA v2 新增四个独立方法 Skill：video-project-orchestration、screenwriting、production-continuity、video-production-pipeline，以 MIT 发布；本仓库现维护 25 个。目录、合同与执行权限由调用项目提供，不绑定账号或社媒竖屏模板。同步开发索引与安装映射；提交发布前不覆盖本机安装副本。
+
+2026-10-16 将 codex-imagegen 升级至 v2.0.0，当前入口文档与执行程序重新编写为 Python 标准库实现，保留 shell 兼容入口；加入只读能力探测、工作区输出约束、独占创建和本次任务显式结果恢复。历史未知来源内容未继续复制进 v2 包；新的文档和代码由本项目以 MIT 维护。

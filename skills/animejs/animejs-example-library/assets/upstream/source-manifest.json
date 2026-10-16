@@ -1,0 +1,671 @@
+{
+  "repository": "juliangarnier/anime",
+  "commit": "01b81be1df6843ccfe0a71c0699a746bf740dd77",
+  "version": "4.5.0",
+  "files": [
+    {
+      "path": "LICENSE.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f999fa58ebdda6d8d0f3ae581ebdfe821f09603a",
+      "size": 1075,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/f999fa58ebdda6d8d0f3ae581ebdfe821f09603a"
+    },
+    {
+      "path": "examples/additive-creature/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b8610e20877d51c3afa8b4c6891633f3ef66b965",
+      "size": 1275,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/b8610e20877d51c3afa8b4c6891633f3ef66b965"
+    },
+    {
+      "path": "examples/additive-creature/index.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4d22e3a70b73f20022057c176ca8463dbbcab8fc",
+      "size": 2784,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/4d22e3a70b73f20022057c176ca8463dbbcab8fc"
+    },
+    {
+      "path": "examples/additive-fireflies/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6bbe8704febfdac80d9ab280341dbbd7c62c210f",
+      "size": 2145,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/6bbe8704febfdac80d9ab280341dbbd7c62c210f"
+    },
+    {
+      "path": "examples/additive-fireflies/index.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "70b184a2dc1140594770f2fcd14b8a5e09a2e9e0",
+      "size": 2208,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/70b184a2dc1140594770f2fcd14b8a5e09a2e9e0"
+    },
+    {
+      "path": "examples/advanced-grid-staggering/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "197a725d666b2aa21db3048d341df1c3ccfaeb03",
+      "size": 1243,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/197a725d666b2aa21db3048d341df1c3ccfaeb03"
+    },
+    {
+      "path": "examples/advanced-grid-staggering/index.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5848ffbcea59f55367ab8bbfd94873b27c8a45e1",
+      "size": 2032,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/5848ffbcea59f55367ab8bbfd94873b27c8a45e1"
+    },
+    {
+      "path": "examples/animatable-follow-cursor/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f9edc66f9f7a2e16f64243e12eab472ea8166c0a",
+      "size": 1247,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/f9edc66f9f7a2e16f64243e12eab472ea8166c0a"
+    },
+    {
+      "path": "examples/animatable-follow-cursor/index.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6f8b748911ff8157d69fad652e9db71d169e5dd4",
+      "size": 1191,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/6f8b748911ff8157d69fad652e9db71d169e5dd4"
+    },
+    {
+      "path": "examples/animejs-v4-logo-animation/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ffee0fa4f8f06fd679d365a1b85c55570340ff76",
+      "size": 37316,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/ffee0fa4f8f06fd679d365a1b85c55570340ff76"
+    },
+    {
+      "path": "examples/animejs-v4-logo-animation/index.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "83cdbdfa2f15aeb0a53def37e66ab60955931994",
+      "size": 7471,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/83cdbdfa2f15aeb0a53def37e66ab60955931994"
+    },
+    {
+      "path": "examples/assets/css/styles.css",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c5b2f6c99697e2a288b94f2927878813ae75a2f4",
+      "size": 9603,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/c5b2f6c99697e2a288b94f2927878813ae75a2f4"
+    },
+    {
+      "path": "examples/assets/fonts/IoskeleyMono-Bold.woff2",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0d0a0e517631c68d545fb1aa890553d136379ba9",
+      "size": 475120,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/0d0a0e517631c68d545fb1aa890553d136379ba9"
+    },
+    {
+      "path": "examples/assets/fonts/IoskeleyMono-Regular.woff2",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e90afff9077c4d2de2969a84d0bf6cb80aedf264",
+      "size": 478444,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/e90afff9077c4d2de2969a84d0bf6cb80aedf264"
+    },
+    {
+      "path": "examples/auto-layout/accordion/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e1ab67d6b9c5991e1e5773abd3f7535eb9c41d61",
+      "size": 8403,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/e1ab67d6b9c5991e1e5773abd3f7535eb9c41d61"
+    },
+    {
+      "path": "examples/auto-layout/accordion/index.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "361b0e6fadc50d95c9928071060e00704e8f91af",
+      "size": 535,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/361b0e6fadc50d95c9928071060e00704e8f91af"
+    },
+    {
+      "path": "examples/auto-layout/cards/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1daf136df00acffada6741b6ff35aeb93c455871",
+      "size": 2499,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/1daf136df00acffada6741b6ff35aeb93c455871"
+    },
+    {
+      "path": "examples/auto-layout/cards/index.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bf2ba00a644e9e89dc9655160f792350bb025182",
+      "size": 1605,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/bf2ba00a644e9e89dc9655160f792350bb025182"
+    },
+    {
+      "path": "examples/auto-layout/code/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "97a64281e1cd2bd1bd21809b10ed1b6c8db19f6f",
+      "size": 1807,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/97a64281e1cd2bd1bd21809b10ed1b6c8db19f6f"
+    },
+    {
+      "path": "examples/auto-layout/code/index.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b23ebd779bfa12774a5ea35e76ac95d9a5d5e0ca",
+      "size": 1819,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/b23ebd779bfa12774a5ea35e76ac95d9a5d5e0ca"
+    },
+    {
+      "path": "examples/auto-layout/grid-columns/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fdd82d58829da6a62fecef5008db101ce479ba11",
+      "size": 1908,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/fdd82d58829da6a62fecef5008db101ce479ba11"
+    },
+    {
+      "path": "examples/auto-layout/grid-columns/index.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "31f48f618e6a3b29ae81315fa6e225070b21b3db",
+      "size": 1398,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/31f48f618e6a3b29ae81315fa6e225070b21b3db"
+    },
+    {
+      "path": "examples/auto-layout/nav/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5326a73744b931d1a6f64377de464765519edd21",
+      "size": 4937,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/5326a73744b931d1a6f64377de464765519edd21"
+    },
+    {
+      "path": "examples/auto-layout/nav/index.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "80c8c36cd2c19e051ead01a7115bbb99cdf61598",
+      "size": 795,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/80c8c36cd2c19e051ead01a7115bbb99cdf61598"
+    },
+    {
+      "path": "examples/auto-layout/onscroll/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b0a5eced6e0f923b408a1ba3abb04131cb4f8fd4",
+      "size": 1828,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/b0a5eced6e0f923b408a1ba3abb04131cb4f8fd4"
+    },
+    {
+      "path": "examples/auto-layout/onscroll/index.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fd01d54c74520a07fe1dedaf72d346e60dd872f6",
+      "size": 1830,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/fd01d54c74520a07fe1dedaf72d346e60dd872f6"
+    },
+    {
+      "path": "examples/auto-layout/periodic-table/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0d5824a30b83dd7ef476c4fd80663a28834353d6",
+      "size": 5894,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/0d5824a30b83dd7ef476c4fd80663a28834353d6"
+    },
+    {
+      "path": "examples/auto-layout/periodic-table/index.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8c689d7c3e0c812d20522aff340d56e1f0f4ba39",
+      "size": 14652,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/8c689d7c3e0c812d20522aff340d56e1f0f4ba39"
+    },
+    {
+      "path": "examples/auto-layout/planets/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2d4b1e4b35920c1d69e89d3a43a131d014180008",
+      "size": 9660,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/2d4b1e4b35920c1d69e89d3a43a131d014180008"
+    },
+    {
+      "path": "examples/auto-layout/planets/index.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "80dd035b7517e02cc7319203d4e0bb5e7064854a",
+      "size": 7621,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/80dd035b7517e02cc7319203d4e0bb5e7064854a"
+    },
+    {
+      "path": "examples/auto-layout/todo-list/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b96edbb0601ef4ebf528e5af109b4b6de140fd37",
+      "size": 4666,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/b96edbb0601ef4ebf528e5af109b4b6de140fd37"
+    },
+    {
+      "path": "examples/auto-layout/todo-list/index.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e04dca7c603152667ab33a9503aba603b3ea749d",
+      "size": 3023,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/e04dca7c603152667ab33a9503aba603b3ea749d"
+    },
+    {
+      "path": "examples/canvas-2d/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "11d67582326e907a43f74bdfd15557f0f8234ce6",
+      "size": 689,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/11d67582326e907a43f74bdfd15557f0f8234ce6"
+    },
+    {
+      "path": "examples/canvas-2d/index.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a4cb2c8f700146530b40d1ee851bf63629cebedd",
+      "size": 2103,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/a4cb2c8f700146530b40d1ee851bf63629cebedd"
+    },
+    {
+      "path": "examples/clock-playback-controls/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0f364cb9154050b58179390bcbcb98f4c9ac8889",
+      "size": 4213,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/0f364cb9154050b58179390bcbcb98f4c9ac8889"
+    },
+    {
+      "path": "examples/clock-playback-controls/index.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7d2f2d08aadb260f3168153936479bfff7a320d8",
+      "size": 3573,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/7d2f2d08aadb260f3168153936479bfff7a320d8"
+    },
+    {
+      "path": "examples/draggable-infinite-auto-carousel/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "64900f17211edc4c831a39bc9c0c788ee01fbae6",
+      "size": 1678,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/64900f17211edc4c831a39bc9c0c788ee01fbae6"
+    },
+    {
+      "path": "examples/draggable-infinite-auto-carousel/index.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4e19bbc8d20abf00df453d3d949356b902161d5c",
+      "size": 2025,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/4e19bbc8d20abf00df453d3d949356b902161d5c"
+    },
+    {
+      "path": "examples/draggable-mouse-scroll-snap-carousel/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e39e5140d0ebd5c86a05cccd78ce19234b710cfc",
+      "size": 1906,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/e39e5140d0ebd5c86a05cccd78ce19234b710cfc"
+    },
+    {
+      "path": "examples/draggable-mouse-scroll-snap-carousel/index.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1216cceb0b367ee4c94e3ef6ed80e29d44ed7ce5",
+      "size": 3036,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/1216cceb0b367ee4c94e3ef6ed80e29d44ed7ce5"
+    },
+    {
+      "path": "examples/draggable-playground/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b8cc09b5a8d8a6c6d50e2d0e2a1d928a68dc97e1",
+      "size": 20451,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/b8cc09b5a8d8a6c6d50e2d0e2a1d928a68dc97e1"
+    },
+    {
+      "path": "examples/draggable-playground/index.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "28f5843f2457e8842a0ed3a77d0342d3b6c3509f",
+      "size": 9064,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/28f5843f2457e8842a0ed3a77d0342d3b6c3509f"
+    },
+    {
+      "path": "examples/irregular-playback-typewriter/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "abe92365df692d85c998a943dae91a4a34a3802d",
+      "size": 1664,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/abe92365df692d85c998a943dae91a4a34a3802d"
+    },
+    {
+      "path": "examples/irregular-playback-typewriter/index.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7233c3728e28696ea3540858a3513747576c6360",
+      "size": 634,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/7233c3728e28696ea3540858a3513747576c6360"
+    },
+    {
+      "path": "examples/layered-css-transforms/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "44154b31673af3fabf43e5801ab0c7d82b81025c",
+      "size": 2048,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/44154b31673af3fabf43e5801ab0c7d82b81025c"
+    },
+    {
+      "path": "examples/layered-css-transforms/index.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4cc1653868f2c8bc8fb705b4e0c4f2a40819c4d2",
+      "size": 1736,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/4cc1653868f2c8bc8fb705b4e0c4f2a40819c4d2"
+    },
+    {
+      "path": "examples/onscroll-responsive-scope/card-back.svg",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2fb75ad3c5c7e83990549cbea93e5eafff72e72e",
+      "size": 319655,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/2fb75ad3c5c7e83990549cbea93e5eafff72e72e"
+    },
+    {
+      "path": "examples/onscroll-responsive-scope/card.svg",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a293e453ac2c873138e0a19f771c0a2362b8d19a",
+      "size": 2682,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/a293e453ac2c873138e0a19f771c0a2362b8d19a"
+    },
+    {
+      "path": "examples/onscroll-responsive-scope/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ad6639b55b0e981a2799444f648fe1f8da935335",
+      "size": 4146,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/ad6639b55b0e981a2799444f648fe1f8da935335"
+    },
+    {
+      "path": "examples/onscroll-responsive-scope/index.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9ede8840b9b7b088269e0ddbade5774aa5a6a3b1",
+      "size": 1118,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/9ede8840b9b7b088269e0ddbade5774aa5a6a3b1"
+    },
+    {
+      "path": "examples/onscroll-sticky/card-back.svg",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2fb75ad3c5c7e83990549cbea93e5eafff72e72e",
+      "size": 319655,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/2fb75ad3c5c7e83990549cbea93e5eafff72e72e"
+    },
+    {
+      "path": "examples/onscroll-sticky/card.svg",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a293e453ac2c873138e0a19f771c0a2362b8d19a",
+      "size": 2682,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/a293e453ac2c873138e0a19f771c0a2362b8d19a"
+    },
+    {
+      "path": "examples/onscroll-sticky/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "275c664351d1853167ddaa8e46bc54a9f8d10421",
+      "size": 6922,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/275c664351d1853167ddaa8e46bc54a9f8d10421"
+    },
+    {
+      "path": "examples/onscroll-sticky/index.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0bfd06ebef33664aa95e36c2bee012c0e7a6344a",
+      "size": 1927,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/0bfd06ebef33664aa95e36c2bee012c0e7a6344a"
+    },
+    {
+      "path": "examples/stagger/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5b87b429a96d9ff996de37469b29ce32c38cbc53",
+      "size": 552,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/5b87b429a96d9ff996de37469b29ce32c38cbc53"
+    },
+    {
+      "path": "examples/stagger/index.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a7adf4eb9199fa779e9f4d3a40977c5f946639c7",
+      "size": 932,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/a7adf4eb9199fa779e9f4d3a40977c5f946639c7"
+    },
+    {
+      "path": "examples/svg-graph/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f43b4905e6578efadce65be7b5ca61d893daf05c",
+      "size": 3134,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/f43b4905e6578efadce65be7b5ca61d893daf05c"
+    },
+    {
+      "path": "examples/svg-graph/index.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fd1ee4a91a463123b074127d35690dd6a29c8fc6",
+      "size": 587,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/fd1ee4a91a463123b074127d35690dd6a29c8fc6"
+    },
+    {
+      "path": "examples/svg-line-drawing/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "47bd966895f77a28b0e1476fc12cde8d5744e83c",
+      "size": 677,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/47bd966895f77a28b0e1476fc12cde8d5744e83c"
+    },
+    {
+      "path": "examples/svg-line-drawing/index.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "56b811e1d86adcacfc9a08c827dea54d60dc6564",
+      "size": 2353,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/56b811e1d86adcacfc9a08c827dea54d60dc6564"
+    },
+    {
+      "path": "examples/text/hover-effects/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c493cdb346fae130435c12925432d41a57bb2b31",
+      "size": 2958,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/c493cdb346fae130435c12925432d41a57bb2b31"
+    },
+    {
+      "path": "examples/text/hover-effects/index.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c38a2b72f860f6be20acf590b080207d889e35e8",
+      "size": 5359,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/c38a2b72f860f6be20acf590b080207d889e35e8"
+    },
+    {
+      "path": "examples/text/scramble-tl/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ea853958f92915db99f8d855e6b5e5c50d556f65",
+      "size": 3046,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/ea853958f92915db99f8d855e6b5e5c50d556f65"
+    },
+    {
+      "path": "examples/text/scramble-tl/index.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "068201465455ea83ac2e9448fac5ebf560081f84",
+      "size": 3995,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/068201465455ea83ac2e9448fac5ebf560081f84"
+    },
+    {
+      "path": "examples/text/scramble/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "20631dcc1fea259a4bc29324fb3c34a6ffdbafca",
+      "size": 3166,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/20631dcc1fea259a4bc29324fb3c34a6ffdbafca"
+    },
+    {
+      "path": "examples/text/scramble/index.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9a036c35fd49efc1c27755ba3e63ae760234fd00",
+      "size": 3162,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/9a036c35fd49efc1c27755ba3e63ae760234fd00"
+    },
+    {
+      "path": "examples/text/split-effects/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0f5822d84be9f9d3641726cb5f0f77428e97a178",
+      "size": 3414,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/0f5822d84be9f9d3641726cb5f0f77428e97a178"
+    },
+    {
+      "path": "examples/text/split-effects/index.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c1671b38fdaa48234bb1907f3101fcf0b89f42b5",
+      "size": 2142,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/c1671b38fdaa48234bb1907f3101fcf0b89f42b5"
+    },
+    {
+      "path": "examples/text/split-playground/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b495b63d15684bebd8098e94d3c3eff6e87b0f84",
+      "size": 3930,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/b495b63d15684bebd8098e94d3c3eff6e87b0f84"
+    },
+    {
+      "path": "examples/text/split-playground/index.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "cd773b5197908090ad8a6937d0e326f0df762875",
+      "size": 3329,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/cd773b5197908090ad8a6937d0e326f0df762875"
+    },
+    {
+      "path": "examples/threejs/transforms/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f66a6a9e49b610fec67442aa4f99e07e65ff976f",
+      "size": 846,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/f66a6a9e49b610fec67442aa4f99e07e65ff976f"
+    },
+    {
+      "path": "examples/threejs/transforms/index.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5726b73bc7ab77f470ed08fe7807f8224620e406",
+      "size": 8452,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/5726b73bc7ab77f470ed08fe7807f8224620e406"
+    },
+    {
+      "path": "examples/timeline-50K-stars/cursor.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "13ba785125bac40fb553e0b12bf1bf98eb0a4f57",
+      "size": 2048,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/13ba785125bac40fb553e0b12bf1bf98eb0a4f57"
+    },
+    {
+      "path": "examples/timeline-50K-stars/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b70a1d412e4c1eb9e7b1090f614d5dc66ecb3f7a",
+      "size": 3236,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/b70a1d412e4c1eb9e7b1090f614d5dc66ecb3f7a"
+    },
+    {
+      "path": "examples/timeline-50K-stars/index.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c9e1b0355ece0e4763ca802985bf68a8e7718b0a",
+      "size": 4218,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/c9e1b0355ece0e4763ca802985bf68a8e7718b0a"
+    },
+    {
+      "path": "examples/timeline-refresh-starlings/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2683f1fb3f31633c9e61f808ec6562649adde553",
+      "size": 835,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/2683f1fb3f31633c9e61f808ec6562649adde553"
+    },
+    {
+      "path": "examples/timeline-refresh-starlings/index.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "cf98d31579e28fc9701ec663f1ca6c3adfbee02c",
+      "size": 1688,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/cf98d31579e28fc9701ec663f1ca6c3adfbee02c"
+    },
+    {
+      "path": "examples/timeline-seamless-loop/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4845e7c28fc11b477e619b135a1882f8c4698848",
+      "size": 1400,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/4845e7c28fc11b477e619b135a1882f8c4698848"
+    },
+    {
+      "path": "examples/timeline-seamless-loop/index.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "cb7da30dc063866d42e34355412b55b2c99fe689",
+      "size": 2226,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/cb7da30dc063866d42e34355412b55b2c99fe689"
+    },
+    {
+      "path": "examples/timeline-stress-test/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "aa171fb549a91c646a87a706b0d85a95ac58b6d1",
+      "size": 691,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/aa171fb549a91c646a87a706b0d85a95ac58b6d1"
+    },
+    {
+      "path": "examples/timeline-stress-test/index.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5e27ffa9b807ce5479420475a09c307805ec2d9e",
+      "size": 704,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/5e27ffa9b807ce5479420475a09c307805ec2d9e"
+    },
+    {
+      "path": "examples/tsconfig.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "09b4bb0dc2bb1245655d66b382a88a79988db44a",
+      "size": 176,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/09b4bb0dc2bb1245655d66b382a88a79988db44a"
+    },
+    {
+      "path": "package.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7ebe3997b3620aeb7757c1d24b568d461ceb967d",
+      "size": 8344,
+      "url": "https://api.github.com/repos/juliangarnier/anime/git/blobs/7ebe3997b3620aeb7757c1d24b568d461ceb967d"
+    }
+  ]
+}
