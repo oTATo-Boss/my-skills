@@ -7,6 +7,7 @@
 - version: `1.0.0`
 - author: oTATo-Boss，Agent 辅助编写。
 - license: MIT，见 [LICENSE](LICENSE)。
+- collected_at: 2026-10-16（本次新编写或建立可分发版本）
 - recorded_at: `2026-10-16`
 - evidence: [设计记录](https://github.com/oTATo-Boss/my-skills/blob/main/docs/video-production-design.md)；当前入口 SHA-256 `65a483a7fa25235a20c348b0bb129ff6832183732a7ec5cce631febc1505605c`。
 
