@@ -2,6 +2,7 @@
   "installed_root": "~/.agents/skills",
   "mode": "independent-copy",
   "skills": {
+    "r2v": "video/ai/r2v",
     "ai-liveaction-fusion": "video/ai/ai-liveaction-fusion",
     "ai-video-prompt": "video/ai/ai-video-prompt",
     "json-prompt-system": "image/json-prompt-system",

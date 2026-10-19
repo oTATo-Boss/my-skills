@@ -48,3 +48,5 @@
 2026-10-16 为 AI-SMA v2 新增四个独立方法 Skill：video-project-orchestration、screenwriting、production-continuity、video-production-pipeline，以 MIT 发布；本仓库现维护 25 个。目录、合同与执行权限由调用项目提供，不绑定账号或社媒竖屏模板。同步开发索引与安装映射；提交发布前不覆盖本机安装副本。
 
 2026-10-16 将 codex-imagegen 升级至 v2.0.0，当前入口文档与执行程序重新编写为 Python 标准库实现，保留 shell 兼容入口；加入只读能力探测、工作区输出约束、独占创建和本次任务显式结果恢复。历史未知来源内容未继续复制进 v2 包；新的文档和代码由本项目以 MIT 维护。
+
+2026-10-19 按用户明确要求，将 `R2V-Skill.zip` 的 `r2v/` 完整纳入 `skills/video/ai/r2v/`，用于跨模型的视频参考素材判断与制作交接。本次保留原包 11 个文件的内容与权限，新增来源及导入记录，同步项目索引、安装映射和 README；项目现维护 29 个 Skill。原包未声明独立版本、作者署名或许可证，按用户提供套件记录，不推断为用户原创，也不授予新许可。原包哈希和验证边界见 [SOURCE.md](skills/video/ai/r2v/SOURCE.md)；提交推送后再同步本机独立安装副本与 Claude 发现入口。
