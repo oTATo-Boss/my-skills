@@ -15,6 +15,8 @@
 
 CREATE / QUEUED / RUNNING 继续每 15 秒查询，SUCCESS 下载，FAILED / CANCEL / CANCELLED 保存失败。链接可能很快过期，生成完成立即下载；上传 fileName 也不要长期复用。
 
+本技能两个模式统一默认 `instanceType=plus`；缺少该字段的 jobs 也由客户端补为 `plus`，显式指定其他实例的任务保留其选择。长视频线上节点在 2026-10-19 只读查询中标注“0.8以上用Plus运行”；默认实例是本地使用策略，和原 API 示例的 `default` 分开记录。
+
 ## 节点发现
 
 打开所选应用的 API 详情：[短视频](https://www.runninghub.ai/zh-cn/call-api/api-detail/2084320751339032577?apiType=4)、[长视频](https://www.runninghub.ai/zh-cn/call-api/api-detail/2103012816681041921?apiType=4)，取得该应用的完整 nodeInfoList 示例及字段类型/枚举。需要登录时沿用用户已授权登录，不自行换账户。

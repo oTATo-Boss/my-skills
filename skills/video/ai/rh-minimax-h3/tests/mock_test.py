@@ -81,7 +81,8 @@ check('success path', r.returncode == 0 and STATE['runs'] == 1, r.stdout + r.std
 rec = json.loads((t / 'o' / 'j0_submitting.json').read_text())
 chk=json.loads(next((t/'o').glob('j0_T*.json')).read_text()); check('ffprobe info recorded', any(v.get('width')==64 and v.get('duration',0)>0 for v in chk['checks'].values()), chk.get('checks'))
 check('pending record has payload, no key', rec['status'] == 'DONE' and 'testkey' not in json.dumps(rec) and rec['payload']['nodeInfoList'])
-check('legacy jobs keep short app', rec['appId'] == '2084320751339032577' and STATE['apps'] == ['2084320751339032577'])
+check('legacy jobs keep short app and default to plus', rec['appId'] == '2084320751339032577' and
+      STATE['apps'] == ['2084320751339032577'] and rec['payload']['instanceType'] == 'plus')
 # 4 resubmit same name after DONE allowed; but open state refused
 r = run([jobs(t), '--output', str(t / 'o')]); check('rerun after DONE allowed', r.returncode == 0)
 # Mixed batches dispatch each job to its selected app; legacy jobs remain compatible.
@@ -98,6 +99,7 @@ check('mixed short/long endpoint routing', r.returncode == 0 and
 long_receipt = json.loads((t/'o'/'long_submitting.json').read_text())
 check('long app identity saved outside API payload', long_receipt['appId'] == '2103012816681041921' and
       long_receipt['payload']['nodeInfoList'][0]['nodeId'] == '59' and
+      long_receipt['payload']['instanceType'] == 'default' and
       all('appId' not in p for p in STATE['payloads']))
 reset(); unknown = t/'unknown.json'
 unknown.write_text(json.dumps({'jobs':[{'name':'unknown','appId':'unregistered',

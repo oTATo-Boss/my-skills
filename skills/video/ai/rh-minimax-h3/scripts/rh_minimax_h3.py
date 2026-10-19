@@ -136,7 +136,7 @@ def summarize_jobs(jobs):
         uploads = sum(1 for n in job['nodeInfoList']
                       if isinstance(n.get('fieldValue'), dict) and set(n['fieldValue']) == {'$upload'})
         lines.append(f"- {safe_name(job.get('name'))}: appId={job.get('appId', APP_ID)}，节点 {len(job['nodeInfoList'])} 个，"
-                     f"待上传素材 {uploads} 个，instanceType={job.get('instanceType', '默认')}")
+                     f"待上传素材 {uploads} 个，instanceType={job.get('instanceType', 'plus')}")
     lines.append('时长、像素档位、费用须对照真实节点映射与平台计价确认；dry-run 不校验这些。')
     return '\n'.join(lines)
 
@@ -302,8 +302,8 @@ def run_one(job, out, max_wait):
             raise RuntimeError(
                 f'{name}: 已有未结束的同名提交（{previous.get("status")} taskId={previous.get("taskId")}），'
                 f'拒绝重复提交；有 taskId 用 --resume，没有就先去平台核对任务/消费记录，再删 {pending.name}')
-    payload = {'nodeInfoList': job['nodeInfoList']}
-    for optional in ('instanceType', 'usePersonalQueue'):
+    payload = {'nodeInfoList': job['nodeInfoList'], 'instanceType': job.get('instanceType', 'plus')}
+    for optional in ('usePersonalQueue',):
         if optional in job:
             payload[optional] = job[optional]
     record = {'name': name, 'status': 'SUBMITTING', 'payload': payload, 'uploads': job.get('_uploads', {}),

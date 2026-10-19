@@ -101,7 +101,7 @@ def main():
         media('164', 'video', args.video)
         set_value('163', 'value', 'true')
     job = {'name': args.name, 'appId': mapping['appId'],
-           'instanceType': mapping.get('instanceType', 'default' if args.mode == 'long' else 'plus'),
+           'instanceType': mapping.get('instanceType', 'plus'),
            'usePersonalQueue': False, 'nodeInfoList': nodes}
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with args.output.open('x', encoding='utf-8') as stream:

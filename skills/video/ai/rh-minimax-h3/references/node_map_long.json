@@ -1,9 +1,9 @@
 {
   "appId": "2103012816681041921",
   "snapshot_date": "2026-10-19",
-  "source": "用户粘贴的 RunningHub 新应用 API 示例；未在线发现节点，未提交收费生成；已移除示例提示词和上传素材，关闭 LoRA 强度，清空文本触发词",
+  "source": "用户粘贴的 RunningHub 新应用 API 示例；未提交收费生成；已移除示例提示词和上传素材，关闭 LoRA 强度，清空文本触发词；实例按用户 2026-10-19 要求默认改为 plus",
   "source_sha256": "c3d1f0899d6bffc64eb882bc04af7c6af3fb0b93ac1146e18f1e64bf4df5d466",
-  "instanceType": "default",
+  "instanceType": "plus",
   "usePersonalQueue": false,
   "nodeInfoList": [
     {

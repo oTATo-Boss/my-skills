@@ -2,12 +2,12 @@
 name: rh-minimax-h3
 description: 使用 RunningHub 指定 MiniMax H3 AI 应用执行短视频或长视频生成；支持图像参考，短视频应用另有音视频参考，以及 API Key 安全存入、节点任务构造、批量提交、查询恢复和结果下载。用户提到 RH-minimax-H3、RunningHub H3 或 H3 长视频模式时使用。
 metadata:
-  version: "1.1.0"
+  version: "1.1.1"
 ---
 
 # RH-minimax-H3
 
-通过 RunningHub 的两个 H3 AI 应用生视频。使用 **RunningHub API Key**；依赖 Python 3.9+、`requests`，可选 `ffprobe` 检查视频流。
+通过 RunningHub 的两个 H3 AI 应用生视频，**两种模式均默认使用 Plus 实例**。使用 **RunningHub API Key**；依赖 Python 3.9+、`requests`，可选 `ffprobe` 检查视频流。
 
 | 模式 | 应用 | 节点依据与范围 |
 |---|---|---|
@@ -15,6 +15,8 @@ metadata:
 | `long` | `2103012816681041921`，新增长视频应用 | 用户 2026-10-19 提供的 API 示例；示例为 35 秒、0.5 MP、16:9、default 实例，暴露 6 张图；[节点](references/node_map_long.json)。尚未线上生成验证，时长上下限和空图片处理待核实 |
 
 用户指定长视频时显式使用 `--mode long`。长视频示例未暴露音频/视频参考和采样步数节点，不套用短视频的这些参数或画质映射。节点细节见 [api.md](references/api.md)。
+
+原长视频 API 示例的实例为 `default`；本技能按用户要求改为默认 `plus`，构造器和直接读取旧 jobs 的客户端均采用此默认值。jobs 显式指定的实例仍按该任务执行。
 
 ## 什么时候用
 

@@ -94,7 +94,7 @@ class Helpers(unittest.TestCase):
                 image.write_bytes(b'offline-fixture')
                 images.extend(['--image', str(image)])
             for mode, seconds, aspect, instance in [('short', '15', '9:16', 'plus'),
-                                                   ('long', '35', '16:9', 'default')]:
+                                                   ('long', '35', '16:9', 'plus')]:
                 jobs = tmp/f'{mode}.json'
                 command = [sys.executable, str(ROOT/'scripts/build_jobs.py'), '--mode', mode,
                            '--prompt-file', str(prompt), '--output', str(jobs)]
