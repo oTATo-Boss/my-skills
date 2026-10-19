@@ -3,7 +3,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 MODE = {'run': 'ok', 'query': 'success', 'file': 'video'}
-STATE = {'runs': 0, 'queries': 0, 'inflight': 0, 'peak': 0}
+STATE = {'runs': 0, 'queries': 0, 'inflight': 0, 'peak': 0, 'apps': [], 'payloads': []}
 LOCK = threading.Lock()
 MP4 = open(__import__('pathlib').Path(__file__).resolve().parent/'real.mp4','rb').read()
 
@@ -24,6 +24,8 @@ class H(BaseHTTPRequestHandler):
         if '/run/ai-app/' in self.path:
             with LOCK:
                 STATE['runs'] += 1; STATE['inflight'] += 1; STATE['peak'] = max(STATE['peak'], STATE['inflight'])
+                STATE['apps'].append(self.path.rsplit('/', 1)[-1])
+                STATE['payloads'].append(json.loads(raw))
             if MODE['run'] == 'hang': time.sleep(3)
             if MODE['run'] == 'notaskid': return self._send({'status': 'RUNNING'})
             return self._send({'taskId': f"T{STATE['runs']}", 'status': 'RUNNING'})
@@ -62,7 +64,7 @@ def check(label, cond, extra=''):
 
 def reset(**m):
     MODE.update({'run': 'ok', 'query': 'success', 'file': 'video'}); MODE.update(m)
-    STATE.update(runs=0, queries=0, inflight=0, peak=0)
+    STATE.update(runs=0, queries=0, inflight=0, peak=0, apps=[], payloads=[])
 
 # 1 dry-run rejects placeholders, makes no requests
 t = Path(tempfile.mkdtemp()); reset()
@@ -79,8 +81,30 @@ check('success path', r.returncode == 0 and STATE['runs'] == 1, r.stdout + r.std
 rec = json.loads((t / 'o' / 'j0_submitting.json').read_text())
 chk=json.loads(next((t/'o').glob('j0_T*.json')).read_text()); check('ffprobe info recorded', any(v.get('width')==64 and v.get('duration',0)>0 for v in chk['checks'].values()), chk.get('checks'))
 check('pending record has payload, no key', rec['status'] == 'DONE' and 'testkey' not in json.dumps(rec) and rec['payload']['nodeInfoList'])
+check('legacy jobs keep short app', rec['appId'] == '2084320751339032577' and STATE['apps'] == ['2084320751339032577'])
 # 4 resubmit same name after DONE allowed; but open state refused
 r = run([jobs(t), '--output', str(t / 'o')]); check('rerun after DONE allowed', r.returncode == 0)
+# Mixed batches dispatch each job to its selected app; legacy jobs remain compatible.
+reset(); t = Path(tempfile.mkdtemp())
+mixed = t/'mixed.json'
+mixed.write_text(json.dumps({'jobs': [
+    {'name': 'short', 'nodeInfoList': [{'nodeId':'150', 'fieldName':'value', 'fieldValue':'a ceramic cup'}]},
+    {'name': 'long', 'appId':'2103012816681041921', 'instanceType':'default', 'usePersonalQueue':False,
+     'nodeInfoList': [{'nodeId':'59', 'fieldName':'prompt', 'fieldValue':'a ceramic cup'}]},
+]}))
+r = run([str(mixed), '--output', str(t/'o')])
+check('mixed short/long endpoint routing', r.returncode == 0 and
+      sorted(STATE['apps']) == ['2084320751339032577', '2103012816681041921'], r.stdout+r.stderr)
+long_receipt = json.loads((t/'o'/'long_submitting.json').read_text())
+check('long app identity saved outside API payload', long_receipt['appId'] == '2103012816681041921' and
+      long_receipt['payload']['nodeInfoList'][0]['nodeId'] == '59' and
+      all('appId' not in p for p in STATE['payloads']))
+reset(); unknown = t/'unknown.json'
+unknown.write_text(json.dumps({'jobs':[{'name':'unknown','appId':'unregistered',
+    'nodeInfoList':[{'nodeId':'59','fieldName':'prompt','fieldValue':'a ceramic cup'}]}]}))
+r = run([str(unknown), '--dry-run', '--output', str(t/'unused')])
+check('unknown app rejected before network', r.returncode != 0 and STATE['runs'] == 0 and
+      'appId' in r.stdout+r.stderr and not (t/'unused').exists())
 # 5 submit timeout => UNKNOWN, no retry, then refused next time
 reset(run='hang'); t = Path(tempfile.mkdtemp())
 r = run([jobs(t), '--output', str(t / 'o')], RH_SUBMIT_READ_TIMEOUT='0.5')

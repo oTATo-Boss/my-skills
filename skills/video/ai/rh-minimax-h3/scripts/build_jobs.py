@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
-"""Build a single H3 job from the dated real-node snapshot, without network calls."""
+"""Build a short- or long-video H3 job from a dated node snapshot, offline."""
 import argparse
 import json
+import math
 from pathlib import Path
 
 MAP = Path(__file__).resolve().parents[1] / 'references/node_map.json'
+LONG_MAP = MAP.with_name('node_map_long.json')
+APP_IDS = {'short': '2084320751339032577', 'long': '2103012816681041921'}
 ASPECTS = {
     '1:1': '1:1 (Square)', '2:3': '2:3 (Portrait Photo)', '3:2': '3:2 (Photo)',
     '3:4': '3:4 (Portrait Standard)', '4:3': '4:3 (Standard)',
@@ -18,22 +21,39 @@ def main():
     parser.add_argument('--prompt-file', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--name', default='video')
-    parser.add_argument('--seconds', type=int, default=15, choices=range(5, 16))
-    parser.add_argument('--quality', default='720P', choices=('480P', '720P', '1080P'))
-    parser.add_argument('--aspect', default='9:16', choices=ASPECTS)
+    parser.add_argument('--mode', choices=APP_IDS, default='short', help='short：原应用；long：长视频应用')
+    parser.add_argument('--seconds', type=int, help='short 默认 15（5–15）；long 示例默认 35，范围待应用确认')
+    parser.add_argument('--quality', choices=('480P', '720P', '1080P'), help='仅 short，默认 720P')
+    parser.add_argument('--megapixels', type=float, help='仅 long，直接传百万像素，默认 0.5')
+    parser.add_argument('--aspect', choices=ASPECTS, help='short 默认 9:16；long 默认 16:9')
     parser.add_argument('--image', type=Path, action='append', default=[])
     parser.add_argument('--audio', type=Path, action='append', default=[])
     parser.add_argument('--video', type=Path)
-    parser.add_argument('--steps', type=int, default=8)
-    parser.add_argument('--node-map', type=Path, default=MAP)
+    parser.add_argument('--steps', type=int, help='仅 short，默认 8；long 示例未声明步数节点')
+    parser.add_argument('--node-map', type=Path, help='指定与所选 mode 应用 ID 一致的映射')
     args = parser.parse_args()
-    if len(args.image) > 6 or len(args.audio) > 3 or args.steps < 1:
-        parser.error('最多 6 张图、3 段音频；steps 须大于 0')
+    if len(args.image) > 6 or len(args.audio) > 3:
+        parser.error('最多 6 张图、3 段音频')
+    if args.mode == 'long':
+        if args.audio or args.video or args.steps is not None or args.quality is not None:
+            parser.error('长视频示例未声明音频/视频参考或采样步数；画质请使用 --megapixels，不沿用短视频节点')
+        seconds = args.seconds if args.seconds is not None else 35
+        megapixels = args.megapixels if args.megapixels is not None else 0.5
+        if seconds < 1 or not math.isfinite(megapixels) or megapixels <= 0:
+            parser.error('长视频 seconds 须为正整数，megapixels 须为有限正数；线上范围仍须核实')
+        aspect = args.aspect or '16:9'
+    else:
+        seconds = args.seconds if args.seconds is not None else 15
+        steps = args.steps if args.steps is not None else 8
+        if seconds not in range(5, 16) or steps < 1 or args.megapixels is not None:
+            parser.error('短视频 seconds 须为 5–15，steps 须大于 0；长视频请显式选择 --mode long')
+        aspect = args.aspect or '9:16'
     prompt = args.prompt_file.read_text(encoding='utf-8').strip()
     if not prompt:
         parser.error('提示词不能为空')
-    mapping = json.loads(args.node_map.read_text(encoding='utf-8'))
-    if mapping.get('appId') != '2084320751339032577':
+    map_path = args.node_map or (LONG_MAP if args.mode == 'long' else MAP)
+    mapping = json.loads(map_path.read_text(encoding='utf-8'))
+    if mapping.get('appId') != APP_IDS[args.mode]:
         parser.error('节点映射的应用 ID 不匹配')
     nodes = [{k: n[k] for k in ('nodeId', 'fieldName', 'fieldValue')}
              for n in mapping['nodeInfoList']]
@@ -54,22 +74,34 @@ def main():
     for node in nodes:
         if node['fieldName'] in ('image', 'audio'):
             node['fieldValue'] = 'None'
-    set_value('150', 'value', prompt)
-    set_value('186', 'value', args.seconds)
-    set_value('147', 'value', {'480P': '0.4', '720P': '0.9', '1080P': '2.0'}[args.quality])
-    set_value('115', 'aspect_ratio', ASPECTS[args.aspect])
-    set_value('192', 'value', args.steps)
-    set_value('159', 'strength_model', '0')
-    for node_id in ('171', '163', '185', '169', '158'):
-        set_value(node_id, 'value', 'false')
-    for node_id, path in zip(('141', '142', '143', '161', '175', '176'), args.image):
+    if args.mode == 'long':
+        set_value('59', 'prompt', prompt)
+        set_value('291', 'value', seconds)
+        set_value('426', 'megapixels', megapixels)
+        set_value('426', 'aspect_ratio', ASPECTS[aspect])
+        for node_id in ('446', '444', '443'):
+            set_value(node_id, 'strength_model', '0')
+        set_value('442', 'text', '')
+        image_nodes = ('28', '273', '285', '436', '462', '463')
+    else:
+        set_value('150', 'value', prompt)
+        set_value('186', 'value', seconds)
+        set_value('147', 'value', {'480P': '0.4', '720P': '0.9', '1080P': '2.0'}[args.quality or '720P'])
+        set_value('115', 'aspect_ratio', ASPECTS[aspect])
+        set_value('192', 'value', steps)
+        set_value('159', 'strength_model', '0')
+        for node_id in ('171', '163', '185', '169', '158'):
+            set_value(node_id, 'value', 'false')
+        image_nodes = ('141', '142', '143', '161', '175', '176')
+    for node_id, path in zip(image_nodes, args.image):
         media(node_id, 'image', path)
     for node_id, path in zip(('144', '160', '189'), args.audio):
         media(node_id, 'audio', path)
     if args.video:
         media('164', 'video', args.video)
         set_value('163', 'value', 'true')
-    job = {'name': args.name, 'instanceType': mapping.get('instanceType', 'plus'),
+    job = {'name': args.name, 'appId': mapping['appId'],
+           'instanceType': mapping.get('instanceType', 'default' if args.mode == 'long' else 'plus'),
            'usePersonalQueue': False, 'nodeInfoList': nodes}
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with args.output.open('x', encoding='utf-8') as stream:

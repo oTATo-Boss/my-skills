@@ -8,7 +8,7 @@
 | --- | --- | --- |
 | [R2V｜全能参考](skills/video/ai/r2v/SKILL.md) | 判断视频参考素材、必要补齐与生成方式，形成制作交接依据。 | `npx skills add oTATo-Boss/my-skills --skill r2v -g -a codex --copy -y` |
 | [ai-liveaction-fusion](skills/video/ai/ai-liveaction-fusion/SKILL.md) | AI 与实拍融合：镜头分析、静态分镜、视频提示词、审片与返修。 | `npx skills add oTATo-Boss/my-skills --skill ai-liveaction-fusion -g -a codex --copy -y` |
-| [RH-minimax-H3](skills/video/ai/rh-minimax-h3/SKILL.md) | RunningHub H3 视频生成、API 存入、批量任务及查询恢复。 | `npx skills add oTATo-Boss/my-skills --skill rh-minimax-h3 -g -a codex --copy -y` |
+| [RH-minimax-H3](skills/video/ai/rh-minimax-h3/SKILL.md) | RunningHub H3 短/长视频生成、API 存入、批量任务及查询恢复。 | `npx skills add oTATo-Boss/my-skills --skill rh-minimax-h3 -g -a codex --copy -y` |
 | [ai-video-prompt](skills/video/ai/ai-video-prompt/SKILL.md) | 创作、修改和审查通用 AI 视频提示词。 | `npx skills add oTATo-Boss/my-skills --skill ai-video-prompt -g -a codex --copy -y` |
 | [json-prompt-system](skills/image/json-prompt-system/SKILL.md) | 生成或还原自拍、生活照、电商服装与试穿的 JSON 图像提示词。 | `npx skills add oTATo-Boss/my-skills --skill json-prompt-system -g -a codex --copy -y` |
 | [fashion-picture](skills/image/fashion-picture/SKILL.md) | 设计服装、四视图样衣、人物换装与妆造图片。 | `npx skills add oTATo-Boss/my-skills --skill fashion-picture -g -a codex --copy -y` |

@@ -52,3 +52,5 @@
 2026-10-19 按用户明确要求，将 `R2V-Skill.zip` 的 `r2v/` 完整纳入 `skills/video/ai/r2v/`，用于跨模型的视频参考素材判断与制作交接。本次保留原包 11 个文件的内容与权限，新增来源及导入记录，同步项目索引、安装映射和 README；项目现维护 29 个 Skill。原包未声明独立版本、作者署名或许可证，按用户提供套件记录，不推断为用户原创，也不授予新许可。原包哈希和验证边界见 [SOURCE.md](skills/video/ai/r2v/SOURCE.md)；提交推送后再同步本机独立安装副本与 Claude 发现入口。
 
 2026-10-19 按用户明确要求，将 `motion-video-source.zip` 的 `motion-video/` 完整纳入 `skills/video/creative/motion-video/`，用于面向导演的代码视频与媒体处理能力参考。原包 10 份文档保持内容不变，归档未指定文件权限，安装时统一采用普通文档权限 0644；新增来源及导入记录，同步项目索引、安装映射和 README，项目现维护 30 个 Skill。原包未声明独立版本、作者署名或许可证，保留其参考来源，不推断原创归属或授予新许可；归档哈希与注释标识见 [SOURCE.md](skills/video/creative/motion-video/SOURCE.md)。按项目约定先提交推送，再同步本机独立副本与 Claude 入口。
+
+2026-10-19 按用户要求将 `rh-minimax-h3` 升级为 v1.1.0：从用户粘贴的 RunningHub API 示例接入长视频应用 `2103012816681041921`，新增独立节点映射、显式模式选择与逐任务提交路由，保留原短视频默认行为。示例参数、未说明字段与待线上验证项单独记录，不带入示例提示词、上传素材或启用的 LoRA 权重；来源与版本见 [sources.md](skills/video/ai/rh-minimax-h3/references/sources.md) 和 [CHANGELOG.md](skills/video/ai/rh-minimax-h3/CHANGELOG.md)。技能数量仍为 30，安装位置不变。
