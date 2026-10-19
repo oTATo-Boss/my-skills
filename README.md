@@ -15,6 +15,7 @@
 | [nsfw-seedance-prompt-skill](skills/video/ai/nsfw-seedance-prompt-skill/SKILL.md) | 成人题材视频提示词的结构化编写与检查。 | `npx skills add oTATo-Boss/my-skills --skill nsfw-seedance-prompt-skill -g -a codex --copy -y` |
 | [codex-imagegen](skills/image/codex-imagegen/SKILL.md) | 让其他 Agent 通过本机 Codex CLI 生成和编辑图片。 | `npx skills add oTATo-Boss/my-skills --skill codex-imagegen -g -a codex --copy -y` |
 | [direct-video](skills/video/creative/direct-video/SKILL.md) | 统筹视频创意、分镜、节奏、声音和成片验收。 | `npx skills add oTATo-Boss/my-skills --skill direct-video -g -a codex --copy -y` |
+| [motion-video](skills/video/creative/motion-video/SKILL.md) | 查询代码视频、素材编辑、合成特效、三维、声音字幕与渲染交付的能力及输入条件。 | `npx skills add oTATo-Boss/my-skills --skill motion-video -g -a codex --copy -y` |
 | [design-review](<skills/web design/design/design-review/SKILL.md>) | 审查已有界面的视觉层级、交互状态、动效与性能。 | `npx skills add oTATo-Boss/my-skills --skill design-review -g -a codex --copy -y` |
 | [ui-craft](<skills/web design/design/ui-craft/SKILL.md>) | 精修界面的字体、颜色、间距、对齐和控件状态。 | `npx skills add oTATo-Boss/my-skills --skill ui-craft -g -a codex --copy -y` |
 | [visual-reference](<skills/web design/design/visual-reference/SKILL.md>) | 分析图片、视频和网页参考，转成设计规格或界面实现。 | `npx skills add oTATo-Boss/my-skills --skill visual-reference -g -a codex --copy -y` |
@@ -35,7 +36,7 @@
 
 Social Media 套件的来源和维护范围见 [SOURCES.md](skills/social-media/SOURCES.md)，完整分工见 [套件说明](skills/social-media/README.md)。
 
-一次安装全部 29 个：
+一次安装全部 30 个：
 
 ```bash
 npx skills add oTATo-Boss/my-skills --skill '*' -g -a codex --copy -y
