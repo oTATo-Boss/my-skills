@@ -12,7 +12,7 @@ skills/
 │   ├── SKILLS_INDEX.md
 │   ├── ai/
 │   │   ├── SKILLS_INDEX.md
-│   │   └── ai-video-prompt/SKILL.md
+│   │   └── short-video-prompt/SKILL.md
 │   └── creative/
 │       ├── SKILLS_INDEX.md
 │       └── direct-video/SKILL.md
@@ -73,7 +73,7 @@ skills/
 
 [返回分类索引](../SKILLS_INDEX.md)
 
-- [ai-video-prompt](ai-video-prompt/SKILL.md) — 创作和审查 AI 视频提示词。
+- [short-video-prompt](short-video-prompt/SKILL.md) — 创作和审查单镜头短视频提示词。
 ```
 
 分发到仓库的索引使用相对路径；本机索引可使用稳定绝对路径。路径含空格时包裹为 `<...>`，例如 `[web design](<skills/web design/SKILLS_INDEX.md>)`。Skill 名以 frontmatter 的 `name` 为准，目录名允许保留上游命名。
@@ -90,6 +90,6 @@ skills/
 
 | 二级文件夹 | 数量 | 主要放什么 | 全部 Skill |
 |---|---:|---|---|
-| `ai/` | 2 | AI 视频提示词与实拍融合 | ai-video-prompt、ai-liveaction-fusion |
+| `ai/` | 2 | 短视频提示词与实拍融合 | short-video-prompt、ai-liveaction-fusion |
 
 文件夹名保持原文，名称列写全该分组的 Skill，不用代表项或省略号。用户要求一行一个 Skill 时，再用「文件夹／Skill／简短说明」。方案只说明需要改变的层级，明确保持现状的分类；未授权执行时不移动文件。

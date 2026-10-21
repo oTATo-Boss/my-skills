@@ -45,7 +45,7 @@ python3 scripts/audit_library.py \
   "installed_root": "~/.agents/skills",
   "mode": "independent-copy",
   "skills": {
-    "ai-video-prompt": "video/ai/ai-video-prompt",
+    "short-video-prompt": "video/ai/short-video-prompt",
     "fashion-picture": "image/fashion-picture"
   }
 }
