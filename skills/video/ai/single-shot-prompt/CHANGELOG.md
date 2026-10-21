@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.1 - 2026-10-21
+
+- 按用户最终命名，将 `short-video-prompt` 更名为 `single-shot-prompt`。
+- 同步目录、调用元数据、安装映射、相关索引与来源记录，保留单镜头短视频提示词工作流。
+
 ## 1.1.0 - 2026-10-21
 
 - 根据用户长期使用经验，由 `ai-video-prompt` 更名为 `short-video-prompt`，适用于不切镜的单镜头短视频。

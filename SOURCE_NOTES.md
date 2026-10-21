@@ -4,7 +4,7 @@
 
 ## 原创工作流
 
-`ai-liveaction-fusion`、`short-video-prompt`（原 `ai-video-prompt`）、`json-prompt-system`、`fashion-picture` 有本地开发记录；`nsfw-seedance-prompt-skill` 由用户明确确认原创。`fashion-picture` 是原 `otato-fashion-design` 的当前安装版本。
+`ai-liveaction-fusion`、`single-shot-prompt`（曾用名 `ai-video-prompt`、`short-video-prompt`）、`json-prompt-system`、`fashion-picture` 有本地开发记录；`nsfw-seedance-prompt-skill` 由用户明确确认原创。`fashion-picture` 是原 `otato-fashion-design` 的当前安装版本。
 
 ## 二创与整合版本
 
@@ -58,3 +58,5 @@
 2026-10-19 按用户要求将 `rh-minimax-h3` 升级为 v1.1.1，两种模式默认使用 Plus；旧 jobs 缺少实例字段时由客户端补 `plus`，显式实例选择保留。同步版本、来源、使用说明与现有离线回归；原长视频 API 示例的 `default` 作为历史来源保留。
 
 2026-10-21 根据用户长期使用反馈，将 `ai-video-prompt` 更名为 `short-video-prompt` v1.1.0，适用范围明确为不切镜的单镜头短视频。保留三节输出结构与创作、修改、审查流程，调整单镜头连续性要求；更新名称、调用元数据、分级索引、安装映射、管理示例与来源记录。技能数量仍为 30；本机安装目录为 `~/.agents/skills/video/ai/short-video-prompt/`，按项目同步顺序更新独立副本和 Claude 发现入口。
+
+2026-10-21 按用户最终命名，将 `short-video-prompt` 更名为 `single-shot-prompt` v1.1.1；保留不切镜的单镜头短视频适用范围与工作流，同步当前名称、目录、调用入口、相关索引、安装映射和管理示例。技能数量不变，当前本机安装路径为 `~/.agents/skills/video/ai/single-shot-prompt/`。

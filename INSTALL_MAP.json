@@ -5,7 +5,7 @@
     "motion-video": "video/creative/motion-video",
     "r2v": "video/ai/r2v",
     "ai-liveaction-fusion": "video/ai/ai-liveaction-fusion",
-    "short-video-prompt": "video/ai/short-video-prompt",
+    "single-shot-prompt": "video/ai/single-shot-prompt",
     "json-prompt-system": "image/json-prompt-system",
     "fashion-picture": "image/fashion-picture",
     "nsfw-seedance-prompt-skill": "video/ai/nsfw-seedance-prompt-skill",

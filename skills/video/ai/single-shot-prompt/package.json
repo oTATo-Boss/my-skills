@@ -1,6 +1,6 @@
 {
-  "name": "short-video-prompt",
-  "version": "1.1.0",
+  "name": "single-shot-prompt",
+  "version": "1.1.1",
   "description": "创作、修改和审查不切镜的单镜头短视频提示词，保留创意、美术与设计自由。",
   "private": true,
   "license": "MIT",
