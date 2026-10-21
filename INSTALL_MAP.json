@@ -6,6 +6,7 @@
     "r2v": "video/ai/r2v",
     "ai-liveaction-fusion": "video/ai/ai-liveaction-fusion",
     "single-shot-prompt": "video/ai/single-shot-prompt",
+    "multi-shot-prompt": "video/ai/multi-shot-prompt",
     "json-prompt-system": "image/json-prompt-system",
     "fashion-picture": "image/fashion-picture",
     "nsfw-seedance-prompt-skill": "video/ai/nsfw-seedance-prompt-skill",
