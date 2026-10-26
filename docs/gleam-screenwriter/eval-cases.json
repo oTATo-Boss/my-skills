@@ -1,0 +1,122 @@
+{
+  "trigger_cases": [
+    {
+      "query": "用AI剧本的七阶段流程做可恢复项目",
+      "expected": true,
+      "split": "train"
+    },
+    {
+      "query": "用Gleam Screenwriter继续上次的剧本",
+      "expected": true,
+      "split": "train"
+    },
+    {
+      "query": "建立原创项目并逐阶段验收",
+      "expected": true,
+      "split": "train"
+    },
+    {
+      "query": "把原作改编为剧集并保存阶段产物",
+      "expected": true,
+      "split": "train"
+    },
+    {
+      "query": "检查现有七阶段剧本项目缺了哪些字段",
+      "expected": true,
+      "split": "train"
+    },
+    {
+      "query": "从project.json恢复编剧室并导出",
+      "expected": true,
+      "split": "train"
+    },
+    {
+      "query": "把一句广告文案改短",
+      "expected": false,
+      "split": "train"
+    },
+    {
+      "query": "写一条Seedance视频提示词",
+      "expected": false,
+      "split": "train"
+    },
+    {
+      "query": "点评这部电影的摄影",
+      "expected": false,
+      "split": "train"
+    },
+    {
+      "query": "继续我的长篇网文第十章",
+      "expected": false,
+      "split": "train"
+    },
+    {
+      "query": "帮我画一个场景平面图",
+      "expected": false,
+      "split": "train"
+    },
+    {
+      "query": "打开剧本桌面App窗口",
+      "expected": false,
+      "split": "train"
+    },
+    {
+      "query": "只修改AI剧本项目的第三阶段且保留历史",
+      "expected": true,
+      "split": "validation"
+    },
+    {
+      "query": "用gleam-screenwriter写下一集但别批准",
+      "expected": true,
+      "split": "validation"
+    },
+    {
+      "query": "从App的项目JSON迁移为文件项目",
+      "expected": true,
+      "split": "validation"
+    },
+    {
+      "query": "导出已保存的七阶段产物ZIP",
+      "expected": true,
+      "split": "validation"
+    },
+    {
+      "query": "将这句英语台词翻译成中文",
+      "expected": false,
+      "split": "validation"
+    },
+    {
+      "query": "给小说起十个书名",
+      "expected": false,
+      "split": "validation"
+    },
+    {
+      "query": "在项目里改React按钮颜色",
+      "expected": false,
+      "split": "validation"
+    },
+    {
+      "query": "帮我部署Next.js网站",
+      "expected": false,
+      "split": "validation"
+    }
+  ],
+  "trigger_execution": "labels for future evaluation, not a measured trigger benchmark",
+  "content_cases": [
+    {
+      "case": "recoverable Chinese mystery, stage 1 only",
+      "with_skill": "executed by independent evaluator; receipt in validation.md",
+      "without_skill": "not executed"
+    },
+    {
+      "case": "partial adaptation JSON import; preserve drafts, no inherited consent",
+      "with_skill": "CLI import test passed",
+      "without_skill": "not executed"
+    },
+    {
+      "case": "revise approved upstream stage, preserve later drafts",
+      "with_skill": "CLI approval/revision test passed",
+      "without_skill": "not executed"
+    }
+  ]
+}

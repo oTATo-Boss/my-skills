@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI剧本 Agent"
+  short_description: "复用 AI剧本的立项、七阶段创作、验收、断点恢复与导出完整流程"
+  default_prompt: "请使用 $gleam-screenwriter，从我的创意或素材开始建立可恢复的剧本项目，并完成我指定的创作阶段。"

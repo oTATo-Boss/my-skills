@@ -1,0 +1,5 @@
+node-ensure 0.0.0
+Author: Carl A. Bauer
+Declared license: MIT
+Source: https://github.com/bauerca/node-ensure
+Bundled index.js as node-ensure.cjs; no substantive changes.

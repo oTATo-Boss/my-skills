@@ -1,6 +1,6 @@
 # my-skills 技能索引
 
-技能数量：31
+技能数量：32
 
 本索引只登记本仓库维护的 Skill，用于项目技能选型与复用。开发目录按本机分类路径组织，安装位置以 INSTALL_MAP.json 为准；每个 Skill 根目录的 SOURCE.md 保存来源、版本、许可与证据；历史范围说明保留在 SOURCE_NOTES.md。
 
@@ -13,3 +13,5 @@
 - [Rules](skills/Rules/SKILLS_INDEX.md) — 技能库管理与分级索引。（1 个技能）
 
 - [animejs](skills/animejs/SKILLS_INDEX.md) — 创意动效、运行集成与可追溯官方示例。（3 个技能）
+
+- [writing](skills/writing/SKILLS_INDEX.md) — 可恢复剧本项目、阶段化编剧与产物交付。（1 个技能）

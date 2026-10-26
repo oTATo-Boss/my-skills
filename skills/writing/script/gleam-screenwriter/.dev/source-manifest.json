@@ -1,0 +1,146 @@
+{
+  "source_app": "/Users/griffith/Desktop/AI剧本",
+  "snapshot": "2026-10-26",
+  "files": [
+    {
+      "path": "agent/script-agent/directions/bl-short-drama/direction.json",
+      "prepared_sha256": "798dbad7e98f29fd40621793822500479b5ee942fa042935cc01cb6712a05d97",
+      "source_sha256": "798dbad7e98f29fd40621793822500479b5ee942fa042935cc01cb6712a05d97"
+    },
+    {
+      "path": "agent/script-agent/directions/general-screenplay/direction.json",
+      "prepared_sha256": "8f12cc95cb3a46b4babdc7f10b91fb0f6bd738434f46bee06b7cb979e1c82f06",
+      "source_sha256": "8f12cc95cb3a46b4babdc7f10b91fb0f6bd738434f46bee06b7cb979e1c82f06"
+    },
+    {
+      "path": "agent/script-agent/manifest.json",
+      "prepared_sha256": "df9894a926bc7b373a3d35b9a60b6f5a8449a3d9e63d53c9068974c1e3ae0349",
+      "source_sha256": "df9894a926bc7b373a3d35b9a60b6f5a8449a3d9e63d53c9068974c1e3ae0349"
+    },
+    {
+      "path": "lib/agent-paths.ts",
+      "prepared_sha256": "bf5ca43939b876c606060fc358d45dae6cf3328daf10c3692da85225e0d8500f",
+      "source_sha256": "abbc472b44ccf2559e3e321ca100320ddf134328b17e3d828b5db5a93736fa4a"
+    },
+    {
+      "path": "lib/artifact-extract.ts",
+      "prepared_sha256": "d1d1834e3570490c8f24563647e6d7706e6433fc1273c42db8edb89fcd6691a4",
+      "source_sha256": "d1d1834e3570490c8f24563647e6d7706e6433fc1273c42db8edb89fcd6691a4"
+    },
+    {
+      "path": "lib/artifact-mutations.ts",
+      "prepared_sha256": "947b6e6f879f5f37e0ee57037137a6c83f4af56879e6eb25bad4b55ac91beb1f",
+      "source_sha256": "947b6e6f879f5f37e0ee57037137a6c83f4af56879e6eb25bad4b55ac91beb1f"
+    },
+    {
+      "path": "lib/asset-at-mention.ts",
+      "prepared_sha256": "1c0af5e8d54ea3567cc2a699cdb32630f3ea53f136e30b18f7658c38efba54fd",
+      "source_sha256": "1c0af5e8d54ea3567cc2a699cdb32630f3ea53f136e30b18f7658c38efba54fd"
+    },
+    {
+      "path": "lib/baked-api-defaults.ts",
+      "prepared_sha256": "f7537b757e7cdef6df317b1ab1d036c5e459c5508eaaa48e434ca2b4450d457e",
+      "source_sha256": "e1d43fb33fb06bc1c5649ad84f0c51fb63af7e087eb403669d1cc782f2ad1045"
+    },
+    {
+      "path": "lib/bible-audit.ts",
+      "prepared_sha256": "11e4a16732c4f1a9105f3f64d364d3c4b5e6ea7508a1164e6bf3b7751a1eac6b",
+      "source_sha256": "11e4a16732c4f1a9105f3f64d364d3c4b5e6ea7508a1164e6bf3b7751a1eac6b"
+    },
+    {
+      "path": "lib/creative-brief-extract.ts",
+      "prepared_sha256": "86d6babc673a8ae47a904ab0a8289d5313f8694d9ffc12afecd61776054935e5",
+      "source_sha256": "86d6babc673a8ae47a904ab0a8289d5313f8694d9ffc12afecd61776054935e5"
+    },
+    {
+      "path": "lib/creative-brief-meta-parse.ts",
+      "prepared_sha256": "758bf23612b74d904d637770c56d481dcea2cf31368a2aa7fdf15e49c1e02551",
+      "source_sha256": "758bf23612b74d904d637770c56d481dcea2cf31368a2aa7fdf15e49c1e02551"
+    },
+    {
+      "path": "lib/creative-directions.ts",
+      "prepared_sha256": "04606e49b63e53e681ec9c84cd4e95b0fc8263ef0e8331f41236d117f78a3efa",
+      "source_sha256": "04606e49b63e53e681ec9c84cd4e95b0fc8263ef0e8331f41236d117f78a3efa"
+    },
+    {
+      "path": "lib/episode-stats.ts",
+      "prepared_sha256": "a7fd06b4831b45723d73afe0239077dac932fba20379ed692625ef6af9cccea3",
+      "source_sha256": "a7fd06b4831b45723d73afe0239077dac932fba20379ed692625ef6af9cccea3"
+    },
+    {
+      "path": "lib/export-artifacts.ts",
+      "prepared_sha256": "21ffcd350b049a250cbdc458ff30ac67fe1a70246365d535cedeeb41651987e0",
+      "source_sha256": "05a6a283bee1b5e7a9ddf548dfa397db7663c2867c34b5317640044b0d72ec53"
+    },
+    {
+      "path": "lib/project-context.ts",
+      "prepared_sha256": "ccf4969c4e0f41259cf460e0878ff4fff450d63873fca49796d15aa9f4cc426e",
+      "source_sha256": "150335d56fdc413dfdbedf25d042761b9dc1aa9da52e5de1becdbcfbf5248538"
+    },
+    {
+      "path": "lib/project-migrate.ts",
+      "prepared_sha256": "253c8405f76969dc435b0723d681726c2f6f7d4decf9eae869851defa9bde78d",
+      "source_sha256": "253c8405f76969dc435b0723d681726c2f6f7d4decf9eae869851defa9bde78d"
+    },
+    {
+      "path": "lib/prompt-loader.ts",
+      "prepared_sha256": "ba27ddef8d2cd7b182dc3c7d1546c448edadd820b6f7f9d75d75860f2e3a3d30",
+      "source_sha256": "ba27ddef8d2cd7b182dc3c7d1546c448edadd820b6f7f9d75d75860f2e3a3d30"
+    },
+    {
+      "path": "lib/source-materials.ts",
+      "prepared_sha256": "569c4feb505f4dbd6210db00cc3a092a19745884a5a6ffe77dece60e209fe71d",
+      "source_sha256": "569c4feb505f4dbd6210db00cc3a092a19745884a5a6ffe77dece60e209fe71d"
+    },
+    {
+      "path": "lib/stage-detect.ts",
+      "prepared_sha256": "78f0e5d1fab971b0620b27089368202ebde57c1fbb9cf34a3272f1bfb3af7ae5",
+      "source_sha256": "78f0e5d1fab971b0620b27089368202ebde57c1fbb9cf34a3272f1bfb3af7ae5"
+    },
+    {
+      "path": "lib/stage-gate.ts",
+      "prepared_sha256": "afffa182542a80641f970079466bed5fa759710c27a20184b8e953ebca83ca60",
+      "source_sha256": "afffa182542a80641f970079466bed5fa759710c27a20184b8e953ebca83ca60"
+    },
+    {
+      "path": "lib/stage-slot-schema.ts",
+      "prepared_sha256": "2dba14959aae0ea8908b8da98b75a916d730fe67e784d0faa0b26661b9750bab",
+      "source_sha256": "2dba14959aae0ea8908b8da98b75a916d730fe67e784d0faa0b26661b9750bab"
+    },
+    {
+      "path": "lib/stage5-pipeline.ts",
+      "prepared_sha256": "3cd513ab7916e4cae8ccb48029650a11eb160988973568f046964e56668abbda",
+      "source_sha256": "c32dd04dce92998850d1542b391f81371c8deff9275211598123859f39cac378"
+    },
+    {
+      "path": "lib/stage6-pipeline.ts",
+      "prepared_sha256": "7f2d713e62c87c9de90d7fd60a216ca4511cb9f4477a282aa88bf76e70e80745",
+      "source_sha256": "f12af2ecfd081491ad11a58d5e419b6fd8889f5731eac345b67c1f74642974f1"
+    },
+    {
+      "path": "lib/strip-thinking.ts",
+      "prepared_sha256": "7b54bcdf62afb1ddca77d94c9f90ca3e87a47b0a2afd48cf6ff7f64667465053",
+      "source_sha256": "7b54bcdf62afb1ddca77d94c9f90ca3e87a47b0a2afd48cf6ff7f64667465053"
+    },
+    {
+      "path": "lib/studio-auto-kickoff.ts",
+      "prepared_sha256": "968ff8fc39f045f2e317e96729f80509e656082421d06748782ad5a79cbc0188",
+      "source_sha256": "968ff8fc39f045f2e317e96729f80509e656082421d06748782ad5a79cbc0188"
+    },
+    {
+      "path": "lib/types.ts",
+      "prepared_sha256": "ba051bddc8b58f29b4f8df2c4069adb02a64732faafbb769077c4602e4d2205c",
+      "source_sha256": "ba051bddc8b58f29b4f8df2c4069adb02a64732faafbb769077c4602e4d2205c"
+    }
+  ],
+  "adaptations": [
+    "agent-paths resolves bundled references",
+    "ZIP generation returns a Node buffer instead of triggering browser download",
+    "static App UI wording changed to project records/documents",
+    "physical PDF.js node-ensure resolver bundled",
+    "import normalizes project metadata; inherited approvals require review",
+    "general episode continuation obeys project dialogue language; legacy English localization is conditional"
+  ],
+  "cli_source_sha256": "d4982ba77191d3f0508d66a371a12544fc25a3074bb5c5c11802a0e3c9ed799a",
+  "runtime_cli_sha256": "07065f6b0f9fd026588c2a282884f0134ae64f62b1b039f0c35e41336fd779f8"
+}

@@ -32,6 +32,7 @@
     "video-production-pipeline": "video/production/video-production-pipeline",
     "animejs-creative-motion": "animejs/animejs-creative-motion",
     "animejs-workflows": "animejs/animejs-workflows",
-    "animejs-example-library": "animejs/animejs-example-library"
+    "animejs-example-library": "animejs/animejs-example-library",
+    "gleam-screenwriter": "writing/script/gleam-screenwriter"
   }
 }

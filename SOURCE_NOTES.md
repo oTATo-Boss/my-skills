@@ -62,3 +62,7 @@
 2026-10-21 按用户最终命名，将 `short-video-prompt` 更名为 `single-shot-prompt` v1.1.1；保留不切镜的单镜头短视频适用范围与工作流，同步当前名称、目录、调用入口、相关索引、安装映射和管理示例。技能数量不变，当前本机安装路径为 `~/.agents/skills/video/ai/single-shot-prompt/`。
 
 2026-10-21 按用户要求，将本人开发的 `multi-shot-prompt.skill` 导入 `skills/video/ai/multi-shot-prompt/`。原包 46 个文件内容与 0644 权限保持不变，保留原有恢复范围说明，新增 SOURCE.md 与导入记录；用户原创归属已明确确认，原包未声明独立发布版本或许可证，不自行补授许可。原包只读校验通过 38 个资源引用、10 个正向用例和 32 个错误变体；未进行视频生成。同步项目索引、安装映射和安装说明，项目现维护 31 个 Skill；按已确认的顺序提交推送后，再同步本机独立副本与 Claude 发现入口。
+
+## 2026-10-26 — gleam-screenwriter
+
+从用户指定的本地「AI剧本」应用封装为可独立使用的 Agent Skill，开发路径 `skills/writing/script/gleam-screenwriter`，版本 0.1.0。继承的工程提示词与知识库保留本地改编来源，不擅自声明上游开放许可。CLI 复用阶段解析／验收引擎；当前只交付源码与分发 ZIP，未提交、推送或安装同步。
