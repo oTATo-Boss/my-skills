@@ -1,185 +1,118 @@
 {
-  "appId": "2084320751339032577",
-  "snapshot_date": "2026-10-12",
-  "source": "oTATo项目成功任务及应用apiCallDemo节点发现快照；尚未重新核对线上应用",
-  "instanceType": "plus",
-  "usePersonalQueue": false,
+  "appId": "2104753059472990209",
+  "snapshot_date": "2026-10-27",
+  "source": "用户提供 API 示例与线上节点描述；移除示例素材和内容，保留作者 LoRA 名称、强度和触发词。",
+  "source_sha256": "326f18351a2382904abc9b9fc8eb8643e50c9e56d003cd5ea972b7a6cedfc0d5",
   "nodeInfoList": [
     {
-      "nodeId": "141",
+      "nodeId": "438",
       "fieldName": "image",
-      "fieldValue": "None",
-      "fieldType": "IMAGE",
-      "fieldData": "[[\"example.png\", \"None\", \"keep_this_dic\"], {\"image_upload\": true}]",
-      "description": "参考图1"
+      "fieldValue": "None"
     },
     {
-      "nodeId": "142",
+      "nodeId": "435",
       "fieldName": "image",
-      "fieldValue": "None",
-      "fieldType": "IMAGE",
-      "fieldData": "[[\"example.png\", \"None\", \"keep_this_dic\"], {\"image_upload\": true}]",
-      "description": "参考图2"
+      "fieldValue": "None"
     },
     {
-      "nodeId": "143",
+      "nodeId": "437",
       "fieldName": "image",
-      "fieldValue": "None",
-      "fieldType": "IMAGE",
-      "fieldData": "[[\"example.png\", \"None\", \"keep_this_dic\"], {\"image_upload\": true}]",
-      "description": "参考图3"
+      "fieldValue": "None"
     },
     {
-      "nodeId": "171",
+      "nodeId": "439",
+      "fieldName": "image",
+      "fieldValue": "None"
+    },
+    {
+      "nodeId": "431",
+      "fieldName": "image",
+      "fieldValue": "None"
+    },
+    {
+      "nodeId": "429",
+      "fieldName": "image",
+      "fieldValue": "None"
+    },
+    {
+      "nodeId": "827",
       "fieldName": "value",
-      "fieldValue": "false",
-      "fieldType": "BOOLEAN",
-      "fieldData": "[\"BOOLEAN\", {}]",
-      "description": "最高画质参考（一致性最强）"
+      "fieldValue": "1"
     },
     {
-      "nodeId": "144",
+      "nodeId": "841",
       "fieldName": "audio",
-      "fieldValue": "None",
-      "fieldType": "AUDIO",
-      "fieldData": "[\"COMBO\", {\"options\": [\"None\"], \"multiselect\": false, \"audio_upload\": true}]",
-      "description": "参考音频1"
+      "fieldValue": "None"
     },
     {
-      "nodeId": "164",
-      "fieldName": "video",
-      "fieldValue": "c989919266c6103699a0aad7e207b45e3955db203ecc270d4e812fbef27d1ce9.mp4",
-      "fieldType": "VIDEO",
-      "fieldData": "[\"STRING\", {\"default\": \"None\", \"vhs_path_extensions\": [\"webm\", \"mp4\", \"mkv\", \"gif\", \"mov\"]}]",
-      "description": "参考视频（勿删，打开开关才生效）"
+      "nodeId": "842",
+      "fieldName": "audio",
+      "fieldValue": "None"
     },
     {
-      "nodeId": "163",
-      "fieldName": "value",
-      "fieldValue": "false",
-      "fieldType": "BOOLEAN",
-      "fieldData": "[\"BOOLEAN\", {}]",
-      "description": "参考视频开关"
-    },
-    {
-      "nodeId": "150",
-      "fieldName": "value",
-      "fieldValue": "",
-      "fieldType": "STRING",
-      "fieldData": "[\"STRING\", {\"multiline\": true}]",
-      "description": "提示词"
-    },
-    {
-      "nodeId": "185",
-      "fieldName": "value",
-      "fieldValue": "false",
-      "fieldType": "BOOLEAN",
-      "fieldData": "[\"BOOLEAN\", {}]",
-      "description": "提示词优化"
-    },
-    {
-      "nodeId": "115",
+      "nodeId": "462",
       "fieldName": "aspect_ratio",
-      "fieldValue": "9:16 (Portrait Widescreen)",
-      "fieldType": "LIST",
-      "fieldData": "[\"COMBO\", {\"default\": \"1:1 (Square)\", \"options\": [\"1:1 (Square)\", \"2:3 (Portrait Photo)\", \"3:2 (Photo)\", \"3:4 (Portrait Standard)\", \"4:3 (Standard)\", \"9:16 (Portrait Widescreen)\", \"16:9 (Widescreen)\", \"21:9 (Ultrawide)\"], \"tooltip\": \"The aspect ratio for the output dimensions.\", \"multiselect\": false}]",
-      "description": "比例选择"
+      "fieldValue": ""
     },
     {
-      "nodeId": "186",
+      "nodeId": "462",
+      "fieldName": "megapixels",
+      "fieldValue": "1"
+    },
+    {
+      "nodeId": "804",
       "fieldName": "value",
-      "fieldValue": "15",
-      "fieldType": "INT",
-      "fieldData": "[\"INT\", {\"default\": 0}]",
-      "description": "时长/秒"
+      "fieldValue": ""
     },
     {
-      "nodeId": "147",
+      "nodeId": "894",
       "fieldName": "value",
-      "fieldValue": "0.9",
-      "fieldType": "FLOAT",
-      "fieldData": "[\"FLOAT\", {\"max\": 9223372036854775807, \"min\": -9223372036854775807, \"step\": 0.1}]",
-      "description": "像素/百万"
+      "fieldValue": "true"
     },
     {
-      "nodeId": "161",
-      "fieldName": "image",
-      "fieldValue": "None",
-      "fieldType": "IMAGE",
-      "fieldData": "[[\"example.png\", \"None\", \"keep_this_dic\"], {\"image_upload\": true}]",
-      "description": "参考图4"
+      "nodeId": "456",
+      "fieldName": "text",
+      "fieldValue": ""
     },
     {
-      "nodeId": "175",
-      "fieldName": "image",
-      "fieldValue": "None",
-      "fieldType": "IMAGE",
-      "fieldData": "[[\"example.png\", \"None\", \"keep_this_dic\"], {\"image_upload\": true}]",
-      "description": "参考图5"
-    },
-    {
-      "nodeId": "176",
-      "fieldName": "image",
-      "fieldValue": "None",
-      "fieldType": "IMAGE",
-      "fieldData": "[[\"example.png\", \"None\", \"keep_this_dic\"], {\"image_upload\": true}]",
-      "description": "参考图6"
-    },
-    {
-      "nodeId": "160",
-      "fieldName": "audio",
-      "fieldValue": "None",
-      "fieldType": "AUDIO",
-      "fieldData": "[\"COMBO\", {\"options\": [\"None\"], \"multiselect\": false, \"audio_upload\": true}]",
-      "description": "参考音频2"
-    },
-    {
-      "nodeId": "189",
-      "fieldName": "audio",
-      "fieldValue": "None",
-      "fieldType": "AUDIO",
-      "fieldData": "[\"COMBO\", {\"options\": [\"None\"], \"multiselect\": false, \"audio_upload\": true}]",
-      "description": "参考音频3"
-    },
-    {
-      "nodeId": "192",
-      "fieldName": "value",
-      "fieldValue": "8",
-      "fieldType": "INT",
-      "fieldData": "[\"INT\", {\"default\": 0}]",
-      "description": "采样步数（增加提高质量）"
-    },
-    {
-      "nodeId": "159",
+      "nodeId": "813",
       "fieldName": "lora_name",
-      "fieldValue": "MysticXXX_MMH3-V1.safetensors",
-      "fieldType": "LORA",
-      "fieldData": "[[]]",
-      "description": "解剖结构专用lora"
+      "fieldValue": "MysticXXX-ref2va-V4.safetensors"
     },
     {
-      "nodeId": "159",
+      "nodeId": "813",
       "fieldName": "strength_model",
-      "fieldValue": "0",
-      "fieldType": "FLOAT",
-      "fieldData": "[\"FLOAT\", {\"max\": 100, \"min\": -100, \"step\": 0.01, \"default\": 1}]",
-      "description": "lora强度（画面崩设为0）"
+      "fieldValue": "0.4000000000000001"
     },
     {
-      "nodeId": "169",
-      "fieldName": "value",
-      "fieldValue": "false",
-      "fieldType": "BOOLEAN",
-      "fieldData": "[\"BOOLEAN\", {}]",
-      "description": "补帧开关"
+      "nodeId": "817",
+      "fieldName": "lora_name",
+      "fieldValue": "HMNSFW-AIO-V2.5.safetensors"
     },
     {
-      "nodeId": "158",
+      "nodeId": "817",
+      "fieldName": "strength_model",
+      "fieldValue": "0.5000000000000001"
+    },
+    {
+      "nodeId": "815",
+      "fieldName": "lora_name",
+      "fieldValue": "H3_Motion_BoosterV2.safetensors"
+    },
+    {
+      "nodeId": "815",
+      "fieldName": "strength_model",
+      "fieldValue": "0.6000000000000001"
+    },
+    {
+      "nodeId": "816",
+      "fieldName": "text",
+      "fieldValue": "dynv2,"
+    },
+    {
+      "nodeId": "824",
       "fieldName": "value",
-      "fieldValue": "false",
-      "fieldType": "BOOLEAN",
-      "fieldData": "[\"BOOLEAN\", {}]",
-      "description": "仅Zip输出"
+      "fieldValue": "false"
     }
   ]
 }

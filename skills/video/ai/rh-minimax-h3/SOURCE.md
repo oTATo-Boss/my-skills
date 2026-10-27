@@ -4,12 +4,14 @@
 - kind: `adapted`
 - status: `confirmed`
 - source: 已确认的用户二创／整合版本；本地开发／维护目录 `skills/video/ai/rh-minimax-h3`；当前维护仓库 https://github.com/oTATo-Boss/my-skills
-- version: 1.1.1
+- version: 2.0.0
 - author: 用户（本地二创／整合部分）；第三方原作者信息未完整记录。
 - license: MIT（2026-10-14 本人决定，见 [LICENSE](<LICENSE>)）
 - collected_at: unknown；没有可靠安装／导入日期。
-- recorded_at: `2026-10-19`
+- recorded_at: `2026-10-27`
 - evidence: 当前维护仓库的 SOURCE_NOTES.md 与 INSTALL_MAP.json；[sources.md](references/sources.md)、[变更记录](CHANGELOG.md)；用户 2026-10-19 提供新应用 API 示例，原文 SHA-256 `c3d1f0899d6bffc64eb882bc04af7c6af3fb0b93ac1146e18f1e64bf4df5d466`；本人 2026-10-14 决定以 MIT 许可发布。
+
+- v2.0.0 evidence: 用户 2026-10-27 提供应用 `2104753059472990209` 的 API 示例，SHA-256 `326f18351a2382904abc9b9fc8eb8643e50c9e56d003cd5ea972b7a6cedfc0d5`；线上节点查询及真实 5 秒任务，详见 [sources.md](references/sources.md)。
 
 ## 本地调整与边界
 

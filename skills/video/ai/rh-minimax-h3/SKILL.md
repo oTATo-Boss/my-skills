@@ -1,75 +1,37 @@
 ---
 name: rh-minimax-h3
-description: 使用 RunningHub 指定 MiniMax H3 AI 应用执行短视频或长视频生成；支持图像参考，短视频应用另有音视频参考，以及 API Key 安全存入、节点任务构造、批量提交、查询恢复和结果下载。用户提到 RH-minimax-H3、RunningHub H3 或 H3 长视频模式时使用。
+description: 使用 RunningHub 的 Minimax-H3（30s直出）应用生成视频；支持多图和音频参考、API Key 安全存入、节点任务构造、批量提交、查询恢复与结果下载。用户提到 RH-minimax-H3 或 RunningHub H3 时使用。
 metadata:
-  version: "1.1.1"
+  version: "2.0.0"
 ---
 
 # RH-minimax-H3
 
-通过 RunningHub 的两个 H3 AI 应用生视频，**两种模式均默认使用 Plus 实例**。使用 **RunningHub API Key**；依赖 Python 3.9+、`requests`，可选 `ffprobe` 检查视频流。
+调用 RunningHub **Minimax-H3（30s直出）多图生视频自动提示词-小白全能版**，应用 `2104753059472990209`。使用 RunningHub API Key，依赖 Python 3.9+、`requests`，可选 `ffprobe`。原有两个应用已从当前提交路径移除；旧任务仍可用 taskId 查询恢复，但旧 jobs 不能直接提交。
 
-| 模式 | 应用 | 节点依据与范围 |
-|---|---|---|
-| `short`（默认） | `2084320751339032577`，原多参数视频应用 | 2026-10-12 快照及历史成功任务；5–15 秒，6 张图、3 段音频与 1 段视频参考；[节点](references/node_map.json) |
-| `long` | `2103012816681041921`，新增长视频应用 | 用户 2026-10-19 提供的 API 示例；示例为 35 秒、0.5 MP、16:9、default 实例，暴露 6 张图；[节点](references/node_map_long.json)。尚未线上生成验证，时长上下限和空图片处理待核实 |
+## 任务参数与默认策略
 
-用户指定长视频时显式使用 `--mode long`。长视频示例未暴露音频/视频参考和采样步数节点，不套用短视频的这些参数或画质映射。节点细节见 [api.md](references/api.md)。
+Agent 根据当前任务明确填写提示词、**时长 5–30 秒、画幅、参考图和输出目录**，不自行预设时长或画幅。至少 1 张、最多 6 张参考图；可选最多 2 段音频。纯文生及音频参考尚未线上验证。画幅可选 1:1、2:3、3:2、3:4、4:3、9:16、16:9、21:9。
 
-原长视频 API 示例的实例为 `default`；本技能按用户要求改为默认 `plus`，构造器和直接读取旧 jobs 的客户端均采用此默认值。jobs 显式指定的实例仍按该任务执行。
+用户指定的默认策略：**Plus 实例、自动提示词开启、直接输出视频、1 MP、作者示例的 3 组 LoRA 和触发词**。用户要求 1080P 时使用 **2 MP + Ultra**。1 MP 和 2 MP 是本技能的画质参数约定，不保证输出恰好为标准 720P/1080P 分辨率；报告实际尺寸。用户明确其他要求时按任务设置。
 
-## 什么时候用
+**线上节点提示超过 0.8 MP 需 Ultra**；用户指定的默认 1 MP + Plus 与之冲突，但已实测 5 秒可运行；其他时长仍须按任务验证，不自动降像素或切换实例。若远端失败，报告实际错误并与用户协调。2 MP 或以上强制 Ultra；详见 [api.md](references/api.md)。作者 LoRA 和自动提示词会影响内容，明确任务要求可覆盖；默认参数及 2 MP + Ultra 均已完成 5 秒生成和完整解码验证；30 秒、音频参考、纯文生仍未验证。
 
-用户指定这个工具生视频、配置 Key，或查询并下载已提交的 H3 任务时使用。它负责执行生成；创作内容与项目的脚本确认、声音、输出目录要求沿用当前任务。不要把 oTATo 的角色和台词规则带到其他项目。
+## 凭据
 
-## API 存入
+先执行 `python3 "$SKILL_DIR/scripts/credentials.py" status`，其中 `SKILL_DIR` 为本技能目录。优先读取环境变量 `RUNNINGHUB_API_KEY`，其次为 `~/.config/rh-minimax-h3/.env`；可用 `RUNNINGHUB_ENV_FILE` 指定文件。状态仅证明已配置，不证明 Key 有效或余额充足。
 
-将本 Skill 所在目录记为 `SKILL_DIR`，从任何工作目录运行包内脚本。先执行：
+新 Key 用 `credentials.py set` 本机隐藏输入，权限 0600；从已授权项目导入用 `import-env --from-env /绝对路径/.env`。替换需用户要求并加 `--replace`。不得将 Key 写入技能、任务、日志、Git 或交付；详见 [credentials.md](references/credentials.md)。
 
-```bash
-python3 "$SKILL_DIR/scripts/credentials.py" status
-```
+## 使用与安全
 
-默认从 `RUNNINGHUB_API_KEY` 环境变量读取，其次读取 `~/.config/rh-minimax-h3/.env`。指定项目配置时设置 `RUNNINGHUB_ENV_FILE=/绝对路径/.env`。文件只解析键值，不执行 shell。
+按 [usage.md](references/usage.md) 构造 jobs；先 `--dry-run`，通过后才在当前任务授权范围内提交。Dry-run 不联网、不校验账户或节点在线有效性。素材上传后提交；每批最多 3 个在途任务，且不得超过账户可用额度。脚本保存提交请求和 taskId；提交不明或查询超时后停止排队，不盲目重试。
 
-- 新 Key：`python3 "$SKILL_DIR/scripts/credentials.py" set`，隐藏输入，保存权限 0600。
-- 已有项目配置：`python3 "$SKILL_DIR/scripts/credentials.py" import-env --from-env /绝对路径/.env`，不回显、不改动原文件。
-- 替换现有配置需加 `--replace`；仅在用户要求更新 Key 时执行。
-- 凭据独立于开发目录与安装包。不得写入 Skill、jobs、提示词、回包日志、Git 或交付。具体路径、保存和优先级见 [credentials.md](references/credentials.md)。
+已有 taskId 用 `--resume TASK_ID --name 原名称 --output 原目录` 查询并下载，不重提。没有 taskId 的 `SUBMIT_UNKNOWN` 先查平台任务和消费记录。结果立即下载；报告 taskId、平台 usage、实际文件和尺寸/时长。usage 缺失时如实说明；ffprobe 不能代替完整播放与审美验收。
 
-`status` 只证明本机已配置，不能证明 Key 有效或有余额。没有 Key 时请用户在本机隐藏输入，不要求发进聊天。
+## 参考与验证
 
-## 怎么用
-
-1. 明确当前任务的内容、时长、画幅、画质、参考文件和输出目录；已有授权持续有效。本技能不自行新增“任何项目无限收费”的授权，也不重复询问已授权任务。
-2. 按 [usage.md](references/usage.md) 选择模式并构造 jobs。两份映射只用于各自应用；字段以该应用当前 API 页为准，参数失败或应用更新时按 [api.md](references/api.md) 重新发现。构造器清空未使用图像/音频，所有可选 LoRA 强度设为 0；短视频关闭视频参考、提示词优化、补帧和仅 ZIP 输出，关闭参考时保留其原快照字段；长视频清空示例文本触发词，未声明用途的数值/开关保留示例值。
-3. 先 `--dry-run`，通过后执行生成：
-
-```bash
-python3 "$SKILL_DIR/scripts/rh_minimax_h3.py" /绝对路径/jobs.json \
-  --output /绝对路径/当前任务/素材 --dry-run
-python3 "$SKILL_DIR/scripts/rh_minimax_h3.py" /绝对路径/jobs.json \
-  --output /绝对路径/当前任务/素材
-```
-
-Dry-run 校验应用 ID、结构、占位符、重名和素材文件；不联网、不检查余额，也不证明节点当前在线有效。短视频画质映射为 480P→0.4 MP、720P→0.9 MP、1080P→2.0 MP；实际支持取决于应用与实例。长视频直接用 `--megapixels` 指定 MP，示例默认 0.5，不把它换算为未经验证的 P 档位。分辨率均按真实输出报告。
-
-4. 每个批次最多 3 个在途任务，且应低于账户可用额度。脚本并发限制仅覆盖本次进程；不要启动多个批次绕过额度。脚本先保存提交请求，再保存 taskId。提交不明或查询超时后停止新的排队提交。
-5. 已有 taskId 使用恢复命令，复用原名称和目录，不再生成一次：
-
-```bash
-python3 "$SKILL_DIR/scripts/rh_minimax_h3.py" --resume TASK_ID \
-  --name 原任务名 --output /绝对路径/原任务/素材
-```
-
-没有 taskId 的 `SUBMIT_UNKNOWN` 先查平台任务和消费记录；没有证据前不清理回执、不盲目重提。`SUCCESS` 也可能下载失败，仍优先恢复。只有明确远端失败或用户安排新尝试时，才创建新任务。
-
-6. 结果立即下载，记录 taskId、usage、文件和检查；CDN 下载不附带 API Key。客户端检查容器文件头，有 ffprobe 时核对视频流、尺寸、时长；审美、参考一致性、声音和完整播放另按任务检查。汇报有效视频路径、真实尺寸/时长、taskId、usage 及未验证项；usage 缺失就说明未返回，不估算成实际费用。
-
-## 按需参考
-
-- 首次接入、API 存入或换 Key：[credentials.md](references/credentials.md)。
-- 文生、图生、多参考、批量和断点恢复：[usage.md](references/usage.md)。
-- 节点、接口、画质及故障：[api.md](references/api.md)。
-- 来源、许可状态与版本：[sources.md](references/sources.md)。
-- 本地假服务验证：`python3 "$SKILL_DIR/tests/mock_test.py"`；不调用 RunningHub。配置和构造器行为验证：`python3 "$SKILL_DIR/tests/test_helpers.py"`。
+- [usage.md](references/usage.md)：构造、可选参数与恢复。
+- [api.md](references/api.md)：节点、线上范围、默认策略和验证边界。
+- [sources.md](references/sources.md)：来源、许可和历史版本。
+- 离线行为：`python3 "$SKILL_DIR/tests/test_helpers.py"`；假服务：`python3 "$SKILL_DIR/tests/mock_test.py"`。假服务不调用 RunningHub。

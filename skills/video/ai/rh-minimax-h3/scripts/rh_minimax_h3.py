@@ -12,6 +12,7 @@
 import argparse
 import copy
 import json
+import math
 import os
 import re
 import shutil
@@ -24,9 +25,8 @@ from urllib.parse import urlsplit
 
 import requests
 
-APP_ID = '2084320751339032577'
-LONG_APP_ID = '2103012816681041921'
-SUPPORTED_APP_IDS = {APP_ID, LONG_APP_ID}
+APP_ID = '2104753059472990209'
+SUPPORTED_APP_IDS = {APP_ID}
 BASE = os.getenv('RUNNINGHUB_BASE_URL', 'https://www.runninghub.ai').rstrip('/')
 MAX_CONCURRENT = 3
 POLL_SECONDS = float(os.getenv('RH_POLL_SECONDS', '15'))
@@ -105,9 +105,21 @@ def validate_jobs(jobs):
         if name in names:
             problems.append(f'{label}: name 重复（{name}），回执文件会互相覆盖')
         names.add(name)
-        if not isinstance(job.get('appId', APP_ID), str) or job.get('appId', APP_ID) not in SUPPORTED_APP_IDS:
-            problems.append(f'{label}: appId 不在本技能支持的短/长视频应用中')
+        if not isinstance(job.get('appId'), str) or job.get('appId') not in SUPPORTED_APP_IDS:
+            problems.append(f'{label}: 须显式指定当前应用 appId；旧应用 jobs 不能直接提交')
         nodes = job.get('nodeInfoList')
+        if isinstance(nodes, list):
+            pixels = [n.get('fieldValue') for n in nodes if isinstance(n, dict)
+                      and str(n.get('nodeId')) == '462' and n.get('fieldName') == 'megapixels']
+            if len(pixels) == 1:
+                try:
+                    mp = float(pixels[0])
+                    if not math.isfinite(mp) or not 0.1 <= mp <= 16:
+                        problems.append(f'{label}: MP 须为 0.1–16 的有限数值')
+                    elif mp >= 2 and job.get('instanceType', 'plus') != 'ultra':
+                        problems.append(f'{label}: 2 MP 或以上须使用 Ultra')
+                except (TypeError, ValueError):
+                    problems.append(f'{label}: MP 不是有效数值')
         if not isinstance(nodes, list) or not nodes:
             problems.append(f'{label}: 缺少 nodeInfoList')
             continue
@@ -135,7 +147,7 @@ def summarize_jobs(jobs):
     for job in jobs:
         uploads = sum(1 for n in job['nodeInfoList']
                       if isinstance(n.get('fieldValue'), dict) and set(n['fieldValue']) == {'$upload'})
-        lines.append(f"- {safe_name(job.get('name'))}: appId={job.get('appId', APP_ID)}，节点 {len(job['nodeInfoList'])} 个，"
+        lines.append(f"- {safe_name(job.get('name'))}: appId={job.get('appId')}，节点 {len(job['nodeInfoList'])} 个，"
                      f"待上传素材 {uploads} 个，instanceType={job.get('instanceType', 'plus')}")
     lines.append('时长、像素档位、费用须对照真实节点映射与平台计价确认；dry-run 不校验这些。')
     return '\n'.join(lines)
@@ -289,7 +301,7 @@ def finish_task(task_id, name, out, status_json, receipt):
 
 def run_one(job, out, max_wait):
     name = safe_name(job.get('name'))
-    app_id = job.get('appId', APP_ID)
+    app_id = job['appId']
     pending = out / f'{name}_submitting.json'
     if HALT.is_set():
         raise RuntimeError(f'{name}: 未提交，因为已有任务等待超时仍在远端运行（避免超出并发额度）')
