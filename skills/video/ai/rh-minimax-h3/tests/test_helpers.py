@@ -81,6 +81,7 @@ class Helpers(unittest.TestCase):
                                       '--dry-run', '--output', str(tmp/'out')],
                                      capture_output=True, text=True)
                 self.assertEqual(dry.returncode, 0, dry.stderr)
+                self.assertIn('待上传素材 2 个', dry.stdout)
                 self.assertFalse((tmp/'out').exists())
             result = subprocess.run(base + ['--output', str(tmp/'bad.json'), '--quality', '1080P',
                                              '--instance', 'plus'], capture_output=True, text=True)

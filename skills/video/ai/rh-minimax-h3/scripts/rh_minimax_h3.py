@@ -145,8 +145,9 @@ def validate_jobs(jobs):
 def summarize_jobs(jobs):
     lines = [f'共 {len(jobs)} 个任务，最多同时 {MAX_CONCURRENT} 个在途']
     for job in jobs:
-        uploads = sum(1 for n in job['nodeInfoList']
-                      if isinstance(n.get('fieldValue'), dict) and set(n['fieldValue']) == {'$upload'})
+        uploads = len({str(Path(str(n['fieldValue']['$upload'])).expanduser().resolve())
+                       for n in job['nodeInfoList']
+                       if isinstance(n.get('fieldValue'), dict) and set(n['fieldValue']) == {'$upload'}})
         lines.append(f"- {safe_name(job.get('name'))}: appId={job.get('appId')}，节点 {len(job['nodeInfoList'])} 个，"
                      f"待上传素材 {uploads} 个，instanceType={job.get('instanceType', 'plus')}")
     lines.append('时长、像素档位、费用须对照真实节点映射与平台计价确认；dry-run 不校验这些。')
