@@ -25,7 +25,7 @@ from urllib.parse import urlsplit
 
 import requests
 
-APP_ID = '2104753059472990209'
+APP_ID = '2101232638873858050'
 SUPPORTED_APP_IDS = {APP_ID}
 BASE = os.getenv('RUNNINGHUB_BASE_URL', 'https://www.runninghub.ai').rstrip('/')
 MAX_CONCURRENT = 3
@@ -88,8 +88,7 @@ def safe_name(value):
 
 def is_placeholder(value):
     return isinstance(value, str) and (value.startswith(('（填', '(填')) or
-        (bool(re.search(r'<[^<>]*>', value)) and
-         (value.strip().startswith('<真实') or value.strip().startswith('<填') or '真实' in value)))
+        bool(re.search(r'<(?:真实|填)[^<>]*>', value)))
 
 
 def validate_jobs(jobs):
@@ -114,8 +113,8 @@ def validate_jobs(jobs):
             if len(pixels) == 1:
                 try:
                     mp = float(pixels[0])
-                    if not math.isfinite(mp) or not 0.1 <= mp <= 16:
-                        problems.append(f'{label}: MP 须为 0.1–16 的有限数值')
+                    if not math.isfinite(mp) or mp <= 0:
+                        problems.append(f'{label}: MP 须为有限正数')
                     elif mp >= 2 and job.get('instanceType', 'plus') != 'ultra':
                         problems.append(f'{label}: 2 MP 或以上须使用 Ultra')
                 except (TypeError, ValueError):

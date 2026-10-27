@@ -1,33 +1,32 @@
-# 任务构造、生成与恢复
+# 小白版 V2：任务构造、生成与恢复
 
-Agent 根据任务选择时长、画幅、图片、提示词与交付目录。无足够任务信息时询问；至少一张图片，纯文生未验证。不将任务素材或凭据写进技能目录。
+Agent 按任务指定时长、画幅、提示词、参考图和交付目录；至少一张图片，纯文生未验证。不将素材或凭据写入技能目录。
 
 ```bash
 python3 "$SKILL_DIR/scripts/build_jobs.py" \
   --prompt-file /绝对路径/任务/prompt.txt --name shot01 \
-  --seconds 5 --aspect 9:16 --image /绝对路径/任务/参考.png \
+  --seconds 15 --aspect 9:16 --quality 720P \
+  --image /绝对路径/任务/人物.png --audio /绝对路径/任务/音色.wav \
   --output /绝对路径/任务/jobs.json
 python3 "$SKILL_DIR/scripts/rh_minimax_h3.py" /绝对路径/任务/jobs.json \
-  --output /绝对路径/任务/素材 --dry-run
+  --output /绝对路径/任务/输出 --dry-run
 python3 "$SKILL_DIR/scripts/rh_minimax_h3.py" /绝对路径/任务/jobs.json \
-  --output /绝对路径/任务/素材
+  --output /绝对路径/任务/输出
 ```
 
-示例只是参数用法，不作为时长或画幅默认值。构造器拒绝覆盖既有 jobs。生成操作需属于用户授权的当前任务；dry-run 不联网、不提交、不证明线上参数可行。
+示例不规定所有任务的时长或画幅。构造器拒绝覆盖已有 jobs；dry-run 不上传、不提交、不验证线上节点或账户余额。
 
-`--quality 1080P` 使用 2 MP 和 Ultra，`--quality 720P` 使用 1 MP；也可用 `--megapixels` 指定数值。未指定为 1 MP。`--instance default|plus|ultra` 可选，缺省 Plus，但 2 MP 及以上必须 Ultra；其他数值线上节点提示超过 0.8 MP 需 Ultra，按用户指定默认不自动切换。不能保证对应标准 P 档的准确像素。
+- `--quality 480P|720P|1080P` 分别设置 **0.5、1、2 MP**；默认 720P（1 MP）。这是用户指定的档位映射，实际输出宽高不一定是标准分辨率。也可 `--megapixels` 指定数值。默认 Plus；2 MP 及以上使用 Ultra，显式传入其他实例会拒绝。
+- `--image` 重复 1–6 次，`--audio` 重复 0–2 次；单文件限 30 MB。未使用的图像槽复用最后一张参考图，`827` 保持真实图片数；上传按文件路径去重。未使用音频为 `None`。
+- 四组 `--lora-N-name`、`--lora-N-strength`（N=1–4）可单次覆盖用户指定默认值；`--lora-trigger` 可覆盖触发词。换 LoRA 时应一起检查触发词，构造器不会推断新的触发词。
+- 默认 `--output-format video`；`zip` 映射示例布尔开关 `true`，ZIP 输出未实测。版本开关默认沿用已成功样例的 `true`，可显式 `--version-switch true|false`；v1/v2 的布尔对应关系尚未核实。
+- 本应用接口没有提示词优化开关、采样步数、视频参考或种子字段；不要传入或假称已控制这些参数。
 
-重复传 `--image` 最多 6 张、`--audio` 最多 2 段；实际图像数量自动设置到节点 827。自动提示词开启时，未使用的图片节点复用最后一张参考图，避免平台合并空图片报错；实际使用张数不变，上传按文件去重。关闭自动提示词时，未用节点为 `None`。单文件限 30 MB。`--auto-prompt on|off` 默认 on，`--output-format video|zip` 默认 video。ZIP 将下载保留，但客户端没有视频时不会判为视频成功。
-
-作者示例默认三组 LoRA：`MysticXXX-ref2va-V4.safetensors` 强度 0.4、`HMNSFW-AIO-V2.5.safetensors` 强度 0.5、`H3_Motion_BoosterV2.safetensors` 强度 0.6；触发词 `dynv2,`。用 `--lora-1-name` / `--lora-1-strength` 到 `--lora-3-name` / `--lora-3-strength` 及 `--lora-trigger` 覆盖。输出是否适合当前任务另行检查。
-
-参数构造示例 `--quality 1080P` 自动选 Ultra；不支持视频参考和采样步数。示例不证明高分辨率、音频或不同 LoRA 组合可运行。
-
-`<name>_submitting.json` 记录提交前 payload 与状态；`<name>_<taskId>.json` 保存状态、usage、文件和检查。异常退出后不可盲目重提：
+`<name>_submitting.json` 保存不含 Key 的请求与状态，`<name>_<taskId>.json` 保存状态、usage 和结果检查。提交不明时先查平台，不盲目重试。已有 taskId：
 
 ```bash
 python3 "$SKILL_DIR/scripts/rh_minimax_h3.py" --resume TASK_ID \
-  --name 原任务名 --output /绝对路径/原任务/素材
+  --name 原任务名 --output /绝对路径/原输出目录
 ```
 
-有 taskId 只恢复查询下载；没有 taskId 的 `SUBMIT_UNKNOWN` 先查平台任务和消费。无有效视频时保留回执及下载文件，不报告视频成功。旧应用任务仍可恢复，但旧应用 jobs 和无 appId 的旧 jobs 拒绝直接提交；须重新根据新应用构造，不能静默转投。
+其他应用的历史任务可恢复，但其他应用 ID 和缺 appId 的 jobs 拒绝提交；查询恢复与当前应用选择相互独立。

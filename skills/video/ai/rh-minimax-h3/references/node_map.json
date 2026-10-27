@@ -1,118 +1,159 @@
 {
-  "appId": "2104753059472990209",
-  "snapshot_date": "2026-10-27",
-  "source": "用户提供 API 示例与线上节点描述；移除示例素材和内容，保留作者 LoRA 名称、强度和触发词。",
-  "source_sha256": "326f18351a2382904abc9b9fc8eb8643e50c9e56d003cd5ea972b7a6cedfc0d5",
+  "appId": "2101232638873858050",
+  "snapshot_date": "2026-10-28",
+  "source": "用户提供小白版 V2 API 示例与 2026-10-28 指定参数；已排除示例媒体、提示词和凭据。",
+  "source_sha256": "cd7c983c620e0459b600ef6d97231c63bada5a5b5fb31ebc84da86594a644dff",
   "nodeInfoList": [
     {
       "nodeId": "438",
       "fieldName": "image",
-      "fieldValue": "None"
+      "fieldValue": "None",
+      "description": null
     },
     {
       "nodeId": "435",
       "fieldName": "image",
-      "fieldValue": "None"
+      "fieldValue": "None",
+      "description": null
     },
     {
       "nodeId": "437",
       "fieldName": "image",
-      "fieldValue": "None"
+      "fieldValue": "None",
+      "description": null
     },
     {
       "nodeId": "439",
       "fieldName": "image",
-      "fieldValue": "None"
+      "fieldValue": "None",
+      "description": null
     },
     {
       "nodeId": "431",
       "fieldName": "image",
-      "fieldValue": "None"
+      "fieldValue": "None",
+      "description": null
     },
     {
       "nodeId": "429",
       "fieldName": "image",
-      "fieldValue": "None"
+      "fieldValue": "None",
+      "description": null
     },
     {
       "nodeId": "827",
       "fieldName": "value",
-      "fieldValue": "1"
+      "fieldValue": "1",
+      "description": null
     },
     {
       "nodeId": "841",
       "fieldName": "audio",
-      "fieldValue": "None"
+      "fieldValue": "None",
+      "description": null
     },
     {
       "nodeId": "842",
       "fieldName": "audio",
-      "fieldValue": "None"
+      "fieldValue": "None",
+      "description": null
     },
     {
       "nodeId": "462",
       "fieldName": "aspect_ratio",
-      "fieldValue": ""
+      "fieldData": "[\"COMBO\", {\"default\": \"1:1 (Square)\", \"options\": [\"1:1 (Square)\", \"2:3 (Portrait Photo)\", \"3:2 (Photo)\", \"3:4 (Portrait Standard)\", \"4:3 (Standard)\", \"9:16 (Portrait Widescreen)\", \"16:9 (Widescreen)\", \"21:9 (Ultrawide)\"], \"tooltip\": \"The aspect ratio for the output dimensions.\", \"multiselect\": false}]",
+      "fieldValue": "9:16 (Portrait Widescreen)",
+      "description": null
     },
     {
       "nodeId": "462",
       "fieldName": "megapixels",
-      "fieldValue": "1"
+      "fieldValue": "1.0",
+      "description": null
     },
     {
       "nodeId": "804",
       "fieldName": "value",
-      "fieldValue": ""
+      "fieldValue": "15",
+      "description": null
     },
     {
-      "nodeId": "894",
+      "nodeId": "881",
       "fieldName": "value",
-      "fieldValue": "true"
+      "fieldValue": "true",
+      "description": null
     },
     {
       "nodeId": "456",
       "fieldName": "text",
-      "fieldValue": ""
+      "fieldValue": "",
+      "description": null
+    },
+    {
+      "nodeId": "774",
+      "fieldName": "unet_name",
+      "fieldValue": "minimax_h3_hybrid_fl2va_ref2va_b25-49-int8_r.safetensors",
+      "description": null
     },
     {
       "nodeId": "813",
       "fieldName": "lora_name",
-      "fieldValue": "MysticXXX-ref2va-V4.safetensors"
+      "fieldValue": "MysticXXX_MMH3-V5.1.safetensors",
+      "description": null
     },
     {
       "nodeId": "813",
       "fieldName": "strength_model",
-      "fieldValue": "0.4000000000000001"
+      "fieldValue": "0.4",
+      "description": null
     },
     {
       "nodeId": "817",
       "fieldName": "lora_name",
-      "fieldValue": "HMNSFW-AIO-V2.5.safetensors"
+      "fieldValue": "Minimax-H3-Digicam-Realism Improve Lora.safetensors",
+      "description": null
     },
     {
       "nodeId": "817",
       "fieldName": "strength_model",
-      "fieldValue": "0.5000000000000001"
+      "fieldValue": "0.5",
+      "description": null
     },
     {
       "nodeId": "815",
       "fieldName": "lora_name",
-      "fieldValue": "H3_Motion_BoosterV2.safetensors"
+      "fieldValue": "h3-realism-people-t2v-i2v-r2v_new.safetensors",
+      "description": null
     },
     {
       "nodeId": "815",
       "fieldName": "strength_model",
-      "fieldValue": "0.6000000000000001"
+      "fieldValue": "0.5",
+      "description": null
+    },
+    {
+      "nodeId": "888",
+      "fieldName": "lora_name",
+      "fieldValue": "H3电影感V2.safetensors",
+      "description": null
+    },
+    {
+      "nodeId": "888",
+      "fieldName": "strength_model",
+      "fieldValue": "0.5",
+      "description": null
     },
     {
       "nodeId": "816",
       "fieldName": "text",
-      "fieldValue": "dynv2,"
+      "fieldValue": "dynv2,r34l1sm",
+      "description": null
     },
     {
       "nodeId": "824",
       "fieldName": "value",
-      "fieldValue": "false"
+      "fieldValue": "false",
+      "description": null
     }
   ]
 }

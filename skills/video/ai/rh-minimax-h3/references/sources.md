@@ -1,8 +1,10 @@
 # 来源与版本
 
-- `rh-minimax-h3` 当前版本 2.0.0（2026-10-27）；用户确认的二创／整合技能，参见 [SOURCE.md](../SOURCE.md) 和 [CHANGELOG.md](../CHANGELOG.md)。本技能代码和文档的 MIT 许可不覆盖 RunningHub 的服务、应用或第三方模型和 LoRA。
-- 用户提供的 30 秒应用 API 示例，SHA-256 `326f18351a2382904abc9b9fc8eb8643e50c9e56d003cd5ea972b7a6cedfc0d5`；应用 ID `2104753059472990209`，线上 API 节点于 2026-10-27 只读核对。保留作者示例 LoRA 的名称、强度和触发词；不继承示例提示词或素材。作者 LoRA 的独立作者与许可状态未核实。
-- [RunningHub 应用 API 页面](https://www.runninghub.ai/zh-cn/call-api/api-detail/2104753059472990209?apiType=4)；节点变化以线上应用为准。
-- 2026-10-27 真实任务 `2114987085958303745` 成功输出 672×672、5.167 秒 MP4，usage 42 RH 币；具体参数和未验证内容见 [api.md](api.md)。后续默认配置任务 `2114992611366621185` 已验证 1 MP + Plus、自动提示词开启、作者 LoRA 和触发词，输出 1408×768、5.167 秒，82 RH 币；完整解码通过。
-- 1080P 配置任务 `2114993584755535874` 已验证 2 MP + Ultra、自动提示词开启、作者 LoRA 和触发词，输出 1952×1120、5.167 秒，196 RH 币；完整解码通过。
-- 早期 1.x 双应用记录见变更记录；本版移除旧应用提交路径，不自动迁移旧 jobs，查询恢复不依赖应用 ID。
+- `rh-minimax-h3` 当前版本 4.0.0（2026-10-28）；用户确认的二创／整合技能，见 [SOURCE.md](../SOURCE.md) 与 [CHANGELOG.md](../CHANGELOG.md)。本技能 MIT 许可不覆盖 RunningHub 的应用、服务、模型或 LoRA。
+- 用户提供 [小白版 V2 应用](https://www.runninghub.ai/zh-cn/call-api/api-detail/2101232638873858050?apiType=4)的 API 示例，2026-10-28 只读核对线上节点；原示例与此前三应用对照中第一份示例一致。用户随后指定截图中的四组 LoRA、强度、触发词和画质映射。未在技能中保存用户素材、提示词或凭据。
+- 第一组 `MysticXXX_MMH3-V5.1.safetensors`：用户 RunningHub 截图确认文件名，作者、许可和精确权重来源未核实。
+- 第二组 `Minimax-H3-Digicam-Realism Improve Lora.safetensors`：用户截图指定，RunningHub 发布的[模型说明](https://huggingface.co/RunningHubAI/rh-minimax-h3-digicam-realism-improve-lora)列出相同文件名；版权归作者，许可须遵循原项目或上游条款。
+- 第三组 `h3-realism-people-t2v-i2v-r2v_new.safetensors`：用户截图指定；[fal 模型卡](https://huggingface.co/fal/MiniMax-H3-Realism-People-LoRA)给出触发词 `r34l1sm` 和 MiniMax H3 Community License。RunningHub 的 `_new` 文件与原作者权重是否逐字节一致未核实。
+- 第四组 `H3电影感V2.safetensors`：用户截图指定，作者、许可和精确权重来源未核实。用户截图指定组合触发词 `dynv2,r34l1sm`。
+- 小白版 V2 真实任务 `2115032446445903873` 以作者示例 LoRA、0.8 MP + Plus、15 秒、多图双音频，输出 1248×672、15.083 秒视频，183 RH 币；完整解码通过。它不验证当前用户指定的四 LoRA 组合、三个画质档、音色相似度或精细口型。
+- 更早应用的节点和验证范围见历史变更记录；其他应用 jobs 不再接受，查询恢复不依赖应用 ID。

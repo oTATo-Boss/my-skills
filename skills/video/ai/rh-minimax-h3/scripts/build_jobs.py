@@ -1,18 +1,19 @@
 #!/usr/bin/env python3
-"""Build a 30-second H3 application job from the current node snapshot, offline."""
+"""Build a RunningHub MiniMax H3 beginner V2 job from its node snapshot."""
 import argparse
 import json
 import math
 from pathlib import Path
 
 MAP = Path(__file__).resolve().parents[1] / 'references/node_map.json'
-APP_ID = '2104753059472990209'
+APP_ID = '2101232638873858050'
 ASPECTS = {
     '1:1': '1:1 (Square)', '2:3': '2:3 (Portrait Photo)', '3:2': '3:2 (Photo)',
     '3:4': '3:4 (Portrait Standard)', '4:3': '4:3 (Standard)',
     '9:16': '9:16 (Portrait Widescreen)', '16:9': '16:9 (Widescreen)',
     '21:9': '21:9 (Ultrawide)',
 }
+QUALITY_MP = {'480P': 0.5, '720P': 1.0, '1080P': 2.0}
 
 
 def main():
@@ -20,29 +21,29 @@ def main():
     parser.add_argument('--prompt-file', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--name', default='video')
-    parser.add_argument('--seconds', type=int, required=True, help='任务指定时长 5–30 秒')
-    parser.add_argument('--aspect', choices=ASPECTS, required=True, help='任务指定画幅')
+    parser.add_argument('--seconds', type=int, required=True, help='任务指定时长，5–15 秒')
+    parser.add_argument('--aspect', choices=ASPECTS, required=True)
     pixels = parser.add_mutually_exclusive_group()
-    pixels.add_argument('--quality', choices=('720P', '1080P'), help='720P→1 MP；1080P→2 MP + Ultra')
-    pixels.add_argument('--megapixels', type=float, help='指定 MP；默认 1，2 或以上使用 Ultra')
-    parser.add_argument('--instance', choices=('default', 'plus', 'ultra'), help='默认 Plus；2 MP 或以上须 Ultra')
-    parser.add_argument('--image', type=Path, action='append', default=[], help='图像参考，至少 1 张，最多 6 张')
-    parser.add_argument('--audio', type=Path, action='append', default=[], help='音频参考，最多 2 段')
-    parser.add_argument('--auto-prompt', choices=('on', 'off'), default='on')
+    pixels.add_argument('--quality', choices=tuple(QUALITY_MP), help='480P→0.5 MP；720P→1 MP；1080P→2 MP')
+    pixels.add_argument('--megapixels', type=float, help='任务指定目标 MP，默认 1')
+    parser.add_argument('--instance', choices=('default', 'plus', 'ultra'), help='默认 Plus；2 MP 或以上使用 Ultra')
+    parser.add_argument('--image', type=Path, action='append', default=[])
+    parser.add_argument('--audio', type=Path, action='append', default=[])
     parser.add_argument('--output-format', choices=('video', 'zip'), default='video')
-    for number in (1, 2, 3):
+    parser.add_argument('--version-switch', choices=('true', 'false'), help='应用 v1/v2 布尔开关，默认沿用已测示例 true')
+    for number in (1, 2, 3, 4):
         parser.add_argument(f'--lora-{number}-name')
         parser.add_argument(f'--lora-{number}-strength', type=float)
-    parser.add_argument('--lora-trigger', help='覆盖作者示例的 LoRA 触发词，可传空字符串')
-    parser.add_argument('--node-map', type=Path, help='指定与当前应用 ID 一致的节点映射')
+    parser.add_argument('--lora-trigger')
+    parser.add_argument('--node-map', type=Path)
     args = parser.parse_args()
-    if not 5 <= args.seconds <= 30:
-        parser.error('时长须为 5–30 秒')
+    if not 5 <= args.seconds <= 15:
+        parser.error('时长须为 5–15 秒')
     if not 1 <= len(args.image) <= 6 or len(args.audio) > 2:
-        parser.error('须提供 1–6 张参考图，最多 2 段音频；纯文生尚未验证')
-    megapixels = args.megapixels if args.megapixels is not None else (2.0 if args.quality == '1080P' else 1.0)
+        parser.error('须提供 1–6 张参考图，最多 2 段音频；纯文生未验证')
+    megapixels = args.megapixels if args.megapixels is not None else QUALITY_MP.get(args.quality or '720P')
     if not math.isfinite(megapixels) or not 0.1 <= megapixels <= 16:
-        parser.error('MP 须为 0.1–16 的有限数值；线上实用范围仍待核实')
+        parser.error('MP 须为 0.1–16 的有限数值；线上实用范围仍需验证')
     if megapixels >= 2 and args.instance and args.instance != 'ultra':
         parser.error('2 MP 或以上须使用 Ultra')
     instance = args.instance or ('ultra' if megapixels >= 2 else 'plus')
@@ -65,6 +66,8 @@ def main():
         path = path.expanduser().resolve()
         if not path.is_file() or path.stat().st_size > 30 * 1024 * 1024:
             parser.error('素材不存在或超过 30MB：' + str(path))
+        if (node_id, field) not in by_key:
+            parser.error('素材节点缺失，须核对当前应用接口')
         by_key[(node_id, field)]['fieldValue'] = {'$upload': str(path)}
 
     for node in nodes:
@@ -75,20 +78,18 @@ def main():
     set_value('462', 'megapixels', megapixels)
     set_value('462', 'aspect_ratio', ASPECTS[args.aspect])
     set_value('827', 'value', len(args.image))
-    set_value('894', 'value', str(args.auto_prompt == 'on').lower())
-    # The author's sample uses false for direct output; this was verified by a real task.
     set_value('824', 'value', str(args.output_format == 'zip').lower())
+    if args.version_switch is not None:
+        set_value('881', 'value', args.version_switch)
     image_nodes = ('438', '435', '437', '439', '431', '429')
     for node_id, path in zip(image_nodes, args.image):
         media(node_id, 'image', path)
-    # Auto-prompt batches all six image sockets before applying the declared image count.
-    # Repeat a task-owned image in inactive sockets instead of passing a None tensor.
-    if args.auto_prompt == 'on':
-        for node_id in image_nodes[len(args.image):]:
-            media(node_id, 'image', args.image[-1])
+    # The user's successful V2 task used the last real image for unused sockets.
+    for node_id in image_nodes[len(args.image):]:
+        media(node_id, 'image', args.image[-1])
     for node_id, path in zip(('841', '842'), args.audio):
         media(node_id, 'audio', path)
-    for number, node_id in enumerate(('813', '817', '815'), 1):
+    for number, node_id in enumerate(('813', '817', '815', '888'), 1):
         name = getattr(args, f'lora_{number}_name')
         strength = getattr(args, f'lora_{number}_strength')
         if name is not None:
@@ -107,8 +108,6 @@ def main():
                   stream, ensure_ascii=False, indent=2)
         stream.write('\n')
     print('已生成任务配置（未上传、未提交）：' + str(args.output))
-    if megapixels > 0.8 and instance != 'ultra':
-        print('注意：应用节点提示 0.8 MP 以上需 Ultra；当前按指定策略使用 ' + instance + '，不同任务仍须验证实际支持情况。')
 
 
 if __name__ == '__main__':

@@ -1,37 +1,42 @@
 ---
 name: rh-minimax-h3
-description: 使用 RunningHub 的 Minimax-H3（30s直出）应用生成视频；支持多图和音频参考、API Key 安全存入、节点任务构造、批量提交、查询恢复与结果下载。用户提到 RH-minimax-H3 或 RunningHub H3 时使用。
+description: 使用 RunningHub MiniMax H3 多图生视频自动提示词 V2 应用生成视频；支持多图、音频参考、四组 LoRA、分辨率档位、安全凭据、任务构造与结果恢复。用户提到 RH-minimax-H3 或 RunningHub H3 时使用。
 metadata:
-  version: "2.0.0"
+  version: "4.0.0"
 ---
 
 # RH-minimax-H3
 
-调用 RunningHub **Minimax-H3（30s直出）多图生视频自动提示词-小白全能版**，应用 `2104753059472990209`。使用 RunningHub API Key，依赖 Python 3.9+、`requests`，可选 `ffprobe`。原有两个应用已从当前提交路径移除；旧任务仍可用 taskId 查询恢复，但旧 jobs 不能直接提交。
+当前生成只提交 RunningHub **MiniMax-H3 多图生视频自动提示词 V2－小白全能版**，应用 `2101232638873858050`。旧应用的任务可用 taskId 查询恢复；旧应用 jobs 禁止直接提交。依赖 Python 3.9+、`requests`，可选 `ffprobe`。接口或工作流可能更新，按需核对当前节点。
 
-## 任务参数与默认策略
+## 参数和默认配置
 
-Agent 根据当前任务明确填写提示词、**时长 5–30 秒、画幅、参考图和输出目录**，不自行预设时长或画幅。至少 1 张、最多 6 张参考图；可选最多 2 段音频。纯文生及音频参考尚未线上验证。画幅可选 1:1、2:3、3:2、3:4、4:3、9:16、16:9、21:9。
+Agent 根据任务指定提示词、**时长 5–15 秒、画幅、1–6 张参考图和输出目录**；可选最多 2 段音频。纯文生未验证。支持 1:1、2:3、3:2、3:4、4:3、9:16、16:9、21:9。
 
-用户指定的默认策略：**Plus 实例、自动提示词开启、直接输出视频、1 MP、作者示例的 3 组 LoRA 和触发词**。用户要求 1080P 时使用 **2 MP + Ultra**。1 MP 和 2 MP 是本技能的画质参数约定，不保证输出恰好为标准 720P/1080P 分辨率；报告实际尺寸。用户明确其他要求时按任务设置。
+用户指定画质档：**480P→0.5 MP、720P→1 MP、1080P→2 MP**。默认 720P（1 MP）+ Plus，1080P 使用 Ultra；可按任务指定其他 MP 或实例，2 MP 及以上须 Ultra。MP 是生成目标像素量，不保证准确输出标准宽高，实际尺寸以文件为准。应用节点提示超过 0.8 MP 使用 Plus，不代表任何时长与组合必定成功。
 
-**线上节点提示超过 0.8 MP 需 Ultra**；用户指定的默认 1 MP + Plus 与之冲突，但已实测 5 秒可运行；其他时长仍须按任务验证，不自动降像素或切换实例。若远端失败，报告实际错误并与用户协调。2 MP 或以上强制 Ultra；详见 [api.md](references/api.md)。作者 LoRA 和自动提示词会影响内容，明确任务要求可覆盖；默认参数及 2 MP + Ultra 均已完成 5 秒生成和完整解码验证；30 秒、音频参考、纯文生仍未验证。
+默认四组 LoRA 与触发词按用户 2026-10-28 的截图固定：
 
-## 凭据
+| 槽位 | 文件名 | 强度 |
+|---|---|---:|
+| 1 | `MysticXXX_MMH3-V5.1.safetensors` | 0.4 |
+| 2 | `Minimax-H3-Digicam-Realism Improve Lora.safetensors` | 0.5 |
+| 3 | `h3-realism-people-t2v-i2v-r2v_new.safetensors` | 0.5 |
+| 4 | `H3电影感V2.safetensors` | 0.5 |
 
-先执行 `python3 "$SKILL_DIR/scripts/credentials.py" status`，其中 `SKILL_DIR` 为本技能目录。优先读取环境变量 `RUNNINGHUB_API_KEY`，其次为 `~/.config/rh-minimax-h3/.env`；可用 `RUNNINGHUB_ENV_FILE` 指定文件。状态仅证明已配置，不证明 Key 有效或余额充足。
+触发词为 `dynv2,r34l1sm`。默认配置是用户指定值，可以按任务显式覆盖；更换 LoRA 时同步检查触发词。**该四 LoRA 组合和三个画质档尚未在本应用实测，接口成功构造不等于 LoRA 已加载或画质达标。**
 
-新 Key 用 `credentials.py set` 本机隐藏输入，权限 0600；从已授权项目导入用 `import-env --from-env /绝对路径/.env`。替换需用户要求并加 `--replace`。不得将 Key 写入技能、任务、日志、Git 或交付；详见 [credentials.md](references/credentials.md)。
+沿用应用已测 API 示例的版本布尔值 `true` 与模型名；节点标注“版本<v1 / v2>”，未证明布尔值与版本的对应关系。应用名称包含自动提示词，但接口没有开放单独的优化开关，也没有采样步数或种子字段；不要声称可以控制它们。默认直接输出视频；视频、额外音频及效果以真实返回为准。
 
-## 使用与安全
+## 凭据与执行
 
-按 [usage.md](references/usage.md) 构造 jobs；先 `--dry-run`，通过后才在当前任务授权范围内提交。Dry-run 不联网、不校验账户或节点在线有效性。素材上传后提交；每批最多 3 个在途任务，且不得超过账户可用额度。脚本保存提交请求和 taskId；提交不明或查询超时后停止排队，不盲目重试。
+先运行 `python3 "$SKILL_DIR/scripts/credentials.py" status`；优先读取环境变量 `RUNNINGHUB_API_KEY`，其次 `~/.config/rh-minimax-h3/.env`，可通过 `RUNNINGHUB_ENV_FILE` 指定。新 Key 用隐藏输入保存、权限 0600；禁止泄露凭据，详见 [credentials.md](references/credentials.md)。
 
-已有 taskId 用 `--resume TASK_ID --name 原名称 --output 原目录` 查询并下载，不重提。没有 taskId 的 `SUBMIT_UNKNOWN` 先查平台任务和消费记录。结果立即下载；报告 taskId、平台 usage、实际文件和尺寸/时长。usage 缺失时如实说明；ffprobe 不能代替完整播放与审美验收。
+按 [usage.md](references/usage.md) 创建 jobs 并先 `--dry-run`；dry-run 不联网、不验证账户或节点。经任务授权才能提交，每批最多 3 个在途。保存无 Key 的提交回执和 taskId；提交结果不明、查询超时或连接中断不得盲目重提。已有 taskId 用 `--resume TASK_ID --name 原名称 --output 原目录` 查询并下载，不重新提交。报告 taskId、平台 usage、文件、实际尺寸与时长；usage 缺失如实说明。用户要求生成后直接交付时不增加画面审查。
 
 ## 参考与验证
 
 - [usage.md](references/usage.md)：构造、可选参数与恢复。
-- [api.md](references/api.md)：节点、线上范围、默认策略和验证边界。
-- [sources.md](references/sources.md)：来源、许可和历史版本。
+- [api.md](references/api.md)：当前节点、限制和实测范围。
+- [sources.md](references/sources.md)：来源及版本。
 - 离线行为：`python3 "$SKILL_DIR/tests/test_helpers.py"`；假服务：`python3 "$SKILL_DIR/tests/mock_test.py"`。假服务不调用 RunningHub。

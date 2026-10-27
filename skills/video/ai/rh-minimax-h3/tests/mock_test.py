@@ -54,7 +54,7 @@ def run(args, **env):
 
 def jobs(tmp, n=1, node='456', field='text', prefix='j'):
     p = tmp / 'jobs.json'
-    p.write_text(json.dumps({'jobs': [{'name': f'{prefix}{i}', 'appId':'2104753059472990209', 'nodeInfoList': [
+    p.write_text(json.dumps({'jobs': [{'name': f'{prefix}{i}', 'appId':'2101232638873858050', 'nodeInfoList': [
         {'nodeId': node, 'fieldName': field, 'fieldValue': 'hi'}]} for i in range(n)]}))
     return str(p)
 
@@ -76,6 +76,10 @@ check('placeholder: no request', STATE['runs'] == 0)
 # 2 dry-run ok, no upload/submit, no key needed
 r = run([jobs(t), '--dry-run', '--output', str(t / 'o')], RUNNINGHUB_API_KEY='')
 check('dry-run passes without submitting', r.returncode == 0 and 'dry-run 通过' in r.stdout and STATE['runs'] == 0, r.stderr)
+# Natural prompt references and the word 真实 are not placeholder fields.
+prompt_job = Path(t/'natural.json'); prompt_job.write_text(json.dumps({'jobs':[{'name':'natural','appId':'2101232638873858050','nodeInfoList':[{'nodeId':'150','fieldName':'value','fieldValue':'<Picture 1> 是真实人物参考'}]}]}))
+r = run([str(prompt_job), '--dry-run', '--output', str(t/'o')], RUNNINGHUB_API_KEY='')
+check('natural prompt is not placeholder', r.returncode == 0 and STATE['runs'] == 0, r.stderr + r.stdout)
 # 3 normal success
 reset(); t = Path(tempfile.mkdtemp())
 r = run([jobs(t), '--output', str(t / 'o')])
@@ -83,13 +87,13 @@ check('success path', r.returncode == 0 and STATE['runs'] == 1, r.stdout + r.std
 rec = json.loads((t / 'o' / 'j0_submitting.json').read_text())
 chk=json.loads(next((t/'o').glob('j0_T*.json')).read_text()); check('ffprobe info recorded', any(v.get('width')==64 and v.get('duration',0)>0 for v in chk['checks'].values()), chk.get('checks'))
 check('pending record has payload, no key', rec['status'] == 'DONE' and 'testkey' not in json.dumps(rec) and rec['payload']['nodeInfoList'])
-check('current app and default to plus', rec['appId'] == '2104753059472990209' and
-      STATE['apps'] == ['2104753059472990209'] and rec['payload']['instanceType'] == 'plus')
+check('current app and default to plus', rec['appId'] == '2101232638873858050' and
+      STATE['apps'] == ['2101232638873858050'] and rec['payload']['instanceType'] == 'plus')
 # 4 resubmit same name after DONE allowed; but open state refused
 r = run([jobs(t), '--output', str(t / 'o')]); check('rerun after DONE allowed', r.returncode == 0)
 # Old apps are rejected before requests are sent.
 reset(); t = Path(tempfile.mkdtemp()); unknown = t/'old.json'
-unknown.write_text(json.dumps({'jobs':[{'name':'old','appId':'2084320751339032577',
+unknown.write_text(json.dumps({'jobs':[{'name':'old','appId':'2104753059472990209',
     'nodeInfoList':[{'nodeId':'150','fieldName':'value','fieldValue':'x'}]}]}))
 r = run([str(unknown), '--dry-run', '--output', str(t/'unused')])
 check('old app rejected before network', r.returncode != 0 and STATE['runs'] == 0 and

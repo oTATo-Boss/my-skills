@@ -15,4 +15,4 @@ AI 视频参考、提示词、生成执行与实拍融合。
 - [single-shot-prompt](single-shot-prompt/SKILL.md) — 创作、修改和审查不切镜的单镜头短视频提示词；当前 v1.1.1。
 - [multi-shot-prompt](multi-shot-prompt/SKILL.md) — 编写多镜头视频提示词，组织梗概、质感、素材锁定与分镜，并按需编译执行清单、审片和返修。
 - [nsfw-seedance-prompt-skill](nsfw-seedance-prompt-skill/SKILL.md) — 成人题材视频提示词的专项结构与检查流程。
-- [rh-minimax-h3](rh-minimax-h3/SKILL.md) — RH-minimax-H3：RunningHub H3 30 秒直出、多图音频参考、Plus/Ultra、任务构造与查询恢复；当前 v2.0.0。
+- [rh-minimax-h3](rh-minimax-h3/SKILL.md) — RH-minimax-H3：RunningHub H3 小白版 V2：多图音频、四组 LoRA、画质档和任务恢复；当前 v4.0.0。
