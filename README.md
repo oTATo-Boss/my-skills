@@ -6,6 +6,7 @@
 
 | Skill | 简单说明 | 安装命令 |
 | --- | --- | --- |
+| [workflow-builder](skills/dev/workflow-builder/SKILL.md) | 按需求匹配技能与工具，生成独立工作流并验证执行、重试和恢复。 | `npx skills add oTATo-Boss/my-skills --skill workflow-builder -g -a codex --copy -y` |
 | [R2V｜全能参考](skills/video/ai/r2v/SKILL.md) | 判断视频参考素材、必要补齐与生成方式，形成制作交接依据。 | `npx skills add oTATo-Boss/my-skills --skill r2v -g -a codex --copy -y` |
 | [ai-liveaction-fusion](skills/video/ai/ai-liveaction-fusion/SKILL.md) | AI 与实拍融合：镜头分析、静态分镜、视频提示词、审片与返修。 | `npx skills add oTATo-Boss/my-skills --skill ai-liveaction-fusion -g -a codex --copy -y` |
 | [RH-minimax-H3](skills/video/ai/rh-minimax-h3/SKILL.md) | RunningHub H3 30 秒直出、多图音频参考、Plus/Ultra、批量任务及查询恢复。 | `npx skills add oTATo-Boss/my-skills --skill rh-minimax-h3 -g -a codex --copy -y` |
@@ -37,7 +38,7 @@
 
 Social Media 套件的来源和维护范围见 [SOURCES.md](skills/social-media/SOURCES.md)，完整分工见 [套件说明](skills/social-media/README.md)。
 
-一次安装全部 32 个：
+一次安装全部 33 个：
 
 ```bash
 npx skills add oTATo-Boss/my-skills --skill '*' -g -a codex --copy -y

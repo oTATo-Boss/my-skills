@@ -2,6 +2,7 @@
   "installed_root": "~/.agents/skills",
   "mode": "independent-copy",
   "skills": {
+    "workflow-builder": "dev/workflow-builder",
     "motion-video": "video/creative/motion-video",
     "r2v": "video/ai/r2v",
     "ai-liveaction-fusion": "video/ai/ai-liveaction-fusion",

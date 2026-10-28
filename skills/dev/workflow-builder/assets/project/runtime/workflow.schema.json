@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:workflow-builder:workflow:1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "workflow_id", "revision", "goal", "inputs", "outputs", "runtime", "trigger", "steps", "resources", "rules", "acceptance"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "workflow_id": {"$ref": "#/$defs/id"},
+    "revision": {"type": "string", "minLength": 1},
+    "goal": {"type": "string", "minLength": 1},
+    "inputs": {"$ref": "#/$defs/objectSchema"},
+    "outputs": {"$ref": "#/$defs/bindings", "minProperties": 1},
+    "runtime": {
+      "type": "object", "additionalProperties": false,
+      "required": ["adapter", "version"],
+      "properties": {"adapter": {"const": "json-subprocess-posix"}, "version": {"const": "0.1.0"}}
+    },
+    "trigger": {"const": "manual"},
+    "steps": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/step"}},
+    "resources": {"type": "object", "propertyNames": {"$ref": "#/$defs/id"}, "additionalProperties": {"$ref": "#/$defs/resource"}},
+    "rules": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "acceptance": {"$ref": "#/$defs/checks"}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[a-z][a-z0-9_-]{0,63}$"},
+    "command": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "pointer": {"type": "string", "pattern": "^(/|$)"},
+    "objectSchema": {"type": "object", "required": ["type", "properties", "required"], "properties": {"type": {"const": "object"}, "properties": {"type": "object"}, "required": {"type": "array", "items": {"type": "string"}}}},
+    "binding": {
+      "oneOf": [
+        {"type": "object", "additionalProperties": false, "required": ["value"], "properties": {"value": {}}},
+        {"type": "object", "additionalProperties": false, "required": ["input"], "properties": {"input": {"$ref": "#/$defs/pointer"}}},
+        {"type": "object", "additionalProperties": false, "required": ["step", "pointer"], "properties": {"step": {"$ref": "#/$defs/id"}, "pointer": {"$ref": "#/$defs/pointer"}}}
+      ]
+    },
+    "bindings": {"type": "object", "additionalProperties": {"$ref": "#/$defs/binding"}},
+    "artifact": {
+      "type": "object", "additionalProperties": false, "required": ["pointer"],
+      "properties": {
+        "pointer": {"$ref": "#/$defs/pointer"}, "format": {"enum": ["text", "json", "binary"]},
+        "min_bytes": {"type": "integer", "minimum": 1},
+        "contains": {"type": "array", "items": {"type": "string"}}, "schema": {"type": "object"}
+      }
+    },
+    "checks": {
+      "type": "object", "additionalProperties": false, "minProperties": 1,
+      "anyOf": [{"required": ["schema"]}, {"required": ["artifacts"]}, {"required": ["command"]}],
+      "properties": {
+        "schema": {"$ref": "#/$defs/objectSchema"},
+        "artifacts": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/artifact"}},
+        "command": {"$ref": "#/$defs/command"}, "timeout_seconds": {"type": "number", "exclusiveMinimum": 0}
+      }
+    },
+    "resource": {
+      "type": "object", "additionalProperties": false, "required": ["kind"],
+      "properties": {
+        "kind": {"enum": ["skill", "tool", "model"]},
+        "paths": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "required_env": {"type": "array", "items": {"type": "string", "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"}},
+        "probe": {"$ref": "#/$defs/command"}, "timeout_seconds": {"type": "number", "exclusiveMinimum": 0},
+        "source": {"type": "string"}, "version": {"type": "string"}
+      },
+      "allOf": [
+        {"if": {"properties": {"kind": {"const": "skill"}}}, "then": {"required": ["paths"], "properties": {"paths": {"minItems": 1}}}},
+        {"if": {"properties": {"kind": {"enum": ["tool", "model"]}}}, "then": {"required": ["probe"]}}
+      ]
+    },
+    "step": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "depends_on", "inputs", "executor", "outputs", "completion", "failure", "recovery"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "depends_on": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/id"}},
+        "inputs": {"$ref": "#/$defs/bindings"},
+        "executor": {
+          "type": "object", "additionalProperties": false, "required": ["kind", "command"],
+          "properties": {
+            "kind": {"enum": ["script", "agent"]}, "command": {"$ref": "#/$defs/command"},
+            "resources": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/id"}},
+            "role": {"$ref": "#/$defs/id"},
+            "instructions": {"type": "array", "items": {"type": "string", "minLength": 1}}
+          },
+          "allOf": [{"if": {"properties": {"kind": {"const": "agent"}}}, "then": {"required": ["role"]}}]
+        },
+        "outputs": {"$ref": "#/$defs/objectSchema"},
+        "completion": {"$ref": "#/$defs/checks"},
+        "failure": {
+          "type": "object", "additionalProperties": false,
+          "required": ["max_attempts", "timeout_seconds", "retry_on"],
+          "properties": {
+            "max_attempts": {"type": "integer", "minimum": 1, "maximum": 20},
+            "timeout_seconds": {"type": "number", "exclusiveMinimum": 0},
+            "automatic": {"type": "boolean"},
+            "backoff_seconds": {"type": "number", "minimum": 0, "maximum": 60},
+            "retry_on": {"type": "array", "uniqueItems": true, "items": {"enum": ["executor_failed", "invalid_output", "validation_failed", "timeout"]}}
+          }
+        },
+        "recovery": {
+          "type": "object", "additionalProperties": false, "required": ["mode"],
+          "properties": {"mode": {"enum": ["pure", "idempotent", "manual"]}}
+        }
+      }
+    }
+  }
+}

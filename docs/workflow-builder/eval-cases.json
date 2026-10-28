@@ -1,0 +1,155 @@
+{
+  "schema_version": 1,
+  "description_source": "skills/dev/workflow-builder/SKILL.md",
+  "trigger_cases": [
+    {
+      "id": "t01",
+      "split": "train",
+      "expected_trigger": true,
+      "prompt": "按我的需求搭一个从本地笔记到报告的可运行工作流。"
+    },
+    {
+      "id": "t02",
+      "split": "train",
+      "expected_trigger": true,
+      "prompt": "把这个三 Agent 模板改成能独立启动和恢复的项目。"
+    },
+    {
+      "id": "t03",
+      "split": "train",
+      "expected_trigger": true,
+      "prompt": "给工作流接入合适的本机技能和 MCP，并跑通样例。"
+    },
+    {
+      "id": "t04",
+      "split": "train",
+      "expected_trigger": true,
+      "prompt": "现有流程只有方案，帮我补真正的启动入口和运行状态。"
+    },
+    {
+      "id": "t05",
+      "split": "train",
+      "expected_trigger": true,
+      "prompt": "把现有自动化迁移到另一个 Agent 客户端并验证。"
+    },
+    {
+      "id": "t06",
+      "split": "train",
+      "expected_trigger": true,
+      "prompt": "先设计我的工作流，列出工具缺口，不要实际连接服务。"
+    },
+    {
+      "id": "t07",
+      "split": "train",
+      "expected_trigger": false,
+      "prompt": "运行项目里已经建好的日报工作流，使用今天的输入。"
+    },
+    {
+      "id": "t08",
+      "split": "train",
+      "expected_trigger": false,
+      "prompt": "npx skills add owner/repo --skill a-skill -g -a codex -y"
+    },
+    {
+      "id": "t09",
+      "split": "train",
+      "expected_trigger": false,
+      "prompt": "这个 workflow-builder 技能是做什么的？"
+    },
+    {
+      "id": "t10",
+      "split": "train",
+      "expected_trigger": false,
+      "prompt": "修一下 report.py 第 10 行的拼写错误，别改工作流。"
+    },
+    {
+      "id": "t11",
+      "split": "train",
+      "expected_trigger": false,
+      "prompt": "帮我把这句话翻译成英文。"
+    },
+    {
+      "id": "t12",
+      "split": "train",
+      "expected_trigger": false,
+      "prompt": "给已有笔记整理成一份报告，不需要搭建自动化。"
+    },
+    {
+      "id": "v01",
+      "split": "validation",
+      "expected_trigger": true,
+      "prompt": "我有一个模板，但缺执行器、节点验收和中断恢复，帮我落地。"
+    },
+    {
+      "id": "v02",
+      "split": "validation",
+      "expected_trigger": true,
+      "prompt": "为团队设计并搭建每次输入资料就能生成审核稿的系统。"
+    },
+    {
+      "id": "v03",
+      "split": "validation",
+      "expected_trigger": true,
+      "prompt": "调整这个循环依赖且角色重复的流程模板，并交付可重复运行的版本。"
+    },
+    {
+      "id": "v04",
+      "split": "validation",
+      "expected_trigger": true,
+      "prompt": "我不知道用哪些工具，先查本机能力，再搭建完整的 Agent 工作流。"
+    },
+    {
+      "id": "v05",
+      "split": "validation",
+      "expected_trigger": false,
+      "prompt": "查看现有运行 abc 的失败日志。"
+    },
+    {
+      "id": "v06",
+      "split": "validation",
+      "expected_trigger": false,
+      "prompt": "按项目说明 resume 上次工作流，不要重新设计。"
+    },
+    {
+      "id": "v07",
+      "split": "validation",
+      "expected_trigger": false,
+      "prompt": "帮我安装指定的 agent-workflow-designer，解释用途就行。"
+    },
+    {
+      "id": "v08",
+      "split": "validation",
+      "expected_trigger": false,
+      "prompt": "改一下工作流 README 的错字，不改任何执行逻辑。"
+    }
+  ],
+  "content_cases": [
+    {
+      "id": "local-notes",
+      "request": "我有一些本地文字笔记，想搭建每次接收标题与笔记、输出 Markdown 报告的工作流。需要能再次启动、失败后知道原因和恢复；不要连接外部服务，也不要依赖之前聊天。",
+      "invariants": [
+        "实际生成独立项目和产物",
+        "失败与恢复有证据",
+        "不依赖构建聊天或规划Skill"
+      ]
+    },
+    {
+      "id": "missing-auth",
+      "request": "帮我设计每天读取外部数据并生成材料的流程，但当前没有账户认证；不要实际连接任何外部服务。",
+      "invariants": [
+        "设计交付与Runtime执行分离",
+        "明确认证和调度缺口",
+        "不虚报ready"
+      ]
+    },
+    {
+      "id": "bad-template",
+      "request": "研究、写作、审核三个角色共写同一文件，写作与审核互相依赖；按本地笔记报告需求改成可独立运行工作流。",
+      "invariants": [
+        "修复循环和共享写入",
+        "按需求决定Agent数量",
+        "独立入口真实执行"
+      ]
+    }
+  ]
+}
