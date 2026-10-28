@@ -1,16 +1,16 @@
 # Build an Approved Character Styling Picture
 
-Use only after the user approves the design text or four-view sample.
+Use an already selected outfit directly; for a newly designed outfit/styling, obtain user confirmation before application. Do not repeat existing confirmation.
 
 ## Find the Identity Reference
 
-Use the base image supplied or selected by the user as Image 1. It may depict a real person or a fictional character, in a single photograph or a multi-view identity sheet. Do not assume a particular project, character, filename, hairstyle, or body type. If several base images are available, choose the one matching the user's requested subject and hair state; ask only if the intended identity cannot be determined reliably.
+Use the base board supplied or selected by the user as Image 1. A single image may be an intermediate edit target, but is not by itself a complete character reference board. It may depict a real person or a fictional character, in a single photograph or a multi-view identity sheet. Do not assume a particular project, character, filename, hairstyle, or body type. If several base images are available, choose the one matching the user's requested subject and hair state; ask only if the intended identity cannot be determined reliably.
 
 Body-reference sheets may be consulted only when needed to understand proportions or garment contact. They do not change the requested outfit coverage or imply unclothed output.
 
 ## Use the Character-styling Template
 
-Copy [../assets/character-styling-template.txt](../assets/character-styling-template.txt) verbatim. Fill only:
+Use [../assets/character-styling-template.txt](../assets/character-styling-template.txt). Fill its style, explicit-change and keep/remove fields; retain the reference-authority contract. The keep/remove fields mean:
 
 - the first `{{用户输入}}` under “保留的妆造”: styling that must remain or be newly designed and applied;
 - the second `{{用户输入}}` under “不保留的妆造”: styling that must not appear.
@@ -36,9 +36,9 @@ Require:
 - natural contact at neck, shoulders, chest, waist, hips, limbs, and shoes;
 - believable tension, folds, occlusion, support, and gravity;
 - complete hands, feet, limbs, and repeated panel views wherever present in Image 1;
-- real skin texture and phone-photo realism.
+- the character’s established style: natural photography for realistic, specified 3D materials for CG, or photorealistic CGI for AAA.
 
-Review the result against every supplied reference. Only after the user accepts identity, garment fidelity, makeup, and anatomy may the same approved look move into a new pose, location, campaign image, or video asset.
+Review the result against every supplied reference. Review identity, garment fidelity, makeup, and anatomy. Deliver the usable asset with its confirmation status; do not add a mandatory post-render approval gate. Shot production is handled elsewhere.
 
 ## Transfer Boundaries
 
@@ -46,3 +46,7 @@ Review the result against every supplied reference. Only after the user accepts 
 - Do not infer new garment details from the subject's body reference.
 - Do not change the approved outfit to flatter the model; preserve the design and solve fit through realistic tailoring and fabric behavior.
 - Do not change hair state or body proportions merely to suit the garment. Change makeup or hair only through the filled controlled-styling fields.
+
+## Explicit Changes
+
+The user’s named hair, makeup, expression and state changes override corresponding preserved values in Image 1, never the identity. All unnamed fields stay fixed. State-only work uses [variants.md](variants.md) without requiring an outfit image.

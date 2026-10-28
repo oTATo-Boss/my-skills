@@ -1,0 +1,108 @@
+[
+  {
+    "template": "assets/templates/realistic/portrait.txt",
+    "source_title": "写实角色正面面部肖像照",
+    "source_sha256": "9852e18dae2810fdb0cd44aa20372ca00a654eff3a3b1f603fa7c7877d6f5125",
+    "snapshot_date": "2026-10-28",
+    "packaged_sha256": "9852e18dae2810fdb0cd44aa20372ca00a654eff3a3b1f603fa7c7877d6f5125"
+  },
+  {
+    "template": "assets/templates/realistic/head-four.txt",
+    "source_title": "写实角色肖像四视图",
+    "source_sha256": "43fbc21f99b71c383cd04f085d23f3315be80bb7912fe30b68da9abde6e57e04",
+    "snapshot_date": "2026-10-28",
+    "packaged_sha256": "43fbc21f99b71c383cd04f085d23f3315be80bb7912fe30b68da9abde6e57e04"
+  },
+  {
+    "template": "assets/templates/realistic/half.txt",
+    "source_title": "写实角色正面半身照",
+    "source_sha256": "61dd0460d5db6178423a711f829fd5e7e0e4a8f6bd39c0866a14b8999cc26134",
+    "snapshot_date": "2026-10-28",
+    "packaged_sha256": "61dd0460d5db6178423a711f829fd5e7e0e4a8f6bd39c0866a14b8999cc26134"
+  },
+  {
+    "template": "assets/templates/realistic/body-three.txt",
+    "source_title": "写实角色全身三视图",
+    "source_sha256": "88f4f14e7911840696fc540a4131cb385fdd24ba428dc26464a4a0222c8add6f",
+    "snapshot_date": "2026-10-28",
+    "packaged_sha256": "88f4f14e7911840696fc540a4131cb385fdd24ba428dc26464a4a0222c8add6f"
+  },
+  {
+    "template": "assets/templates/realistic/board.txt",
+    "source_title": "写实角色资产宫格图",
+    "source_sha256": "00a6fd12e0f075c2a16d728559a2d1397c20b052b49c97befe8a85b0043917d3",
+    "snapshot_date": "2026-10-28",
+    "packaged_sha256": "00a6fd12e0f075c2a16d728559a2d1397c20b052b49c97befe8a85b0043917d3"
+  },
+  {
+    "template": "assets/templates/cg/portrait.txt",
+    "source_title": "3D-CG角色正面面部肖像照",
+    "source_sha256": "a454c3ec74308148bbedf52679af7dda45ba643318fcdc37a3415f637735c891",
+    "snapshot_date": "2026-10-28",
+    "packaged_sha256": "a454c3ec74308148bbedf52679af7dda45ba643318fcdc37a3415f637735c891"
+  },
+  {
+    "template": "assets/templates/cg/half.txt",
+    "source_title": "3D-CG角色正面半身照",
+    "source_sha256": "c4c37cee375addc8dd6ec75b9293edf397e9cb77c24d9b09d2d281c7beeebc95",
+    "snapshot_date": "2026-10-28",
+    "packaged_sha256": "c4c37cee375addc8dd6ec75b9293edf397e9cb77c24d9b09d2d281c7beeebc95"
+  },
+  {
+    "template": "assets/templates/cg/board.txt",
+    "source_title": "3D:CG角色资产宫格图",
+    "source_sha256": "64e5088df922b744b8f788d658a6ccd9e56872849c1c1142e1c2bd1cc537e120",
+    "snapshot_date": "2026-10-28",
+    "packaged_sha256": "e65c9bd6561e78e82151b00899cbfba30fd28e7c14decfcbe4fabf8f5abad9a3"
+  },
+  {
+    "template": "assets/templates/aaa/portrait.txt",
+    "source_title": "AAA-CG角色正面面部肖像照",
+    "source_sha256": "df2d4218a45f24ce3145472890fe89a3001985019dc466c5ff1e255b93fddb73",
+    "snapshot_date": "2026-10-28",
+    "packaged_sha256": "df2d4218a45f24ce3145472890fe89a3001985019dc466c5ff1e255b93fddb73"
+  },
+  {
+    "template": "assets/templates/aaa/half.txt",
+    "source_title": "AAA-CG角色正面半身照",
+    "source_sha256": "ea9a788ffa5a428f2b1e90c1a0235ba5cab9d9b9215a781faaa727b094475b1e",
+    "snapshot_date": "2026-10-28",
+    "packaged_sha256": "ea9a788ffa5a428f2b1e90c1a0235ba5cab9d9b9215a781faaa727b094475b1e"
+  },
+  {
+    "template": "assets/templates/aaa/body-four.txt",
+    "source_title": "AAA-CG角色资产宫格图_9x16全身四视图",
+    "source_sha256": "f8ea1e81c9915b2a4d8668e0973fbdc3a00de9bf868b273e54b8d637f6430f74",
+    "snapshot_date": "2026-10-28",
+    "packaged_sha256": "f8ea1e81c9915b2a4d8668e0973fbdc3a00de9bf868b273e54b8d637f6430f74"
+  },
+  {
+    "template": "assets/templates/aaa/board.txt",
+    "source_title": "AAA-CG角色资产宫格图",
+    "source_sha256": "8d27cbc5c9e152aff9802fe2128a9670aab6977071df776e19712d87ac50effb",
+    "snapshot_date": "2026-10-28",
+    "packaged_sha256": "fb45386eec891c83894724ba87996d33e59d6a197140820fe3a0bdc73ff39ab5"
+  },
+  {
+    "template": "assets/templates/outfit/extract.txt",
+    "source_title": "服装+配饰提取（保持原穿戴方式）_v1.4_三核心精简版",
+    "source_sha256": "205b5e0e3cb144add0570f9d48a66695e42e128d41cc1b3597328bc1cfcecd33",
+    "snapshot_date": "2026-10-28",
+    "packaged_sha256": "2d3fc18c8b65829bbec8cf166265b202051ceb6ae7c0696a50e9188b16057c8d"
+  },
+  {
+    "template": "assets/four-view-template.txt",
+    "source": "character-outfit-design v1.0.1 (adapted)",
+    "packaged_sha256": "fc462846e12540659db49c57fb87d604351289e09e8f90f6df744fd6af5d8550"
+  },
+  {
+    "template": "assets/character-styling-template.txt",
+    "source": "character-outfit-design v1.0.1 (adapted)",
+    "packaged_sha256": "6cf3c2878f4ee5e7cc65dad43078e012934bd4b4284d2cbf71b7ecd01c80486b"
+  },
+  {
+    "template": "assets/templates/outfit/state.txt",
+    "source": "user-approved character-design plan, local implementation",
+    "packaged_sha256": "71df62d2de954b4a4c7c6a1759bb4850f597b3ee68e331bf2937c59723c1e948"
+  }
+]

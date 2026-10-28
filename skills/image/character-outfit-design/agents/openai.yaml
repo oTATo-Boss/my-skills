@@ -1,4 +1,0 @@
-interface:
-  display_name: "角色的服装设计"
-  short_description: "为角色设计服装、四视图样衣、换装与妆造图片"
-  default_prompt: "Use $character-outfit-design to design a realistic outfit, prepare its four-view sample, and create a controlled try-on and styling picture for the selected person or character."

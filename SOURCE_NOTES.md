@@ -68,3 +68,7 @@
 从用户指定的本地「AI剧本」应用封装为可独立使用的 Agent Skill，开发路径 `skills/writing/script/gleam-screenwriter`，版本 0.1.0。继承的工程提示词与知识库保留本地改编来源，不擅自声明上游开放许可。CLI 复用阶段解析／验收引擎；当前只交付源码与分发 ZIP，未提交、推送或安装同步。
 
 2026-10-27 按用户要求将 `rh-minimax-h3` 升级为 v2.0.0：生成仅使用应用 `2104753059472990209`，旧应用仅保留已有 taskId 的查询恢复。时长、画幅及参考素材由当前任务指定，默认 Plus、1 MP、自动提示词、视频直出与作者 LoRA；1080P 使用 2 MP + Ultra。修复自动提示词分支合并空图片导致的失败，默认 1 MP + Plus 和 2 MP + Ultra 均完成 5 秒真实生成和完整解码验证；详细结果、未验证项及来源见技能的 [api.md](skills/video/ai/rh-minimax-h3/references/api.md) 和 [来源记录](skills/video/ai/rh-minimax-h3/references/sources.md)。技能数量和安装位置不变。
+
+## 2026-10-28 · 角色技能整合
+
+`character-design`整合并替换`character-outfit-design`，保留其服装方法、模板与案例；旧名称仅作历史记录，不保留安装入口。新包增加用户确认的角色基础资产、三类画风、剧情状态裂变与拼接脚本，来源及许可边界见`skills/image/character-design/SOURCE.md`。

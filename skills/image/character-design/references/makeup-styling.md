@@ -1,6 +1,6 @@
 # Controlled Makeup and Hair Styling
 
-Use this reference only when building the character styling asset after an outfit is approved.
+Use this reference only when building the character styling asset after new outfit/styling design is confirmed; state-only work does not require an outfit.
 
 ## Design One Cohesive Styling Direction
 
@@ -25,6 +25,6 @@ Do not treat the do-not-keep field as a generic negative-prompt dump. Include on
 ## Identity and Realism Boundaries
 
 - Preserve facial proportions, bone structure, age, skin tone, recognizable asymmetry, hairline, and the identity of the user-selected person or character.
-- Preserve pores, fine facial hair, natural lip lines, lash separation, and believable cosmetic layering.
+- For realistic/AAA preserve pores, fine facial hair, natural lip lines and believable layering; for general CG preserve the established stylized surface and model language instead of forcing photographic detail.
 - Do not import the face, body, aura, or character traits of the garment reference.
 - Do not let makeup compensate for garment problems. Outfit fidelity and facial styling are separate controls.

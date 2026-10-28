@@ -7,7 +7,7 @@ Use this reference when creating or revising an original outfit.
 Write one self-contained design block that fixes:
 
 - look name and overall intent;
-- intended adult body proportions and coverage;
+- intended character body proportions and coverage;
 - every garment piece and its silhouette;
 - front, back, left, and right structural relationships;
 - layer order and wearing method;
