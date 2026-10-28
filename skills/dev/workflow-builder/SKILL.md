@@ -2,13 +2,14 @@
 name: workflow-builder
 description: >-
   Use this skill when the user wants to build, adapt, or migrate an executable
-  workflow from a goal or template: discover suitable local Skills and tools,
+  workflow from a goal or template, or add and integrate workflows within an
+  existing project: discover suitable local Skills and tools,
   design step contracts and agents, configure integrations, generate an independent
   runtime project, and verify repeatable execution. Also use when a workflow plan
   needs real launch, retry, or recovery mechanisms. Do not take over ordinary
   execution of an existing workflow, a single code fix, or installation of a named Skill.
 metadata:
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # Workflow Builder
@@ -19,9 +20,11 @@ metadata:
 
 读取目标项目规则与技能索引，确认最终产物、输入、验收标准、执行环境，以及用户要求只设计、搭建还是改造。只问会改变实现的缺失信息，已有授权不重复索取。
 
+先区分新建独立工作流、在已有项目新增工作流、整合多个已有工作流。后两类先确认真正的项目根和既有调用方式，读取 [已有项目接入](references/project-integration.md)，把工作流接入项目后再验收，不仅交付一个孤立文件夹。
+
 只设计时交付蓝图、依赖与缺口，状态为 designed。搭建时继续生成、配置和运行验证。明确当前客户端交互、独立脚本、无人值守或自动触发的需要，不默认增加框架、后台任务或多个 Agent。
 
-在调用命令前设置 `SKILL_DIR` 为本 Skill 的真实目录。具体业务执行项目是 `PROJECT_DIR`，两者不能混淆。核心规范跨平台；随包 Runtime 首版支持 Python 3.10+、macOS/Linux。其他运行平台由相应适配器实现并单独验证。
+在调用命令前设置 `SKILL_DIR` 为本 Skill 的真实目录。`PROJECT_ROOT` 为真正的业务项目根，`WORKFLOW_DIR` 为某一工作流的定义、执行器与状态目录；独立工作流项目时两者可以相同。不要把已有项目根交给生成器覆盖，也不要在任务、素材或临时目录重复创建项目规则和索引。核心规范跨平台；随包 Runtime 支持 Python 3.10+、macOS/Linux。其他运行平台由相应适配器实现并单独验证。
 
 ## 1. 需求转成执行契约
 
@@ -45,17 +48,21 @@ metadata:
 
 只有必要能力缺失才进行外部搜索；比较适配性、维护证据、依赖成本、许可和平台兼容性。涉及检索、安装或服务连接时读取 [能力发现与接入](references/capabilities.md)。
 
-## 3. 设计与生成独立项目
+## 3. 设计、生成与项目接入
+
+已有项目优先复用公共上下文、资料位置和规则入口；由构建 Agent 按业务决定是否增量补充配置、登记或路由。文件名、格式和业务目录不是固定模板。多个工作流按输入输出契约交接，各自保持独立状态；若需要统一调用，提供真实入口并验证它会找到和启动对应流程。
 
 选最小充分 Runtime：已有可靠执行器满足需求时复用；否则按需生成脚本、原生 Agent 或混合适配。不要因客户端支持 Skills 就推定有后台调度、持久状态或跨会话恢复。
 
 随包项目模板有真实入口、Schema、规则加载、JSON 节点协议、日志、检查点和最终验证。生成器不覆盖现有目录，也不标记 ready：
 
 ```bash
-python3 "$SKILL_DIR/scripts/create_workflow.py" --path "$PROJECT_DIR" --name example-workflow
+python3 "$SKILL_DIR/scripts/create_workflow.py" --path "$WORKFLOW_DIR" --name example-workflow
 ```
 
 默认生成一个真正可运行的“笔记→Markdown 报告”示例，供检查契约与入口；将 workflow.yaml、业务脚本、规则和验收改成用户目标，删改无用的示例文件。`--spec` 可复制已有定义，但不会自动复制其业务资源或证明它可用。不要把默认例子当作已完成用户需求。
+
+新增时选择项目内符合既有约定的未占用目录；整合既有流程时先保留基线，针对性修改，不重新生成覆盖。公共规则和共享输入必须由实际入口或适配器显式加载，不能假定父级文档会自动传给脚本 Runtime。
 
 生成项目仅执行被明确接受的工作流命令，规则和工具范围不构成操作系统沙箱。需要接模型、MCP、原生客户端或自动触发时读取 [运行适配与连接边界](references/adapters.md)，依据目标版本官方资料实现和验证，不能编造 CLI 参数。
 
@@ -64,13 +71,13 @@ python3 "$SKILL_DIR/scripts/create_workflow.py" --path "$PROJECT_DIR" --name exa
 用项目自己的解释器安装声明依赖；需要时使用项目虚拟环境。保留运行依赖的实际版本与来源，密钥留在目标环境的凭据存储或环境变量里。
 
 ```bash
-python3 -m pip install -r "$PROJECT_DIR/runtime/requirements.txt"
-python3 "$PROJECT_DIR/runtime/runner.py" check
-python3 "$PROJECT_DIR/runtime/runner.py" run --input "$PROJECT_DIR/example-input.json"
-python3 "$PROJECT_DIR/runtime/runner.py" status --run-id RUN_ID
-python3 "$PROJECT_DIR/runtime/runner.py" retry --run-id RUN_ID --step STEP_ID
-python3 "$PROJECT_DIR/runtime/runner.py" resume --run-id RUN_ID
-python3 "$PROJECT_DIR/runtime/runner.py" validate --run-id RUN_ID
+python3 -m pip install -r "$WORKFLOW_DIR/runtime/requirements.txt"
+python3 "$WORKFLOW_DIR/runtime/runner.py" check
+python3 "$WORKFLOW_DIR/runtime/runner.py" run --input "$WORKFLOW_DIR/example-input.json"
+python3 "$WORKFLOW_DIR/runtime/runner.py" status --run-id RUN_ID
+python3 "$WORKFLOW_DIR/runtime/runner.py" retry --run-id RUN_ID --step STEP_ID
+python3 "$WORKFLOW_DIR/runtime/runner.py" resume --run-id RUN_ID
+python3 "$WORKFLOW_DIR/runtime/runner.py" validate --run-id RUN_ID
 ```
 
 模板 CLI 的 `RUN_ID`、`STEP_ID` 是需要替换的真实 ID；自定义工作流使用自己的输入文件。工具探测仅证明所需检查通过；不把找到工具、写好配置或存在环境变量称为已连通。
@@ -84,6 +91,8 @@ python3 "$PROJECT_DIR/runtime/runner.py" validate --run-id RUN_ID
 读取 [验收和就绪门槛](references/acceptance.md)，为当前业务生成可执行测试与样例，覆盖新进程正常执行、失败、自动或显式重试及耗尽、中断恢复、最终产物拒绝和重复运行。需要调度时另验触发链路。
 
 由生成项目自己的入口在新的进程或 Agent 会话执行。不能借助 Builder 的临时文件、隐含模型连接或聊天历史；领域 Skill 与外部服务可以保留，但必须是已声明、可访问且经过验证的运行依赖。
+
+接入已有项目时，另验从项目入口调用、每个流程独立启动、公共上下文生效、必要的跨流程产物交接，以及受影响旧流程仍可运行。只登记路径或把目录放在一起不能算整合成功；不承诺未实现的自动发现、并行或调度。
 
 交付 README 中的真实启动方式、配置方法、依赖、验收记录、run ID、产物和恢复方式。区分 designed／generated／configured／verified／ready；未通过必需场景就报告准确状态与缺口。样例成功不是对任意业务需求的质量保证。
 

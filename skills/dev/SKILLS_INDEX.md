@@ -6,4 +6,4 @@
 
 ## 工作流构建
 
-- [workflow-builder](workflow-builder/SKILL.md) — 按需求发现能力、生成独立工作流项目并验证执行、重试和恢复；v0.1.0。
+- [workflow-builder](workflow-builder/SKILL.md) — 按需求生成独立工作流或接入已有项目，验证执行、恢复与跨流程交接；v0.2.0。

@@ -1,0 +1,35 @@
+{
+  "version": "0.2.0",
+  "date": "2026-10-28",
+  "status": "verified",
+  "business": "local deterministic experiment report review",
+  "project_root": "/var/folders/v7/1gywz6t5433g8xkxs72n4hs40000gn/T/workflow-builder-integration.rx_l6tl7/lab-portal",
+  "used_existing": [
+    "agent.md",
+    "config/jobs.json",
+    "tools/project.py",
+    "knowledge/project.json"
+  ],
+  "added_workflow": "tasks/review",
+  "independent_checks": 8,
+  "parent_preservation_checks": [
+    "knowledge/untouched.txt",
+    "tasks/summary/workflow.yaml",
+    "tasks/summary/runtime/runner.py",
+    "tasks/summary/runs/baseline/state.json",
+    "tasks/summary/outputs/baseline/report.md",
+    "agent.md.prefix"
+  ],
+  "source_run_id": "baseline",
+  "review_run_id": "r61d97c3d680447d3b729",
+  "legacy_regression_run_id": "rfb640378ba4e4427b58c",
+  "artifacts": {
+    "tasks/review/outputs/r61d97c3d680447d3b729/review.md": "20f9f7353db1a51d949721ae4117037a2b34fe80bdeaab87f01b068c047163e4",
+    "tasks/review/outputs/r61d97c3d680447d3b729/trace.json": "a76304f1814876e4835f32019044544edfa892840ec604fa89937781e7f043b6"
+  },
+  "limitations": [
+    "No model or external service; deterministic structure and trace checks only.",
+    "Checkpoint pause/resume tested; forced process-kill recovery and manual side-effect nodes were not exercised.",
+    "No automatic chaining or scheduling."
+  ]
+}
