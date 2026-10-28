@@ -13,7 +13,7 @@
 | [single-shot-prompt](skills/video/ai/single-shot-prompt/SKILL.md) | 创作、修改和审查不切镜的单镜头短视频提示词。 | `npx skills add oTATo-Boss/my-skills --skill single-shot-prompt -g -a codex --copy -y` |
 | [multi-shot-prompt](skills/video/ai/multi-shot-prompt/SKILL.md) | 编写多镜头视频提示词，并按需编译执行清单、审片和返修。 | `npx skills add oTATo-Boss/my-skills --skill multi-shot-prompt -g -a codex --copy -y` |
 | [json-prompt-system](skills/image/json-prompt-system/SKILL.md) | 生成或还原自拍、生活照、电商服装与试穿的 JSON 图像提示词。 | `npx skills add oTATo-Boss/my-skills --skill json-prompt-system -g -a codex --copy -y` |
-| [角色设计与资产裂变（character-design）](skills/image/character-design/SKILL.md) | 建立写实/CG/AAA角色参考板，设计服装并进行妆造与状态裂变。 | `npx skills add oTATo-Boss/my-skills --skill character-design -g -a codex --copy -y` |
+| [Character Design（character-design）](skills/image/character-design/SKILL.md) | 建立写实/CG/AAA角色参考板，设计服装并进行妆造与状态裂变。 | `npx skills add oTATo-Boss/my-skills --skill character-design -g -a codex --copy -y` |
 | [nsfw-seedance-prompt-skill](skills/video/ai/nsfw-seedance-prompt-skill/SKILL.md) | 成人题材视频提示词的结构化编写与检查。 | `npx skills add oTATo-Boss/my-skills --skill nsfw-seedance-prompt-skill -g -a codex --copy -y` |
 | [codex-imagegen](skills/image/codex-imagegen/SKILL.md) | 让其他 Agent 通过本机 Codex CLI 生成和编辑图片。 | `npx skills add oTATo-Boss/my-skills --skill codex-imagegen -g -a codex --copy -y` |
 | [direct-video](skills/video/creative/direct-video/SKILL.md) | 统筹视频创意、分镜、节奏、声音和成片验收。 | `npx skills add oTATo-Boss/my-skills --skill direct-video -g -a codex --copy -y` |

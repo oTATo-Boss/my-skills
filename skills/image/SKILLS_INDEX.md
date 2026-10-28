@@ -11,5 +11,5 @@
 ## 技能入口
 
 - [json-prompt-system](json-prompt-system/SKILL.md) — 生成或还原自拍、生活照、电商服装与试穿的分层 JSON 图像提示词。
-- [角色设计与资产裂变（character-design）](character-design/SKILL.md) — 建立写实/CG/AAA角色综合参考板，设计或提取服装并完成换装妆造与状态裂变。
+- [Character Design（character-design）](character-design/SKILL.md) — 建立写实/CG/AAA角色综合参考板，设计或提取服装并完成换装妆造与状态裂变。
 - [codex-imagegen](codex-imagegen/SKILL.md) — 供其他 Agent 通过本机已登录的 Codex CLI 调用生图与图片编辑能力。

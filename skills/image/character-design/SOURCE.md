@@ -4,7 +4,7 @@
 - kind: `local`
 - status: `confirmed`
 - source: 用户2026-10-28讲述并确认的角色资产建立与裂变工作流；整合本仓库原character-outfit-design；模板来自用户oTATo Prompt库的授权读取快照。
-- version: `1.0.0`
+- version: `1.0.1`
 - author: 用户设计与经验，Agent辅助整理实现；原服装模块作者信息保留，不另推断公开署名。
 - license: unknown；原character-outfit-design未有足以确认的许可声明，本次整合不新增或推定许可。
 - collected_at: `2026-10-28`
@@ -18,3 +18,5 @@
 - 新增脚本和测试为本地实现；不收录用户角色图片、数据库、账号配置或未跟踪工作草稿。
 - 模板在本包维护，不在运行时访问用户软件数据库或自动覆盖软件模板。
 - 结构和脚本验证不证明生图能力、人物身份稳定或视频一致性；实际媒体验证单独报告。
+
+- `1.0.1`（2026-10-28）：按用户要求将界面显示名与入口标题改为`Character Design`，调用名仍为`character-design`，创作流程不变。
