@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fit explicit, approved character panels into a board. Requires Pillow; never paints pixels."""
+"""Join three complete reference images without crops or added gaps. Requires Pillow."""
 from __future__ import annotations
 import argparse
 import hashlib
@@ -41,7 +41,7 @@ def default_boxes(width, height, bodies):
     return boxes
 
 
-def compose(config_path: Path, output: Path):
+def compose_panels(config_path: Path, output: Path):
     config_path, output = config_path.resolve(), output.resolve()
     receipt_path = output.with_suffix(output.suffix + '.json')
     if output.suffix.lower() != '.png':
@@ -121,6 +121,91 @@ def compose(config_path: Path, output: Path):
             path.unlink(missing_ok=True)
         raise
     return receipt
+
+
+
+def compose_whole(config_path: Path, output: Path, config):
+    """Concatenate half+body at equal height, then head above at equal width."""
+    config_path, output = config_path.resolve(), output.resolve()
+    receipt_path = output.with_suffix(output.suffix + '.json')
+    if output.exists() or receipt_path.exists():
+        raise FileExistsError('Output or receipt exists; choose a new version')
+    if output.suffix.lower() != '.png':
+        raise ValueError('Output must be PNG')
+    unsupported = set(config) - {'style', 'head', 'half', 'body', 'output_width', 'background'}
+    if unsupported:
+        raise ValueError(f'Unsupported whole-image configuration fields: {sorted(unsupported)}')
+    style = config.get('style', 'realistic')
+    if style not in {'realistic', 'cg', 'aaa'}:
+        raise ValueError('style must be realistic, cg or aaa')
+    background = ImageColor.getcolor(config.get('background', '#ffffff'), 'RGB')
+    images, sources, warnings, seen = {}, {}, [], set()
+    ratios = {'head': 16 / 9, 'half': 3 / 4, 'body': 9 / 16}
+    for role in ['head', 'half', 'body']:
+        if role not in config or not isinstance(config[role], str):
+            raise ValueError('Provide three complete images: head, half, body')
+        source = Path(config[role])
+        source = (config_path.parent / source).resolve() if not source.is_absolute() else source.resolve()
+        if source in seen or source in {output, receipt_path, config_path}:
+            raise ValueError('The three source images and output/config files must be distinct')
+        seen.add(source)
+        with Image.open(source) as raw:
+            images[role] = ImageOps.exif_transpose(raw).convert('RGBA')
+        w, h = images[role].size
+        if abs((w / h) / ratios[role] - 1) > .03:
+            warnings.append(f'{role}: actual aspect ratio {w}:{h} differs from requested source; kept entire image')
+        sources[role] = {'source': str(source), 'source_size': [w, h],
+                         'source_sha256': hashlib.sha256(source.read_bytes()).hexdigest()}
+    width = config.get('output_width', images['head'].width)
+    if type(width) is not int or not 4 <= width <= 16384:
+        raise ValueError('output_width must be an integer between 4 and 16384')
+    lower_ratio = sum(images[r].width / images[r].height for r in ['half', 'body'])
+    lower_h = max(1, round(width / lower_ratio))
+    half_w = min(width - 1, max(1, round(width * (images['half'].width / images['half'].height) / lower_ratio)))
+    head_h = max(1, round(width * images['head'].height / images['head'].width))
+    height = head_h + lower_h
+    if width * height > 100_000_000:
+        raise ValueError('Unsupported canvas size')
+    placements = {'head': [0, 0, width, head_h],
+                  'half': [0, head_h, half_w, lower_h],
+                  'body': [half_w, head_h, width - half_w, lower_h]}
+    canvas = Image.new('RGB', (width, height), background)
+    for role, image in images.items():
+        x, y, w, h = placements[role]
+        scale = [w / image.width, h / image.height]
+        if max(scale) > 1:
+            warnings.append(f'{role}: resized larger for equal-height/width join; no new source detail established')
+        fitted = image if image.size == (w, h) else image.resize((w, h), Image.Resampling.LANCZOS)
+        canvas.paste(fitted, (x, y), fitted)
+        sources[role].update(placed=placements[role], scale=scale)
+    receipt = {'layout': 'head-over-half-left-body-right', 'style': style,
+               'output_size': [width, height], 'sources': sources, 'warnings': warnings,
+               'review': 'whole-image joining only; no cropping or generation; visual review still required'}
+    created = []
+    output.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        with output.open('xb') as stream:
+            created.append(output)
+            canvas.save(stream, format='PNG')
+        with receipt_path.open('x', encoding='utf-8') as stream:
+            created.append(receipt_path)
+            json.dump(receipt, stream, ensure_ascii=False, indent=2)
+            stream.write('\n')
+    except BaseException:
+        for path in created:
+            path.unlink(missing_ok=True)
+        raise
+    return receipt
+
+
+def compose(config_path: Path, output: Path):
+    config = json.loads(config_path.read_text(encoding='utf-8'))
+    if not isinstance(config, dict):
+        raise ValueError('Configuration must be an object')
+    # Retain only explicit old-config compatibility; new workflows always pass three whole images.
+    if 'panels' in config and not any(role in config for role in ['head', 'half', 'body']):
+        return compose_panels(config_path, output)
+    return compose_whole(config_path, output, config)
 
 
 def main():

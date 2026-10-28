@@ -1,44 +1,41 @@
-# 确定性参考板排版
+# 三张整图直接拼接
 
-使用 [compose_board.py](../scripts/compose_board.py) 拼接已验收面板，不重绘脸、服装或状态。需要 Python 3.10+ 与 Pillow；先检查本机实际运行时，不自动安装或改变环境。
+只用三张已验收的完整源图：16:9头部四视图、3:4半身图、9:16全身三视图（AAA沿用已定全身四视图）。不拆出单个角度、不裁切、不自动去留白、不重绘。
 
-```text
-python3 <skill-root>/scripts/compose_board.py --config <project>/board-layout.json --output <project>/C01-base-v001.png
-```
+## 与PS相同的顺序
 
-## 配置
+1. 头部条带放上面，保持原始像素尺寸不动，作为整板宽度基准。
+2. 全身整图等比缩放到半身整图高度；半身在左、全身在右，等高横向拼接。
+3. 将下方“半身＋全身”整体等比缩放到头部条带宽度，紧接在头部下方。
+4. 画布收至上下两行的实际边缘，不额外补白，不强制3:4或固定分辨率。脚本直接计算最终尺寸，一次缩放各源图，避免反复重采样。
 
-配置为JSON，`source`相对于配置文件所在目录解析。下例八个文件必须是实际面板；角色验收在调用前完成，脚本不识别人脸。
+三个源图内部已有的留白原样保留。全身不足9:16时记录源图规格问题，不为凑排版自动再生一张横图，也不裁出三个单人视图。先确认选的是已有正确版本。
+
+## 使用
+
+脚本依赖Python 3.10+、Pillow。配置源路径相对于配置文件所在目录解析：
 
 ```json
 {
   "style": "realistic",
-  "output_size": [3072, 4096],
-  "background": "#ffffff",
-  "allow_upscale": false,
-  "panels": [
-    {"role": "head_front", "source": "panels/head-front.png"},
-    {"role": "head_45", "source": "panels/head-45.png"},
-    {"role": "head_side", "source": "panels/head-side.png"},
-    {"role": "head_back", "source": "panels/head-back.png"},
-    {"role": "half", "source": "panels/half.png"},
-    {"role": "body_front", "source": "panels/body-front.png"},
-    {"role": "body_side", "source": "panels/body-side.png"},
-    {"role": "body_back", "source": "panels/body-back.png"}
-  ]
+  "head": "head-four-v01.png",
+  "half": "half-v01.png",
+  "body": "body-three-v01.png"
 }
 ```
 
-`style`取 `realistic`、`cg`、`aaa`；AAA需增加唯一的`body_right`。AAA的`body_side`表示角色左侧；普通三视图表示所选90°侧面。每个角色、状态单独合成，不允许缺项、重复或未知角色面板。
+```text
+python3 <skill-root>/scripts/compose_board.py --config <project>/board-layout-v03.json --output <project>/base-board-v03.png
+```
 
-源图是条带或宫格时，为每个面板明确填写`crop: [x, y, width, height]`，坐标为应用EXIF方向之后的像素。按真实图尺寸和已知布局确定分区；有留白和分隔线时先看图，不盲用等分。不会自动识别面部或生成缺失视角。
+使用[compose_board.py](../scripts/compose_board.py)。`style`取`realistic`、`cg`或`aaa`，不改变拼接方式。每个角色/状态恰好引用三张完整图片；AAA的全身四视图也以一张完整图片传入。新任务不创建旧式`panels/crop/box`配置，不调用旧分格裁切方式；历史显式配置仅保留兼容读取，不能作为新流程默认。
 
-默认上方28%高度为头部四视图，下方左60%宽度为全身三/四视图，右侧为半身。面板等比缩放后居中留白，不拉伸、不自动裁掉内容。可按源图调整布局：所有面板都填写`box: [x, y, width, height]`，框必须在画布内且互不重叠。裂变复制基础板配置，只替换对应源图路径；画幅、框和裁切职责保留，除非新配件确实需要扩展空间并另记布局版本。
+正常不设置`output_width`，最终宽度等于头部原图宽度。只有用户另行指定输出尺寸时才设置该字段进行整体等比导出，不推断固定4K；`background`只影响源图透明区域，默认白色，不增加边距。整数像素取整可能有约1像素的比例差。
 
-## 输出与限制
+## 实际尺寸与回执
 
-输出PNG与同名`.png.json`回执，包含实际尺寸、每个面板裁切框、布局框、放置区域、缩放、源文件摘要和警告。任一输出已存在即拒绝覆盖，使用新版本名。
+例如头部1672×941、半身1086×1448、全身941×1672，得到1672×2215。大致称接近2K可以，但交付以实际像素为准。1K级源图合成可能接近2K、2K级可能接近4K，是源图比例与尺寸共同形成的经验，不是固定输出档位。
 
-默认不放大源图；信息不足时图像以原尺寸留白，回执提示改善源图。明确设置`allow_upscale: true`可放大，但回执记录上采样，不宣称新增细节。缩小后也需检查五官与衣物可读性，必要时调整分区或修源图。
+输出PNG与`.png.json`回执，记录三张源图路径、摘要、原始尺寸、实际放置区域、缩放与最终尺寸。任何输出已存在则拒绝覆盖，使用新版本。普通等比缩放不产生新的真实细节，放大时如实提示。
 
-检查完整头顶、手脚、服装外延；脚本只能保证所给裁切区域完整放入框，不能发现源图本就缺脚或裁切框切掉头发。排版回执不能替代视觉验收。
+查看实际整图，确认头部宽度不变、下方等高等宽拼接、头脚和侧边完整、没有人为大留白。源图本就缺手脚或切掉衣物时，脚本不能修复；报告具体缺陷，不能以拼接完成冒充资产合格。
