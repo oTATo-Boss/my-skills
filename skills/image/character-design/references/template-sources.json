@@ -32,7 +32,7 @@
     "source_title": "写实角色资产宫格图",
     "source_sha256": "00a6fd12e0f075c2a16d728559a2d1397c20b052b49c97befe8a85b0043917d3",
     "snapshot_date": "2026-10-28",
-    "packaged_sha256": "00a6fd12e0f075c2a16d728559a2d1397c20b052b49c97befe8a85b0043917d3"
+    "packaged_sha256": "a1a7ca1bc4068d5fe5a865472724f833fe9ae89fbb389d0255f6188e469829ff"
   },
   {
     "template": "assets/templates/cg/portrait.txt",
@@ -53,7 +53,7 @@
     "source_title": "3D:CG角色资产宫格图",
     "source_sha256": "64e5088df922b744b8f788d658a6ccd9e56872849c1c1142e1c2bd1cc537e120",
     "snapshot_date": "2026-10-28",
-    "packaged_sha256": "e65c9bd6561e78e82151b00899cbfba30fd28e7c14decfcbe4fabf8f5abad9a3"
+    "packaged_sha256": "cb55ca69b14b3541c337761adbbdb0af4cbbd5d924fd5a4e8a11a79d96ec12c0"
   },
   {
     "template": "assets/templates/aaa/portrait.txt",
@@ -81,7 +81,7 @@
     "source_title": "AAA-CG角色资产宫格图",
     "source_sha256": "8d27cbc5c9e152aff9802fe2128a9670aab6977071df776e19712d87ac50effb",
     "snapshot_date": "2026-10-28",
-    "packaged_sha256": "fb45386eec891c83894724ba87996d33e59d6a197140820fe3a0bdc73ff39ab5"
+    "packaged_sha256": "e3bbef36ea0c8ae9c687b967b3f9924d3773b99955694b8fdacdfeca3f2169f2"
   },
   {
     "template": "assets/templates/outfit/extract.txt",
