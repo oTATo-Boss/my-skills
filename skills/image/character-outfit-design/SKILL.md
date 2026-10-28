@@ -1,9 +1,11 @@
 ---
-name: fashion-picture
+name: character-outfit-design
 description: "Design photorealistic fashion pictures for a user-selected person or character: original outfits, four-view garment samples, outfit try-on, and controlled makeup and hair styling. Use for 服装图片设计, 四视图样衣, 人物换装, 妆造图片, and garment image review or repair; do not use to extract an existing outfit unchanged."
+metadata:
+  version: "1.0.1"
 ---
 
-# Fashion Picture — Clothing & Character Styling
+# 角色的服装设计
 
 Build one approved character look through two linked stages: first make the outfit physically credible as a four-view sample, then transfer it to the user-selected person or character reference while designing only the requested makeup and hair styling. Keep both reusable templates unchanged; put current-look detail only inside their placeholders.
 

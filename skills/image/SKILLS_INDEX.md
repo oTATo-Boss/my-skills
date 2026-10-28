@@ -11,5 +11,5 @@
 ## 技能入口
 
 - [json-prompt-system](json-prompt-system/SKILL.md) — 生成或还原自拍、生活照、电商服装与试穿的分层 JSON 图像提示词。
-- [fashion-picture](fashion-picture/SKILL.md) — 服装设计、四视图样衣、人物换装与受控妆造；原名 otato-fashion-design。
+- [角色的服装设计（character-outfit-design）](character-outfit-design/SKILL.md) — 服装设计、四视图样衣、人物换装与受控妆造；曾用名 fashion-picture、otato-fashion-design。
 - [codex-imagegen](codex-imagegen/SKILL.md) — 供其他 Agent 通过本机已登录的 Codex CLI 调用生图与图片编辑能力。
