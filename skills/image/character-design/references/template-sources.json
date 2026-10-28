@@ -25,7 +25,7 @@
     "source_title": "写实角色全身三视图",
     "source_sha256": "88f4f14e7911840696fc540a4131cb385fdd24ba428dc26464a4a0222c8add6f",
     "snapshot_date": "2026-10-28",
-    "packaged_sha256": "d42d209dc918e199bffad67811e8857386380de1e095d74ee5db74720e4074bf"
+    "packaged_sha256": "51477609554f04c28e99be5b3f7f7a6249ee965e84d6de5f8f7ab51d2414d438"
   },
   {
     "template": "assets/templates/realistic/board.txt",
@@ -53,7 +53,7 @@
     "source_title": "3D:CG角色资产宫格图",
     "source_sha256": "64e5088df922b744b8f788d658a6ccd9e56872849c1c1142e1c2bd1cc537e120",
     "snapshot_date": "2026-10-28",
-    "packaged_sha256": "661801d3772610e1ab05859bdd9fdd4b464674e3ecc7698e7e9a7d28dce248e6"
+    "packaged_sha256": "bbe21cd242b65b8974a24f25860c69009700cc101103256621bb79ebf80b5e63"
   },
   {
     "template": "assets/templates/aaa/portrait.txt",

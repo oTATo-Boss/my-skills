@@ -15,7 +15,7 @@ Accept only when there is no major identity, structure, material, or mannequin f
 
 ## Single-variable Repair
 
-Choose one primary failure category:
+Classify the observed defect for diagnosis; classification does not authorize changing the prompt or design:
 
 - `DESIGN_DRIFT`
 - `VIEW_INCONSISTENCY`
@@ -24,13 +24,13 @@ Choose one primary failure category:
 - `VISIBLE_BODY`
 - `CAPTURE_OR_LAYOUT`
 
-Preserve every accepted part. Revise only the design sentence or generation constraint that controls the primary failure, then render a new version.
+Preserve the prompt, references, parameters, requested aspect ratio and accepted design. For a generation defect, rerender under the exact same conditions within the task authorization. Do not edit the design, prompt, layout or template as an automatic repair.
 
-For `VIEW_INCONSISTENCY`, strengthen exact count and attachment landmarks inside `{{服装设计}}`. If the same repeated structure fails again, reduce or consolidate that structure. Do not inflate the universal template.
+For `VIEW_INCONSISTENCY`, rerender without changing the locked counts or structure. Changing counts, attachment landmarks or simplifying a design requires a user-requested revision; do not inflate the universal template.
 
-For `MATERIAL_FAKE`, replace metaphorical material words with named real materials, edge behavior, thickness, fastening, and surface response appropriate to the selected style.
+For `MATERIAL_FAKE`, preserve the established material requirements and rerender. Do not rewrite the selected style or prompt merely because one result failed.
 
-For `VISIBLE_BODY`, restate that the support is fully invisible and that empty openings reveal the real wall behind the garment, not a white mannequin surface.
+For `VISIBLE_BODY`, rerender with the existing invisible-support prompt; do not add defensive constraints automatically.
 
 Report: status, visible evidence, preserved elements, one repair variable, and new version path.
 
@@ -44,11 +44,11 @@ Report: status, visible evidence, preserved elements, one repair variable, and n
 6. **Human integrity:** inspect every hand, finger group, foot, arm, leg, ear, and facial feature in every panel. Nothing is missing, duplicated, fused, cropped unexpectedly, or anatomically impossible.
 7. **Capture realism:** skin, cloth, leather, metal, transparent materials, shadows and reflections match the established realistic, general CG or AAA style. A deliberately plastic/toy style is valid when specified.
 
-## Decide Whether to Rerender or Revise
+## Rerender Defects Without Changing Inputs
 
-- If identity, garment logic, makeup scope, or composition is systematically wrong, revise the single controlling prompt variable and preserve everything already accepted.
-- If one otherwise-correct result has an isolated missing hand, fused finger group, accidental crop, or similar stochastic defect, within the task’s retry authorization, rerender once with the same prompt and references before changing the workflow.
-- If the same defect repeats, classify its controlling category and make one targeted revision. Do not accumulate defensive prose in either universal template.
-- Save every rerender as a new version; never overwrite an accepted or diagnostically useful prior result.
+- Generation defects (identity drift, inconsistent garment views, missing hands, fused fingers, edge crops, wrong output proportions) call for a new candidate with the exact same prompt, references and settings. The requested ratio stays fixed; do not repair a 9:16 asset by changing it to landscape.
+- Repeated failures do not automatically authorize changing the design, prompt, proportions, crop, template or workflow. At the task's budget/attempt limit, report what failed and retain useful candidates.
+- Only change the creative requirements when the user requests a design/styling revision; distinguish that request from a failed sample.
+- Save new candidates as versions; select one usable result for the same intended asset rather than creating a second redundant asset stage.
 
-Report: status, visible evidence, whether it is a stochastic rerender or prompt repair, preserved elements, and the new version path.
+Report actual acceptance status, observed defects, unchanged input conditions, adopted version and known limits.
