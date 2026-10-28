@@ -3,6 +3,7 @@ import json
 import os
 from pathlib import Path
 import signal
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -277,6 +278,57 @@ class Acceptance(unittest.TestCase):
         result = subprocess.run([sys.executable, str(GENERATOR), "--path", str(self.project),
                                  "--name", "test-workflow"], capture_output=True, text=True)
         self.assertEqual(result.returncode, 2)
+
+    def test_bundled_skill_runs_after_relocation_without_source_library(self):
+        # A full Skill, including executable support and a binary asset, travels
+        # with the workflow. The adapter consumes the copied resource, not a
+        # globally discovered Skill or retained build path.
+        library = Path(self.temp.name) / "source-library"
+        source = library / "portable-skill"
+        (source / "scripts").mkdir(parents=True)
+        (source / "assets").mkdir()
+        (source / "SKILL.md").write_text("Use the bundled helper to read the bundled asset.")
+        (source / "LICENSE").write_text("Synthetic fixture; no third-party source.")
+        (source / "assets/token.bin").write_bytes(b"portable-evidence")
+        helper = source / "scripts/read_asset.py"
+        helper.write_text("from pathlib import Path\nprint((Path(__file__).resolve().parents[1]/'assets/token.bin').read_bytes().decode())\n")
+        helper.chmod(0o755)
+        bundled = self.project / "skills/portable-skill"
+        shutil.copytree(source, bundled)
+        self.assertEqual({p.relative_to(source): p.read_bytes() for p in source.rglob('*') if p.is_file()},
+                         {p.relative_to(bundled): p.read_bytes() for p in bundled.rglob('*') if p.is_file()})
+        self.assertEqual(helper.stat().st_mode & 0o777,
+                         (bundled / "scripts/read_asset.py").stat().st_mode & 0o777)
+        self.spec["resources"]["portable"] = {"kind": "skill", "version": "1",
+                                               "paths": ["skills/portable-skill/SKILL.md"]}
+        self.spec["steps"][-1]["executor"].update(
+            command=["{python}", "tests/bundled_adapter.py"], resources=["portable"])
+        (self.project / "tests/bundled_adapter.py").write_text('''import json,subprocess,sys
+from pathlib import Path
+j=json.load(sys.stdin)
+doc=j['resources']['portable']['documents'][0]
+skill=Path(doc['path']).parent
+assert skill == Path(j['project_dir'])/'skills/portable-skill'
+assert 'bundled helper' in doc['text']
+token=subprocess.check_output([sys.executable,str(skill/'scripts/read_asset.py')],text=True).strip()
+assert token == 'portable-evidence'
+(Path(j['output_dir'])/'report.md').write_text('# Portable report\\n- '+token+'\\n')
+print(json.dumps({'report':'report.md','note_count':1}))
+''')
+        self.write_spec()
+        relocated = Path(self.temp.name) / "recipient/workflows/test-workflow"
+        relocated.parent.mkdir(parents=True)
+        shutil.move(self.project, relocated)
+        shutil.rmtree(library)  # Only the synthetic test library is removed.
+        self.project = relocated
+        self.runner = relocated / "runtime/runner.py"
+        self.assertTrue(self.cli("check")["ok"])
+        self.assertEqual(self.run_job()["status"], "succeeded")
+        self.assertTrue(self.cli("validate", "--run-id", "example")["acceptance"]["passed"])
+        self.assertIn("portable-evidence", (relocated / "outputs/example/report.md").read_text())
+        # Merely copying SKILL.md would fail this real execution.
+        (relocated / "skills/portable-skill/assets/token.bin").unlink()
+        self.assertEqual(self.run_job(run_id="missing-asset", expected=1)["status"], "failed")
 
 
 if __name__ == "__main__":

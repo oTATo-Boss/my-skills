@@ -25,7 +25,7 @@ pointer 使用 JSON Pointer；空字符串引用整个对象，`~1` 表示 `/`�
 
 ## 执行与检查
 
-executor.kind 为 script 或 agent，command 是参数数组，禁止 shell 拼接。`{python}` 占位替换为启动 Runtime 的 Python。进程工作目录固定为项目根。Agent 节点还须声明 role，可通过 instructions 数组加载角色文件；生成适配器应实际消费这些指令和 resources 中的 Skill 文本。
+executor.kind 为 script 或 agent，command 是参数数组，禁止 shell 拼接。`{python}` 占位替换为启动 Runtime 的 Python。进程工作目录固定为项目根。Agent 节点还须声明 role，可通过 instructions 数组加载角色文件；生成适配器应实际消费这些指令和 resources 中的包内 Skill 文本。Skill 资源使用 skills/<skill-name>/ 下的相对文件路径，完整包随工作流交付；关联脚本及素材由适配器按包内位置访问，不依赖本机技能库。完整性校验与资源锁见 [能力发现与接入](capabilities.md)。
 
 ```json
 {

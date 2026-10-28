@@ -24,8 +24,9 @@ python3 runtime/runner.py validate --run-id <运行ID>
 
 这不是后台调度器或沙箱，不宣称原生 Codex／Claude／Cursor 适配已验证。Agent 节点需要项目自行提供读取 job 并返回 JSON 的真实模型适配器。
 工具 probe 必须是已授权的无副作用检查；stdout 返回 {"ok":true}。所需工具/模型资源必须定义 probe。
-Skill 文档随 job.resources 传入适配器；允许动作和工具范围是配置约定，不能替代外部权限控制。
+实际使用的领域 Skill 完整存放在 skills/<skill-name>/，包含脚本、参考资料和素材，绑定使用包内相对文件路径；不依赖构建者的共享技能库。Skill 文档随 job.resources 传入适配器，关联文件由适配器从包内读取；Runtime 不自动发现技能目录或遍历校验整个包，Builder 必须补充文件清单与摘要校验。未使用 Skill 的默认报告示例不创建空 skills/。
+允许动作和工具范围是配置约定，不能替代外部权限控制。
 
-workflow.yaml 是唯一工作流定义；resources.lock.json 记录实际依赖，规则由 Runtime 加载。交付后不会自动搜技能、装 MCP 或更换模型。
+workflow.yaml 是唯一工作流定义；resources.lock.json 记录实际依赖，规则由 Runtime 加载。交付后不会自动搜技能、装 MCP 或更换模型。分享前应在新位置、原始工作流和本机技能库路径不可用的隔离环境中验证包内 Skill；接收者需安装声明的系统／Python 依赖，并自行配置所需模型、MCP 和服务凭据。
 所有源码、验证器、规则及资源锁都参与恢复指纹。环境变量值不保存，凭据变更后应重新 check；模型或工具版本应明确记录。
 未经过正常、失败、重试、中断恢复、最终验收和重复运行验证的项目只能称为已生成项目，不能标记 ready。

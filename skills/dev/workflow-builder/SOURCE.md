@@ -4,12 +4,12 @@
 - kind: `local`
 - status: `confirmed`
 - source: 本仓库 `skills/dev/workflow-builder/`；经用户确认的 v0.2 设计记录 `docs/workflow-builder/plan.md`。
-- version: `0.2.1`；2026-10-28 明确项目 workflows/ 整包存放与外部导入规则；随包 Runtime 为 0.1.0。
+- version: `0.3.0`；2026-10-28 要求领域 Skill 完整内置到工作流 skills/，以包内相对路径执行并验证可分享性；随包 Runtime 为 0.1.0。
 - author: 用户需求与架构确认，Codex 辅助编写本包说明、生成器、Schema、Runtime 和示例。
 - license: unknown；本次未指定新包发布许可，不继承或改写第三方伙伴 Skill 的许可。
 - collected_at: `2026-10-28`
 - recorded_at: `2026-10-28`
-- evidence: 本次对话对 Builder／Runtime 分离、独立入口及验收方案的确认和开发授权；后续明确要求补充通用的已有项目新增／整合能力，工作流统一置于项目根 workflows/，业务资料目录由 Agent 决定。源码旁保留设计及验证记录。
+- evidence: 本次对话对 Builder／Runtime 分离、独立入口及验收方案的确认和开发授权；后续明确要求补充通用的已有项目新增／整合能力，工作流统一置于项目根 workflows/，业务资料目录由 Agent 决定；用户进一步明确领域 Skill 必须完整随工作流交付，不能依赖本机共享技能库。源码旁保留设计及验证记录。
 
 ## 依赖与参考边界
 
