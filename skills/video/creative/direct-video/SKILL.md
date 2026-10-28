@@ -15,6 +15,16 @@ Own creative decisions and execution. The user should not have to teach composit
 4. For a new direction, study 2–3 relevant references, including an original creator/studio source. Use [reference-study.md](references/reference-study.md) and [sources.md](references/sources.md). A small edit or approved direction does not require new research. Stop when the creative question is answered.
 5. Define a compact design contract: palette roles, type hierarchy, composition, material/light, motion character, transition logic, sound and project-specific exclusions. Use [craft.md](references/craft.md); never impose one universal aesthetic.
 
+## Reference assets before generated shot frames
+
+For generated video with existing characters, locations or props, consult `r2v` as needed and first evaluate direct reference-to-video using the current entry's supported inputs. Map each asset to its role; describe blocking, gaze, action order and camera movement in the shot/beat list and video prompt. Multiple characters or a continuous performance do not by themselves require a composite image.
+
+For asset supplements, use `asset-generation` and an image tool only for an identified information gap: missing body/side/back views, a changed outfit, a needed scene extension or an important prop. Preserve the established identity, structure and visual quality; stop when the visible information is sufficient. Do not generate full view sheets or extensions merely to complete a checklist.
+
+Do not default to generating a finished shot composition or storyboard image and then animating it. Use a shot frame when the user requires an exact still/endpoint, the selected entry requires endpoint input, or a specific unresolved control problem justifies it after simpler references have been assessed. State that reason and the frame's input role. If an entry forces a still that conflicts with the intended route, evaluate a suitable available entry before adding image generation. A storyboard made for discussion does not automatically become model input.
+
+Example: two established adult characters and a bedroom, 15 seconds of continuous silent performance → inspect and map the existing assets, specify the interaction and camera in text, then use supported multi-reference video generation; supplement only a demonstrated asset gap. No automatic two-person composition image.
+
 ## User quality bar
 
 The user expects strong design and taste without teaching or micromanaging the agent. Own reference selection, artistic judgment and revision. Do not ask the user to solve routine design problems or lower the bar to fit the easiest implementation.
@@ -33,7 +43,7 @@ Procedural geometry and text are valid when the concept calls for them, but neve
 
 - Keep a brief and shot/beat list in the project. Each shot needs time range, purpose, focal subject, action, camera, text/read window, sound and a transition relationship.
 - Choose a visual mechanism (cause/effect, metaphor, transformation, contrast or performance), not merely adjectives. Connect shots through an idea or recurring element.
-- Design main static compositions and the ending before polishing motion. Test the hardest 2–4 seconds early. Use an animatic for longer stories.
+- Plan the main compositions and ending before polishing motion; a written shot design can be sufficient. For generated video, follow the reference-assets decision above rather than treating composition planning as a mandatory image-generation step. Test the hardest 2–4 seconds early. Use an animatic for longer stories.
 - When the user delegates direction, select the strongest suitable option and continue through reversible production. Do not require three alternatives or repeated approvals by default. Honor explicit sign-off boundaries and external-action/spend permissions.
 - Plan sound early. Let dialogue, dramatic emphasis and musical phrases guide timing. Use silence and holds deliberately; not every beat needs a cut.
 - Work in shots/sequences with shared design tokens and one time contract. Keep text editable and source assets intact. Combine code, footage, generation and 3D according to their strengths.

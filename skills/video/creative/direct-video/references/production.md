@@ -10,7 +10,7 @@ Find the named skill in the current catalog; versioned plugin paths change. Keep
 | Product screen reveal | bs-hyperframes-device-canvas-launch | Real screen, camera, one convincing action |
 | Continuous UI traversal | bs-hyperframes-velocity-sting | Position/direction/velocity at seams |
 | AI + original performance | ai-liveaction-fusion | Shot facts, reference roles and approved storyboard boundaries |
-| New generated shots | Available video tool skill + current provider docs | Physical action, identity and temporal QC |
+| New generated shots | r2v when reference control is needed + available video tool skill + current provider docs | Reuse sufficient assets directly; justify asset supplements or endpoint frames; check physical action, identity and time |
 | Precise 3D product/camera/light | Relevant Blender skills | Geometry, materials, photography and render |
 | Existing-film edit/color/audio | Available editor or FFmpeg + official docs | Trim, J/L cuts, grade matching, mix |
 | Small procedural experiment | Canvas/SVG with deterministic seek | Isolate one motion mechanism cheaply |

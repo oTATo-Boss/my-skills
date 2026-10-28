@@ -10,7 +10,7 @@
 
 - [social-media-router](social-media-router/SKILL.md) — 按目标路由并串联社交内容各阶段，保持交付范围。
 - [content-planning](content-planning/SKILL.md) — 研究参考、选择创意并编写脚本、分镜和素材简报。
-- [asset-generation](asset-generation/SKILL.md) — 整理身份资产、补图、编写生成提示词并验收源素材。
+- [asset-generation](asset-generation/SKILL.md) — 复用身份与场景资产、补最小信息缺口，编写生成提示词并验收源素材。
 - [content-production](content-production/SKILL.md) — 剪辑、声音处理、成片验收与封面制作。
 - [publishing-delivery](publishing-delivery/SKILL.md) — 撰写标题正文标签并整理逐篇待发布文件夹。
 - [performance-analysis](performance-analysis/SKILL.md) — 采集和比较后台数据，给出有证据边界的分析与实验。

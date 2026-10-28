@@ -10,6 +10,6 @@
 
 ## 技能入口
 
-- [direct-video](direct-video/SKILL.md) — 统筹视频创意、分镜、构图、节奏、声音与成片验收。
+- [direct-video](direct-video/SKILL.md) — 统筹视频创意、参考资产复用与制作路线、分镜、节奏、声音和成片验收。
 - [motion-video](motion-video/SKILL.md) — 面向导演查询代码视频、素材编辑、合成特效、三维、声音字幕与渲染交付的输入条件和能力边界。
 - [screenwriting](screenwriting/SKILL.md) — 编写或修订影视、剧集、解说与 MV 的可制作脚本。
