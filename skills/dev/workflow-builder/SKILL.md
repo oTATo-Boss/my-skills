@@ -9,7 +9,7 @@ description: >-
   needs real launch, retry, or recovery mechanisms. Do not take over ordinary
   execution of an existing workflow, a single code fix, or installation of a named Skill.
 metadata:
-  version: "0.2.0"
+  version: "0.2.1"
 ---
 
 # Workflow Builder
@@ -24,7 +24,7 @@ metadata:
 
 只设计时交付蓝图、依赖与缺口，状态为 designed。搭建时继续生成、配置和运行验证。明确当前客户端交互、独立脚本、无人值守或自动触发的需要，不默认增加框架、后台任务或多个 Agent。
 
-在调用命令前设置 `SKILL_DIR` 为本 Skill 的真实目录。`PROJECT_ROOT` 为真正的业务项目根，`WORKFLOW_DIR` 为某一工作流的定义、执行器与状态目录；独立工作流项目时两者可以相同。不要把已有项目根交给生成器覆盖，也不要在任务、素材或临时目录重复创建项目规则和索引。核心规范跨平台；随包 Runtime 支持 Python 3.10+、macOS/Linux。其他运行平台由相应适配器实现并单独验证。
+在调用命令前设置 `SKILL_DIR` 为本 Skill 的真实目录。`PROJECT_ROOT` 为真正的业务项目根，`WORKFLOW_DIR` 为某一完整工作流目录。在已有业务项目中新增、开发或导入工作流时，统一使用 `PROJECT_ROOT/workflows/<workflow-id>/`，与项目 `skills/<skill-name>/` 整包存放的逻辑一致；独立工作流项目时两者可以相同。不要把已有项目根交给生成器覆盖，也不要在任务、素材或临时目录重复创建项目规则和索引。核心规范跨平台；随包 Runtime 支持 Python 3.10+、macOS/Linux。其他运行平台由相应适配器实现并单独验证。
 
 ## 1. 需求转成执行契约
 
@@ -62,7 +62,7 @@ python3 "$SKILL_DIR/scripts/create_workflow.py" --path "$WORKFLOW_DIR" --name ex
 
 默认生成一个真正可运行的“笔记→Markdown 报告”示例，供检查契约与入口；将 workflow.yaml、业务脚本、规则和验收改成用户目标，删改无用的示例文件。`--spec` 可复制已有定义，但不会自动复制其业务资源或证明它可用。不要把默认例子当作已完成用户需求。
 
-新增时选择项目内符合既有约定的未占用目录；整合既有流程时先保留基线，针对性修改，不重新生成覆盖。公共规则和共享输入必须由实际入口或适配器显式加载，不能假定父级文档会自动传给脚本 Runtime。
+新增或开发时在项目根 `workflows/<workflow-id>/` 的未占用目录生成完整工作流；从外部添加已有工作流时，将完整定义、入口、代码与必要资源复制导入该位置，保留原始来源，修正路径与依赖，不以外部路径、软链接或包装调用替代导入。整合项目内已有流程时先保留基线，针对性修改，不重新生成覆盖，也不顺带批量迁移无关流程。公共规则和共享输入必须由实际入口或适配器显式加载，不能假定父级文档会自动传给脚本 Runtime。
 
 生成项目仅执行被明确接受的工作流命令，规则和工具范围不构成操作系统沙箱。需要接模型、MCP、原生客户端或自动触发时读取 [运行适配与连接边界](references/adapters.md)，依据目标版本官方资料实现和验证，不能编造 CLI 参数。
 
