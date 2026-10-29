@@ -2,21 +2,35 @@
 
 只读取当前阶段与当前画风需要的文件。模板中现有占位符填写本次内容，不把某个角色写入共享模板。未提供的参考不虚构。
 
-## 基础模板
+## 写实用途选型
 
-| 阶段 | 写实 | 通用3D-CG | AAA-CG |
+先按[写实模板分流](realistic-routes.md)选择用途，再选阶段。下表三套保留完整基础流程；原写实路线仅保留[一步到位快速综合板](../assets/templates/realistic/board.txt)，无默认服装，实际参考图与结尾设计插槽共同控制最终角色设计。
+
+| 阶段 | 通用基础服装版 | 美女专用版 | 帅哥专用基础版 |
 |---|---|---|---|
-| 正面肖像 | [portrait](../assets/templates/realistic/portrait.txt) | [portrait](../assets/templates/cg/portrait.txt) | [portrait](../assets/templates/aaa/portrait.txt) |
-| 头部四视图 | [head-four](../assets/templates/realistic/head-four.txt) | 综合模板的头部补齐模式 | 综合模板的头部补齐模式 |
-| 正面半身 | [half](../assets/templates/realistic/half.txt) | [half](../assets/templates/cg/half.txt) | [half](../assets/templates/aaa/half.txt) |
-| 全身 | [body-three](../assets/templates/realistic/body-three.txt) | 综合模板的全身补齐模式 | [body-four](../assets/templates/aaa/body-four.txt) |
-| 综合板 | [board](../assets/templates/realistic/board.txt) | [board](../assets/templates/cg/board.txt) | [board](../assets/templates/aaa/board.txt) |
+| 正面肖像 | [portrait](../assets/templates/realistic-base/portrait.txt) | [portrait](../assets/templates/beauty/portrait.txt) | [portrait](../assets/templates/handsome/portrait.txt) |
+| 头部四视图 | [head-four](../assets/templates/realistic-base/head-four.txt) | [head-four](../assets/templates/beauty/head-four.txt) | [head-four](../assets/templates/handsome/head-four.txt) |
+| 正面半身 | [half](../assets/templates/realistic-base/half.txt) | [half](../assets/templates/beauty/half.txt) | [half](../assets/templates/handsome/half.txt) |
+| 全身三视图 | [body-three](../assets/templates/realistic-base/body-three.txt) | [body-three](../assets/templates/beauty/body-three.txt) | [body-three](../assets/templates/handsome/body-three.txt) |
+| 综合板 | [board](../assets/templates/realistic-base/board.txt) | [board](../assets/templates/beauty/board.txt) | [board](../assets/templates/handsome/board.txt) |
+
+新基础版和帅哥版快速板默认采用16:9左半身、右上头部四视、右下全身四视；分阶段仍用原三张整图拼接结构。美女版恢复整体重写前的女模特模板，仅服装为纯白色基础款合身短袖T恤和黑色基础款运动短裤（裤长至大腿中部）；原文阶段冲突沿用分流说明中的历史适配。已有分阶段源图时使用拼接脚本。原写实快速综合板只生成新整板，不提供分阶段或拼接模式；下文CG／AAA模式不覆盖各写实模板的明确规格。
+
+## CG／AAA基础模板
+
+| 阶段 | 通用3D-CG | AAA-CG |
+|---|---|---|
+| 正面肖像 | [portrait](../assets/templates/cg/portrait.txt) | [portrait](../assets/templates/aaa/portrait.txt) |
+| 头部四视图 | 综合模板的头部补齐模式 | 综合模板的头部补齐模式 |
+| 正面半身 | [half](../assets/templates/cg/half.txt) | [half](../assets/templates/aaa/half.txt) |
+| 全身 | 综合模板的全身补齐模式 | [body-four](../assets/templates/aaa/body-four.txt) |
+| 综合板 | [board](../assets/templates/cg/board.txt) | [board](../assets/templates/aaa/board.txt) |
 
 软件模板已纠错的快照是版本起点；随包适配补齐模式和模块化风格字段。输出是参考图片，不包含真实绑定、网格或三维模型数据。
 
-## 综合模板的运行模式（先选快速或分阶段）
+## CG／AAA综合模板的运行模式
 
-三类综合模板均提供 `{{输出模式}}`、`{{本次输入与参考职责}}`。运行前明确填一种模式；不让图片模型自行选择：
+CG／AAA综合模板均提供 `{{输出模式}}`、`{{本次输入与参考职责}}`。运行前明确填一种模式；不让图片模型自行选择：
 
 - `快速整板生成`：三类画风均支持。实际人物/服装/妆造/特征参考＋文字说明，直接生成完整多视角角色板；无需已有头部、半身或全身中间图，不强制使用打底服或先拼接。已定身份保持，其余按本次整体设计要求执行。
 - `头部补齐`：只输出16:9头部四视图，0°/45°/90°/180°。输入已确认肖像，不依赖半身或全身。
@@ -25,7 +39,7 @@
 
 全身模板与`全身补齐`只选一个入口，同一阶段只需要一张最终可用的9:16全身三视图，随机缺陷允许原条件重抽。已有可用全身图时禁止再次补齐，拼接阶段不生成新图；发现生成缺陷直接在任务授权内沿用原提示词、参考和规格重抽，不改成横版或自动更改设计。
 
-快速模式是生成新整板；`综合板`模式是已有源图的排版规格，二者不可混用。写实综合模板在分阶段路线中用于规定排版和状态一致性；已有源图直接拼接。三个综合模板都不要求“为了排版统一”重绘已确认面部。
+快速模式是生成新整板；`综合板`模式是已有源图的排版规格，二者不可混用。写实基础路线已有源图直接按其拼接说明处理，原写实快速综合板不进入分阶段。各模板都不要求“为了排版统一”重绘已确认面部。
 
 ## 服装与裂变模板
 
