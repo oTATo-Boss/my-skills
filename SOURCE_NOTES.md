@@ -73,4 +73,4 @@
 
 `character-design`整合并替换`character-outfit-design`，保留其服装方法、模板与案例；旧名称仅作历史记录，不保留安装入口。新包增加用户确认的角色基础资产、三类画风、剧情状态裂变与拼接脚本，来源及许可边界见`skills/image/character-design/SOURCE.md`。
 
-2026-10-29 按用户要求从 `visual-creative-director.zip` 完整导入视觉创意总监技能，登记于 `image/visual-creative-director`，并同步 M1rage Studio 内置创意指导分类。保留 8 个原包文件，来源、归档哈希及软件适配边界见技能 `SOURCE.md`；原作者、版本和许可未声明，不标为用户原创。
+2026-10-29 按用户要求从 `visual-creative-director.zip` 完整导入视觉创意总监技能，登记于 `image/visual-creative-director`，并同步 M1rage Studio 内置创意指导分类。保留 8 个原包文件，来源、归档哈希及软件适配边界见技能 `SOURCE.md`；用户于同日明确确认作者为本人，归属记录为用户原创；原包版本和许可未声明。

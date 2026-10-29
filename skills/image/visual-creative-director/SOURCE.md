@@ -1,15 +1,15 @@
 # 来源记录
 
 - skill: `visual-creative-director`
-- kind: `collected`
+- kind: `local`
 - status: `confirmed`
-- source: 用户于 2026-10-29 明确提供并要求安装的 `visual-creative-director.zip`；原始公开仓库 unknown。
+- source: 用户本人创作；2026-10-29 明确确认作者为本人，通过 `visual-creative-director.zip` 提供并要求安装。
 - version: unknown；原包未声明版本；本次为 2026-10-29 导入快照。
-- author: unknown；原包未提供作者声明，不据此认定用户原创。
+- author: 用户本人；2026-10-29 在本会话中明确确认。
 - license: unknown；原包未附许可证，不替原作者授权。
 - collected_at: `2026-10-29`
 - recorded_at: `2026-10-29`
-- evidence: 输入归档 `visual-creative-director.zip`，SHA-256 `504952f152a7432115b96d17218f983a99100b1ddaf108d15c0e233f7d4d5ae8`；原包含 8 个文件（入口、Agent 配置及 6 份参考）。
+- evidence: 输入归档 `visual-creative-director.zip`，SHA-256 `504952f152a7432115b96d17218f983a99100b1ddaf108d15c0e233f7d4d5ae8`；原包含 8 个文件（入口、Agent 配置及 6 份参考）；作者归属依据为用户本人于 2026-10-29 的明确确认。
 
 ## 本地调整与边界
 
