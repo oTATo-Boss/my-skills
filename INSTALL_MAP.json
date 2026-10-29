@@ -12,7 +12,7 @@
     "character-design": "image/character-design",
     "nsfw-seedance-prompt-skill": "video/ai/nsfw-seedance-prompt-skill",
     "codex-imagegen": "image/codex-imagegen",
-    "direct-video": "video/creative/direct-video",
+    "direct-video": "director/direct-video",
     "design-review": "web design/design/design-review",
     "ui-craft": "web design/design/ui-craft",
     "visual-reference": "web design/design/visual-reference",
@@ -35,6 +35,6 @@
     "animejs-workflows": "animejs/animejs-workflows",
     "animejs-example-library": "animejs/animejs-example-library",
     "gleam-screenwriter": "writing/script/gleam-screenwriter",
-    "visual-creative-director": "image/visual-creative-director"
+    "visual-creative-director": "director/visual-creative-director"
   }
 }

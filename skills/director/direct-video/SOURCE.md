@@ -3,7 +3,7 @@
 - skill: `direct-video`
 - kind: `local`
 - status: `confirmed`
-- source: 本地开发／维护目录 `skills/video/creative/direct-video`；当前维护仓库 https://github.com/oTATo-Boss/my-skills
+- source: 本地开发／维护目录 `skills/director/direct-video`；当前维护仓库 https://github.com/oTATo-Boss/my-skills
 - version: unknown；未找到技能版本或上游提交声明。
 - author: 用户自研工作流（含 Agent 辅助编写）；未单独声明公开作者署名。
 - license: MIT（2026-10-14 本人决定，见 [LICENSE](<LICENSE>)）
@@ -27,3 +27,7 @@
 - 将角色建立、服装妆造和状态裂变交接到`character-design`；参考方式与本技能原职责保持。
 
 - 2026-10-28：角色交接明确遵守character-design的快速或分阶段路径，不将中间确认节点强加给快速整板生成。
+
+## 2026-10-29 · 导演分类迁移
+
+- 按用户要求整体迁入 `director/`，保留包内资源与原版本；同步必要引用、索引和客户端入口。
