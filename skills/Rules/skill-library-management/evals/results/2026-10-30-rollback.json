@@ -1,0 +1,102 @@
+{
+  "scope": "temporary fixture 07 only; isolated archive/failure/rollback exercise",
+  "snapshot": {
+    "client": [
+      "dir",
+      493
+    ],
+    "dev": [
+      "dir",
+      493
+    ],
+    "install": [
+      "dir",
+      493
+    ],
+    "install/A": [
+      "dir",
+      493
+    ],
+    "install/SKILLS_INDEX.md": [
+      "file",
+      "a2f2a24cc2c552f5027b7106f53c26739aa2deaa5e3b6f9c8dc73d07886a4dad",
+      420
+    ],
+    "install/A/SKILL.md": [
+      "file",
+      "3c6cda137a30abea319ea546c3bc2aa81ac7d7d4f18cc3281b5ebf24540a131a",
+      420
+    ],
+    "install/A/SOURCE.md": [
+      "file",
+      "4b2c986b973e0586e598144947c6f8ec21e1a693d65eee6c2a3745e107100d82",
+      420
+    ],
+    "install/A/local-notes.txt": [
+      "file",
+      "4f893f7c62bafa31cab838b7d0b66f80fbca902ca4fafb2d062b9b25047872a3",
+      420
+    ],
+    "install/A/scripts": [
+      "dir",
+      493
+    ],
+    "install/A/scripts/export.py": [
+      "file",
+      "2416b8819bdec0d460243e2b90e3667ea530f03bc5ec4f022d1b1cd807541caa",
+      493
+    ],
+    "dev/INSTALL_MAP.json": [
+      "file",
+      "97c02672e89dbc43a96eb46e24babe3fd01612304d8896aa0b28ed47cce65b99",
+      420
+    ],
+    "dev/SKILLS_INDEX.md": [
+      "file",
+      "2155a4cb5d7a1e1c8feefdbce91a5158e3fa003a3eb4e32637e440f4a39feebc",
+      420
+    ],
+    "dev/skills": [
+      "dir",
+      493
+    ],
+    "dev/skills/A": [
+      "dir",
+      493
+    ],
+    "dev/skills/A/SKILL.md": [
+      "file",
+      "3c6cda137a30abea319ea546c3bc2aa81ac7d7d4f18cc3281b5ebf24540a131a",
+      420
+    ],
+    "dev/skills/A/SOURCE.md": [
+      "file",
+      "4b2c986b973e0586e598144947c6f8ec21e1a693d65eee6c2a3745e107100d82",
+      420
+    ],
+    "dev/skills/A/scripts": [
+      "dir",
+      493
+    ],
+    "dev/skills/A/scripts/export.py": [
+      "file",
+      "2416b8819bdec0d460243e2b90e3667ea530f03bc5ec4f022d1b1cd807541caa",
+      493
+    ],
+    "client/archive-me": [
+      "link",
+      "../install/A",
+      493
+    ]
+  },
+  "backup": "rollback-backup/07",
+  "archive": "archive/07",
+  "steps": [
+    "archived dev/skills/A",
+    "archived install/A",
+    "removed active registrations and relative client entry",
+    "restored original bytes, modes, index/map and relative link"
+  ],
+  "restore": "Restore each original entry from backup, retaining modes and symlink text; verify baseline.",
+  "failure": "injected failure during client switch"
+}

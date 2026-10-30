@@ -8,7 +8,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from audit_library import audit, file_manifest
+from audit_library import audit, file_manifest, inventory
 
 
 class LibraryAuditTests(unittest.TestCase):
@@ -85,6 +85,40 @@ class LibraryAuditTests(unittest.TestCase):
         self.skill("one", "one")
         self.page(self.index, 1, [("one", "skills/one/SKILL.md", "Workflow.")])
         self.assertTrue(self.check()["ok"])
+
+    def test_physical_aliases_and_cycles_do_not_duplicate_inventory(self):
+        folder = self.skill("one", "one")
+        (self.root / "alias").symlink_to(folder)
+        (folder / "loop").symlink_to(self.root)
+        errors = []
+        found = inventory(self.root, errors)
+        self.assertEqual(set(found), {(folder / "SKILL.md").resolve()})
+        self.assertEqual(errors, [])
+
+    def test_identical_independent_entities_are_not_semantically_deduplicated(self):
+        folder = self.skill("one", "one")
+        shutil.copytree(folder, self.root / "other")
+        self.page(self.index, 2, [
+            ("one", "skills/one/SKILL.md", "Workflow."),
+            ("other", "skills/other/SKILL.md", "Workflow."),
+        ])
+        before = file_manifest(self.project)
+        result = self.check()
+        self.assertEqual(result["skills"], 2)
+        self.fails_with(result, "Duplicate skill name")
+        self.assertEqual(before, file_manifest(self.project))
+
+    def test_install_relationship_preserves_divergent_copy_for_agent_review(self):
+        self.layout()
+        self.install()
+        extra = self.installed / "image/second/export.txt"
+        extra.write_text("Installed-only export capability.")
+        before = file_manifest(self.installed)
+        result = self.check(install_map=self.map_file, compare_installed=True)
+        self.assertEqual(result["skills"], 4)
+        self.fails_with(result, "Installed copy differs: second")
+        self.assertTrue(any("export.txt" in error for error in result["errors"]))
+        self.assertEqual(before, file_manifest(self.installed))
 
     def source_record(self, folder, name, status="confirmed"):
         fields = {"skill": name, "kind": "collected", "status": status,

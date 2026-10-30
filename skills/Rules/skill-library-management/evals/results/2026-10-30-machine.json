@@ -1,0 +1,143 @@
+{
+  "read_only_review": "PASS",
+  "01": {
+    "ok": true,
+    "skills": 1,
+    "reachable_skills": 1,
+    "indexes": 1,
+    "counts": {
+      "<fixture>/active/01/dev/SKILLS_INDEX.md": 1
+    },
+    "install_map_skills": 1,
+    "installed_compared": true,
+    "sources": null,
+    "errors": [],
+    "warnings": []
+  },
+  "02": {
+    "ok": false,
+    "skills": 1,
+    "reachable_skills": 1,
+    "indexes": 1,
+    "counts": {
+      "<fixture>/active/02/dev/SKILLS_INDEX.md": 1
+    },
+    "install_map_skills": 1,
+    "installed_compared": true,
+    "sources": null,
+    "errors": [
+      "Installed copy differs: same-name: ['SKILL.md', 'scripts/export_csv.py']"
+    ],
+    "warnings": []
+  },
+  "01_unlisted": {
+    "ok": false,
+    "skills": 2,
+    "reachable_skills": 1,
+    "indexes": 1,
+    "counts": {
+      "<fixture>/active/01/unrelated/SKILLS_INDEX.md": 1
+    },
+    "install_map_skills": null,
+    "installed_compared": false,
+    "sources": null,
+    "errors": [
+      "Unindexed skill: <fixture>/active/01/unrelated/C/SKILL.md"
+    ],
+    "warnings": []
+  },
+  "01_counts": {
+    "physical_entities": 4,
+    "mapped_logical_skills": 3,
+    "client_entries": 2,
+    "basis": "4 real paths; the explicit dev/install map relates exactly 2 of them; B and C remain separate"
+  },
+  "02_csv": {
+    "code": 0,
+    "stdout": "text\n\"你好,\"\"quoted\"\"\n\"\n",
+    "stderr": ""
+  },
+  "03_alpha": {
+    "code": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"<fixture>/active/03/alpha/scripts/export.py\", line 1, in <module>\n    from missing_encoder import encode\nModuleNotFoundError: No module named 'missing_encoder'\n"
+  },
+  "03_乙": {
+    "code": 0,
+    "stdout": "\"你好,\\\"quoted\\\"\\n\"\n",
+    "stderr": ""
+  },
+  "06_offline": {
+    "code": 0,
+    "stdout": "\"你好,\\\"quoted\\\"\\n\"\n",
+    "stderr": ""
+  },
+  "04_render": {
+    "code": 0,
+    "stdout": "{\"shots\": [1], \"captions\": [\"hello\"]}\n",
+    "stderr": ""
+  },
+  "05_visibility": {
+    "P": [
+      "global/A",
+      "global/B",
+      "P/skills/A"
+    ],
+    "Q": [
+      "global/A",
+      "global/B"
+    ],
+    "fact": "Global A and project A share a name and are both visible in P; precedence unspecified"
+  },
+  "06_discovery": {
+    "active_plugin": "plugins/current",
+    "excluded_cache": "plugins/history",
+    "limitation": "Project unavailability is simulated by registry and absent path, not an OS permission test"
+  },
+  "07": {
+    "rollback": "PASS: identical baseline including installed-only change and relative link",
+    "dev": {
+      "ok": true,
+      "skills": 1,
+      "reachable_skills": 1,
+      "indexes": 1,
+      "counts": {
+        "<fixture>/active/07/dev/SKILLS_INDEX.md": 1
+      },
+      "install_map_skills": 1,
+      "installed_compared": false,
+      "sources": {
+        "records": 1,
+        "statuses": {
+          "confirmed": 1,
+          "partial": 0,
+          "unknown": 0
+        }
+      },
+      "errors": [],
+      "warnings": []
+    },
+    "installed": {
+      "ok": true,
+      "skills": 1,
+      "reachable_skills": 1,
+      "indexes": 1,
+      "counts": {
+        "<fixture>/active/07/install/SKILLS_INDEX.md": 1
+      },
+      "install_map_skills": null,
+      "installed_compared": false,
+      "sources": {
+        "records": 1,
+        "statuses": {
+          "confirmed": 1,
+          "partial": 0,
+          "unknown": 0
+        }
+      },
+      "errors": [],
+      "warnings": []
+    }
+  },
+  "scope": "Only generated temporary fixtures were executed or changed; semantic decisions are recorded separately by the reviewing Agent."
+}

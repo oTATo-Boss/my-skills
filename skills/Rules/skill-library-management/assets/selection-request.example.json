@@ -1,0 +1,17 @@
+{
+  "scenario": "text-to-json",
+  "explicit_id": null,
+  "near_points": 3,
+  "candidates": [
+    {
+      "id": "example/text-export",
+      "version": "example-1",
+      "revision": "unverified-example-revision",
+      "fit": "unknown",
+      "conditions": "unknown",
+      "evidence": [
+        "Template: Agent must inspect actual task fit, current entry and dependencies."
+      ]
+    }
+  ]
+}

@@ -1,13 +1,29 @@
 ---
 name: skill-library-management
-description: Organize and maintain skill libraries with purpose-based categories, package indexes, provenance records, development/install mappings and client links. Use for installing, classifying, migrating, updating, removing or auditing skills and reusable resources; ordinary use of a selected skill does not require a library audit.
+description: Manage skill libraries: install, update, audit, deduplicate, score quality and select among competing skills. Maintain categories, indexes, provenance, install mappings and client links. Use for library changes or candidate comparison; ordinary skill use does not trigger a full audit. Audits are read-only by default.
 metadata:
-  version: "1.2.1"
+  version: "1.4.1"
 ---
 
 # 分级 Skill 库管理
 
 按用途归类，通过分级索引找到技能，完整保留包内资源，并维护开发目录、本机安装副本与客户端入口。适用于接入、分类、迁移、更新、卸载和完整性检查；用户只要求方案时，交付方案即可。
+
+## 按需智能审计
+
+日常管理只检查相关范围；用户要求整理、精简或审计整个库时，按 [智能审计与去重](references/semantic-audit.md) 发现管理范围内的全局、项目与各 Agent 客户端入口，关联源码、安装副本和软链接，建立不重复计数的能力清单。未发现或无法访问的范围必须说明。
+
+Agent 阅读实际流程、输入输出、场景、脚本与依赖，比较重复、重叠、互补、调用冲突和独立能力；对竞争实现按证据评估质量并保留独特能力。目标是能力完整、调用准确、维护便利，不是数量最少。名称、关键词、描述或内容哈希只用于定位线索，不能代替语义与行为判断。
+
+审计默认只读，先交付关系、依据、能力保留方案和待验证项；明确整理授权才执行相应变更。修改前保存可恢复备份与回滚记录，优先归档；执行复用下方流程与变更指南，完成后核对能力覆盖、结构和客户端入口。
+
+## 评分、选型与持续优化
+
+按 [100 分质量规范](references/quality-scoring.md) 维护效果 25、可靠性 20、完整度 15、维护 10、GitHub Star 15、本人开发 15 的证据档案；未知／过期项不冒充已知 0 或确定总分。Star 核实原始仓库及独立／合集归属，本人原创和深度二创按来源与实际贡献评估。
+
+按 [优先调用与持续优化](references/routing-and-refresh.md) 先尊重用户指定，再核对任务、可见范围和运行条件；有可用同类档案时运行选择器，同场景候选优先高分，接近时考虑本人开发、真实使用记录和专业适配。职责互补则组合使用。该策略通过项目调用指令和管理器流程生效，不是 Codex 原生评分拦截器。
+
+新增／更新时自动进入相关候选的查重与必要重评；周期复核只刷新约定范围内的到期证据，不自行创建后台任务。更优候选先提出替代或吸收升级方案，保留独特能力与来源许可。普通调用只读相关索引及已有档案，无档案时按实际能力选用并标待评，不扫描全库。
 
 ## 管理模型
 
@@ -24,7 +40,7 @@ metadata:
 
 1. 明确本次范围和终点；先读项目索引、库总入口，再进入相关分类／二级分类和实际入口，不为普通选型扫描全库。
 2. 根据现有拥有索引和真实文件归类。保留既有名称和用户例外，不强制所有分类拆二级，不凭名称相似或工具插件存在判定重复。分类与展示规则见 [索引契约](references/index-contract.md)。
-3. 接入时核实来源、版本、作者与许可声明、依赖和同名冲突，并在每个独立 Skill 根目录保存 `SOURCE.md`，包括嵌套子技能；更新时维护记录，迁移时随完整包保留。按 [来源记录](references/source-records.md) 区分安装来源、二创来源与参考资源；无法确认的信息明确标为未知，不猜测、不标为原创。用户提供的套件保留原始资料，示例库按资源管理。
+3. 接入时核实来源、版本、作者与许可声明、依赖和同类冲突，按上方生命周期流程评估相关候选；在每个独立 Skill 根目录保存 `SOURCE.md`，包括嵌套子技能；更新时维护记录，迁移时随完整包保留。按 [来源记录](references/source-records.md) 区分安装来源、二创来源与参考资源；无法确认的信息明确标为未知，不猜测、不标为原创。用户提供的套件保留原始资料，示例库按资源管理。
 4. 迁移前确定旧路径到新路径的映射，检查独立修改，记录文件内容、权限及有效引用；整包移动后同步各层索引、导航数量、跨技能路径、客户端链接及项目安装映射。具体方法见 [变更与校验](references/change-checks.md)。
 5. 自研更新在开发目录完成，遵守项目规定的提交／推送与安装同步顺序。同步前保留独立修改，同步新增、修改和本次授权删除的资源，排除缓存与私有配置。
 6. 验证本次变更：索引与映射检查、来源记录覆盖、资源和权限核对；改动脚本路径时运行相关行为检查。分别报告源码、安装同步、实际运行的证据及来源待确认项，达到完成条件即停止。
@@ -35,6 +51,11 @@ metadata:
 
 - [audit_library.py](scripts/audit_library.py)：只读检查完整维护库的分级导航、拥有关系、覆盖、数量和客户端入口；可检查来源记录、开发／安装映射及副本一致性，不绑定机器路径。
 - [test_audit_library.py](scripts/test_audit_library.py)：验证深浅分类、嵌套包、链接、映射和冲突诊断的回归用例。
+- [quality_registry.py](scripts/quality_registry.py)：只读计算与校验质量档案、过滤和排序 Agent 提供的候选，按需核实 GitHub 数据；不执行 Skill 或修改库。
+- [test_quality_registry.py](scripts/test_quality_registry.py)：验证评分、证据边界、Star 口径、调用优先级与失效处理。
+- [语义验收场景](evals/semantic-audit.md)：用隔离案例检查能力判断、授权边界和治理交付。
+- [评分与调用验收](evals/quality-and-routing.md)：验证评分证据、候选优先级及原生调用接入边界。
+- [新会话原生调用实测](evals/native-invocation.md)：按需在系统沙箱中运行真实 CLI 会话，验证隐式调用、评分互换及运行条件。
 
 ```bash
 python3 scripts/audit_library.py \
@@ -44,4 +65,4 @@ python3 scripts/audit_library.py \
   --check-sources
 ```
 
-开发仓库额外传入 `--install-map /path/to/INSTALL_MAP.json`；完成安装同步后可加 `--compare-installed` 核对内容和权限。普通项目的选型索引不要求覆盖整个共享库；检查命令、范围与限制见变更指南。检查脚本不移动、删除、安装或自动修复资源。
+开发仓库额外传入 `--install-map /path/to/INSTALL_MAP.json`；完成安装同步后可加 `--compare-installed` 核对内容和权限。普通项目的选型索引不要求覆盖整个共享库；检查命令、范围与限制见变更指南。脚本只负责确定性结构检查，不跨客户端建立语义清单、不评判质量，也不移动、删除、安装或自动修复资源。

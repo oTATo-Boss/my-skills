@@ -1,4 +1,4 @@
 interface:
   display_name: "分级 Skill 库管理"
-  short_description: "Organize skill categories, indexes and install mappings"
-  default_prompt: "使用 $skill-library-management 按当前用途分类和可选二级分类维护技能库，核对索引、完整包、开发安装映射与客户端入口。"
+  short_description: "Audit, score and select skills; maintain library integrity"
+  default_prompt: "使用 $skill-library-management 按当前范围管理技能库，比较真实能力与六项质量证据，核实 Star 和本人开发归属，给出调用优先级及处理方案；维护索引、来源、映射与客户端入口，默认只读，明确整理授权后备份执行。"

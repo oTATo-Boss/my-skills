@@ -25,7 +25,7 @@
 | [web-art-direction](<skills/web design/design/web-art-direction/SKILL.md>) | 确定并实现网站整体视觉方向。 | `npx skills add oTATo-Boss/my-skills --skill web-art-direction -g -a codex --copy -y` |
 | [web-motion](<skills/web design/effects/web-motion/SKILL.md>) | 设计和实现网页交互、文字、滚动与时间线动画。 | `npx skills add oTATo-Boss/my-skills --skill web-motion -g -a codex --copy -y` |
 | [web-visual-effects](<skills/web design/effects/web-visual-effects/SKILL.md>) | 实现玻璃、纹理、粒子、WebGL 和三维网页效果。 | `npx skills add oTATo-Boss/my-skills --skill web-visual-effects -g -a codex --copy -y` |
-| [skill-library-management](skills/Rules/skill-library-management/SKILL.md) | 维护用途与二级分类、分级索引、开发安装映射和客户端入口。 | `npx skills add oTATo-Boss/my-skills --skill skill-library-management -g -a codex --copy -y` |
+| [skill-library-management](skills/Rules/skill-library-management/SKILL.md) | 管理分类索引、来源与安装同步，提供语义去重、100 分评分、优先选型与持续优化。 | `npx skills add oTATo-Boss/my-skills --skill skill-library-management -g -a codex --copy -y` |
 | [Social Media](skills/social-media/social-media/SKILL.md) | 策划、素材、成片、发布交付与后台分析。 | `npx skills add oTATo-Boss/my-skills --skill social-media -g -a codex --copy -y` |
 | [Video Production（video-production）](skills/video/production/video-production/SKILL.md) | 编剧、统筹、连续性与制作交付四模块协同。 | `npx skills add oTATo-Boss/my-skills --skill video-production -g -a codex --copy -y` |
 

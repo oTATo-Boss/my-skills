@@ -10,4 +10,4 @@
 
 ## 技能入口
 
-- [skill-library-management](skill-library-management/SKILL.md) — 管理用途分类、可选二级分类、整包迁移、来源记录、开发安装映射与客户端入口；当前 v1.2.1。
+- [skill-library-management](skill-library-management/SKILL.md) — 管理分类索引、来源、迁移与安装同步，按需进行语义审计、100 分质量评分、优先选型和安全去重；当前 v1.4.1。

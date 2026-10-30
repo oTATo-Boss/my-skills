@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "profiles": [
+    {
+      "id": "example/text-export",
+      "name": "example-skill",
+      "entry": "skills/example-skill/SKILL.md",
+      "version": "example-1",
+      "revision": "unverified-example-revision",
+      "scenario": "text-to-json",
+      "evaluated_at": "2026-10-30",
+      "upstream_repository": null,
+      "metrics": {
+        "effect": {
+          "status": "unverified",
+          "assessed_version": "example-1",
+          "review_after": null,
+          "evidence": [],
+          "reason": "Template only; no evidence collected.",
+          "points": null
+        },
+        "reliability": {
+          "status": "unverified",
+          "assessed_version": "example-1",
+          "review_after": null,
+          "evidence": [],
+          "reason": "Template only; no evidence collected.",
+          "points": null
+        },
+        "capability": {
+          "status": "unverified",
+          "assessed_version": "example-1",
+          "review_after": null,
+          "evidence": [],
+          "reason": "Template only; no evidence collected.",
+          "points": null
+        },
+        "maintenance": {
+          "status": "unverified",
+          "assessed_version": "example-1",
+          "review_after": null,
+          "evidence": [],
+          "reason": "Template only; no evidence collected.",
+          "points": null
+        }
+      },
+      "github": {
+        "status": "unverified",
+        "assessed_version": "example-1",
+        "review_after": null,
+        "evidence": [],
+        "reason": "Template only; no evidence collected.",
+        "repository": null,
+        "stars": null,
+        "scope": "unknown",
+        "attribution": "unknown"
+      },
+      "ownership": {
+        "status": "unverified",
+        "assessed_version": "example-1",
+        "review_after": null,
+        "evidence": [],
+        "reason": "Template only; no evidence collected.",
+        "kind": "unknown",
+        "contribution": null
+      },
+      "runs": []
+    }
+  ]
+}

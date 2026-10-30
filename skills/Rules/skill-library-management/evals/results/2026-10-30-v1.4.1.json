@@ -1,0 +1,258 @@
+{
+  "all_pass": true,
+  "results": [
+    {
+      "case": "baseline",
+      "pass": true,
+      "thread_id": "01a18bb2-abab-74f2-a7c4-fff85526ab21",
+      "final": "FERN-7241|alpha",
+      "executed_skills": [
+        "fern-a"
+      ],
+      "selector_used": false,
+      "selector_decisions": [],
+      "commands": [
+        "/bin/zsh -lc 'cat .agents/skills/fern-a/SKILL.md .agents/skills/fern-b/SKILL.md'",
+        "/bin/zsh -lc \"rg --files -g '\"'!**/__pycache__/**'\"' -g '*.md' -g '*.py' -g '.*' .agents .\"",
+        "/bin/zsh -lc 'cat .agents/skills/fern-a/scripts/receipt.py .agents/skills/fern-b/scripts/receipt.py'",
+        "/bin/zsh -lc 'python3 .agents/skills/fern-a/scripts/receipt.py alpha'"
+      ],
+      "errors": [
+        "Failed to read global AGENTS.md instructions from `<user-home>/.codex/AGENTS.md`: Operation not permitted (os error 1)"
+      ],
+      "run": {
+        "exit": 0,
+        "seconds": 48.8,
+        "fixtures_unchanged": true,
+        "selector_required": false,
+        "mode": "outer Seatbelt enforced; no inner Seatbelt; fresh ephemeral CLI; existing authentication only"
+      },
+      "prepared_inputs_match": true,
+      "input_manifest_sha256": "99042a8137e68d668d66cbe433705e78d5fbf37a4c0eaefd997e15a194c0563a",
+      "raw_events_sha256": "ba5669ef6cf7a1d0588e02f1eb38b7d3b7b65ddd54f9d45c2bf6d175df14caf5"
+    },
+    {
+      "case": "managed-b",
+      "pass": true,
+      "thread_id": "01a18bb2-abab-7d83-9c25-d500a10ed87f",
+      "final": "FERN-8352|alpha",
+      "executed_skills": [
+        "fern-b"
+      ],
+      "selector_used": true,
+      "selector_decisions": [
+        "fern-b"
+      ],
+      "commands": [
+        "/bin/zsh -lc \"pwd; rg --files -g 'AGENTS.md' -g '*SKILL*' -g 'task-candidates.json' -g 'routing-and-refresh.md' -g 'quality_registry.py' -g '*index*' -g '*INDEX*'\"",
+        "/bin/zsh -lc 'cat SKILLS_INDEX.md manager/references/routing-and-refresh.md task-candidates.json SKILL_QUALITY.json'",
+        "/bin/zsh -lc \"cat .agents/skills/fern-a/SKILL.md .agents/skills/fern-b/SKILL.md; rg --files --hidden .agents/skills; rg -n 'revision|sha256' manager/scripts/quality_registry.py\"",
+        "/bin/zsh -lc 'cat .agents/skills/fern-a/scripts/receipt.py .agents/skills/fern-b/scripts/receipt.py; shasum -a 256 .agents/skills/fern-a/scripts/receipt.py .agents/skills/fern-b/scripts/receipt.py; python3 --version; python3 manager/scripts/quality_registry.py select SKILL_QUALITY.json --request task-candidates.json --as-of 2026-10-30'",
+        "/bin/zsh -lc 'python3 .agents/skills/fern-b/scripts/receipt.py alpha'"
+      ],
+      "errors": [
+        "Failed to read global AGENTS.md instructions from `<user-home>/.codex/AGENTS.md`: Operation not permitted (os error 1)"
+      ],
+      "run": {
+        "exit": 0,
+        "seconds": 47.1,
+        "fixtures_unchanged": true,
+        "selector_required": true,
+        "mode": "outer Seatbelt enforced; no inner Seatbelt; fresh ephemeral CLI; existing authentication only"
+      },
+      "prepared_inputs_match": true,
+      "input_manifest_sha256": "bae6ddbddcf16921b62e5c63e8b3dd1a573780afb148571d9ec77c40e05bb28b",
+      "raw_events_sha256": "1db95e40ec343beb4aa29903c6f92368c911cd3067112dcb4a73c9bc4246ac46"
+    },
+    {
+      "case": "managed-a",
+      "pass": true,
+      "thread_id": "01a18bb2-abab-7c02-a276-6fa5bc6e2ced",
+      "final": "FERN-7241|alpha",
+      "executed_skills": [
+        "fern-a"
+      ],
+      "selector_used": true,
+      "selector_decisions": [
+        "fern-a"
+      ],
+      "commands": [
+        "/bin/zsh -lc \"pwd; rg --files -g 'SKILL_QUALITY.json' -g 'task-candidates.json' -g 'routing-and-refresh.md' -g 'SKILL.md' -g 'quality_registry.py' -g 'AGENTS.md'\"",
+        "/bin/zsh -lc 'cat manager/references/routing-and-refresh.md task-candidates.json SKILL_QUALITY.json'",
+        "/bin/zsh -lc \"ls -la .agents/skills/fern-a .agents/skills/fern-b; cat .agents/skills/fern-a/SKILL.md .agents/skills/fern-b/SKILL.md; rg --files --hidden .agents/skills/fern-a .agents/skills/fern-b; rg -n 'revision|sha256|select' manager/scripts/quality_registry.py\"",
+        "/bin/zsh -lc 'cat .agents/skills/fern-a/scripts/receipt.py .agents/skills/fern-b/scripts/receipt.py; shasum -a 256 .agents/skills/fern-a/SKILL.md .agents/skills/fern-b/SKILL.md; python3 --version; cat manager/scripts/quality_registry.py'",
+        "/bin/zsh -lc \"shasum -a 256 .agents/skills/fern-a/scripts/receipt.py .agents/skills/fern-b/scripts/receipt.py; rg --files --hidden -g '*INDEX*' -g '*fixture*' -g '*version*'\"",
+        "/bin/zsh -lc 'cat SKILLS_INDEX.md fixture-evidence.json'",
+        "/bin/zsh -lc \"python3 - <<'PY'\nimport hashlib\nfrom pathlib import Path\nfor name in ['fern-a','fern-b']:\n p=Path('.agents/skills')/name\n h=hashlib.sha256()\n for f in sorted(p.rglob('*')):\n  if f.is_file():\n   h.update(str(f.relative_to(p)).encode()); h.update(f.read_bytes())\n print(name,h.hexdigest())\nPY\npython3 manager/scripts/quality_registry.py select SKILL_QUALITY.json --request task-candidates.json --as-of 2026-10-30\"",
+        "/bin/zsh -lc 'python3 .agents/skills/fern-a/scripts/receipt.py alpha'"
+      ],
+      "errors": [
+        "Failed to read global AGENTS.md instructions from `<user-home>/.codex/AGENTS.md`: Operation not permitted (os error 1)"
+      ],
+      "run": {
+        "exit": 0,
+        "seconds": 52.4,
+        "fixtures_unchanged": true,
+        "selector_required": true,
+        "mode": "outer Seatbelt enforced; no inner Seatbelt; fresh ephemeral CLI; existing authentication only"
+      },
+      "prepared_inputs_match": true,
+      "input_manifest_sha256": "85725757587eeecf6d6dd139f609bcab4edffb2f0e664efc195c5de82c2aec74",
+      "raw_events_sha256": "5e982b7d1205d4c3e2181f48a9eb427f5a9f638e651da70643b676c43e463ede"
+    },
+    {
+      "case": "explicit-lower",
+      "pass": true,
+      "thread_id": "01a18bb4-cf75-7ed1-893d-fa649adf52dd",
+      "final": "FERN-7241|alpha",
+      "executed_skills": [
+        "fern-a"
+      ],
+      "selector_used": false,
+      "selector_decisions": [],
+      "commands": [
+        "/bin/zsh -lc 'cat .agents/skills/fern-a/SKILL.md'",
+        "/bin/zsh -lc 'python3 .agents/skills/fern-a/scripts/receipt.py alpha'"
+      ],
+      "errors": [
+        "Failed to read global AGENTS.md instructions from `<user-home>/.codex/AGENTS.md`: Operation not permitted (os error 1)"
+      ],
+      "run": {
+        "exit": 0,
+        "seconds": 41.9,
+        "fixtures_unchanged": true,
+        "selector_required": false,
+        "mode": "outer Seatbelt enforced; no inner Seatbelt; fresh ephemeral CLI; existing authentication only"
+      },
+      "prepared_inputs_match": true,
+      "input_manifest_sha256": "bae6ddbddcf16921b62e5c63e8b3dd1a573780afb148571d9ec77c40e05bb28b",
+      "raw_events_sha256": "52ca10d2c9da71d07e2f46b15faf61bb315b2bdfeed37812ca22b237de540512"
+    },
+    {
+      "case": "blocked-higher",
+      "pass": true,
+      "thread_id": "01a18bb4-cf75-7a81-b9ec-34f191ab6073",
+      "final": "FERN-7241|alpha",
+      "executed_skills": [
+        "fern-a"
+      ],
+      "selector_used": true,
+      "selector_decisions": [
+        "fern-a"
+      ],
+      "commands": [
+        "/bin/zsh -lc \"pwd; rg --files -g 'AGENTS.md' -g 'SKILL_QUALITY.json' -g 'task-candidates.json' -g 'routing-and-refresh.md' -g 'quality_registry.py' -g 'SKILL.md' -g '*spec*'\"",
+        "/bin/zsh -lc 'cat manager/references/routing-and-refresh.md task-candidates.json SKILL_QUALITY.json; cat .agents/skills/fern-a/SKILL.md .agents/skills/fern-b/SKILL.md'",
+        "/bin/zsh -lc 'cat .agents/skills/fern-a/scripts/receipt.py .agents/skills/fern-b/scripts/receipt.py; rg --files --hidden .agents/skills deps; shasum -a 256 .agents/skills/fern-a/SKILL.md .agents/skills/fern-b/SKILL.md; python3 --version'",
+        "/bin/zsh -lc 'python3 manager/scripts/quality_registry.py select SKILL_QUALITY.json --request task-candidates.json --as-of 2026-10-30'",
+        "/bin/zsh -lc 'python3 .agents/skills/fern-a/scripts/receipt.py alpha'"
+      ],
+      "errors": [
+        "Failed to read global AGENTS.md instructions from `<user-home>/.codex/AGENTS.md`: Operation not permitted (os error 1)"
+      ],
+      "run": {
+        "exit": 0,
+        "seconds": 63.2,
+        "fixtures_unchanged": true,
+        "selector_required": true,
+        "mode": "outer Seatbelt enforced; no inner Seatbelt; fresh ephemeral CLI; existing authentication only"
+      },
+      "prepared_inputs_match": true,
+      "input_manifest_sha256": "3c49831077aaf735d527bad48bc9c7d4a87d779e800ec716d6b481bcbd0a52ce",
+      "raw_events_sha256": "994724c9bfcf129124eda262cb67bf744a522d9263e480e8e9c90ddd7cfc5b8c"
+    },
+    {
+      "case": "project-ready",
+      "pass": true,
+      "thread_id": "01a18bb4-cf75-7fc3-aacd-8f4f1eae1009",
+      "final": "FERN-8352|alpha",
+      "executed_skills": [
+        "fern-b"
+      ],
+      "selector_used": true,
+      "selector_decisions": [
+        "fern-b"
+      ],
+      "commands": [
+        "/bin/zsh -lc \"pwd; rg --files -g 'SKILL_QUALITY.json' -g 'task-candidates.json' -g 'routing-and-refresh.md' -g 'quality_registry.py' -g 'SKILL.md' -g 'AGENTS.md'\"",
+        "/bin/zsh -lc 'cat manager/references/routing-and-refresh.md task-candidates.json SKILL_QUALITY.json'",
+        "/bin/zsh -lc \"rg --files --hidden .agents deps; cat .agents/skills/fern-a/SKILL.md .agents/skills/fern-b/SKILL.md; rg -n 'revision|sha256' manager/scripts/quality_registry.py\"",
+        "/bin/zsh -lc 'cat .agents/skills/fern-a/scripts/receipt.py .agents/skills/fern-b/scripts/receipt.py; shasum -a 256 .agents/skills/fern-a/SKILL.md .agents/skills/fern-b/SKILL.md; python3 --version'",
+        "/bin/zsh -lc 'shasum -a 256 .agents/skills/fern-a/scripts/receipt.py .agents/skills/fern-b/scripts/receipt.py; ls -l deps/fern-b.ready; python3 manager/scripts/quality_registry.py select SKILL_QUALITY.json --request task-candidates.json --as-of 2026-10-30'",
+        "/bin/zsh -lc 'cat .agents/skills/fern-b/SKILL.md; python3 .agents/skills/fern-b/scripts/receipt.py alpha'"
+      ],
+      "errors": [
+        "Failed to read global AGENTS.md instructions from `<user-home>/.codex/AGENTS.md`: Operation not permitted (os error 1)"
+      ],
+      "run": {
+        "exit": 0,
+        "seconds": 57.7,
+        "fixtures_unchanged": true,
+        "selector_required": true,
+        "mode": "outer Seatbelt enforced; no inner Seatbelt; fresh ephemeral CLI; existing authentication only"
+      },
+      "prepared_inputs_match": true,
+      "input_manifest_sha256": "962d1c2bc1738754c57b21d19f3b833f532ddb06658498b3669b51e0bab0c61c",
+      "raw_events_sha256": "1ebb530f7b09e870a260ebc76f11270171f949c4ca06030a654649e7e10e182b"
+    },
+    {
+      "case": "unrelated",
+      "pass": true,
+      "thread_id": "01a18bb7-cf44-7da0-a9f0-fcb64b311ff1",
+      "final": "4",
+      "executed_skills": [],
+      "selector_used": false,
+      "selector_decisions": [],
+      "commands": [],
+      "errors": [
+        "Failed to read global AGENTS.md instructions from `<user-home>/.codex/AGENTS.md`: Operation not permitted (os error 1)"
+      ],
+      "run": {
+        "exit": 0,
+        "seconds": 26.7,
+        "fixtures_unchanged": true,
+        "selector_required": false,
+        "mode": "outer Seatbelt enforced; no inner Seatbelt; fresh ephemeral CLI; existing authentication only"
+      },
+      "prepared_inputs_match": true,
+      "input_manifest_sha256": "bae6ddbddcf16921b62e5c63e8b3dd1a573780afb148571d9ec77c40e05bb28b",
+      "raw_events_sha256": "89b2f137712950c032d70ea2a855071c0a8e34245a02e1e3767a274f3394e910"
+    }
+  ],
+  "boundary": "Controlled CLI samples only; not a native numeric priority hook, desktop UI experiment, or statistical guarantee.",
+  "version": "1.4.1",
+  "date": "2026-10-30",
+  "cli": "0.163.0",
+  "model": "CLI default; no --model override",
+  "provisional": false,
+  "isolation_complete": true,
+  "sampling": "One fresh ephemeral CLI session per final controlled case; seven distinct thread IDs. Synthetic scores and fixture annotations are visible, so this is not blind or statistical sampling.",
+  "implementation_sha256": {
+    "scripts/quality_registry.py": "bab33ae4eba5185c51b8da691bf261eed35fa20db69c445e56a9a57072c423e2",
+    "references/routing-and-refresh.md": "b3a64604d6cd660ff86aa41fde0c179d2fc8e7e8574daacb9fa5f94ec5fe42bb",
+    "SKILL.md": "d6f41379d26ac10ba541c1343c69b1d2475e92724a1c5b40632fbf468adbd353"
+  },
+  "isolation": {
+    "all_declared_protected_roots_preflight": "PASS after UTF-8 fix",
+    "controlled_unicode_read_and_write_probe": "PASS",
+    "policy_sha256": "d910483d48b070f34277035016fd32d24cca11fa6bf4c74ba8adf55d709e375f",
+    "scope": "Real shared/client Skills, global rules and development project denied; core tool runtime allowlisted; account plugins disabled. HOME and CODEX_HOME unchanged, existing CLI authentication retained."
+  },
+  "prior_observations": {
+    "original_v1_4_rules": "Six exploratory fresh sessions produced correct outcomes but did not call select; blocked probe used the wrong relative base.",
+    "pre_utf8_fix_batch": "Seven decision checks passed, but Unicode escaping left the development directory readable. Superseded by this fully re-run final batch; not counted as complete-isolation evidence."
+  },
+  "excluded_environment_trials": [
+    "Nested Seatbelt prevented tools.",
+    "Disabling required code-mode host prevented tools.",
+    "Runtime allowance and cwd adjustment alone did not fix nested Seatbelt.",
+    "Removing parent bridges alone did not fix nested Seatbelt.",
+    "After UTF-8 correction, the probe inherited a now-protected cwd; fixed by launching it in the temporary root before any model run."
+  ],
+  "unit_tests": {
+    "audit_library": 25,
+    "quality_registry": 20,
+    "native_evidence_and_isolation": 14,
+    "total": 59
+  }
+}

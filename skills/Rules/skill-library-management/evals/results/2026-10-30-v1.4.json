@@ -1,0 +1,65 @@
+{
+  "version": "1.4.0",
+  "date": "2026-10-30",
+  "scope": "Temporary fixtures and this management Skill only; no installed Skill library audit or cleanup.",
+  "quality_fixture": {
+    "task": "fixture-unicode-quote-newline-json",
+    "ratings": {
+      "alpha": 10,
+      "乙": 58
+    },
+    "selected": "乙",
+    "excluded": "alpha: missing_encoder dependency failure",
+    "evidence": {
+      "alpha_exit": 1,
+      "乙_exit": 0
+    },
+    "rating_basis": {
+      "alpha": "0 effect + 0 reliability + 8 declared capability + 2 maintenance; actual dependency failure.",
+      "乙": "25 effect for the exact tested input + 10 reliability (one sample, untested failures) + 15 narrow capability + 8 maintenance; only fixture contract assessed."
+    },
+    "ownership_and_github": "Controlled synthetic external local fixtures: collected=0 and confirmed absence of GitHub origin=0. Not real user Skill ratings."
+  },
+  "semantic_regression": {
+    "read_only": "PASS",
+    "counts": {
+      "physical_entities": 4,
+      "mapped_logical_skills": 3,
+      "client_entries": 2,
+      "basis": "4 real paths; the explicit dev/install map relates exactly 2 of them; B and C remain separate"
+    },
+    "rollback": "PASS: identical baseline including installed-only change and relative link"
+  },
+  "native_protocol": {
+    "cli": "0.163.0",
+    "method": "codex app-server generate-json-schema",
+    "SkillMetadata_fields": [
+      "dependencies",
+      "description",
+      "enabled",
+      "interface",
+      "name",
+      "path",
+      "pluginId",
+      "scope",
+      "shortDescription"
+    ],
+    "native_quality_priority_field": false,
+    "model_choice_experiment": false
+  },
+  "github_live_smoke": {
+    "repository": "oTATo-Boss/my-skills",
+    "stars": 0,
+    "source": "https://api.github.com/repos/oTATo-Boss/my-skills",
+    "observed_at": "2026-10-30T06:22:51.404046+00:00",
+    "channels": [
+      "GitHub connector",
+      "quality_registry.py github via gh fallback"
+    ],
+    "scope": "collection (this project index lists 22 skills); count smoke only, no real Skill scoring"
+  },
+  "unit_tests": {
+    "audit_library": 25,
+    "quality_registry": 19
+  }
+}
