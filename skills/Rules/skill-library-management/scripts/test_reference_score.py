@@ -91,5 +91,12 @@ class ReferenceTests(unittest.TestCase):
             p=reviewed();p['review_assessment'][key]=value
             with self.assertRaises(ValueError):self.evaluate(p)
 
+    def test_query_reference_includes_its_actual_rationale_and_evidence(self):
+        p=reviewed();r=self.evaluate(p)
+        self.assertEqual(r['assessment']['dimensions'],p['review_assessment']['dimensions'])
+        self.assertEqual(r['assessment']['reviewed_files'],p['review_assessment']['reviewed_files'])
+        r['assessment']['dimensions']['effect']['points']=0
+        self.assertEqual(p['review_assessment']['dimensions']['effect']['points'],20)
+
 
 if __name__=='__main__':unittest.main()

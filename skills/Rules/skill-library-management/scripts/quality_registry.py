@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Read-only score/selection validation; Agent supplies semantic and evidence judgments."""
 import argparse
+import copy
 from datetime import date, datetime, timezone
 import json
 import math
@@ -214,6 +215,7 @@ def reference_score(profile, repositories, today):
     known = quality + (github_points if github_points is not None else 0) + (own_points if own_points is not None else 0)
     missing = [k for k,v in [('github',github_points),('ownership',own_points)] if v is None]
     return {'basis':'content_review','status':'reviewed_with_gaps' if missing else 'reviewed',
+            'assessment':copy.deepcopy(review),
             'version':review['version'],'revision':review['revision'],'confidence':review['confidence'],
             'quality_points':round(quality,4),'github_points':round(github_points,4) if github_points is not None else None,
             'repository':repo,'repository_scope':gh.get('scope'),

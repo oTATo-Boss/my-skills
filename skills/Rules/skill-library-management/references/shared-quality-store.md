@@ -102,7 +102,7 @@ python3 -B scripts/quality_store.py query --check-current --require-complete
 
 query 只读现有档案；未收录返回零条，不宣称全库覆盖。完整盘点的入口数量与已建档／完成评分数量分开报告；不能用 277 个折叠展示条目冒充展开后的 Skill 数。按任务匹配和名字检索无相关结果时沿共享分类索引找候选，再增量补入同一档案，不创建第二份表。
 
-普通 query 不重算全部包哈希，其 current_revision 为 not_checked；实际竞争／评分验收须对相关候选使用 --check-current 或提供选择器要求的当前版本和 revision。包变化或入口缺失不复用旧分确定赢家，需 Agent 根据变更范围完成必要重评。外部工具的 score/select 仍是通用底层校验器，日常输入固定使用本文件规定的唯一 JSON。
+参考评估的任务、逐项分值理由、已读文件及来源／运行证据由 query 的 reference.assessment 一并返回；reference.total 是参考分，外层 total 是严格实测分。普通 query 不重算全部包哈希，其 current_revision 为 not_checked；实际竞争／评分验收须对相关候选使用 --check-current 或提供选择器要求的当前版本和 revision。包变化或入口缺失不复用旧分确定赢家，需 Agent 根据变更范围完成必要重评。外部工具的 score/select 仍是通用底层校验器，日常输入固定使用本文件规定的唯一 JSON。
 
 ## 完成标准与交付
 
