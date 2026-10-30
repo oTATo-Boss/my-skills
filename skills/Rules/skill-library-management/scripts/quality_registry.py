@@ -9,7 +9,7 @@ import re
 import shutil
 import subprocess
 import sys
-from urllib.error import URLError
+from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
 WEIGHTS = {"effect": 25, "reliability": 20, "capability": 15, "maintenance": 10,
@@ -217,7 +217,7 @@ def select(data, request, today):
             "excluded": excluded, "near_points": near, "tie_policy": "authorship, verified successful runs, task specificity, score, stable ID"}
 
 
-def github_snapshot(repository):
+def github_snapshot(repository, allow_fallback=True):
     require(re.fullmatch(r"[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+", repository) is not None, "Use owner/repo, not an arbitrary URL")
     require(not any(part in {".", ".."} for part in repository.split("/")), "Repository path segments cannot be traversal markers")
     url = "https://api.github.com/repos/" + repository
@@ -227,14 +227,27 @@ def github_snapshot(repository):
         with urlopen(req, timeout=15) as response:
             require(response.status == 200, "GitHub response was not successful")
             payload = json.load(response)
-    except URLError:
+    except URLError as exc:
+        # Do not turn a known rate limit or missing repository into a second
+        # transport request. Batch management needs the HTTP status for cooldown.
+        if isinstance(exc, HTTPError) or not allow_fallback:
+            raise
         # Some macOS Python distributions lack the system CA bundle. Reuse an
         # existing authenticated CLI, never disable TLS or inspect its credentials.
         if shutil.which("gh") is None:
             raise
-        response = subprocess.run(["gh", "api", "repos/" + repository,
-                                   "-H", "X-GitHub-Api-Version: 2022-11-28"],
-                                  capture_output=True, text=True, timeout=15)
+        try:
+            response = subprocess.run(["gh", "api", "repos/" + repository,
+                                       "-H", "X-GitHub-Api-Version: 2022-11-28"],
+                                      capture_output=True, text=True, timeout=15)
+        except subprocess.TimeoutExpired as timeout:
+            raise ValueError('GitHub CLI timed out after transport fallback; Star remains unknown') from timeout
+        if response.returncode:
+            status = re.search(r'HTTP\s+([45][0-9]{2})', response.stderr or '')
+            if status or 'rate limit' in (response.stderr or '').lower():
+                error = HTTPError(url, int(status.group(1)) if status else 429, 'GitHub CLI request failed', None, None)
+                error.transport_attempts = 2
+                raise error
         require(response.returncode == 0, "GitHub CLI request failed; Star remains unknown")
         payload = json.loads(response.stdout)
         transport = "gh"

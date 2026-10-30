@@ -104,3 +104,7 @@
 ## Midjourney 执行 Skill 入库（2026-10-30）
 
 用户明确确认 `midjourney-generate` 为自研，纳入本项目 `skills/image/midjourney-generate/`，当前版本 v1.0.2；包含执行器、离线测试、参考文档、Agent 配置和来源记录。本机独立安装位置为 `~/.agents/skills/image/midjourney-generate/`。详细依赖、参考来源与验证边界见 [SOURCE.md](skills/image/midjourney-generate/SOURCE.md)。`midjourney-prompting` 为外来安装技能，独立保留在共享库，不纳入本项目。
+
+## 2026-10-30 · 共享库统一质量管理
+
+`Rules/skill-library-management` v1.5.0 按用户要求限定共享库范围，固定唯一质量档案与派生展示位置，增加批量事实复用、增量更新和完成状态校验。复用原结构与评分脚本，未引入新 Python 依赖；新增隔离存储行为测试，83 项回归通过；代码审查发现的包内越界链接、后备限流与重试预算、运行记录更正边界均已修复。真实用户评分数据保存在共享管理位置，不纳入本仓库或 Skill 分发；未将待评档案声明为完成评分。

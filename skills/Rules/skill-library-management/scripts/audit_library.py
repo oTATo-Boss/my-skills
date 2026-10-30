@@ -79,18 +79,28 @@ def inventory(root, errors):
     return found
 
 
-def file_manifest(root):
+def file_manifest(root, allowed_root=None):
     """Compare distributable files, excluding caches and local private data."""
     result = {}
+    allowed_root = Path(allowed_root).resolve() if allowed_root is not None else None
     for current, dirs, files in os.walk(root):
         dirs[:] = [d for d in dirs if d not in CACHE_DIRS]
+        if allowed_root is not None:
+            for name in dirs:
+                if not (Path(current) / name).resolve().is_relative_to(allowed_root):
+                    raise ValueError(f"Package directory link is outside shared scope: {Path(current) / name}")
         for name in files:
             if name == ".DS_Store" or name.startswith(".env") or name.endswith((".pyc", ".pyo", ".log")):
                 continue
             path = Path(current) / name
+            readable = path
+            if allowed_root is not None:
+                readable = path.resolve()
+                if not readable.is_relative_to(allowed_root):
+                    raise ValueError(f"Package file link is outside shared scope: {path}")
             result[str(path.relative_to(root))] = (
-                hashlib.sha256(path.read_bytes()).hexdigest(),
-                stat.S_IMODE(path.stat().st_mode),
+                hashlib.sha256(readable.read_bytes()).hexdigest(),
+                stat.S_IMODE(readable.stat().st_mode),
             )
     return result
 

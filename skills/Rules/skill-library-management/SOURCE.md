@@ -4,12 +4,12 @@
 - kind: `local`
 - status: `confirmed`
 - source: 本地开发／维护目录 `skills/Rules/skill-library-management`；当前维护仓库 https://github.com/oTATo-Boss/my-skills
-- version: 1.4.1（原生新会话验收与确定性选型接入）；历史版本见 CHANGELOG.md。
+- version: 1.5.0（共享范围、唯一质量档案与增量批量查询）；历史版本见 CHANGELOG.md。
 - author: oTATo-Boss（用户本人）；2026-10-30 在当前对话明确确认本人制作，Agent 辅助编写／整理。
 - license: MIT（2026-10-14 本人决定，见 [LICENSE](<LICENSE>)）
 - collected_at: unknown；没有可靠安装／导入日期。
 - recorded_at: `2026-10-30`
-- evidence: [SOURCE_NOTES.md](</Users/griffith/Desktop/AI/我的项目/my skills/SOURCE_NOTES.md>)；[INSTALL_MAP.json](</Users/griffith/Desktop/AI/我的项目/my skills/INSTALL_MAP.json>)；当前入口 SHA-256 `d6f41379d26ac10ba541c1343c69b1d2475e92724a1c5b40632fbf468adbd353`（v1.4.1 记录快照）；本人 2026-10-14 决定以 MIT 许可发布。
+- evidence: [SOURCE_NOTES.md](</Users/griffith/Desktop/AI/我的项目/my skills/SOURCE_NOTES.md>)；[INSTALL_MAP.json](</Users/griffith/Desktop/AI/我的项目/my skills/INSTALL_MAP.json>)；当前入口 SHA-256 `67e09bf9765a2c378e4bdfe220e838b2b5842ea26c97ef9ba51c9650033d55d6`（v1.5.0 记录快照）；本人 2026-10-14 决定以 MIT 许可发布。
 
 ## 本地调整与边界
 
@@ -27,3 +27,7 @@
 ## v1.4.1 实测与修正
 
 使用已有 CLI 登录在系统临时项目中实测新会话，沿用原生 Skill 发现与隐式调用；加强项目选型指令，加入只读候选标准输入与可复核验收工具，不引入新 Python 依赖。证据及客户端范围限制见 [原生调用验收](evals/native-invocation.md)。未整理真实安装库。
+
+## v1.5.0 共享范围与统一档案
+
+按用户本次明确要求固定共享范围、唯一质量档案位置、批量查询与增量更新规则；新增标准库存储工具，复用原有结构检查与评分计算。历史有效结果按证据归并，不伪造实际效果或将待评计为完成；真实用户数据保存在共享管理目录，不打包进 Skill。

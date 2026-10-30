@@ -2,7 +2,7 @@
 
 - 本项目是 `my-skills`，集中维护用户原创及已确认由用户二创、整合编写的 Skill 源码、脚本、资源与版本，并按用户明确要求保存外部套件及其来源记录。
 - `SKILLS_INDEX.md` 用于项目技能选型与复用，随任务增量补充，只登记本仓库维护的 Skill，不复制本机全量目录。
-- Skill 选型先尊重用户明确指定，再按索引匹配任务与运行条件；同类候选有已维护的质量档案时，按 [管理器调用规则](skills/Rules/skill-library-management/references/routing-and-refresh.md) 核实事实并运行 `quality_registry.py select`（请求可用标准输入传入），以选择器结果作为优先依据，不能只看分数自行排序。只加载相关候选；无档案或证据过期时据实际能力判断并标待评，不因缺档阻塞正常任务，不触发全库审计。
+- Skill 选型先尊重用户明确指定，再按索引匹配任务与运行条件；同类候选有已维护的质量档案时，按 [管理器调用规则](skills/Rules/skill-library-management/references/routing-and-refresh.md) 从唯一档案 `~/.agents/skill-library-management/SKILL_QUALITY.json` 复用证据，核实事实并运行 `quality_registry.py select`（请求可用标准输入传入），以选择器结果作为优先依据，不能只看分数自行排序。只加载相关候选；无档案或证据过期时据实际能力判断并标待评，不因缺档阻塞正常任务，不触发全库审计。
 - 每个 Skill 按 `INSTALL_MAP.json` 的分类路径保存在 `skills/<分类>/[<二级分类>/]<skill-name>/`，与本机安装分类对应，保留 `SKILL.md` 与必要依赖；成套资源的共享资料保留在分类目录；保留二创、整合版本的来源与许可信息，不把系统、插件或第三方原包标为用户原创。
 - 变更只覆盖当前任务；同步相关索引、相对路径引用及 Skill 的版本记录，按实际风险选择验证。
 - 不提交密钥、账号凭据、个人配置或运行缓存；引用外部代码和资源时保留来源及许可信息。

@@ -39,7 +39,7 @@
 
 ## 档案、证据与未知项
 
-示例格式见 [质量档案模板](../assets/quality-registry.example.json)。它是未评分的虚构入口，不代表真实 Skill 运行结果。维护根可约定一个 `SKILL_QUALITY.json` 保存 `schema_version: 1` 和 `profiles`；档案保存在已授权的项目／库管理位置，不放入系统／插件缓存。相同 `id + scenario` 只有一份当前档案，历史评估保留在管理记录中，客户端别名不产生另一份评分。
+示例格式见 [质量档案模板](../assets/quality-registry.example.json)，它不代表真实评估。共享库唯一数据源固定为 `~/.agents/skill-library-management/SKILL_QUALITY.json`，同目录 `SKILL_QUALITY.md` 是唯一派生展示表；不另存项目／日期版本的当前评分表。保留 `schema_version: 1`、`profiles`，仓库快照和历史评估置于同一 JSON。相同 `id + scenario` 只有一份当前档案，客户端别名不重复评分。具体批量查询、历史复用、增量更新、原位生成与查询命令见 [统一档案流程](shared-quality-store.md)。
 
 档案包括逻辑 ID、name、真实入口、Skill 版本、所评实体内容修订标识 `revision`、任务契约 `scenario` 和评估日期 `evaluated_at`。`revision` 用实际 Git 提交加工作区差异摘要，或目标包内容哈希标识；未提交修改不能只写 HEAD。源码／安装分歧时分别记录所评实体，不能把源码的测试分直接赋给有差异的安装副本。
 
@@ -54,7 +54,9 @@
 `review_after` 由维护者按指标变化速度与风险指定：Star、外部依赖通常比已确认作者归属更快过期，不硬编码所有指标同一时限。任一项未知／部分／过期时，总分 `total` 为 null，另给确定分下界 `known_points`、可能上界 `possible_max` 和已验证权重 `verified_weight`；不把剩余权重归一化，也不把未知称作实际 0。所有记录包括未验证项都带本次评估日期和目标版本，未知项允许空证据并明确原因。
 
 ```bash
-python3 scripts/quality_registry.py score /path/to/SKILL_QUALITY.json --as-of YYYY-MM-DD
+python3 scripts/quality_registry.py score ~/.agents/skill-library-management/SKILL_QUALITY.json --as-of YYYY-MM-DD
 ```
 
 脚本不读取其他 Skill、不自动运行评测、不写回分数；外部事实及语义评分的真实性由相应证据和 Agent 复核，结构通过不能宣称全部事实已认证。评分、调用与更新衔接见 [选型与持续优化](routing-and-refresh.md)。
+
+待评是未完成状态，不是本次评分任务的完成条件。Agent 应先复用当前有效证据，完成可在授权内进行的静态评估与安全验证；具体阻塞、未完成指标和下一步必须列明。单项六维满足后才计入已完成数，不能把模板生成、Star 查询成功或仅来源得分当作完整质量评估。

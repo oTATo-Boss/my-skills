@@ -10,7 +10,7 @@ import sys
 import tempfile
 import unittest
 from unittest.mock import patch
-from urllib.error import URLError
+from urllib.error import HTTPError, URLError
 
 from quality_registry import WEIGHTS, catalog, github_snapshot, score, select, star_points
 
@@ -213,8 +213,15 @@ class QualityTests(unittest.TestCase):
         self.assertEqual(call.call_args.args[0][:3], ["gh", "api", "repos/owner/repo"])
         result = subprocess.CompletedProcess([], 1, '', 'Rate limited')
         with patch("quality_registry.urlopen", side_effect=URLError("CA unavailable")), patch("quality_registry.shutil.which", return_value="gh"), patch("quality_registry.subprocess.run", return_value=result):
-            with self.assertRaises(ValueError):
+            with self.assertRaises(HTTPError) as limited:
                 github_snapshot("owner/repo")
+            self.assertEqual(limited.exception.code, 429)
+
+    def test_known_http_limits_and_404_do_not_launch_gh_fallback(self):
+        for code in (403, 404, 429):
+            with patch('quality_registry.urlopen', side_effect=HTTPError('url', code, 'fixture', None, None)), patch('quality_registry.subprocess.run') as fallback:
+                with self.assertRaises(HTTPError):github_snapshot('owner/repo')
+                fallback.assert_not_called()
 
     def test_cli_is_read_only_and_fails_on_malformed_registry(self):
         with tempfile.TemporaryDirectory() as tmp:

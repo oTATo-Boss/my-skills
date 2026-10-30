@@ -1,5 +1,7 @@
 # 优先调用与持续优化
 
+管理范围仅为共享库。唯一档案固定为 `~/.agents/skill-library-management/SKILL_QUALITY.json`，先按 [统一查询与增量流程](shared-quality-store.md) 复用已有结果；不建立其他项目的评分副本，不扫描其内置 Skill。下方宿主机制是边界说明，不是扩大管理范围的指令。
+
 ## 原生发现机制与接入边界
 
 核实日期：2026-10-30。官方 [Build skills](https://learn.chatgpt.com/docs/build-skills) 说明，Codex 先加载 name、description 和路径，再按需读取正文；用户可显式点名，也可由模型按 description 选择。其本地发现覆盖仓库 `.agents/skills`、用户、管理及系统目录，软链接受支持，同名入口不会自动合并。当前会话的实际插件清单及客户端启用状态仍需单独核对。
@@ -14,7 +16,7 @@
 可按实际路径改写的接入段落（不是拥有索引条目）：
 
 ```text
-Skill 选型先尊重用户明确指定，再按项目／分类索引找到相关能力；存在同类竞争候选及已维护的 SKILL_QUALITY.json 时，先读取 skill-library-management 的 references/routing-and-refresh.md，核实当前场景、运行条件及版本，再运行其 scripts/quality_registry.py select，以 selected 作为优先入口，不能只读分数后自行心算排序。候选事实可用现有请求文件或 --request - 从标准输入传入，未经核实不照用旧请求。needs_review／无档案时据实际能力作暂定判断并标待评，不阻塞正常任务。只加载相关候选，不触发全库审计。
+Skill 选型先尊重用户明确指定，再按项目／分类索引找到相关能力；存在共享库同类竞争候选及已维护的 ~/.agents/skill-library-management/SKILL_QUALITY.json 时，先读取 skill-library-management 的 references/routing-and-refresh.md，核实当前场景、运行条件及版本，再运行其 scripts/quality_registry.py select，以 selected 作为优先入口，不能只读分数后自行心算排序。候选事实可用现有请求文件或 --request - 从标准输入传入，未经核实不照用旧请求。needs_review／无档案时据实际能力作暂定判断并标待评，不阻塞正常任务。只加载相关候选，不触发全库审计。
 ```
 
 接入验收分三层报告：指令／索引路径可达、脚本对候选输入的选型行为、客户端实际是否读到指令并选中入口。前两项通过不冒充模型选型实验已完成；客户端新会话中用典型任务和易混淆反例验证第三层。v1.4.1 的 CLI 隔离实测记录见 [原生调用验收](../evals/native-invocation.md)，其中区分了读取评分后自行选择与真正调用选择器的证据。当前会话不会因磁盘规则更新就可靠地重新加载全部指令；必要时新开会话验证，不声称已即时全局生效。
@@ -32,7 +34,7 @@ Skill 选型先尊重用户明确指定，再按项目／分类索引找到相�
 有可用档案的同类候选实际竞争时，核实请求事实后调用选择器，使用其 selected／blocked_explicit／needs_review 结果；不能只按肉眼总分或旧候选文件直接执行。依赖证据注明路径基准（项目根、Skill 根或脚本目录），按实际脚本解析方式核对，不能把项目根的 deps/ 误查到 Skill 根。明确指定可直接按该入口核实执行；无关任务不读档案、不运行选择器。
 
 ```bash
-python3 scripts/quality_registry.py select /path/to/SKILL_QUALITY.json \
+python3 scripts/quality_registry.py select ~/.agents/skill-library-management/SKILL_QUALITY.json \
   --request /path/to/task-candidates.json --as-of YYYY-MM-DD
 ```
 
@@ -46,7 +48,7 @@ python3 scripts/quality_registry.py select /path/to/SKILL_QUALITY.json \
 
 ## 生命周期中的持续优化
 
-“自动检查”是 Agent 在已触发的管理流程中执行相应步骤，不是后台守护进程。安装／更新 Skill 的授权覆盖相应记录维护，不自动授权处理其他重复候选；只读审计只输出草稿档案和方案，不落盘修改库。
+“自动检查”是 Agent 在已触发的管理流程中执行相应步骤，不是后台守护进程。安装／更新 Skill 的授权覆盖相应记录维护，不自动授权处理其他重复候选；只读审计不修改 Skill、索引或客户端入口；用户要求维护评分档案时，可按统一流程更新固定管理位置，这不授权整理库实体。未要求写评分时只在当前回复给草稿，不新建临时表。
 
 | 触发 | 最小评估范围与动作 |
 |---|---|
@@ -60,4 +62,6 @@ python3 scripts/quality_registry.py select /path/to/SKILL_QUALITY.json \
 
 ## 审计报告
 
-全量报告按既有发现范围给出逻辑 Skill 总数、实体数、客户端入口数及不可访问限制；局部报告明确局部数量，不声称全库总数。每项列 ID／入口、任务场景、重复关系、六项分数或未知状态、确定总分／区间、原始 GitHub Star 与查询日期／仓库口径、原创／二创归属、实际调用记录、运行条件、调用优先级及理由、保留能力去向、建议动作和验证状态。执行后再列实际处理结果、源码／安装／客户端检查及具体备份回滚记录。
+全量报告仅按共享库范围给出逻辑 Skill 总数、实体数、已登记客户端入口数及不可访问限制；局部报告明确局部数量，不声称全库总数。每项列 ID／入口、任务场景、重复关系、六项分数或未知状态、确定总分／区间、原始 GitHub Star 与查询日期／仓库口径、原创／二创归属、实际调用记录、运行条件、调用优先级及理由、保留能力去向、建议动作和验证状态。执行后再列实际处理结果、源码／安装／客户端检查及具体备份回滚记录。
+
+评分交付须另列已完成与未完成数量、逐项阻塞和下一步；引用唯一展示表，不新增按日期／项目保存的评分表。退出码 0、档案导入或全部行标待评都不代表完成评分。

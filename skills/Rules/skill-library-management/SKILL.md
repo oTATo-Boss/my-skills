@@ -1,17 +1,17 @@
 ---
 name: skill-library-management
-description: Manage skill libraries: install, update, audit, deduplicate, score quality and select among competing skills. Maintain categories, indexes, provenance, install mappings and client links. Use for library changes or candidate comparison; ordinary skill use does not trigger a full audit. Audits are read-only by default.
+description: "Manage the shared skill library at ~/.agents/skills: install, update, audit, deduplicate, score and select skills. Reuse one quality store, batch repository queries and incrementally refresh evidence. Maintain shared indexes, provenance, mapped development copies and client links. Excludes other projects, system skills and plugins; audits are read-only by default."
 metadata:
-  version: "1.4.1"
+  version: "1.5.0"
 ---
 
 # 分级 Skill 库管理
 
-按用途归类，通过分级索引找到技能，完整保留包内资源，并维护开发目录、本机安装副本与客户端入口。适用于接入、分类、迁移、更新、卸载和完整性检查；用户只要求方案时，交付方案即可。
+只管理 `~/.agents/skills/` 共享库及其已登记的客户端链接；本项目仅维护对应源码与安装映射。不扫描其他项目内置库、系统／插件技能或客户端独立安装项。沿用分类、索引、来源、迁移和安装同步；普通调用不触发全库审计。
 
 ## 按需智能审计
 
-日常管理只检查相关范围；用户要求整理、精简或审计整个库时，按 [智能审计与去重](references/semantic-audit.md) 发现管理范围内的全局、项目与各 Agent 客户端入口，关联源码、安装副本和软链接，建立不重复计数的能力清单。未发现或无法访问的范围必须说明。
+日常只检查相关范围；全量指整个共享库。按 [智能审计与去重](references/semantic-audit.md) 核对共享实体、索引、已知源码映射和指向共享库的客户端链接，不将范围外目录纳入数量或评分。
 
 Agent 阅读实际流程、输入输出、场景、脚本与依赖，比较重复、重叠、互补、调用冲突和独立能力；对竞争实现按证据评估质量并保留独特能力。目标是能力完整、调用准确、维护便利，不是数量最少。名称、关键词、描述或内容哈希只用于定位线索，不能代替语义与行为判断。
 
@@ -19,7 +19,11 @@ Agent 阅读实际流程、输入输出、场景、脚本与依赖，比较重�
 
 ## 评分、选型与持续优化
 
+先执行 [统一查询与档案流程](references/shared-quality-store.md)：唯一数据源为 `~/.agents/skill-library-management/SKILL_QUALITY.json`，同目录 `SKILL_QUALITY.md` 仅由它生成。查询离线复用；仓库批量去重、只查缺失／到期事实；按实际变化增量更新，不再生成日期／项目临时评分表。
+
 按 [100 分质量规范](references/quality-scoring.md) 维护效果 25、可靠性 20、完整度 15、维护 10、GitHub Star 15、本人开发 15 的证据档案；未知／过期项不冒充已知 0 或确定总分。Star 核实原始仓库及独立／合集归属，本人原创和深度二创按来源与实际贡献评估。
+
+先复用有效历史产物与测试，再补最必要的语义评估和安全验证。待评必须列具体缺口、阻塞和下一步；已建档／查询成功不等于已评分，六项证据满足才计完成，不能交一批空分后声称完成。
 
 按 [优先调用与持续优化](references/routing-and-refresh.md) 先尊重用户指定，再核对任务、可见范围和运行条件；有可用同类档案时运行选择器，同场景候选优先高分，接近时考虑本人开发、真实使用记录和专业适配。职责互补则组合使用。该策略通过项目调用指令和管理器流程生效，不是 Codex 原生评分拦截器。
 
@@ -38,7 +42,7 @@ Agent 阅读实际流程、输入输出、场景、脚本与依赖，比较重�
 
 ## 按任务执行
 
-1. 明确本次范围和终点；先读项目索引、库总入口，再进入相关分类／二级分类和实际入口，不为普通选型扫描全库。
+1. 明确共享库内本次范围和终点；先读本项目索引与共享总入口，再进入相关分类／二级分类和实际入口，不因项目导航或客户端目录扩大管理范围。
 2. 根据现有拥有索引和真实文件归类。保留既有名称和用户例外，不强制所有分类拆二级，不凭名称相似或工具插件存在判定重复。分类与展示规则见 [索引契约](references/index-contract.md)。
 3. 接入时核实来源、版本、作者与许可声明、依赖和同类冲突，按上方生命周期流程评估相关候选；在每个独立 Skill 根目录保存 `SOURCE.md`，包括嵌套子技能；更新时维护记录，迁移时随完整包保留。按 [来源记录](references/source-records.md) 区分安装来源、二创来源与参考资源；无法确认的信息明确标为未知，不猜测、不标为原创。用户提供的套件保留原始资料，示例库按资源管理。
 4. 迁移前确定旧路径到新路径的映射，检查独立修改，记录文件内容、权限及有效引用；整包移动后同步各层索引、导航数量、跨技能路径、客户端链接及项目安装映射。具体方法见 [变更与校验](references/change-checks.md)。
@@ -52,6 +56,8 @@ Agent 阅读实际流程、输入输出、场景、脚本与依赖，比较重�
 - [audit_library.py](scripts/audit_library.py)：只读检查完整维护库的分级导航、拥有关系、覆盖、数量和客户端入口；可检查来源记录、开发／安装映射及副本一致性，不绑定机器路径。
 - [test_audit_library.py](scripts/test_audit_library.py)：验证深浅分类、嵌套包、链接、映射和冲突诊断的回归用例。
 - [quality_registry.py](scripts/quality_registry.py)：只读计算与校验质量档案、过滤和排序 Agent 提供的候选，按需核实 GitHub 数据；不执行 Skill 或修改库。
+- [quality_store.py](scripts/quality_store.py)：固定共享档案的离线查询、批量仓库复用与刷新、带修订保护的增量写入和唯一展示表生成；不执行业务技能。
+- [test_quality_store.py](scripts/test_quality_store.py)：在隔离共享根验证范围、复用、增量、冲突、失败和完成状态。
 - [test_quality_registry.py](scripts/test_quality_registry.py)：验证评分、证据边界、Star 口径、调用优先级与失效处理。
 - [语义验收场景](evals/semantic-audit.md)：用隔离案例检查能力判断、授权边界和治理交付。
 - [评分与调用验收](evals/quality-and-routing.md)：验证评分证据、候选优先级及原生调用接入边界。
@@ -65,4 +71,4 @@ python3 scripts/audit_library.py \
   --check-sources
 ```
 
-开发仓库额外传入 `--install-map /path/to/INSTALL_MAP.json`；完成安装同步后可加 `--compare-installed` 核对内容和权限。普通项目的选型索引不要求覆盖整个共享库；检查命令、范围与限制见变更指南。脚本只负责确定性结构检查，不跨客户端建立语义清单、不评判质量，也不移动、删除、安装或自动修复资源。
+本开发仓库额外传入其 `--install-map`；同步后可加 `--compare-installed`。底层结构工具保留通用根参数以支持本项目与隔离测试，不代表 Skill 有权扩展到其他真实库；其职责仍为只读结构检查。

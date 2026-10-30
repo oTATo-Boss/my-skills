@@ -120,6 +120,9 @@ def prepare():
     routing = (PACKAGE / "references/routing-and-refresh.md").read_text()
     integration = routing.split("```text\n", 1)[1].split("```", 1)[0].strip()
     integration = integration.replace("skill-library-management 的 references/routing-and-refresh.md", "manager/references/routing-and-refresh.md")
+    # Controlled fixtures substitute their own data path; never make the sandbox
+    # reach the real canonical store. This is not a second production registry.
+    integration = integration.replace("~/.agents/skill-library-management/SKILL_QUALITY.json", "SKILL_QUALITY.json")
 
     def record(points=None):
         return {"status": "verified", "assessed_version": "fixture-1", "review_after": (date.today() + timedelta(days=7)).isoformat(),

@@ -1,4 +1,4 @@
 interface:
   display_name: "分级 Skill 库管理"
-  short_description: "Audit, score and select skills; maintain library integrity"
-  default_prompt: "使用 $skill-library-management 按当前范围管理技能库，比较真实能力与六项质量证据，核实 Star 和本人开发归属，给出调用优先级及处理方案；维护索引、来源、映射与客户端入口，默认只读，明确整理授权后备份执行。"
+  short_description: "Manage the shared library and one incremental quality store"
+  default_prompt: "使用 $skill-library-management 仅管理 ~/.agents/skills 共享库，先查询唯一质量档案，复用历史证据，去重批量查仓库并按变化增量评分；用途、分数、证据和未完成项一并交付，不把待评当完成。不扫描其他项目、系统或插件。整理默认只读，明确授权后备份执行。"

@@ -112,6 +112,9 @@ class NativeEvidenceTests(unittest.TestCase):
         self.assertNotIn("\\u9694", policy)
         NATIVE.check_isolation(root)
         self.assertFalse((root / "隔离保护探针/write-test.txt").exists())
+        rules = (root / 'managed-b/AGENTS.md').read_text()
+        self.assertIn('SKILL_QUALITY.json', rules)
+        self.assertNotIn('~/.agents/skill-library-management/SKILL_QUALITY.json', rules)
 
 
 if __name__ == "__main__":
