@@ -15,6 +15,7 @@ from quality_store import Store, digest
 from quality_registry import github_snapshot
 from audit_library import file_manifest
 from test_quality_registry import profile
+from test_reference_score import reviewed
 
 TODAY = date(2026, 10, 30)
 
@@ -38,6 +39,38 @@ class StoreTests(unittest.TestCase):
 
     def add(self, *items):
         self.data, _ = self.store.merge(self.data, {'profiles': list(items)}, TODAY)
+
+    def test_incremental_merge_does_not_replace_newer_reference_with_older_review(self):
+        p=self.item(complete=False);p['review_assessment']=reviewed()['review_assessment']
+        self.add(p)
+        older=copy.deepcopy(p);older['review_assessment']['evaluated_at']='2026-10-29'
+        with self.assertRaises(ValueError):self.store.merge(self.data,{'profiles':[older]},TODAY)
+
+    def test_render_labels_reference_and_preserves_raw_star_and_date(self):
+        p=self.item(complete=False);p['review_assessment']=reviewed()['review_assessment']
+        self.add(p)
+        self.data,_=self.store.merge(self.data,{'repository_snapshots':[self.snapshot(stars=99999)]},TODAY)
+        self.store.directory.mkdir(parents=True)
+        self.store.render(self.data,TODAY)
+        view=self.store.table.read_text()
+        self.assertIn('参考分／100',view)
+        self.assertIn('84.5',view)
+        self.assertIn('Star 99999（2026-10-30）',view)
+        self.assertIn('未实测，审阅估评',view)
+        self.assertEqual(self.store.query(self.data,TODAY)['summary']['complete'],0)
+
+    def test_repository_plan_uses_reviewed_origin_instead_of_superseded_raw_attribution(self):
+        p=self.item();p['review_assessment']=reviewed()['review_assessment']
+        p['review_assessment']['github_review']['repository']='original/skill'
+        self.add(p)
+        plan=self.store.github_plan(self.data,TODAY)
+        self.assertEqual([r['repository'] for r in plan],['original/skill'])
+
+    def test_unknown_reviewed_origin_does_not_fetch_old_guessed_origin(self):
+        p=self.item();p['review_assessment']=reviewed()['review_assessment']
+        p['review_assessment']['github_review'].update(repository=None,attribution='unknown')
+        self.add(p)
+        self.assertEqual(self.store.github_plan(self.data,TODAY),[])
 
     @staticmethod
     def snapshot(repo='fixture/export', stars=0, observed='2026-10-30T08:00:00Z'):
@@ -239,6 +272,26 @@ class StoreTests(unittest.TestCase):
         self.assertEqual(json.loads(result.stdout)['changed_profiles'],1)
         self.assertEqual(self.store.load(TODAY)['profiles'],[item])
         self.assertEqual({p.name for p in self.store.directory.iterdir()},{'SKILL_QUALITY.json','SKILL_QUALITY.md'})
+
+    def test_query_exposes_reference_estimate_without_completing_measured_assessment(self):
+        p=self.item(complete=False);p['review_assessment']=reviewed()['review_assessment'];p['review_assessment']['revision']=p['revision']
+        self.add(p);self.data,_=self.store.merge(self.data,{'repository_snapshots':[self.snapshot(stars=99999)]},TODAY)
+        result=self.store.query(self.data,TODAY,check_current=True)
+        self.assertIn('reference_reviewed',result['summary'])
+        self.assertEqual(result['summary']['reference_reviewed'],1)
+        self.assertEqual(result['summary']['reference_numeric'],1)
+        self.assertEqual(result['summary']['complete'],0)
+        self.assertEqual(result['profiles'][0]['reference']['total'],84.5)
+        self.assertIsNone(result['profiles'][0]['total'])
+
+    def test_package_change_expires_the_reference_estimate(self):
+        p=self.item(complete=False);p['review_assessment']=reviewed()['review_assessment'];p['review_assessment']['revision']=p['revision'];self.add(p)
+        Path(p['entry']).write_text('Changed workflow')
+        result=self.store.query(self.data,TODAY,check_current=True)
+        self.assertIn('reference',result['profiles'][0])
+        self.assertEqual(result['profiles'][0]['reference']['status'],'stale')
+        self.assertIsNone(result['profiles'][0]['reference']['total'])
+        self.assertEqual(result['summary']['reference_reviewed'],0)
 
 
 if __name__=='__main__':unittest.main()

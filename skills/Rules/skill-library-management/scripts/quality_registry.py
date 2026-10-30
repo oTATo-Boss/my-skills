@@ -140,6 +140,91 @@ def score(profile, today):
             "runs": {"attempts": attempts, "successes": successes}}
 
 
+def reference_score(profile, repositories, today):
+    """Content-review estimate, never a substitute for score()'s tested total.
+
+    Agent supplies individual judgments. Missing community/authorship facts
+    produce a range, not invented zero points or a renormalized score.
+    """
+    review = profile.get('review_assessment')
+    if review is None:
+        return None
+    require(isinstance(review, dict) and review.get('basis') == 'content_review', 'Expected a labelled content review')
+    require(day(review.get('evaluated_at')) <= today, 'Future reference review')
+    for key in ('version', 'revision'):
+        text(review.get(key), 'review '+key)
+    require(review.get('confidence') in {'high', 'medium', 'low'}, 'Invalid review confidence')
+    task = review.get('task', {})
+    text(task.get('input'), 'review input');text(task.get('output'), 'review output')
+    require(isinstance(task.get('acceptance'), list) and bool(task['acceptance']), 'Review requires acceptance criteria')
+    for criterion in task['acceptance']:
+        text(criterion, 'acceptance criterion')
+    files = review.get('reviewed_files')
+    require(isinstance(files, list) and bool(files), 'Review requires inspected files')
+    for path in files:
+        text(path, 'inspected file')
+    for key in ('limitations','strengths'):
+        items = review.get(key, [])
+        require(isinstance(items, list), key+' must be a list')
+        for item in items:
+            text(item, key+' item')
+    runs = review.get('runtime_evidence', [])
+    require(isinstance(runs, list), 'runtime_evidence must be a list')
+    for run in runs:
+        require(isinstance(run, dict), 'Expected bounded runtime evidence')
+        text(run.get('source'), 'runtime evidence source')
+        text(run.get('scope'), 'runtime evidence scope')
+    dimensions = review.get('dimensions')
+    require(isinstance(dimensions, dict) and set(dimensions) == set(WEIGHTS)-{'github','ownership'}, 'Expected four review dimensions')
+    quality = 0
+    for key, metric in dimensions.items():
+        text(metric.get('reason'), key+' review reason')
+        quality += number(metric.get('points'), WEIGHTS[key], key+' reference points')
+    gh = review.get('github_review', {})
+    ownership = review.get('ownership_review', {})
+    text(gh.get('reason'), 'repository review reason')
+    text(ownership.get('reason'), 'authorship review reason')
+    github_points = None
+    snapshot = {}
+    repo = gh.get('repository')
+    if repo is not None:
+        require(isinstance(repo,str) and re.fullmatch(r'[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+',repo), 'Invalid review repository')
+        require(not any(p in {'.','..'} for p in repo.split('/')), 'Invalid review repository segments')
+        record = repositories.get(repo.lower(), {})
+        snapshot = record.get('snapshot', {})
+        if (gh.get('attribution') == 'confirmed' and gh.get('scope') in {'dedicated','collection'}
+                and snapshot.get('status') == 'verified'):
+            observed = day(snapshot['observed_at'][:10])
+            require(observed <= today, 'Future repository fact')
+            if (today-observed).days <= 7:
+                github_points = star_points(snapshot.get('stars'), gh['scope'])
+    elif gh.get('not_applicable') is True and gh.get('attribution') == 'confirmed':
+        github_points = 0
+    own_points = None
+    kind = ownership.get('kind')
+    require(kind in {'original','deep_adapted','collected','unknown'}, 'Invalid review authorship')
+    if kind == 'original':
+        own_points = 15
+    elif kind == 'collected':
+        own_points = 0
+    elif kind == 'deep_adapted' and ownership.get('contribution') is not None:
+        contribution = number(ownership['contribution'],1,'review contribution')
+        require(0 < contribution < 1,'Deep adaptation fraction must be below original authorship')
+        own_points = 15*contribution
+    known = quality + (github_points if github_points is not None else 0) + (own_points if own_points is not None else 0)
+    missing = [k for k,v in [('github',github_points),('ownership',own_points)] if v is None]
+    return {'basis':'content_review','status':'reviewed_with_gaps' if missing else 'reviewed',
+            'version':review['version'],'revision':review['revision'],'confidence':review['confidence'],
+            'quality_points':round(quality,4),'github_points':round(github_points,4) if github_points is not None else None,
+            'repository':repo,'repository_scope':gh.get('scope'),
+            'raw_stars':snapshot.get('stars'),'github_observed_at':snapshot.get('observed_at'),
+            'ownership_points':round(own_points,4) if own_points is not None else None,
+            'total':round(known,4) if not missing else None,'minimum':round(known,4),
+            'maximum':round(known+15*len(missing),4),'missing_metadata':missing,
+            'runtime_evidence_count':len(review.get('runtime_evidence',[])),
+            'limitations':review.get('limitations',[]),'strengths':review.get('strengths',[])}
+
+
 def catalog(data, today):
     require(isinstance(data, dict) and data.get("schema_version") == 1 and type(data["schema_version"]) is int, "Unsupported schema version")
     require(isinstance(data.get("profiles"), list), "Expected profiles list")

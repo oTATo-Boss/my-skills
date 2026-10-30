@@ -2,7 +2,7 @@
 name: skill-library-management
 description: "Manage the shared skill library at ~/.agents/skills: install, update, audit, deduplicate, score and select skills. Reuse one quality store, batch repository queries and incrementally refresh evidence. Maintain shared indexes, provenance, mapped development copies and client links. Excludes other projects, system skills and plugins; audits are read-only by default."
 metadata:
-  version: "1.5.0"
+  version: "1.6.0"
 ---
 
 # 分级 Skill 库管理
@@ -23,7 +23,7 @@ Agent 阅读实际流程、输入输出、场景、脚本与依赖，比较重�
 
 按 [100 分质量规范](references/quality-scoring.md) 维护效果 25、可靠性 20、完整度 15、维护 10、GitHub Star 15、本人开发 15 的证据档案；未知／过期项不冒充已知 0 或确定总分。Star 核实原始仓库及独立／合集归属，本人原创和深度二创按来源与实际贡献评估。
 
-先复用有效历史产物与测试，再补最必要的语义评估和安全验证。待评必须列具体缺口、阻塞和下一步；已建档／查询成功不等于已评分，六项证据满足才计完成，不能交一批空分后声称完成。
+先复用有效历史产物与测试，再补最必要的语义评估和安全验证。日常允许先完成逐项内容审阅的参考评分，与严格实测总分分开；效果／可靠性估评不能冒充成功率或实测。参考分、质量分与来源偏好分开展示，未知元信息给区间，详细规则见质量规范。待评必须列缺口，不能交一批空分后声称完成。
 
 按 [优先调用与持续优化](references/routing-and-refresh.md) 先尊重用户指定，再核对任务、可见范围和运行条件；有可用同类档案时运行选择器，同场景候选优先高分，接近时考虑本人开发、真实使用记录和专业适配。职责互补则组合使用。该策略通过项目调用指令和管理器流程生效，不是 Codex 原生评分拦截器。
 

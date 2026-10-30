@@ -4,7 +4,7 @@
 - kind: `local`
 - status: `confirmed`
 - source: 本地开发／维护目录 `skills/Rules/skill-library-management`；当前维护仓库 https://github.com/oTATo-Boss/my-skills
-- version: 1.5.0（共享范围、唯一质量档案与增量批量查询）；历史版本见 CHANGELOG.md。
+- version: 1.6.0（增量参考评估与严格实测分离）；历史版本见 CHANGELOG.md。
 - author: oTATo-Boss（用户本人）；2026-10-30 在当前对话明确确认本人制作，Agent 辅助编写／整理。
 - license: MIT（2026-10-14 本人决定，见 [LICENSE](<LICENSE>)）
 - collected_at: unknown；没有可靠安装／导入日期。
@@ -31,3 +31,7 @@
 ## v1.5.0 共享范围与统一档案
 
 按用户本次明确要求固定共享范围、唯一质量档案位置、批量查询与增量更新规则；新增标准库存储工具，复用原有结构检查与评分计算。历史有效结果按证据归并，不伪造实际效果或将待评计为完成；真实用户数据保存在共享管理目录，不打包进 Skill。
+
+## v1.6.0 日常参考评估
+
+按用户要求简化评分流程，保留原六项权重，在唯一档案中分离内容审阅参考分与严格实测总分；未知元信息保留区间，未执行不称已实测。共享用户评分数据不进入本Skill分发包。

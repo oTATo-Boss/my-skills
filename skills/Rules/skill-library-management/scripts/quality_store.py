@@ -14,7 +14,7 @@ import tempfile
 from urllib.error import HTTPError, URLError
 
 from audit_library import file_manifest
-from quality_registry import catalog, day, github_snapshot, require, score
+from quality_registry import catalog, day, github_snapshot, require, score, reference_score
 
 
 def digest(data):
@@ -67,11 +67,14 @@ class Store:
         rows = []
         for p in profiles:
             result = score(p, today)
+            reference = reference_score(p, data['repository_snapshots'], today)
+            current_hash = None
             try:
                 path = self.entry(p)
                 current = 'not_checked'
                 if check_current:
                     revision = 'package-sha256:' + digest(file_manifest(path.parent, allowed_root=self.root))
+                    current_hash = revision
                     current = 'matched' if revision == p['revision'] else 'changed'
             except ValueError as exc:
                 current = 'missing_or_out_of_scope'
@@ -81,16 +84,23 @@ class Store:
                 result.update(total=None, known_points=0, possible_max=100, verified_weight=0)
                 pending = list(result['dimensions'])
                 result['dimensions'] = {k: dict(v, status='stale', points=None) for k, v in result['dimensions'].items()}
+            if reference and (current == 'missing_or_out_of_scope' or (check_current and current_hash != reference['revision'])):
+                reference = dict(reference, status='stale', total=None, minimum=None, maximum=None)
             # Ordinary reads reuse scores but do not claim disk revision validation.
             result.update(name=p['name'], entry=p['entry'], description=p.get('description', ''),
                           github_observed_at=next((e['observed_at'] for e in reversed(p['github']['evidence']) if e['source'].startswith('https://api.github.com/repos/')), None),
                           current_revision=current, pending_dimensions=pending,
+                          reference=reference,
                           pending_reasons={k: (p[k] if k in {'github', 'ownership'} else p['metrics'][k]).get('reason', 'Evidence needs review') for k in pending},
                           assessment_status='complete' if result['total'] is not None else 'incomplete')
             rows.append(result)
         complete = sum(r['assessment_status'] == 'complete' for r in rows)
+        reviewed = sum(bool(r['reference']) and r['reference']['status'] in {'reviewed','reviewed_with_gaps'} for r in rows)
+        numeric = sum(bool(r['reference']) and r['reference']['status']=='reviewed' for r in rows)
         return {'store': str(self.path), 'store_revision': digest(data), 'as_of': str(today),
                 'summary': {'profiles': len(rows), 'complete': complete, 'incomplete': len(rows)-complete,
+                            'reference_reviewed':reviewed, 'reference_numeric':numeric,
+                            'reference_metadata_gaps':reviewed-numeric,
                             'assessment_complete': bool(rows) and complete == len(rows)}, 'profiles': rows}
 
     def merge(self, data, delta, today):
@@ -102,11 +112,16 @@ class Store:
         for p in delta.get('profiles', []):
             self.entry(p)
             score(p, today)
+            reference_score(p, updated['repository_snapshots'], today)
             key = (p['id'], p['scenario'])
             require(key not in seen, 'Duplicate incoming ID/scenario')
             seen.add(key)
             old = existing.get(key)
             require(not old or p['evaluated_at'] >= old['evaluated_at'], 'Older profile cannot replace newer evidence')
+            if old and old.get('review_assessment'):
+                require(bool(p.get('review_assessment')), 'Incremental updates must retain the reference review')
+                require(p['review_assessment']['evaluated_at'] >= old['review_assessment']['evaluated_at'],
+                        'Older reference review cannot replace newer evidence')
             if old == p:
                 continue
             if old:
@@ -148,12 +163,13 @@ class Store:
         for p in data['profiles']:
             if ids and p['id'] not in ids and p['name'] not in ids:
                 continue
-            gh = p['github']
+            review = p.get('review_assessment')
+            gh = review.get('github_review', {}) if review else p['github']
             try:
                 self.entry(p)
             except ValueError:
                 continue
-            repo = p.get('upstream_repository')
+            repo = gh.get('repository') if review else p.get('upstream_repository')
             if repo and gh.get('attribution') == 'confirmed' and repo.lower() == str(gh.get('repository', '')).lower():
                 require(re.fullmatch(r'[\w.-]+/[\w.-]+', repo) and not any(s in {'.', '..'} for s in repo.split('/')), 'Invalid original repository')
                 repos.setdefault(repo.lower(), set()).add(p['id'])
@@ -242,17 +258,27 @@ class Store:
 
     def render(self, data, today):
         result = self.query(data, today)
+        full = self.query(data, today, include_children=True)
+        actual = [r for r in full['profiles'] if Path(r['entry']).name=='SKILL.md']
+        reviewed = sum(bool(r['reference']) and r['reference']['status']!='stale' for r in actual)
         lines = ['# 共享库质量表', '', f'唯一数据源：{self.path}', f'数据修订：{digest(data)}；展示日期：{today}',
-                 '', '这是派生视图；查询与更新以 JSON 为准。按 ID + 场景在 JSON 查询各维度证据、版本、原因与下一步。总分待评不能称评分完成；查询未重新核对全部包内容。',
-                 '', f"已完整评分 {result['summary']['complete']}／{result['summary']['profiles']}；待完成 {result['summary']['incomplete']}。", '',
-                 '| Skill／ID／场景 | 用途 | 效果25 | 可靠20 | 完整15 | 维护10 | Star15 | 本人15 | 总分100 | 原始Star | Star查询日期 | 未完成项 |',
-                 '|---|---|---:|---:|---:|---:|---:|---:|---|---:|---|---|']
+                 '', '**参考分是逐项内容审阅的评估，不是全部业务已经实测。** 原权重不变：质量70（效果25、可靠20、完整15、维护10），社区认可15，本人开发偏好15。缺少仓库或归属信息时显示缺口区间，不填假0。不同用途不作全库质量排名。',
+                 '', f'实际 Skill 内容审阅：{reviewed}／{len(actual)}；本表折叠子项，展示 {len(result["profiles"])} 个父入口／套件。',
+                 f'本表明确参考分 {result["summary"]["reference_numeric"]} 项；元信息缺口区间 {result["summary"]["reference_metadata_gaps"]} 项。严格实测证据充分的总分仍单独保留（{result["summary"]["complete"]} 项），不以参考分冒充。',
+                 '', '用途、任务验收条件、六项分数理由、已读文件及真实运行记录保存在同一 JSON 的 review_assessment；普通查询不重新计算全库内容哈希。', '',
+                 '| Skill | 用途 | 参考分／100 | 质量／70 | 社区／15 | 本人／15 | 实测记录 | 主要短板／边界 |',
+                 '|---|---|---:|---:|---:|---:|---|---|']
         def cell(value):
             return str(value).replace('|', '／').replace('\n', ' ')
         for row in result['profiles']:
-            values = [f"{row['name']} [{row['id']}]／{row['scenario']}", row['description']]
-            values += [v['points'] if v['points'] is not None else '待评' for v in row['dimensions'].values()]
-            values += [row['total'] if row['total'] is not None else '待评', row['github']['stars'] if row['github']['stars'] is not None else '未知', row['github_observed_at'] or '未核实', ', '.join(row['pending_dimensions'])]
+            ref = row['reference']
+            if ref and ref['status']!='stale':
+                total=f"{ref['total']:.1f}" if ref['total'] is not None else f"{ref['minimum']:.1f}–{ref['maximum']:.1f}"
+                values=[f"[{row['name']}](<{row['entry']}>)",row['description'],total,ref['quality_points'],
+                        (f"{ref['github_points']:.2f}" if ref['github_points'] is not None else '未知')+f"；Star {ref['raw_stars'] if ref['raw_stars'] is not None else '未知'}（{str(ref['github_observed_at'])[:10] if ref['github_observed_at'] else '未核实'}）",ref['ownership_points'] if ref['ownership_points'] is not None else '未知',
+                        '有记录（范围见证据）' if ref['runtime_evidence_count'] else '未实测，审阅估评','；'.join(ref['limitations'][:2])]
+            else:
+                values=[f"[{row['name']}](<{row['entry']}>)",row['description'],'需重新审阅' if ref else '尚未审阅','','','','','']
             lines.append('| '+' | '.join(cell(v) for v in values)+' |')
         self.atomic_write(self.table, '\n'.join(lines)+'\n')
 
