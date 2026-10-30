@@ -1,10 +1,16 @@
 # 来源与维护范围
 
+## 当前维护范围与作者（2026-10-30）
+
+项目当前维护 22 个 Skill。用户直接确认：除六个网站设计技能为本人收集整合二创外，其余 16 个均为本人制作，Agent 辅助编写或整理。具体包的原始交付方式、外部工具／依赖／参考／模板及其许可继续保留，不将其整体归为本人原创。当前名称、数量和安装位置以 SKILLS_INDEX.md、INSTALL_MAP.json 及各包 SOURCE.md 为准。
+
+下文为历史记录；历史数量、作者待查、未提交／未同步等描述对应记录当时状态，不代表当前状态。已授权本次全部改动提交推送，推送成功后同步本机并清理旧入口。
+
 2026-10-12 从本机正在使用的安装版本迁入 14 个 Skill，保持技能文件内容与执行权限不变。开发目录与本机安装目录均保存实体源码；文件同步遵循 `AGENTS.md`，安装位置见 `INSTALL_MAP.json`。
 
 ## 原创工作流
 
-`ai-liveaction-fusion`、`single-shot-prompt`（曾用名 `ai-video-prompt`、`short-video-prompt`）、`json-prompt-system`、`character-outfit-design` 有本地开发记录；`nsfw-seedance-prompt-skill` 由用户明确确认原创。`character-outfit-design`（角色的服装设计）曾用名为 `fashion-picture`、`otato-fashion-design`。
+`ai-liveaction-fusion`、`single-shot-prompt`（曾用名 `ai-video-prompt`、`short-video-prompt`）、`json-prompt-system`、`character-outfit-design` 有本地开发记录；`nsfw-beauty-selfie-prompt` 由用户明确确认原创。`character-outfit-design`（角色的服装设计）曾用名为 `fashion-picture`、`otato-fashion-design`。
 
 ## 二创与整合版本
 
@@ -74,3 +80,23 @@
 `character-design`整合并替换`character-outfit-design`，保留其服装方法、模板与案例；旧名称仅作历史记录，不保留安装入口。新包增加用户确认的角色基础资产、三类画风、剧情状态裂变与拼接脚本，来源及许可边界见`skills/image/character-design/SOURCE.md`。
 
 2026-10-29 按用户要求从 `visual-creative-director.zip` 完整导入视觉创意总监技能，登记于 `director/visual-creative-director`，并同步 M1rage Studio 内置创意指导分类。保留 8 个原包文件，来源、归档哈希及软件适配边界见技能 `SOURCE.md`；用户于同日明确确认作者为本人，归属记录为用户原创；原包版本和许可未声明。
+
+## 2026-10-30 · 用户来源更正与社交套件合并
+
+用户明确确认 r2v、motion-video 为本人编写；后者改名 motion-video-capabilities。四个视频方法技能和三个 Anime.js 技能不是用户直接开发，实际作者与引入来源待查，旧署名不再视为确认事实。六个网站技能确认为收集整合。原六个社交媒体技能合为单入口 social-media（Social Media），保留阶段方法、参考资料与历史来源，不据旧署名宣称全部原创。当前共 29 个 Skill。本次只更新开发目录，未提交、推送或同步本机安装。
+
+## 2026-10-30 · 移除 gleam-screenwriter
+
+按用户明确要求删除项目 Skill、配套开发文档、本机安装副本与 Claude 入口，移除安装映射和索引，空的项目 writing 分类一并移除。项目当前 28 个 Skill；历史导入记录只作追溯，不再表示当前维护或安装。
+
+## 2026-10-30 · Anime.js 外部来源移出项目
+
+按用户要求移除三个 Anime.js Skill 开发包、项目索引与安装映射。共享库改为安装 rbaumier/skills 的 ui-animations 和 wilfreud/skills-or-something 的 animejs（本机调用别名 animejs-workflows），官方示例保留为本地整理参考库。作者与资源来源见共享包 SOURCE.md；不再登记为本项目维护或用户原创。项目剩余 25 个 Skill。
+
+## 2026-10-30 · 四个方法技能来源查明及 Social Media 作者确认
+
+原始开发聊天确认 screenwriting、video-project-orchestration、production-continuity、video-production-pipeline 为 2026-10-16 AI-SMA v2 升级计划中由 Codex 新编写，用户现确认按本人项目自研、Agent 辅助编写登记，撤回“来源待查”。用户同时明确 Social Media 及原六模块作者为本人，撤回旧“作者待核实”判断。当前仍为 25 个 Skill；只更新来源与历史记录，未提交、推送或同步安装。
+
+## 2026-10-30 · Video Production 四合一
+
+用户明确要求将 screenwriting、video-project-orchestration、production-continuity、video-production-pipeline 整合为一个 Video Production（video-production），并确认作者为本人。原四模块方法、六份参考与 MIT 许可保留；新增统一入口、状态交接及修改恢复规则，移除旧四个独立入口。同步项目导航、README 与安装映射，项目现维护 22 个 Skill。当前只更新开发目录，未提交、推送或同步本机旧安装。

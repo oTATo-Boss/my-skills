@@ -1,3 +1,17 @@
+# Video Production 合并设计
+
+2026-10-30：按用户明确授权，将原四个独立 Skill 合为一个 `video-production`，作者 oTATo-Boss，Codex 辅助实现。当前入口为 [SKILL.md](../skills/video/production/video-production/SKILL.md)。
+
+- 模块：编剧、项目统筹、连续性、制作交付；均为包内方法文档，不独立安装。
+- 按需加载：局部写作、检查或修改进入相应模块；完整项目按统筹、编剧、连续性、制作交付推进。
+- 共享同一套剧本／资产版本、制作单元、输入输出、检查证据和恢复状态。
+- 变更闭环：记录新版本 → 连续性影响分析 → 统筹局部返工 → 制作与组接复核。
+- 旧四个项目入口及安装映射移除；本机副本按项目规定在推送后同步，本次未执行。
+
+以下为 2026-10-16 初始设计的历史原文；其中旧 Skill 名称只供溯源，当前布局以上述入口为准。
+
+---
+
 # Video production skills v1 design
 
 2026-10-16. Consumer: AI-SMA v2 and standalone video projects. Each package is an independent, harness-neutral method skill. The user's project owns its folders, task tool, credentials, approval boundaries and delivery contracts.

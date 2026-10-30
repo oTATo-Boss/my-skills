@@ -5,10 +5,10 @@
 - status: `confirmed`
 - source: 用户提供的 `multi-shot-prompt.skill` 中的 `multi-shot-prompt/`；当前维护目录 `skills/video/ai/multi-shot-prompt/`；维护仓库 https://github.com/oTATo-Boss/my-skills
 - version: unknown；原包未声明独立发布版本，本次记录为 2026-10-21 导入快照。
-- author: 用户本人开发，2026-10-21 在本次会话明确确认；未另设作者署名。
+- author: oTATo-Boss（用户本人）；2026-10-30 在当前对话明确确认本人制作，Agent 辅助编写／整理。
 - license: unknown；原包未附 LICENSE 或许可声明，本次导入不新增许可。
 - collected_at: `2026-10-21`
-- recorded_at: `2026-10-21`
+- recorded_at: `2026-10-30`
 - evidence: 用户在本次会话要求安装至本机和项目，并明确声明本人开发；原包 `/Users/griffith/Downloads/multi-shot-prompt.skill` 的 SHA-256 `1225b59d433f983ed55e06a79c256f92df247621ed6c6d0f5c0842a8c656760b`；入口 SHA-256 `7ffe1f98975b243829d62bfb07d582bc06cbec4a0c979182db07ee24a5359249`；原包 [README.md](README.md)、[来源与恢复范围](RECOVERY_NOTICE.md) 及 [导入记录](CHANGELOG.md)。
 
 ## 本地调整与边界
@@ -18,3 +18,7 @@
 - 原包未单独声明当前发布版本和许可证；保留这些缺口，不影响已确认的本人开发归属。
 - 导入时运行原包只读校验脚本，38 个资源引用、10 个正向用例和 32 个错误变体通过；该检查只覆盖文本结构、时间边界、素材绑定和台词一致性，不代表实际视频生成质量。
 - 开发目录与本机安装副本保留独立实体，Claude 发现软链接指向安装副本。Not-tested: live video generation。
+
+## 2026-10-30 · 当前作者归属最终确认
+
+用户明确确认本技能为本人制作；以本次直接确认取代此前“仅记录为本人／二创版本”的归属表述。Agent 辅助实现不改变本项目作者登记。工具、第三方依赖、参考资料、继承模板及素材的原作者与许可仍分别保留，不将技能归属扩展为这些外部资源的原创声明。

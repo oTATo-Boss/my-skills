@@ -1,0 +1,44 @@
+{
+  "screenwriting": {
+    "path": "video/creative/screenwriting",
+    "files": {
+      "LICENSE": "2fa261496f135ff8f371d316bfe4a8337fadc64b7648d41a12ec17fa6889a5e8",
+      "CHANGELOG.md": "dbcddb05d79afa5eb9c1e715cb053637264e92251c5f766ddd1e2a60b394e496",
+      "SOURCE.md": "af1939d16e6d6a0cbc7377103421ea9e55f2f2bfd7ab2fbf3fcfbca959b3e2eb",
+      "SKILL.md": "65a483a7fa25235a20c348b0bb129ff6832183732a7ec5cce631febc1505605c",
+      "references/formats.md": "46df0f4b00ada4d12391814a03be7bdb2fd6f6efbde368c4584bf84698930a1b",
+      "references/revision.md": "282bd69eb92d1704a6def87127eec3ed48e30a7cdd5779186bf80d5ddd5df4f6"
+    }
+  },
+  "video-project-orchestration": {
+    "path": "video/production/video-project-orchestration",
+    "files": {
+      "LICENSE": "2fa261496f135ff8f371d316bfe4a8337fadc64b7648d41a12ec17fa6889a5e8",
+      "CHANGELOG.md": "ae2441b6cdd7071b55ea5dd2f698066cbf0b071c35c4beb868a9c2821c614448",
+      "SOURCE.md": "b00412f50f5bf52f85d82fe95097afef69ba96e3e8c35dbe57a9a8a4ce8875cb",
+      "SKILL.md": "ae652b997881d09bca887d5760fcea801f9640712241d99f393476151e97034b",
+      "references/handoffs.md": "6605209dff09ed49bb0837d13e31781562709e6fff3c8cc93d6948a037f9c2c0"
+    }
+  },
+  "production-continuity": {
+    "path": "video/production/production-continuity",
+    "files": {
+      "LICENSE": "2fa261496f135ff8f371d316bfe4a8337fadc64b7648d41a12ec17fa6889a5e8",
+      "CHANGELOG.md": "4430d49224ae75688e751ee81b273897de3b481905339bc71b646ef86e8ba86c",
+      "SOURCE.md": "2750248b59bc0031f9446782269c0c7d1430a385d139cc3699021b469149d9b0",
+      "SKILL.md": "69bc76980febbcf169603bc51db615368bb6e781d1442966d47919183fde30fe",
+      "references/ledger.md": "9c9cc5f82c439b616a6c02b9650aa77b6d308d3082d2647a9ee8643fab2977a1"
+    }
+  },
+  "video-production-pipeline": {
+    "path": "video/production/video-production-pipeline",
+    "files": {
+      "LICENSE": "2fa261496f135ff8f371d316bfe4a8337fadc64b7648d41a12ec17fa6889a5e8",
+      "CHANGELOG.md": "281aa2d71eed72f70f696cbe1d397a6773d32a9fb921315586bb0c98a4e1d421",
+      "SOURCE.md": "432f04179b0c089d5c10696baa4c2f2883e184e0febeb38c94bda513703e82b8",
+      "SKILL.md": "f6e996309a00812b307d91b7b9694d4191fdcfc1f3adce17ff57ca03f693a627",
+      "references/manifest.md": "130271dbd17f3bc874d45585812b3e911c73ad5f6cef05e76a17b6b9d6b63cf8",
+      "references/routes-and-qa.md": "cc9254ae87f7202c67a8d1c81251fb50af4d07dacaec66862e762309915689b4"
+    }
+  }
+}

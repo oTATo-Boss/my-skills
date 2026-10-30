@@ -5,10 +5,10 @@
 - status: `confirmed`
 - source: 本地开发／维护目录 `skills/director/direct-video`；当前维护仓库 https://github.com/oTATo-Boss/my-skills
 - version: unknown；未找到技能版本或上游提交声明。
-- author: 用户自研工作流（含 Agent 辅助编写）；未单独声明公开作者署名。
+- author: oTATo-Boss（用户本人）；2026-10-30 在当前对话明确确认本人制作，Agent 辅助编写／整理。
 - license: MIT（2026-10-14 本人决定，见 [LICENSE](<LICENSE>)）
 - collected_at: unknown；没有可靠安装／导入日期。
-- recorded_at: `2026-10-14`
+- recorded_at: `2026-10-30`
 - evidence: [SOURCE_NOTES.md](</Users/griffith/Desktop/AI/我的项目/my skills/SOURCE_NOTES.md>)；[INSTALL_MAP.json](</Users/griffith/Desktop/AI/我的项目/my skills/INSTALL_MAP.json>)；[sources.md](<references/sources.md>)；当前入口 SHA-256 `96c20117ca03446ce15ee3704ae753514d5c884e5f0bfb06d6567747f31fb78d`（本次记录快照）。；本人 2026-10-14 决定以 MIT 许可发布。
 
 ## 本地调整与边界
@@ -31,3 +31,7 @@
 ## 2026-10-29 · 导演分类迁移
 
 - 按用户要求整体迁入 `director/`，保留包内资源与原版本；同步必要引用、索引和客户端入口。
+
+## 2026-10-30 · 当前作者归属最终确认
+
+用户明确确认本技能为本人制作；以本次直接确认取代此前“仅记录为本人／二创版本”的归属表述。Agent 辅助实现不改变本项目作者登记。工具、第三方依赖、参考资料、继承模板及素材的原作者与许可仍分别保留，不将技能归属扩展为这些外部资源的原创声明。

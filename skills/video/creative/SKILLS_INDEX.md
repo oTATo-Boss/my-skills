@@ -1,14 +1,13 @@
 # video/creative 项目技能索引
 
-技能数量：2
+技能数量：1
 
 [返回分类索引](../SKILLS_INDEX.md)
 
 ## 什么时候查本分类
 
-视频导演、影视编剧、代码视频能力参考与成片创作。
+代码视频与媒体制作能力说明。
 
 ## 技能入口
 
-- [motion-video](motion-video/SKILL.md) — 面向导演查询代码视频、素材编辑、合成特效、三维、声音字幕与渲染交付的输入条件和能力边界。
-- [screenwriting](screenwriting/SKILL.md) — 编写或修订影视、剧集、解说与 MV 的可制作脚本。
+- [motion-video-capabilities](motion-video-capabilities/SKILL.md) — 面向导演查询代码视频、素材编辑、合成特效、三维、声音字幕与渲染交付的输入条件和能力边界。
