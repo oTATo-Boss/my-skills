@@ -16,6 +16,7 @@
 | [Character Design（character-design）](skills/image/character-design/SKILL.md) | 建立写实/CG/AAA角色参考板，设计服装并进行妆造与状态裂变。 | `npx skills add oTATo-Boss/my-skills --skill character-design -g -a codex --copy -y` |
 | [nsfw-beauty-selfie-prompt](skills/video/ai/nsfw-beauty-selfie-prompt/SKILL.md) | 成人题材视频提示词的结构化编写与检查。 | `npx skills add oTATo-Boss/my-skills --skill nsfw-beauty-selfie-prompt -g -a codex --copy -y` |
 | [codex-imagegen](skills/image/codex-imagegen/SKILL.md) | 让其他 Agent 通过本机 Codex CLI 生成和编辑图片。 | `npx skills add oTATo-Boss/my-skills --skill codex-imagegen -g -a codex --copy -y` |
+| [midjourney-generate](skills/image/midjourney-generate/SKILL.md) | 通过 Apilio 执行 Midjourney 生图、变体、放大、编辑、状态恢复与下载交付。 | `npx skills add oTATo-Boss/my-skills --skill midjourney-generate -g -a codex --copy -y` |
 | [direct-video](skills/director/direct-video/SKILL.md) | 统筹视频创意、分镜、节奏、声音和成片验收。 | `npx skills add oTATo-Boss/my-skills --skill direct-video -g -a codex --copy -y` |
 | [motion-video-capabilities](skills/video/creative/motion-video-capabilities/SKILL.md) | 查询代码视频、素材编辑、合成特效、三维、声音字幕与渲染交付的能力及输入条件。 | `npx skills add oTATo-Boss/my-skills --skill motion-video-capabilities -g -a codex --copy -y` |
 | [design-review](<skills/web design/design/design-review/SKILL.md>) | 审查已有界面的视觉层级、交互状态、动效与性能。 | `npx skills add oTATo-Boss/my-skills --skill design-review -g -a codex --copy -y` |
@@ -30,7 +31,7 @@
 
 Social Media 套件的来源和维护范围见 [SOURCES.md](skills/social-media/social-media/SOURCE.md)，完整分工见 [套件说明](skills/social-media/README.md)。
 
-一次安装全部 22 个：
+一次安装全部 23 个：
 
 ```bash
 npx skills add oTATo-Boss/my-skills --skill '*' -g -a codex --copy -y

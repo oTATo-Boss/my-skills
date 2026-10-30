@@ -2,7 +2,7 @@
 
 ## 当前维护范围与作者（2026-10-30）
 
-项目当前维护 22 个 Skill。用户直接确认：除六个网站设计技能为本人收集整合二创外，其余 16 个均为本人制作，Agent 辅助编写或整理。具体包的原始交付方式、外部工具／依赖／参考／模板及其许可继续保留，不将其整体归为本人原创。当前名称、数量和安装位置以 SKILLS_INDEX.md、INSTALL_MAP.json 及各包 SOURCE.md 为准。
+项目当前维护 23 个 Skill。用户直接确认：除六个网站设计技能为本人收集整合二创外，其余 17 个均为本人制作，Agent 辅助编写或整理。具体包的原始交付方式、外部工具／依赖／参考／模板及其许可继续保留，不将其整体归为本人原创。当前名称、数量和安装位置以 SKILLS_INDEX.md、INSTALL_MAP.json 及各包 SOURCE.md 为准。
 
 下文为历史记录；历史数量、作者待查、未提交／未同步等描述对应记录当时状态，不代表当前状态。已授权本次全部改动提交推送，推送成功后同步本机并清理旧入口。
 
@@ -100,3 +100,7 @@
 ## 2026-10-30 · Video Production 四合一
 
 用户明确要求将 screenwriting、video-project-orchestration、production-continuity、video-production-pipeline 整合为一个 Video Production（video-production），并确认作者为本人。原四模块方法、六份参考与 MIT 许可保留；新增统一入口、状态交接及修改恢复规则，移除旧四个独立入口。同步项目导航、README 与安装映射，项目现维护 22 个 Skill。当前只更新开发目录，未提交、推送或同步本机旧安装。
+
+## Midjourney 执行 Skill 入库（2026-10-30）
+
+用户明确确认 `midjourney-generate` 为自研，纳入本项目 `skills/image/midjourney-generate/`，当前版本 v1.0.2；包含执行器、离线测试、参考文档、Agent 配置和来源记录。本机独立安装位置为 `~/.agents/skills/image/midjourney-generate/`。详细依赖、参考来源与验证边界见 [SOURCE.md](skills/image/midjourney-generate/SOURCE.md)。`midjourney-prompting` 为外来安装技能，独立保留在共享库，不纳入本项目。
