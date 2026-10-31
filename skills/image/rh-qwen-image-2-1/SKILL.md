@@ -1,17 +1,17 @@
 ---
 name: rh-qwen-image-2-1
-description: Use when 用户指定 RH-Qwen Image 2.1、RH Studio 的 Qwen Image 2.1 多图编辑或 RunningHub 同名应用，进行单图修改、多图融合、人物换装、场景替换或风格参考编辑。
+description: Use when 用户指定 RH-Qwen Image 2.1 或 RunningHub 的 Qwen Image 2.1 多图编辑 AI 应用，进行单图修改、多图融合、人物换装、场景替换或风格参考编辑。
 metadata:
-  version: "1.0.0"
+  version: "1.0.1"
 ---
 
 # RH-Qwen Image 2.1
 
-使用 RH Studio 中的 **Qwen Image 2.1 多图编辑**，RunningHub 应用 ID `2101915284503654402`。这不是 Qwen 官方通用接口，也不使用 RH MiniMax H3 节点。支持 1–6 张有序参考图和非空编辑指令；本技能不提供纯文生图。
+直接调用 RunningHub **Qwen Image 2.1 多图编辑** AI 应用，ID `2101915284503654402`。与 `rh-minimax-h3` 使用相同的 RunningHub v2 上传、提交和查询原理，应用 ID 与节点映射各自独立。支持 1–6 张有序参考图和非空编辑指令；本技能不提供纯文生图。
 
-## 执行选择
+## 直接 API 执行
 
-优先用本包 `scripts/rh_qwen.py` 直接请求 RunningHub，依赖 Python 3.9+、requests、Pillow。先检查依赖，缺失时按当前环境的依赖管理方式安装，不自行改动其他项目环境。没有可用 API 凭据、但用户已登录 RH Studio 时，可按 [网页操作](references/browser.md) 执行；用户指定网页则尊重其选择。不要从浏览器存储提取 Key。
+使用本包 `scripts/rh_qwen.py` 直接请求 `https://www.runninghub.ai/openapi/v2`：上传参考图 → 提交 `/run/ai-app/2101915284503654402` → 按 taskId 查询 `/query` → 下载结果。不依赖 RH Studio、浏览器登录或网页操作。缺少 API Key 时按下方凭据配置处理。依赖 Python 3.9+、requests、Pillow；缺失时按当前环境的依赖管理方式安装。
 
 此版本已核对线上页面及公开前端的节点构造，完成离线模拟验证及两次真实编辑：两图杯身图案迁移、三图人物/穿搭/卧室融合。两次均为 default 实例、2K、1 张，上传、提交、查询、下载与解码成功。其他组合仍未实测。执行时若节点或接口变化，核对 [接口与证据](references/api.md) 的来源，不套用其他应用配置。
 
@@ -33,7 +33,7 @@ metadata:
 | 张数 | 默认 1；1–4 |
 | 实例 | 默认 default；plus / ultra 仅在用户指定或应用要求已核实时选择 |
 
-网页显示 custom，但没有可核实的宽高节点，因此脚本不开放任意尺寸。没有已核实的种子、负向提示词、遮罩或采样器参数；需要避免的内容可写在编辑指令中。
+当前应用没有已核实的自定义宽高节点，因此脚本不开放任意尺寸。没有已核实的种子、负向提示词、遮罩或采样器参数；需要避免的内容可写在编辑指令中。
 
 ## CLI 与恢复
 
@@ -75,5 +75,4 @@ python3 "$SKILL_DIR/scripts/rh_qwen.py" --resume --task-id VERIFIED_TASK_ID --st
 
 - 离线检查：`python3 "$SKILL_DIR/tests/test_qwen.py"`，覆盖槽位映射、防重复提交、超时恢复、多结果下载与无凭据媒体请求。
 - [接口与证据](references/api.md)：字段、来源、变更核对方式及未验证范围。
-- [网页操作](references/browser.md)：复用已登录的 RH Studio，按当前可见页面操作。
 - [SOURCE.md](SOURCE.md)：作者、来源、许可及版本记录；质量档案待评，不将离线测试称为实际出图验证。

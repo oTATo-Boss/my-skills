@@ -1,4 +1,4 @@
 interface:
   display_name: "RH-Qwen Image 2.1"
-  short_description: "使用 RH Studio 同名应用完成单图修改、多图融合与人物换装"
+  short_description: "直接调用 RunningHub AI 应用完成单图修改、多图融合与换装"
   default_prompt: "使用 $rh-qwen-image-2-1 按参考图顺序完成图片编辑，并交付所有生成结果。"
