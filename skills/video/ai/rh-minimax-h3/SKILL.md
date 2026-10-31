@@ -2,7 +2,7 @@
 name: rh-minimax-h3
 description: 使用 RunningHub MiniMax H3 多图生视频自动提示词 V2 应用生成视频；支持多图、音频参考、四组 LoRA、分辨率档位、安全凭据、任务构造与结果恢复。用户提到 RH-minimax-H3 或 RunningHub H3 时使用。
 metadata:
-  version: "4.0.3"
+  version: "4.1.0"
 ---
 
 # RH-minimax-H3
@@ -32,7 +32,20 @@ Agent 根据任务指定提示词、**时长 5–15 秒、画幅、1–6 张参�
 
 先运行 `python3 "$SKILL_DIR/scripts/credentials.py" status`；优先读取环境变量 `RUNNINGHUB_API_KEY`，其次 `~/.config/runninghub/.env`，可通过 `RUNNINGHUB_ENV_FILE` 指定。两个 RH Skill 默认共用此配置；新 Key 用隐藏输入保存、权限 0600；禁止泄露凭据，详见 [credentials.md](references/credentials.md)。
 
-按 [usage.md](references/usage.md) 创建 jobs 并先 `--dry-run`；dry-run 不联网、不验证账户或节点。经任务授权才能提交，每批最多 3 个在途。保存无 Key 的提交回执和 taskId；提交结果不明、查询超时或连接中断不得盲目重提。已有 taskId 用 `--resume TASK_ID --name 原名称 --output 原目录` 查询并下载，不重新提交。报告 taskId、平台 usage、文件、实际尺寸与时长；usage 缺失如实说明。用户要求生成后直接交付时不增加画面审查。
+按 [usage.md](references/usage.md) 创建 jobs 并先 `--dry-run`；dry-run 不联网、不验证账户或节点。经任务授权才能提交，默认并发提交多个独立任务；同一 API Key 在两个 RH Skill、所有批次和进程之间合计最多 3 个远端在途任务。有空位即补交下一项，不串行等待整批，远端确认终态后即释放名额，下载不占远端名额。保存无 Key 的提交回执和 taskId；提交结果不明、查询超时或连接中断不得盲目重提。已有 taskId 用 `--resume TASK_ID --name 原名称 --output 原目录` 查询并下载，不重新提交。报告 taskId、平台 usage、文件、实际尺寸与时长；usage 缺失如实说明。用户要求生成后直接交付时不增加画面审查。
+
+## 跨 Skill 共享额度
+
+继续用原有 `jobs` 数组批量入口，执行器自动并发。`scripts/rh_queue.py` 与 Qwen 包使用相同队列协议和默认目录 `~/.local/state/runninghub/queue/`，按 API Key 分组、跨进程加锁，记录不含 Key。不要为同一 Key 分开指定队列目录。
+
+提交不明、查询超时或进程退出都不能证明远端已结束，预约保持；等待者可以查询已知 taskId 并在终态回收。H3 遇到结果不明时沿用现有策略暂停该批后续提交，已在途任务继续查询。若无 taskId，先在平台核实，再把 taskId 关联原始提交回执：
+
+```bash
+python3 "$SKILL_DIR/scripts/rh_queue.py" --receipt /absolute/path/output/name_submitting.json --task-id VERIFIED_TASK_ID
+python3 "$SKILL_DIR/scripts/rh_minimax_h3.py" --resume VERIFIED_TASK_ID --name name --output /absolute/path/output
+```
+
+`RH_QUEUE_DIR` 可供隔离测试，不是提高额度的开关。队列只协调使用这两个 Skill 的本机进程；其他机器或网页提交的任务也消耗平台额度。
 
 ## 参考与验证
 

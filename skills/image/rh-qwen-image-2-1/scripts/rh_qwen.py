@@ -8,6 +8,7 @@ import tempfile
 import time
 from pathlib import Path
 from urllib.parse import urlsplit
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 import requests
 from PIL import Image
@@ -156,9 +157,17 @@ class Client:
             temporary.unlink(missing_ok=True)
 
 
-def submit_once(client, state_path, payload):
+def submit_once(client, state_path, payload, queue=None, wait=1200):
+    owner = str(Path(state_path).resolve())
+    if queue:
+        queue.acquire(owner, wait=wait, query=client.query)
     record = {'appId': APP_ID, 'status': 'SUBMITTING', 'payload': payload}
-    write_json(state_path, record, exclusive=True)
+    try:
+        write_json(state_path, record, exclusive=True)
+    except Exception:
+        if queue:
+            queue.release(owner=owner)  # No submit has happened yet.
+        raise
     try:
         data = client.submit(payload)
         if not data.get('taskId'):
@@ -170,13 +179,17 @@ def submit_once(client, state_path, payload):
     record.update(taskId=str(data['taskId']), status=str(data.get('status', 'SUBMITTED')).upper(),
                   response=data)
     write_json(state_path, record)
+    if queue:
+        queue.bind(owner, record['taskId'])
     return record
 
 
-def resume(client, state_path, max_wait):
+def resume(client, state_path, max_wait, queue=None):
     record = read_json(state_path)
     if not record.get('taskId'):
         raise ValueError('回执无 taskId；先核对 RunningHub 任务/消费记录，不能重新提交')
+    if queue:
+        queue.track(str(Path(state_path).resolve()), record['taskId'])
     deadline = time.monotonic() + max_wait
     while True:
         data = client.query(record['taskId'])
@@ -185,6 +198,8 @@ def resume(client, state_path, max_wait):
             raise RuntimeError('查询响应缺少 status；保留回执，稍后 resume')
         record.update(status=status, response=data, usage=data.get('usage'))
         write_json(state_path, record)
+        if queue and status in ('SUCCESS', 'FAILED', 'CANCEL', 'CANCELLED', 'CANCELED'):
+            queue.release(task_id=record['taskId'])
         if status in ('FAILED', 'CANCEL', 'CANCELLED', 'CANCELED'):
             raise RuntimeError('远端任务失败/取消；详情见回执，不自动重提')
         if status == 'SUCCESS':
@@ -209,6 +224,58 @@ def resume(client, state_path, max_wait):
     return record
 
 
+def prepare_job(job, base):
+    if isinstance(job, dict) and isinstance(job.get('images'), list):
+        job = dict(job)
+        job['images'] = [str((base / Path(p).expanduser()).resolve())
+                         if isinstance(p, str) and p.strip() else p for p in job['images']]
+    validate(job)
+    return job
+
+
+def payload_for(job, uploaded):
+    return dict(nodeInfoList=nodes(job['prompt'], uploaded, job.get('aspect', '9:16'),
+                job.get('quality', '2K'), job.get('count', 1)),
+                instanceType=job.get('instance', 'default'), usePersonalQueue='false')
+
+
+def run_job(job, state, max_wait):
+    from rh_queue import Queue
+    if state.exists():
+        raise FileExistsError('回执已存在，请 resume；新任务使用新回执名')
+    client = Client(configured_key())
+    queue = Queue(client.key)
+    uploaded = [client.upload(p) for p in job['images']]
+    record = submit_once(client, state, payload_for(job, uploaded), queue=queue, wait=max_wait)
+    print(f'{state.name}: taskId=' + record['taskId'], flush=True)
+    return resume(client, state, max_wait, queue=queue)
+
+
+def run_batch(jobs, output, max_wait):
+    names = [job.get('name', f'job-{i:03d}') for i, job in enumerate(jobs, 1)]
+    if any(not isinstance(n, str) or not n or n in ('.', '..') or
+           any(c not in 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_' for c in n)
+           for n in names) or len(set(names)) != len(names):
+        raise ValueError('批量 name 必须唯一，仅含英文字母、数字、短横线或下划线')
+    states = [output/(n+'.json') for n in names]
+    if any(state.exists() for state in states):
+        raise FileExistsError('批次回执已存在，请恢复原任务，不重复提交整批')
+    results = []
+    failures = []
+    # Extra workers allow a newly free remote slot to refill while prior outputs download.
+    with ThreadPoolExecutor(max_workers=min(8, len(jobs))) as pool:
+        futures = {pool.submit(run_job, job, state, max_wait): name
+                   for job, state, name in zip(jobs, states, names)}
+        for future in as_completed(futures):
+            try:
+                results.append(future.result())
+            except Exception as error:
+                failures.append({'name': futures[future], 'errorType': type(error).__name__})
+    if failures:
+        raise RuntimeError('部分任务未成功，先检查各回执并逐项 resume：' + json.dumps(failures))
+    return results
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('job', nargs='?', type=Path, help='JSON：prompt, images, aspect, quality, count')
@@ -217,6 +284,7 @@ def main():
     mode.add_argument('--submit', action='store_true', help='上传并提交一次收费任务')
     mode.add_argument('--resume', action='store_true', help='仅查询已有回执并下载')
     parser.add_argument('--state', type=Path, help='回执路径，也是输出文件所在目录')
+    parser.add_argument('--output', type=Path, help='批量 jobs 的回执和输出目录')
     parser.add_argument('--task-id', help='resume 时恢复平台已核实的 taskId')
     parser.add_argument('--max-wait', type=int, default=1200)
     args = parser.parse_args()
@@ -228,16 +296,33 @@ def main():
         if not args.state:
             parser.error('resume 需要 --state')
         client = Client(configured_key())
+        from rh_queue import Queue
+        queue = Queue(client.key)
         if args.task_id:
             if args.state.exists():
                 parser.error('--task-id 需要新的回执路径，以保留旧记录')
             write_json(args.state, {'appId': APP_ID, 'taskId': args.task_id,
                                    'status': 'RECOVERED'}, exclusive=True)
-        result = resume(client, args.state, args.max_wait)
+        result = resume(client, args.state, args.max_wait, queue=queue)
     else:
         if not args.job:
             parser.error('需要 job JSON')
         job = read_json(args.job)
+        if isinstance(job, dict) and 'jobs' in job:
+            if not isinstance(job['jobs'], list) or not job['jobs']:
+                parser.error('jobs 必须为非空数组')
+            jobs = [prepare_job(item, args.job.resolve().parent) for item in job['jobs']]
+            if args.state:
+                parser.error('批量使用 --output，而不是 --state')
+            if not args.submit:
+                result = {'dryRun': True, 'appId': APP_ID, 'jobs': [payload_for(item,
+                          [f'UPLOAD_SLOT_{i}' for i in range(1, len(item['images'])+1)]) for item in jobs]}
+            else:
+                if not args.output:
+                    parser.error('批量 submit 需要 --output')
+                result = run_batch(jobs, args.output.expanduser().resolve(), args.max_wait)
+            print(json.dumps(result, ensure_ascii=False, indent=2))
+            return
         # All image paths are relative to the job file, not the caller's cwd.
         if isinstance(job, dict) and isinstance(job.get('images'), list):
             job['images'] = [str((args.job.resolve().parent / Path(p).expanduser()).resolve())
@@ -254,13 +339,7 @@ def main():
                 parser.error('submit 需要新的 --state 回执路径')
             if args.state.exists():
                 raise FileExistsError('回执已存在，请 resume；新生成任务使用新回执名')
-            client = Client(configured_key())
-            uploaded = [client.upload(p) for p in job['images']]
-            payload['nodeInfoList'] = nodes(job['prompt'], uploaded, job.get('aspect', '9:16'),
-                                            job.get('quality', '2K'), job.get('count', 1))
-            record = submit_once(client, args.state, payload)
-            print('taskId=' + record['taskId'], flush=True)
-            result = resume(client, args.state, args.max_wait)
+            result = run_job(job, args.state, args.max_wait)
     print(json.dumps(result, ensure_ascii=False, indent=2))
 
 

@@ -2,7 +2,7 @@
 name: rh-qwen-image-2-1
 description: Use when 用户指定 RH-Qwen Image 2.1 或 RunningHub 的 Qwen Image 2.1 多图编辑 AI 应用，进行单图修改、多图融合、人物换装、场景替换或风格参考编辑。
 metadata:
-  version: "1.0.2"
+  version: "1.1.0"
 ---
 
 # RH-Qwen Image 2.1
@@ -61,6 +61,34 @@ python3 "$SKILL_DIR/scripts/rh_qwen.py" --resume --state /absolute/path/output/e
 
 Key 优先读 `RUNNINGHUB_API_KEY`，其次 `RUNNINGHUB_ENV_FILE` 指定文件，缺省为 `~/.config/runninghub/.env`。文件格式为 `RUNNINGHUB_API_KEY=...`，建议权限 0600；不要把 Key 放在 job、命令行参数、日志或仓库。两个 RH Skill 默认共用此文件；可用 H3 包的 `scripts/credentials.py set` 隐藏输入，统一更新共享 Key。
 
+## 批量与共享并发
+
+用户一次要求多个独立任务时，默认并发执行，不逐个等待生成完成。单任务格式保持兼容；批量 JSON 用 `jobs` 数组，每项使用上面的任务字段，可加唯一 `name`（仅英文字母、数字、短横线、下划线），省略时自动编号。例如：
+
+```json
+{
+  "jobs": [
+    {"name": "edit-01", "prompt": "以图1人物为主，穿图2服装。", "images": ["person.png", "outfit.png"]},
+    {"name": "edit-02", "prompt": "以图1人物为主，穿图2服装，自然侧身站立。", "images": ["person.png", "outfit.png"]}
+  ]
+}
+```
+
+```bash
+python3 "$SKILL_DIR/scripts/rh_qwen.py" /absolute/path/batch.json --dry-run
+python3 "$SKILL_DIR/scripts/rh_qwen.py" /absolute/path/batch.json --submit --output /absolute/path/output
+```
+
+**同一 API Key 合计最多 3 个远端在途任务**，由 Qwen 与 H3 的共享文件锁和持久预约控制，跨批次、跨进程共享额度，不是每个 Skill 各 3 个。默认填满可用名额，有一项远端确认结束就释放并补交下一项，下载不继续占远端名额。单任务也经过同一额度管理。
+
+本机共享队列在 `~/.local/state/runninghub/queue/`，目录 0700、记录 0600，保存回执标识与 taskId，不保存 Key。查询超时、进程退出或提交不明不会按时间自动释放；等待者会查询已知 taskId，确认终态后回收。结果不明且无 taskId 时，先去平台核实，再关联原始提交回执：
+
+```bash
+python3 "$SKILL_DIR/scripts/rh_queue.py" --receipt /absolute/path/output/edit-01.json --task-id VERIFIED_TASK_ID
+```
+
+然后按原回执 resume；批次部分失败时只恢复对应回执，不重新提交整批。`--max-wait` 分别限制排队和远端查询的最长等待，不代表远端任务取消。`RH_QUEUE_DIR` 仅供隔离测试或明确配置使用；正常运行两包沿用同一默认目录。此本机队列只协调接入它的这两个 Skill，其他机器或网页自行提交的任务仍须计入平台额度。
+
 提交前原子创建回执；已有回执拒绝再次提交。同一任务的提交超时、断线或缺少 taskId 视为 `SUBMIT_UNKNOWN`：先核对平台任务/消费记录，不换回执名盲重提。拿到 taskId 后始终 resume；查询超时并不代表任务取消。若只在平台查到了 taskId，用新回执恢复：
 
 ```bash
@@ -73,6 +101,7 @@ python3 "$SKILL_DIR/scripts/rh_qwen.py" --resume --task-id VERIFIED_TASK_ID --st
 
 ## 验证与来源
 
+- 跨 Skill 并发检查：`python3 "$SKILL_DIR/tests/test_queue.py"`，使用隔离的离线 Key 与临时队列，验证 5 进程共用 3 个名额和滚动补位。
 - 离线检查：`python3 "$SKILL_DIR/tests/test_qwen.py"`，覆盖槽位映射、防重复提交、超时恢复、多结果下载与无凭据媒体请求。
 - [接口与证据](references/api.md)：字段、来源、变更核对方式及未验证范围。
 - [SOURCE.md](SOURCE.md)：作者、来源、许可及版本记录；质量档案待评，不将离线测试称为实际出图验证。

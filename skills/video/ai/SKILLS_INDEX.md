@@ -15,4 +15,4 @@ AI 视频参考、提示词、生成执行与实拍融合。
 - [single-shot-prompt](single-shot-prompt/SKILL.md) — 创作、修改和审查不切镜的单镜头短视频提示词；当前 v1.1.1。
 - [multi-shot-prompt](multi-shot-prompt/SKILL.md) — 编写总时长不超过30秒、无独立镜头数上限的完整视频提示词，并按需编译执行清单、审片和返修。
 - [nsfw-beauty-selfie-prompt](nsfw-beauty-selfie-prompt/SKILL.md) — 成人题材视频提示词的专项结构与检查流程。
-- [rh-minimax-h3](rh-minimax-h3/SKILL.md) — RH-minimax-H3：RunningHub H3 小白版 V2：多图音频、四组 LoRA、画质档和任务恢复；当前 v4.0.3。
+- [rh-minimax-h3](rh-minimax-h3/SKILL.md) — RH-minimax-H3：RunningHub H3 小白版 V2：多图音频、四组 LoRA、画质档和任务恢复；当前 v4.1.0。

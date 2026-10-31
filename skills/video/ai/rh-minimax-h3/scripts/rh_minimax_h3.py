@@ -24,6 +24,7 @@ from pathlib import Path
 from urllib.parse import urlsplit
 
 import requests
+from rh_queue import Queue, TERMINAL
 
 APP_ID = '2101232638873858050'
 SUPPORTED_APP_IDS = {APP_ID}
@@ -277,9 +278,11 @@ def poll_until_done(task_id, name, out, receipt, max_wait):
         status = str(status_json.get('status') or '').upper()
         save_json(receipt, {'taskId': task_id, 'status': status, 'name': name,
                             'usage': status_json.get('usage'), 'response': status_json})
+        if status in TERMINAL:
+            Queue(API_KEY).release(task_id=task_id)
         if status == 'SUCCESS':
             return status_json
-        if status in {'FAILED', 'CANCEL', 'CANCELLED'}:
+        if status in {'FAILED', 'CANCEL', 'CANCELLED', 'CANCELED'}:
             raise RemoteTaskFailed(f'任务结束：{name}, {task_id}, {status}, {redact(status_json.get("errorMessage"))}')
         if time.monotonic() >= deadline:
             HALT.set()
@@ -320,7 +323,19 @@ def run_one(job, out, max_wait):
             payload[optional] = job[optional]
     record = {'name': name, 'status': 'SUBMITTING', 'payload': payload, 'uploads': job.get('_uploads', {}),
               'appId': app_id, 'savedAt': time.strftime('%Y-%m-%d %H:%M:%S')}
-    save_json(pending, record)  # 先落盘再提交（不含 Key）
+    queue = Queue(API_KEY)
+    owner = str(pending.resolve())
+    queue.acquire(owner, wait=max_wait,
+                  query=lambda task_id: post_json('/openapi/v2/query', {'taskId': task_id}),
+                  cancelled=HALT.is_set)
+    if HALT.is_set():
+        queue.release(owner=owner)
+        raise RuntimeError(f'{name}: 已有结果不明任务，当前任务未提交')
+    try:
+        save_json(pending, record)  # 先落盘再提交（不含 Key）
+    except Exception:
+        queue.release(owner=owner)
+        raise
     try:
         submitted = post_json('/openapi/v2/run/ai-app/' + app_id, payload, timeout=SUBMIT_TIMEOUT)
     except Exception as error:
@@ -338,6 +353,7 @@ def run_one(job, out, max_wait):
     task_id = str(task_id)
     record.update(status='SUBMITTED', taskId=task_id)
     save_json(pending, record)
+    queue.bind(owner, task_id)
     receipt = out / f'{name}_{task_id}.json'
     save_json(receipt, {'taskId': task_id, 'status': submitted.get('status'), 'name': name})
     print(f'已提交：{name} / taskId={task_id}', flush=True)
@@ -363,6 +379,8 @@ def run_one(job, out, max_wait):
 def resume_task(task_id, name, out, max_wait):
     name = safe_name(name or 'resume')
     receipt = out / f'{name}_{task_id}.json'
+    pending = out / f'{name}_submitting.json'
+    Queue(API_KEY).track(str(pending.resolve()), task_id)
     status_json = poll_until_done(task_id, name, out, receipt, max_wait)
     files = finish_task(task_id, name, out, status_json, receipt)
     pending = out / f'{name}_submitting.json'
@@ -411,7 +429,9 @@ def main():
     out.mkdir(parents=True, exist_ok=True)
     prepared = prepare_jobs(jobs)
     failures = []
-    with ThreadPoolExecutor(max_workers=min(MAX_CONCURRENT, len(prepared))) as pool:
+    # The shared queue enforces 3 remote tasks across both skills/processes.
+    # Additional workers refill free slots before earlier downloads finish.
+    with ThreadPoolExecutor(max_workers=min(8, len(prepared))) as pool:
         futures = {pool.submit(run_one, job, out, args.max_wait): job.get('name') for job in prepared}
         for future in as_completed(futures):
             try:

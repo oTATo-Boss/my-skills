@@ -49,6 +49,7 @@ def run(args, **env):
     no_proxy = ','.join(filter(None, [os.environ.get('NO_PROXY', ''),
                                        os.environ.get('no_proxy', ''), '127.0.0.1', 'localhost']))
     e = {**os.environ, 'RUNNINGHUB_API_KEY': 'testkey', 'RUNNINGHUB_BASE_URL': f'http://127.0.0.1:{PORT}',
+         'RH_QUEUE_DIR': str(Path(args[args.index('--output')+1]) / '.test-queue'),
          'NO_PROXY': no_proxy, 'no_proxy': no_proxy, 'RH_POLL_SECONDS': '0.2', **env}
     return subprocess.run([sys.executable, str(HERE / 'scripts/rh_minimax_h3.py'), *args], capture_output=True, text=True, env=e, timeout=60)
 

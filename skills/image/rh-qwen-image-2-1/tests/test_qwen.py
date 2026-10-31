@@ -4,6 +4,9 @@ import unittest
 from pathlib import Path
 from unittest.mock import Mock, patch
 from io import BytesIO
+import threading
+import sys
+import time
 
 SCRIPT = Path(__file__).resolve().parents[1] / 'scripts' / 'rh_qwen.py'
 spec = importlib.util.spec_from_file_location('rh_qwen', SCRIPT)
@@ -12,6 +15,40 @@ spec.loader.exec_module(q)
 
 
 class QwenTests(unittest.TestCase):
+    def test_batch_starts_three_and_refills_while_downloading(self):
+        lock = threading.Lock()
+        first_three = threading.Event()
+        state = {'active': 0, 'peak': 0, 'submitted': 0, 'downloads_done': 0,
+                 'fourth_during_download': False}
+        class FakeClient:
+            def __init__(self, key): self.key = key
+            def upload(self, filename): return 'uploaded.png'
+            def submit(self, payload):
+                with lock:
+                    state['active'] += 1
+                    state['peak'] = max(state['peak'], state['active'])
+                    state['submitted'] += 1
+                    number = state['submitted']
+                    if number == 3: first_three.set()
+                    if number == 4: state['fourth_during_download'] = state['downloads_done'] < 3
+                return {'taskId': str(number), 'status': 'RUNNING'}
+            def query(self, task_id):
+                if not first_three.wait(3): raise RuntimeError('tasks ran serially')
+                with lock: state['active'] -= 1
+                return {'status': 'SUCCESS', 'results': [{'url':'https://example.com/result.png','outputType':'png'}]}
+            def download(self, url, destination):
+                time.sleep(0.2)
+                with lock: state['downloads_done'] += 1
+                return {'path':str(destination),'width':1,'height':1}
+        with tempfile.TemporaryDirectory() as tmp, patch.dict(q.os.environ, {'RH_QUEUE_DIR': tmp+'/queue'}), \
+                patch.object(q, 'Client', FakeClient), patch.object(q, 'configured_key', return_value='offline'), \
+                patch.object(sys, 'path', [str(SCRIPT.parent), *sys.path]):
+            jobs = [dict(name=f'job-{i}', prompt='edit', images=['unused.png']) for i in range(5)]
+            result = q.run_batch(jobs, Path(tmp)/'output', 5)
+            self.assertEqual(len(result), 5)
+            self.assertEqual(state['peak'], 3)
+            self.assertTrue(state['fourth_during_download'])
+
     def test_shared_runninghub_default_and_overrides(self):
         with tempfile.TemporaryDirectory() as tmp, patch.dict(q.os.environ, {'HOME': tmp}, clear=True):
             shared = Path(tmp)/'.config/runninghub/.env'
