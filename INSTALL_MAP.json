@@ -24,6 +24,7 @@
     "rh-minimax-h3": "video/ai/rh-minimax-h3",
     "video-production": "video/production/video-production",
     "visual-creative-director": "director/visual-creative-director",
-    "midjourney-generate": "image/midjourney-generate"
+    "midjourney-generate": "image/midjourney-generate",
+    "rh-qwen-image-2-1": "image/rh-qwen-image-2-1"
   }
 }
