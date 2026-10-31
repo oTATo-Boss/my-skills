@@ -116,7 +116,7 @@
     {
       "nodeId": "817",
       "fieldName": "strength_model",
-      "fieldValue": "0.5",
+      "fieldValue": "0.6",
       "description": null
     },
     {
@@ -128,7 +128,7 @@
     {
       "nodeId": "815",
       "fieldName": "strength_model",
-      "fieldValue": "0.6",
+      "fieldValue": "0.4",
       "description": null
     },
     {
@@ -140,7 +140,7 @@
     {
       "nodeId": "888",
       "fieldName": "strength_model",
-      "fieldValue": "0.2",
+      "fieldValue": "0.4",
       "description": null
     },
     {

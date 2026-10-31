@@ -4,7 +4,7 @@
 - kind: `local`
 - status: `confirmed`
 - source: 已确认的用户二创／整合版本；本地开发／维护目录 `skills/video/ai/rh-minimax-h3`；当前维护仓库 https://github.com/oTATo-Boss/my-skills
-- version: 4.0.1
+- version: 4.0.2
 - author: oTATo-Boss（用户本人）；2026-10-30 在当前对话明确确认本人制作，Agent 辅助编写／整理。
 - license: MIT（2026-10-14 本人决定，见 [LICENSE](<LICENSE>)）
 - collected_at: unknown；没有可靠安装／导入日期。
@@ -34,3 +34,5 @@
 用户明确确认本技能为本人制作；以本次直接确认取代此前“仅记录为本人／二创版本”的归属表述。Agent 辅助实现不改变本项目作者登记。工具、第三方依赖、参考资料、继承模板及素材的原作者与许可仍分别保留，不将技能归属扩展为这些外部资源的原创声明。
 
 - v4.0.1 evidence: 用户于 2026-10-31 明确将 Realism People 和 H3电影感V2 的默认强度分别改为 0.6、0.2。
+
+- v4.0.2 evidence: 用户于 2026-10-31 提供 16:49:25 的截图，指定四组默认 LoRA 强度依次为 0.4、0.6、0.4、0.4。
