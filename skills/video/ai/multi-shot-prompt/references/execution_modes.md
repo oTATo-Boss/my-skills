@@ -1,7 +1,7 @@
 # 执行模式
 
 ## 必选参数
-调用者必须显式给出 `execution_mode: standalone_mode` 或 `execution_mode: managed_mode`。缺失返回 `E_EXECUTION_MODE_REQUIRED`。`content_mode`、`capture_mode` 与生成模式是独立维度。
+调用者必须显式给出 `execution_mode: standalone_mode` 或 `execution_mode: managed_mode`。缺失返回 `E_EXECUTION_MODE_REQUIRED`。生成模式与执行模式是独立维度。
 
 ## standalone_mode
 面向直接接收创意 brief 的任务。先辨识创作目标、可用素材、时长和最终落点，然后建立素材锁定、影片质感与逐镜时间轴，最后将其概括成1—3句视频梗概。导演判断只在此模式进行。关键输入不足时，用上下文中可核验的事实推进；缺失会改变身份/肖像授权/固定商品信息时先请求确认。
@@ -13,4 +13,4 @@
 实际内容可以先锁定素材、再统一影片质感、规划分镜并提炼梗概；最终单一提示词必须按 `视频梗概 → 影片质感 → 素材锁定 → 分镜` 顺序交付。
 
 ## 决策优先级
-审批事实与素材身份 > 风格规则 > 分镜时间事件 > 派生梗概。项目系统必须使用 managed；单独创作可使用 standalone。读取 `references/realistic_daily_selfie_mode.md` 仅在明示启用该内容模式后。
+审批事实与素材身份 > 风格规则 > 分镜时间事件 > 派生梗概。项目系统必须使用 managed；单独创作可使用 standalone。

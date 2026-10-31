@@ -1,7 +1,7 @@
 # Managed 输入合同
 
 ## 输入对象
-`execution_mode: managed_mode`; `approval:{status:"approved",authority:"master-director-agent",shot_brief_hash:"sha256:<hex>"}`; `shot_brief:{purpose,shots:[{id,start_s,end_s,framing,camera,action,performance,blocking,composition_lock,end_state}],duration_s}`；`material_lock:{status:"locked",hash:"sha256:<hex>",content:<已批准文本>}`；`style:{status:"approved",hash:"sha256:<hex>",content:<已批准风格>}`。可额外提供 `asset_map` 与 `content_mode`。哈希针对上游声明的规范化原文；缺少既定规范时由上游提供可比较的准确摘要，不能擅自编造正确摘要。
+`execution_mode: managed_mode`; `approval:{status:"approved",authority:"master-director-agent",shot_brief_hash:"sha256:<hex>"}`; `shot_brief:{purpose,shots:[{id,start_s,end_s,framing,camera,action,performance,blocking,composition_lock,end_state}],duration_s}`；`material_lock:{status:"locked",hash:"sha256:<hex>",content:<已批准文本>}`；`style:{status:"approved",hash:"sha256:<hex>",content:<已批准风格>}`。可额外提供 `asset_map`。哈希针对上游声明的规范化原文；缺少既定规范时由上游提供可比较的准确摘要，不能擅自编造正确摘要。
 
 ## 阻断条件
 1. 审批状态或权限不匹配：`E_MANAGED_NOT_APPROVED`。

@@ -111,7 +111,7 @@ def check_prompt(text: str, name: str = 'prompt') -> list[str]:
             issue(f'shot {serial} empty spoken words')
 
     shots = list(SHOT_RE.finditer(storyboard))
-    if not 1 <= len(shots) <= 9:
+    if not shots:
         issue(f'shot count out of range: {len(shots)}')
         return issues
     if len(re.findall(r'^镜头\d+', storyboard, re.M)) != len(shots):
@@ -231,9 +231,19 @@ def check_package() -> tuple[list[str], dict[str, int]]:
     positives = {rel: (ROOT/rel).read_text(encoding='utf-8') for rel in [
         'examples/product_ad_10s.md',
         'examples/rainy_bus_stop_20s_mock.md',
-        'examples/realistic-daily-selfie/normalized/front_camera_demo.md',
     ]}
     fixture = positives['examples/rainy_bus_stop_20s_mock.md']
+    def count_fixture(count: int) -> str:
+        prefix = positives['examples/product_ad_10s.md'].split('# 分镜\n', 1)[0]
+        return prefix + '# 分镜\n' + '\n'.join(
+            f'镜头{i+1:02d}｜{i}—{i+1}秒\n视频内容：\n'
+            f'{i}—{i+1}秒：暖灰棚内纸筒居中，花瓣落下。\n'
+            '拍摄手法：固定近景。\n光影执行：柔光稳定。\n'
+            '声音：气流声。\n台词：无\n结束落点：纸筒居中。\n'
+            for i in range(count))
+
+    positives['ten shots within duration limit'] = count_fixture(10)
+    positives['thirty shots at duration limit'] = count_fixture(30)
     a = '@人物A.png说（@人物A音色.mp3）：“你真的不和我一起走吗？”'
     b = '@人物B.png说（@人物B音色.mp3）：“我送你到这里就好。”'
     short_a = '@人物A.png说（@人物A音色.mp3）：“一起走吗？”'
@@ -258,6 +268,8 @@ def check_package() -> tuple[list[str], dict[str, int]]:
     def bad(label: str, malformed: str, expected: str, baseline: str = fixture) -> None:
         negatives.append((label, malformed, expected, baseline))
 
+    bad('thirty-one seconds', count_fixture(31), 'total duration exceeds 30 seconds', count_fixture(30))
+    bad('no shots', count_fixture(0), 'shot count', count_fixture(10))
     bad('wrong visible order', fixture.replace('# 影片质感\n', '# TEMP\n', 1).replace('# 素材锁定\n', '# 影片质感\n', 1).replace('# TEMP\n', '# 素材锁定\n', 1), 'heading order')
     bad('scene ref in shot', fixture.replace('0—2秒：公交站顶棚下', '0—2秒：@雨夜公交站.png公交站顶棚下', 1), 'background scene reference')
     bad('missing speech field', fixture.replace('台词：无\n', '', 1), 'dialogue field')

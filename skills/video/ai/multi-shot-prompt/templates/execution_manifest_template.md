@@ -1,8 +1,6 @@
 # 执行清单（提示词外部元数据）
 ```yaml
 execution_mode: standalone_mode # 或 managed_mode
-content_mode: null
-capture_mode: null
 provider: <已核实的服务>
 generation_mode: T2V # T2V/I2V/R2V/FLF2V/EXTEND/EDIT
 project_aspect_ratio: <执行层比例>

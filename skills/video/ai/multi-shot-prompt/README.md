@@ -7,7 +7,7 @@
 - `templates/`：四部分提示词、执行、成片审查及返修模板
 - `references/`：权限、资产分类、背景场景、音色/台词、分镜连续性和平台执行规则
 - `checklists/`：各模块审查合同
-- `examples/`：完整多镜头、自拍及模拟参考资产的格式验证案例
+- `examples/`：完整多镜头及模拟参考资产的格式验证案例
 - `scripts/validate_skill_contract.py`：结构、顺序、分镜台词与背景引用的自动校验
 
 影片质感必须按 `影像风格：`、`摄影偏好：`、`材质与氛围：`、`光影与色彩：` 四行分别填写，并验证字段顺序和非空值。
@@ -17,4 +17,4 @@
 ## 运行与检查
 将整个目录安装至 Agent Skills 路径。独立创作明确 `execution_mode: standalone_mode`；导演托管明确 `execution_mode: managed_mode`，并提供已批准的输入。运行 `python3 scripts/validate_skill_contract.py` 检查资源与内置格式用例；运行 `python3 scripts/validate_skill_contract.py --prompt 路径/提示词.txt` 检查实际输出的文本结构。自动检查覆盖时间段、引用、台词配对与格式；叙事合理性、表演和成片效果仍需人工及实际生成验证。
 
-本 Skill 的创作上限是 1—9 镜、总时长≤30秒；平台实际单次生成能力需独立核实。来源及重建范围见 `RECOVERY_NOTICE.md`。
+本 Skill 至少使用1镜，不设独立的镜头数量上限，总时长≤30秒；平台实际单次生成能力需独立核实。来源及重建范围见 `RECOVERY_NOTICE.md`。

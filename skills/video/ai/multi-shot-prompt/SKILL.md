@@ -1,6 +1,6 @@
 ---
 name: multi-shot-prompt
-description: 通用多镜头视频提示词编译 Skill，把视频梗概、影片质感、素材锁定和不超过30秒的连续分镜组织成一个完整提示词，并按需启用默认使用手机前置镜头的真人感日常自拍模式，以及生成 T2V、I2V、R2V、FLF2V、EXTEND、EDIT 执行清单、成片审查与单变量返修。既可在 standalone_mode 中独立创作，也可在 managed_mode 中忠实翻译 Master Director 已批准的 shot_brief 与 Style 规则；用于图文转视频、项目 Agent 托管执行、平台素材绑定、连续性审查和局部返修。
+description: 通用多镜头视频提示词编译 Skill，把视频梗概、影片质感、素材锁定和不超过30秒的连续分镜组织成一个完整提示词，并按需生成 T2V、I2V、R2V、FLF2V、EXTEND、EDIT 执行清单、成片审查与单变量返修。既可在 standalone_mode 中独立创作，也可在 managed_mode 中忠实翻译 Master Director 已批准的 shot_brief 与 Style 规则；用于图文转视频、项目 Agent 托管执行、平台素材绑定、连续性审查和局部返修。
 ---
 
 # Multi-Shot Prompt
@@ -15,16 +15,6 @@ description: 通用多镜头视频提示词编译 Skill，把视频梗概、影�
 - `managed_mode`：项目系统托管模式。只接收 Master Director 已批准的 `shot_brief`、锁定素材事实和已批准 Style 规则；只做格式翻译与目标视频生成服务的可执行化，不重新导演。
 
 读取 `references/execution_modes.md`。缺少模式时停止并返回 `E_EXECUTION_MODE_REQUIRED`。项目 Agent 包只能调用 `managed_mode`。
-
-## 可选内容模式
-
-需要生成自然、真实、像虚拟成年模特本人随手录制的日常自拍视频时，可在权限模式之外显式启用：
-
-```text
-content_mode: realistic_daily_selfie_mode
-```
-
-该模式不替代 `standalone_mode` / `managed_mode`，也不替代 `I2V` / `FLF2V` 等生成模式。启用后读取 `references/realistic_daily_selfie_mode.md` 与 `checklists/realistic_daily_selfie_qc.md`。默认要求一张起点截图并路由到 `I2V`；没有起点图时返回 `E_DAILY_SELFIE_START_IMAGE_REQUIRED`。在 `managed_mode` 中，只有已批准输入明确指定该内容模式时才能启用。
 
 ## 权威模型
 
@@ -77,7 +67,7 @@ content_mode: realistic_daily_selfie_mode
 - 视频梗概使用1至3句简短描述，不展开成素材清单、参数表或时间线。
 - 素材锁定与影片质感分别不超过1000字；分镜不超过5000字。
 - 整段分镜从0秒连续计时，总时长不超过30秒；每镜内的时间段沿用全片绝对秒数。
-- 分镜按已批准内容或 standalone 内容密度使用1至9镜；时间使用连续整数秒，前镜结束时间等于后镜开始时间。
+- 分镜按已批准内容或 standalone 内容密度确定镜头数，至少1镜，不设独立的镜头数量上限；时间使用连续整数秒，前镜结束时间等于后镜开始时间。
 - 影片质感必须按 `影像风格：`、`摄影偏好：`、`材质与氛围：`、`光影与色彩：` 四个独立字段依次输出，每字段写入可执行且非空的描述。不能压缩为无字段的整段文字。
 - 素材锁定固定使用 `场景：`、`角色：`、`道具：` 三个分组。每份真实素材直接以 `@文件名.格式：` 起首，在对应条目内写明外观、身份、用途和跨镜保持项；角色还须说明稳定的性格与表演特征。角色音色文件归属相应角色。影片质感只含风格、摄影、氛围、光影与色彩。
 - 分镜不得出现设备参数、焦距、光圈、快门、ISO、滤镜参数、单独角度或总表演顺序栏目。
@@ -87,18 +77,12 @@ content_mode: realistic_daily_selfie_mode
 - 画幅是内部项目设置和执行参数，不增加到四部分可见模板。
 - 默认无背景音乐；环境声和动作音归 `声音`，需要同步画面时在对应时间段交代发生时点；对白同时写入 `视频内容` 与 `台词`。
 - 内部判断、QC过程、迭代说明和角色分析不作为最终栏目。
-- 启用 `realistic_daily_selfie_mode` 且用户与起点截图都未指定其他拍摄来源时，默认使用手机前置摄像头自拍。明确要求镜面自拍、反射构图或第三方跟拍时可以采用，但必须在提示词中声明拍摄来源并保持机位物理一致。
-- 启用 `realistic_daily_selfie_mode` 时，必须在 `front_camera_selfie`、`mirror_selfie`、`third_party_capture` 中选择且只选择一个 `capture_mode`。摄影机归属、拍摄设备可见性、人物视线和运镜来源必须同时服从该模式；禁止把同一部手机同时写成成片摄影机与普通画面内道具。
-- 起点截图若与明确指定的 `capture_mode` 冲突，停止并返回 `E_CAPTURE_SOURCE_CONFLICT`，不得用隐形第三方摄影机消解矛盾。
-- `realistic_daily_selfie_mode` 只支持明确成年的虚拟模特，或已通过肖像授权门的真人；内容可以成熟、性感但必须非露骨。
-- `realistic_daily_selfie_mode` 先锁定一个开场就可读的单一视觉钩子，再安排一个主运动和最多两个辅助变化；不为了构成小故事而堆叠多个整理、移动、对视和微笑任务。
 
 ## 渐进加载
 
 先读取模式文件，再只读取当前任务需要的资源：
 
 - 模式与权限：读取 `references/execution_modes.md`；managed 输入额外读取 `references/managed_input_contract.md` 与 `checklists/managed_mode_qc.md`。
-- 真人感日常自拍：仅在 `content_mode: realistic_daily_selfie_mode` 时读取 `references/realistic_daily_selfie_mode.md`、`checklists/realistic_daily_selfie_qc.md` 与 `examples/realistic-daily-selfie/case_index.md`；只从 `examples/realistic-daily-selfie/normalized/` 读取一份与 `capture_mode` 匹配的规范案例。`cases/` 是用户原始档案，不直接作为正向提示词加载；不读取 `restricted-content` 案例。
 - 创建或修改视频梗概：读取 `templates/video_summary_template.md` 与 `checklists/video_summary_qc.md`，并读取后三部分原文或已批准的对应输入。
 - 创建或修改素材锁定：读取 `templates/material_lock_template.md`、`references/material_lock_rules.md`、`checklists/material_lock_qc.md`。仅 `standalone_mode` 读取 `references/director_method.md`。
 - 创建或修改影片质感：读取 `templates/film_texture_template.md`、`references/film_texture_rules.md`、`checklists/film_texture_qc.md`，并读取素材锁定原文。仅 `standalone_mode` 读取 `references/director_method.md`。
@@ -146,8 +130,6 @@ content_mode: realistic_daily_selfie_mode
 6. 不存在独立辅光或轮廓光时明确写无，不虚构三点布光。
 7. 运行分镜、继承及对应模式QC；将结果作为完整提示词的第四部分。
 8. 根据素材锁定、影片质感与分镜生成视频梗概，再按视频梗概 → 影片质感 → 素材锁定 → 分镜的顺序组装四部分，只交付一个 txt 代码块中的完整提示词。
-
-启用 `realistic_daily_selfie_mode` 时，以上四部分继续作为一个提示词整体交付，但分镜默认收敛为从起点截图连续展开的单个10秒镜头。影片质感的“摄影偏好”和分镜的“拍摄手法”必须各写一次完全一致的 `摄影机身份：[capture_mode]`；视频内容的相应时间段写清手部占用。摄影机归属、拍摄设备可见性、视线、动作、轻微广角、自动对焦和自动曝光必须通过专项QC。
 
 ## 按需生产链
 
