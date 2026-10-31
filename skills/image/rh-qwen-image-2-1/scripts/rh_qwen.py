@@ -48,7 +48,7 @@ def configured_key():
     if key:
         return key
     path = Path(os.getenv('RUNNINGHUB_ENV_FILE') or
-                '~/.config/rh-qwen-image-2-1/.env').expanduser()
+                '~/.config/runninghub/.env').expanduser()
     if path.is_file():
         for line in path.read_text(encoding='utf-8').splitlines():
             name, separator, value = line.strip().removeprefix('export ').partition('=')

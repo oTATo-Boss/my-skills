@@ -20,4 +20,4 @@
 
 ## RunningHub 图片编辑
 
-- [RH-Qwen Image 2.1（rh-qwen-image-2-1）](rh-qwen-image-2-1/SKILL.md) — 直接调用 RunningHub AI 应用完成 1–6 图编辑、换装、多图融合、任务恢复与图片下载；v1.0.1。
+- [RH-Qwen Image 2.1（rh-qwen-image-2-1）](rh-qwen-image-2-1/SKILL.md) — 直接调用 RunningHub AI 应用完成 1–6 图编辑、换装、多图融合、任务恢复与图片下载；v1.0.2。

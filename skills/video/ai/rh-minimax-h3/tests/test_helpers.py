@@ -17,6 +17,15 @@ spec.loader.exec_module(credentials)
 
 
 class Helpers(unittest.TestCase):
+    def test_shared_runninghub_default(self):
+        with tempfile.TemporaryDirectory() as tmp, patch.dict(os.environ, {'HOME': tmp}, clear=True):
+            shared = Path(tmp)/'.config/runninghub/.env'
+            self.assertEqual(credentials.config_path(), shared)
+            credentials.store_key('shared-offline-key', shared)
+            self.assertEqual(credentials.configured_api_key(), 'shared-offline-key')
+            self.assertEqual(shared.stat().st_mode & 0o777, 0o600)
+            self.assertEqual(shared.parent.stat().st_mode & 0o777, 0o700)
+
     def test_secret_storage_and_priority(self):
         with tempfile.TemporaryDirectory() as tmp:
             dest = Path(tmp)/'private/.env'

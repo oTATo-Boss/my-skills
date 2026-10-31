@@ -12,6 +12,19 @@ spec.loader.exec_module(q)
 
 
 class QwenTests(unittest.TestCase):
+    def test_shared_runninghub_default_and_overrides(self):
+        with tempfile.TemporaryDirectory() as tmp, patch.dict(q.os.environ, {'HOME': tmp}, clear=True):
+            shared = Path(tmp)/'.config/runninghub/.env'
+            shared.parent.mkdir(parents=True)
+            shared.write_text('RUNNINGHUB_API_KEY=shared-offline-key\n')
+            self.assertEqual(q.configured_key(), 'shared-offline-key')
+            alternate = Path(tmp)/'alternate.env'
+            alternate.write_text('RUNNINGHUB_API_KEY=alternate-key\n')
+            q.os.environ['RUNNINGHUB_ENV_FILE'] = str(alternate)
+            self.assertEqual(q.configured_key(), 'alternate-key')
+            q.os.environ['RUNNINGHUB_API_KEY'] = 'env-override'
+            self.assertEqual(q.configured_key(), 'env-override')
+
     def test_nodes_preserve_slot_order_and_empty_values(self):
         nodes = q.nodes('换衣服', ['a.png', 'b.png'], '9:16', '2K', 2)
         self.assertEqual([n['nodeId'] for n in nodes[:6]],

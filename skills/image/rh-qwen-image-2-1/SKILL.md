@@ -2,7 +2,7 @@
 name: rh-qwen-image-2-1
 description: Use when 用户指定 RH-Qwen Image 2.1 或 RunningHub 的 Qwen Image 2.1 多图编辑 AI 应用，进行单图修改、多图融合、人物换装、场景替换或风格参考编辑。
 metadata:
-  version: "1.0.1"
+  version: "1.0.2"
 ---
 
 # RH-Qwen Image 2.1
@@ -59,7 +59,7 @@ python3 "$SKILL_DIR/scripts/rh_qwen.py" --resume --state /absolute/path/output/e
 
 默认仅预检；`--dry-run` 不读 Key、不联网、不上传、不验证账户或线上节点。用户已要求生成且授权素材上传时，可执行 `--submit`；创建或维护 Skill 本身不代表要执行收费生成。
 
-Key 优先读 `RUNNINGHUB_API_KEY`，其次 `RUNNINGHUB_ENV_FILE` 指定文件，缺省为 `~/.config/rh-qwen-image-2-1/.env`。文件格式为 `RUNNINGHUB_API_KEY=...`，建议权限 0600；不要把 Key 放在 job、命令行参数、日志或仓库。已有 H3 私有配置可在用户授权复用时用 `RUNNINGHUB_ENV_FILE` 指向，不复制密钥进包。
+Key 优先读 `RUNNINGHUB_API_KEY`，其次 `RUNNINGHUB_ENV_FILE` 指定文件，缺省为 `~/.config/runninghub/.env`。文件格式为 `RUNNINGHUB_API_KEY=...`，建议权限 0600；不要把 Key 放在 job、命令行参数、日志或仓库。两个 RH Skill 默认共用此文件；可用 H3 包的 `scripts/credentials.py set` 隐藏输入，统一更新共享 Key。
 
 提交前原子创建回执；已有回执拒绝再次提交。同一任务的提交超时、断线或缺少 taskId 视为 `SUBMIT_UNKNOWN`：先核对平台任务/消费记录，不换回执名盲重提。拿到 taskId 后始终 resume；查询超时并不代表任务取消。若只在平台查到了 taskId，用新回执恢复：
 

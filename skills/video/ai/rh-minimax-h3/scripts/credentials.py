@@ -10,7 +10,7 @@ from pathlib import Path
 
 def config_path():
     return Path(os.getenv('RUNNINGHUB_ENV_FILE') or
-                '~/.config/rh-minimax-h3/.env').expanduser()
+                '~/.config/runninghub/.env').expanduser()
 
 
 def read_key(path):
@@ -46,7 +46,7 @@ def store_key(key, destination, replace=False):
     if destination.exists() and not replace:
         raise ValueError('配置已存在；明确要替换时使用 --replace')
     destination.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
-    if destination == Path.home() / '.config/rh-minimax-h3/.env':
+    if destination == Path.home() / '.config/runninghub/.env':
         destination.parent.chmod(0o700)
     fd, tmp = tempfile.mkstemp(prefix='.credential-', dir=destination.parent)
     try:

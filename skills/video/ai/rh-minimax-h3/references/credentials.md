@@ -1,6 +1,6 @@
 # API Key 存入与读取
 
-使用 RunningHub 账户的 API Key（不是 MiniMax Key）。API Key 只存本机私有配置或运行环境，不随 Skill 分发。默认配置为 `~/.config/rh-minimax-h3/.env`；默认配置目录权限 0700、文件 0600。
+使用 RunningHub 账户的 API Key（不是 MiniMax Key）。API Key 只存本机私有配置或运行环境，不随 Skill 分发。两个 RH Skill（rh-minimax-h3 与 rh-qwen-image-2-1）共用同一个账户 Key；默认配置为 `~/.config/runninghub/.env`；默认配置目录权限 0700、文件 0600。
 
 读取顺序：非空 `RUNNINGHUB_API_KEY` → `RUNNINGHUB_ENV_FILE` 指定文件（若设置）或默认私有文件。指定文件缺 Key 时不再自动尝试其他项目；环境变量可覆盖旧配置，诊断时用 `status` 看来源。
 

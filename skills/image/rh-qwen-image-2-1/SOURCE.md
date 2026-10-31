@@ -4,7 +4,7 @@
 - kind: `local`
 - status: `confirmed`
 - source: 用户 2026-10-31 在本会话要求将其 RH Studio「Qwen Image 2.1 多图编辑」制作为独立 Skill；开发目录 `skills/image/rh-qwen-image-2-1`。
-- version: `1.0.1`
+- version: `1.0.2`
 - author: 用户提出需求与应用范围，Codex 辅助编写 Skill、接口参考、Python 执行器和测试；不声明 Qwen 模型、RunningHub 服务或 RH Studio 前端为本包原创。
 - license: unknown；用户未为本新包指定对外许可。第三方应用、模型及服务条款归对应权利方，本包不分发其实现或模型权重。
 - collected_at: `2026-10-31`（首次创建）
@@ -36,3 +36,7 @@
 ## 1.0.1 · 直接 API 调用定位
 
 2026-10-31：按用户纠正，统一为与 rh-minimax-h3 同原理的 RunningHub AI 应用直接调用技能，移除网页执行备选及其参考文件，同步展示说明和索引。执行器原本即直连 RunningHub；两次已完成的真实测试均通过直接 API 提交，本次不改动生成链路，也不新增收费任务。
+
+## 1.0.2 · 本机共享 RunningHub Key
+
+2026-10-31：按用户要求，与另一 RH Skill 统一默认读取 `~/.config/runninghub/.env`，保留 `RUNNINGHUB_API_KEY` 优先和 `RUNNINGHUB_ENV_FILE` 显式覆盖。私有 Key 不随仓库或安装包分发；新增隔离测试验证共享路径与读取。

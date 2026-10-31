@@ -4,7 +4,7 @@
 - kind: `local`
 - status: `confirmed`
 - source: 已确认的用户二创／整合版本；本地开发／维护目录 `skills/video/ai/rh-minimax-h3`；当前维护仓库 https://github.com/oTATo-Boss/my-skills
-- version: 4.0.2
+- version: 4.0.3
 - author: oTATo-Boss（用户本人）；2026-10-30 在当前对话明确确认本人制作，Agent 辅助编写／整理。
 - license: MIT（2026-10-14 本人决定，见 [LICENSE](<LICENSE>)）
 - collected_at: unknown；没有可靠安装／导入日期。
@@ -36,3 +36,7 @@
 - v4.0.1 evidence: 用户于 2026-10-31 明确将 Realism People 和 H3电影感V2 的默认强度分别改为 0.6、0.2。
 
 - v4.0.2 evidence: 用户于 2026-10-31 提供 16:49:25 的截图，指定四组默认 LoRA 强度依次为 0.4、0.6、0.4、0.4。
+
+## 4.0.3 · 本机共享 RunningHub Key
+
+2026-10-31：按用户要求，与另一 RH Skill 统一默认读取 `~/.config/runninghub/.env`，保留 `RUNNINGHUB_API_KEY` 优先和 `RUNNINGHUB_ENV_FILE` 显式覆盖。私有 Key 不随仓库或安装包分发；新增隔离测试验证共享路径与读取。

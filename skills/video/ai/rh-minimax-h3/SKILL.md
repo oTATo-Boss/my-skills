@@ -2,7 +2,7 @@
 name: rh-minimax-h3
 description: 使用 RunningHub MiniMax H3 多图生视频自动提示词 V2 应用生成视频；支持多图、音频参考、四组 LoRA、分辨率档位、安全凭据、任务构造与结果恢复。用户提到 RH-minimax-H3 或 RunningHub H3 时使用。
 metadata:
-  version: "4.0.2"
+  version: "4.0.3"
 ---
 
 # RH-minimax-H3
@@ -30,7 +30,7 @@ Agent 根据任务指定提示词、**时长 5–15 秒、画幅、1–6 张参�
 
 ## 凭据与执行
 
-先运行 `python3 "$SKILL_DIR/scripts/credentials.py" status`；优先读取环境变量 `RUNNINGHUB_API_KEY`，其次 `~/.config/rh-minimax-h3/.env`，可通过 `RUNNINGHUB_ENV_FILE` 指定。新 Key 用隐藏输入保存、权限 0600；禁止泄露凭据，详见 [credentials.md](references/credentials.md)。
+先运行 `python3 "$SKILL_DIR/scripts/credentials.py" status`；优先读取环境变量 `RUNNINGHUB_API_KEY`，其次 `~/.config/runninghub/.env`，可通过 `RUNNINGHUB_ENV_FILE` 指定。两个 RH Skill 默认共用此配置；新 Key 用隐藏输入保存、权限 0600；禁止泄露凭据，详见 [credentials.md](references/credentials.md)。
 
 按 [usage.md](references/usage.md) 创建 jobs 并先 `--dry-run`；dry-run 不联网、不验证账户或节点。经任务授权才能提交，每批最多 3 个在途。保存无 Key 的提交回执和 taskId；提交结果不明、查询超时或连接中断不得盲目重提。已有 taskId 用 `--resume TASK_ID --name 原名称 --output 原目录` 查询并下载，不重新提交。报告 taskId、平台 usage、文件、实际尺寸与时长；usage 缺失如实说明。用户要求生成后直接交付时不增加画面审查。
 
