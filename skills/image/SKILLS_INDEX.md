@@ -1,6 +1,6 @@
 # image 项目技能索引
 
-技能数量：5
+技能数量：6
 
 [返回项目总索引](../../SKILLS_INDEX.md)
 
@@ -21,3 +21,7 @@
 ## RunningHub 图片编辑
 
 - [RH-Qwen Image 2.1（rh-qwen-image-2-1）](rh-qwen-image-2-1/SKILL.md) — 直接调用 RunningHub Qwen Unlimited Edition，固定双 LoRA、默认 Ultra，完成多图编辑与任务恢复；v2.0.0。
+
+## Google Flow 执行
+
+- [flow-image](flow-image/SKILL.md) — 通过 Chrome DevTools CLI 常驻会话使用 Flow Nano Banana 2.1 文生图和多参考图编辑；v1.1.0。
