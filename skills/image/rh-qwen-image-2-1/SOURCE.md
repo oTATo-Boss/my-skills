@@ -4,7 +4,7 @@
 - kind: `local`
 - status: `confirmed`
 - source: 用户 2026-10-31 在本会话要求将其 RH Studio「Qwen Image 2.1 多图编辑」制作为独立 Skill；开发目录 `skills/image/rh-qwen-image-2-1`。
-- version: `1.1.0`
+- version: `2.0.0`
 - author: 用户提出需求与应用范围，Codex 辅助编写 Skill、接口参考、Python 执行器和测试；不声明 Qwen 模型、RunningHub 服务或 RH Studio 前端为本包原创。
 - license: unknown；用户未为本新包指定对外许可。第三方应用、模型及服务条款归对应权利方，本包不分发其实现或模型权重。
 - collected_at: `2026-10-31`（首次创建）
@@ -44,3 +44,9 @@
 ## 1.1.0 · 跨 Skill 共享并发
 
 2026-10-31：按用户指定，同一 RunningHub API Key 合计最多3个远端在途任务，默认并发与滚动补位。新增两包一致的 rh_queue.py 协议实现，使用本机文件锁和持久预约协调多个进程；确认终态后释放，提交不明或查询失败保留预约。Qwen 新增 jobs 批量入口，H3 沿用原批量入口；下载阶段不占远端名额。离线5进程混合测试、Qwen批量测试与H3假服务回归通过，未新增收费生成；本机队列不覆盖未接入的其他工具或机器。
+
+## 2.0.0 · 切换 AI 应用与固定 LoRA
+
+2026-11-01：用户提供新应用 `2104225323949101057` 的 API 示例及 LoRA 截图，并后续要求 Ultra 默认实例。通过平台只读节点查询确认应用名称 Qwen Image2.1 (Unlimited Edition) 和全部18个字段；[node_map.json](references/node_map.json) 保存脱敏快照及原文、截图SHA-256。截图强度0.8/1优先于示例0/0，固定模型名为 NSFW Qwen by TheseAlpacas V2.safetensors 和 Pornmaster_QI2.1_Breasts_Slider_V1.safetensors。模型权重许可未核实，本包不分发权重。
+
+更新六图顺序、分辨率MP、比例完整值、原比例开关、图片数量、提示词及辅助开关；旧quality字段拒绝提交，避免将2K误当2MP。共享Key、同Key最多3个在途和旧taskId查询恢复继续生效。新应用与两LoRA组合尚未真实出图；此前两次成功任务仅证明旧应用。代码、文档与平台只读查询的验证不冒充新配置加载或生成效果证明。

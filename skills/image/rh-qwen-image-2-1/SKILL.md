@@ -1,19 +1,26 @@
 ---
 name: rh-qwen-image-2-1
-description: Use when 用户指定 RH-Qwen Image 2.1 或 RunningHub 的 Qwen Image 2.1 多图编辑 AI 应用，进行单图修改、多图融合、人物换装、场景替换或风格参考编辑。
+description: Use when 用户指定 RH-Qwen Image 2.1 或 RunningHub 的 Qwen Image2.1 (Unlimited Edition) AI 应用，进行单图修改、多图融合、人物换装、场景替换或风格参考编辑。
 metadata:
-  version: "1.1.0"
+  version: "2.0.0"
 ---
 
 # RH-Qwen Image 2.1
 
-直接调用 RunningHub **Qwen Image 2.1 多图编辑** AI 应用，ID `2101915284503654402`。与 `rh-minimax-h3` 使用相同的 RunningHub v2 上传、提交和查询原理，应用 ID 与节点映射各自独立。支持 1–6 张有序参考图和非空编辑指令；本技能不提供纯文生图。
+直接调用 RunningHub **Qwen Image2.1 (Unlimited Edition)** AI 应用，ID `2104225323949101057`。与 `rh-minimax-h3` 使用相同的 RunningHub v2 上传、提交和查询原理，应用 ID 与节点映射各自独立。支持 1–6 张有序参考图和非空编辑指令；本技能不提供纯文生图。
 
 ## 直接 API 执行
 
-使用本包 `scripts/rh_qwen.py` 直接请求 `https://www.runninghub.ai/openapi/v2`：上传参考图 → 提交 `/run/ai-app/2101915284503654402` → 按 taskId 查询 `/query` → 下载结果。不依赖 RH Studio、浏览器登录或网页操作。缺少 API Key 时按下方凭据配置处理。依赖 Python 3.9+、requests、Pillow；缺失时按当前环境的依赖管理方式安装。
+使用本包 `scripts/rh_qwen.py` 直接请求 `https://www.runninghub.ai/openapi/v2`：上传参考图 → 提交 `/run/ai-app/2104225323949101057` → 按 taskId 查询 `/query` → 下载结果。不依赖 RH Studio、浏览器登录或网页操作。缺少 API Key 时按下方凭据配置处理。依赖 Python 3.9+、requests、Pillow；缺失时按当前环境的依赖管理方式安装。
 
-此版本已核对线上页面及公开前端的节点构造，完成离线模拟验证及两次真实编辑：两图杯身图案迁移、三图人物/穿搭/卧室融合。两次均为 default 实例、2K、1 张，上传、提交、查询、下载与解码成功。其他组合仍未实测。执行时若节点或接口变化，核对 [接口与证据](references/api.md) 的来源，不套用其他应用配置。
+当前应用已按用户 API 示例和平台只读节点查询核对，固定两组 LoRA 与 Ultra 默认实例。**新应用及此 LoRA 组合尚未实际出图测试**；历史两次成功生成属于旧应用，不能当作新配置的效果证明。执行时若接口变化，核对 [接口与证据](references/api.md)。
+
+| 固定槽位 | 文件名 | 权重 |
+|---|---|---:|
+| LoRA 1 · 节点534 | `NSFW Qwen by TheseAlpacas V2.safetensors` | 0.8 |
+| LoRA 2 · 节点526 | `Pornmaster_QI2.1_Breasts_Slider_V1.safetensors` | 1 |
+
+文件名和权重按用户截图固定，每次请求都显式传入。用户示例强度为0，但截图和直接要求优先；不以示例0覆盖。没有已核实的触发词，不擅自添加。LoRA名称不改变用户当前图片任务的内容要求。
 
 ## 参考图和指令
 
@@ -28,12 +35,12 @@ metadata:
 | 参数 | 默认值与范围 |
 |---|---|
 | 参考图 | 1–6 张，每张不超过 30 MiB；传入 images 数组顺序就是图号 |
-| 比例 | 默认 9:16；original、1:1、3:2、4:3、16:9、2:3、3:4、9:16 |
-| 清晰度 | 默认 2K；1K / 2K / 4K 是档位，不保证精确输出尺寸 |
+| 比例 | 默认 9:16；original、1:1、3:2、4:3、16:9、2:3、3:4、9:16、21:9 |
+| 分辨率 | `megapixels` 默认 2.0，应用标注约1080×1920；有限正数，实际尺寸以输出为准 |
 | 张数 | 默认 1；1–4 |
-| 实例 | 默认 default；plus / ultra 仅在用户指定或应用要求已核实时选择 |
+| 实例 | 默认 ultra；用户可显式指定 default / plus / ultra |
 
-当前应用没有已核实的自定义宽高节点，因此脚本不开放任意尺寸。没有已核实的种子、负向提示词、遮罩或采样器参数；需要避免的内容可写在编辑指令中。
+当前应用没有已核实的自定义宽高节点，因此脚本不开放任意尺寸。保持原比例由节点521控制；默认关闭加速和ZIP输出，开启提示词增强，沿用用户API示例。没有已核实的种子、负向提示词、遮罩或采样器参数；需要避免的内容可写在编辑指令中。
 
 ## CLI 与恢复
 
@@ -44,10 +51,13 @@ metadata:
   "prompt": "以图1为主图，保留人物身份与原有背景，将服装替换为图2中的服装，保持光线、透视和遮挡关系自然一致。",
   "images": ["person.png", "outfit.png"],
   "aspect": "9:16",
-  "quality": "2K",
-  "count": 1
+  "megapixels": 2.0,
+  "count": 1,
+  "instance": "ultra"
 }
 ```
+
+新应用使用百万像素，旧 `quality` 字段会报错，需显式改写为 `megapixels`；不要把旧2K档误当作2MP。旧taskId仍可resume查询，不能重新提交旧节点配置。
 
 `SKILL_DIR` 指本次读取的本技能目录；在用户的任务输出目录执行，生成回执与图片不写入 Skill 包。
 

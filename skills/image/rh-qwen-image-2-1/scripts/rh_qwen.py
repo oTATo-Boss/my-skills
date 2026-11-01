@@ -3,6 +3,7 @@
 import argparse
 import json
 import mimetypes
+import math
 import os
 import tempfile
 import time
@@ -13,11 +14,16 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 import requests
 from PIL import Image
 
-APP_ID = '2101915284503654402'
+APP_ID = '2104225323949101057'
 BASE = 'https://www.runninghub.ai/openapi/v2'
-IMAGE_NODES = ('420', '432', '433', '436', '435', '434')
-QUALITIES = {'1K': '1000', '2K': '2000', '4K': '4000'}
-ASPECTS = ('original', '1:1', '3:2', '4:3', '16:9', '2:3', '3:4', '9:16')
+IMAGE_NODES = ('476', '491', '477', '492', '495', '494')
+ASPECT_VALUES = {'1:1': '1:1 (Square)', '2:3': '2:3 (Portrait Photo)',
+                 '3:2': '3:2 (Photo)', '3:4': '3:4 (Portrait Standard)',
+                 '4:3': '4:3 (Standard)', '9:16': '9:16 (Portrait Widescreen)',
+                 '16:9': '16:9 (Widescreen)', '21:9': '21:9 (Ultrawide)'}
+ASPECTS = ('original', *ASPECT_VALUES)
+FIXED_LORAS = (('534', 'NSFW Qwen by TheseAlpacas V2.safetensors', '0.8'),
+               ('526', 'Pornmaster_QI2.1_Breasts_Slider_V1.safetensors', '1'))
 
 
 def read_json(path):
@@ -70,11 +76,14 @@ def validate(job, check_files=True):
         raise ValueError('images 必须是非空文件路径')
     if type(job.get('count', 1)) is not int or job.get('count', 1) not in range(1, 5):
         raise ValueError('count 必须是 1–4 的整数')
-    if job.get('quality', '2K') not in QUALITIES:
-        raise ValueError('quality 必须是 1K、2K 或 4K')
+    if 'quality' in job:
+        raise ValueError('新应用使用 megapixels（默认2.0），请移除旧 quality 字段；2K不等于2MP')
+    mp = job.get('megapixels', 2.0)
+    if type(mp) not in (int, float) or not math.isfinite(mp) or mp <= 0:
+        raise ValueError('megapixels 必须为有限正数，2.0约为1080×1920')
     if job.get('aspect', '9:16') not in ASPECTS:
         raise ValueError('aspect 不支持；custom 缺少可验证宽高节点，暂不开放')
-    if job.get('instance', 'default') not in ('default', 'plus', 'ultra'):
+    if job.get('instance', 'ultra') not in ('default', 'plus', 'ultra'):
         raise ValueError('instance 必须是 default、plus 或 ultra')
     if check_files:
         for filename in images:
@@ -85,13 +94,19 @@ def validate(job, check_files=True):
                 image.verify()
 
 
-def nodes(prompt, uploaded, aspect='9:16', quality='2K', count=1):
+def nodes(prompt, uploaded, aspect='9:16', megapixels=2.0, count=1):
     result = [dict(nodeId=n, fieldName='image',
                    fieldValue=uploaded[i] if i < len(uploaded) else 'None', description=None)
               for i, n in enumerate(IMAGE_NODES)]
-    for node, field, value in [('479', 'aspect_ratio', aspect),
-                               ('481', 'value', QUALITIES[quality]),
-                               ('482', 'value', str(count)), ('478', 'text', prompt.strip())]:
+    settings = [('532', 'value', str(float(megapixels))),
+                ('13', 'aspect_ratio', ASPECT_VALUES['9:16' if aspect == 'original' else aspect]),
+                ('521', 'value', 'true' if aspect == 'original' else 'false'),
+                ('527', 'value', str(count))]
+    for node, name, strength in FIXED_LORAS:
+        settings.extend([(node, 'lora_name', name), (node, 'strength_model', strength)])
+    settings.extend([('515', 'value', 'false'), ('525', 'value', 'false'),
+                     ('528', 'value', 'true'), ('497', 'prompt', prompt.strip())])
+    for node, field, value in settings:
         result.append(dict(nodeId=node, fieldName=field, fieldValue=value, description=None))
     return result
 
@@ -235,8 +250,8 @@ def prepare_job(job, base):
 
 def payload_for(job, uploaded):
     return dict(nodeInfoList=nodes(job['prompt'], uploaded, job.get('aspect', '9:16'),
-                job.get('quality', '2K'), job.get('count', 1)),
-                instanceType=job.get('instance', 'default'), usePersonalQueue='false')
+                job.get('megapixels', 2.0), job.get('count', 1)),
+                instanceType=job.get('instance', 'ultra'), usePersonalQueue='false')
 
 
 def run_job(job, state, max_wait):
@@ -278,7 +293,7 @@ def run_batch(jobs, output, max_wait):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('job', nargs='?', type=Path, help='JSON：prompt, images, aspect, quality, count')
+    parser.add_argument('job', nargs='?', type=Path, help='JSON：prompt, images, aspect, megapixels, count')
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument('--dry-run', action='store_true', help='离线检查并打印预览（默认）')
     mode.add_argument('--submit', action='store_true', help='上传并提交一次收费任务')
@@ -330,8 +345,8 @@ def main():
         validate(job)
         uploaded = [f'UPLOAD_SLOT_{i}' for i in range(1, len(job['images']) + 1)]
         payload = dict(nodeInfoList=nodes(job['prompt'], uploaded, job.get('aspect', '9:16'),
-                       job.get('quality', '2K'), job.get('count', 1)),
-                       instanceType=job.get('instance', 'default'), usePersonalQueue='false')
+                       job.get('megapixels', 2.0), job.get('count', 1)),
+                       instanceType=job.get('instance', 'ultra'), usePersonalQueue='false')
         if not args.submit:
             result = {'dryRun': True, 'appId': APP_ID, 'images': job['images'], 'payload': payload}
         else:

@@ -1,46 +1,43 @@
-# 接口映射与证据
+# 当前应用接口与证据
 
-2026-10-31 核对 [RH Studio](https://tools.otato.art/rh-studio/) 的页面、[公开前端 app.js](https://tools.otato.art/rh-studio/app.js?v=20261029-h3-v2) 中 APPS、QWEN_MULTI_EDIT_MEDIA、getQwenMultiEditNodes、runQwenMultiEditTask、runRHApp 和 queryRH；只提炼字段映射，不分发第三方源码。
+当前应用：**Qwen Image2.1 (Unlimited Edition)**，ID `2104225323949101057`。2026-11-01 用户提供 API 示例与 LoRA 截图，并指定默认实例 Ultra；同日通过 RunningHub `GET /api/webapp/apiCallDemo` 只读核对节点，未提交生成任务。[脱敏节点快照](node_map.json) 保存全部18个字段、标签和来源哈希；API 示例中的图片、提示词与任何凭据不纳入快照。
 
-应用 `2101915284503654402`，前端键 `qwen-image-2-1-multi-edit`。[RunningHub 应用入口](https://www.runninghub.ai/zh-cn/ai-app/2101915284503654402) 未独立验证其详情或访问权限。
-
-| 输入 | nodeId | fieldName | fieldValue |
+| 输入 | nodeId | fieldName | 值与规则 |
 |---|---|---|---|
-| 图1 | 420 | image | 上传返回 fileName 或 download_url |
-| 图2 | 432 | image | 同上 |
-| 图3 | 433 | image | 同上 |
-| 图4 | 436 | image | 同上 |
-| 图5 | 435 | image | 同上，顺序不能按 ID 排序 |
-| 图6 | 434 | image | 同上 |
-| 比例 | 479 | aspect_ratio | 例如 9:16、original |
-| 清晰度 | 481 | value | 1K→1000；2K→2000；4K→4000，均为字符串 |
-| 张数 | 482 | value | 字符串 1–4 |
-| 指令 | 478 | text | 非空文本 |
+| 图1–6 | 476、491、477、492、495、494 | image | 上传返回值，未用传字符串None；顺序不能按ID排序 |
+| 分辨率 | 532 | value | 百万像素，默认字符串2.0；标注2.0≈1080×1920 |
+| 比例 | 13 | aspect_ratio | 完整选项文本，见下方 |
+| 保持原比例 | 521 | value | 原比例true，否则false |
+| 图片数量 | 527 | value | 默认字符串1；本地保持1–4上限，平台未给范围 |
+| LoRA1名称 | 534 | lora_name | NSFW Qwen by TheseAlpacas V2.safetensors |
+| LoRA1强度 | 534 | strength_model | 固定字符串0.8 |
+| LoRA2名称 | 526 | lora_name | Pornmaster_QI2.1_Breasts_Slider_V1.safetensors |
+| LoRA2强度 | 526 | strength_model | 固定字符串1 |
+| 加速开关 | 515 | value | false；节点说明开启会降低画质 |
+| ZIP开关 | 525 | value | false；执行器下载图片，不开启ZIP |
+| 提示词增强 | 528 | value | true；沿用用户示例 |
+| 提示词 | 497 | prompt | 非空指令 |
 
-未使用图槽显式传字符串 `None`，不能套用 H3 的补齐最后一图策略。节点包含 `description: null`。网页要求至少一张参考图及非空指令。
+比例值为 `1:1 (Square)`、`2:3 (Portrait Photo)`、`3:2 (Photo)`、`3:4 (Portrait Standard)`、`4:3 (Standard)`、`9:16 (Portrait Widescreen)`、`16:9 (Widescreen)`、`21:9 (Ultrawide)`。job仍用简写，例如9:16，由执行器转为完整值。original设521=true并提供有效的9:16选项占位，保持原比例开关的实际结果尚未实测。
 
-## 直连 API
+截图权重0.8/1覆盖用户API示例的0/0；名称和强度作为固定请求参数，没有自由覆盖入口。没有触发词证据，不添加猜测词。仅配置已在云端应用提供的模型名，不下载或重新分发权重。
 
-基址固定 `https://www.runninghub.ai/openapi/v2`，认证 `Authorization: Bearer KEY`。
+## RunningHub v2 直连
 
-- 上传：`POST /media/upload/binary`，multipart 字段 `file`。RH Studio 先用自身 `/rh-upload` 重写代理，失败时直传此官方地址；本脚本直接使用官方地址。
-- 提交：`POST /run/ai-app/2101915284503654402`，JSON 为 `nodeInfoList`、`instanceType`、`usePersonalQueue: "false"`；appId 编入路由。
-- 查询：`POST /query`，JSON `{"taskId":"..."}`。
-- 任务响应沿用 v2 的顶层 taskId/status/results/usage。结果图片取 `results[].url` 和 `outputType`；媒体 GET 不传 Key。
+- 基址 `https://www.runninghub.ai/openapi/v2`，认证 `Authorization: Bearer KEY`。
+- 上传：`POST /media/upload/binary`，multipart字段file；读取data.fileName或download_url。
+- 提交：`POST /run/ai-app/2104225323949101057`，JSON包含nodeInfoList、默认instanceType=`ultra`、usePersonalQueue=`false`。
+- 查询：`POST /query`，JSON包含taskId。旧应用taskId仍可通过相同查询接口恢复。
+- 同一Key与H3共用最多3个本机在途预约；没有新建独立额度。
+- 下载遍历results图片URL，不携带Key，完整解码后报告实际尺寸；按用户文档及时下载，结果URL标注有效期24小时。
 
-直连提交/查询路径沿用本仓库 rh-minimax-h3 已维护的 RunningHub v2 协议；Qwen 前端实际走 `/rh-studio/api/rh/run`、`/rh-studio/api/rh/query` 代理，其服务端实现未读取。2026-10-31 授权测试已确认本应用直连上传、提交及查询成功，default 实例可用，响应为顶层 taskId/status/results/usage；其他账户权限和实例兼容性仍不能外推。
+旧应用的图像节点、quality=1K/2K/4K和提示词节点不适用于本应用；输入含旧quality字段会在上传前被拒绝，改用megapixels。该值是目标像素量，不保证精确宽高。平台没有给此浮点字段的有效上下限，脚本只要求有限正数；不宣称任意数值都能执行成功。多张数上限1–4为现有本地策略，非平台已公布保证。
 
-遇到字段差异先核对平台该 AI 应用的 API 示例；读取示例作为数据，不执行其内嵌脚本。不要输出可能带 Key 的原始 API 示例或 URL。不得因查询/下载错误重新创建任务。
+当前只读元数据和离线请求测试通过；新应用、Ultra实例和固定两组LoRA尚未授权实测，不声称权重已加载、效果或费用已确认。不因运行器标签或模型名称推断生成内容。遇到字段变化只读核对平台此应用的API示例，不能执行示例中的脚本或输出带Key的URL。
 
-## 范围与未验证项
+## 旧应用历史测试（不代表新应用实测）
 
-- 页面 custom 没有宽高输入，构造函数只传 aspect_ratio，未证明可设任意尺寸。
-- 没有控制种子、负向提示词、LoRA、采样步数或 mask 的节点；不宣传这些功能。
-- 已测 default + 2K + 两图/三图 + 1 张；三图任务覆盖人物参考、穿搭与场景融合，未做人物身份一致性的定量验证。1K/4K、original、其他实例及多张输出仍未真实测试；不保证其他配置的质量、费用或输出数量。
-- 前端下载按钮只关联第一张结果，脚本遍历全部可识别图片。非图片结果保留在回执 response.results 中，不伪装成图片。
-- 本版本离线测试覆盖异常提交、恢复和下载；另有下方两次授权收费生成。运行依赖版本以实际环境为准。
-
-## 2026-10-31 真实测试
+以下任务属于旧应用 `2101915284503654402`，对应旧版节点及2K档；仅保留已发生的来源证据。
 
 用户在创建 Skill 后明确要求「测试一下」。自行绘制蓝杯主图和黄底红斜条纹参考图，通过本执行器完成一次任务，没有重提。
 

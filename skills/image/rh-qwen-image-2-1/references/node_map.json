@@ -1,0 +1,155 @@
+{
+  "appId": "2104225323949101057",
+  "webappName": "Qwen Image2.1 (Unlimited Edition)",
+  "snapshot_date": "2026-11-01",
+  "source": "用户 API 示例、LoRA 截图与平台只读节点查询；LoRA强度按截图覆盖示例0，实例按用户后续要求默认ultra；原始图片与提示词已移除。",
+  "source_sha256": "eab642a5350249e451a31f0f179a8cd7ed61a9de1d319ca193ad8c7103e3be5b",
+  "screenshot_sha256": "efbb810b4b687fae1a40113387c35df3c8b065329bf3d281599bb8727da2f122",
+  "instanceType": "ultra",
+  "nodeInfoList": [
+    {
+      "nodeId": "476",
+      "fieldName": "image",
+      "fieldValue": "None",
+      "description": "图1",
+      "fieldData": "[[\"example.png\", \"None\", \"keep_this_dic\"], {\"image_upload\": true}]",
+      "nodeName": "LoadImage"
+    },
+    {
+      "nodeId": "491",
+      "fieldName": "image",
+      "fieldValue": "None",
+      "description": "图2",
+      "fieldData": "[[\"example.png\", \"None\", \"keep_this_dic\"], {\"image_upload\": true}]",
+      "nodeName": "LoadImage"
+    },
+    {
+      "nodeId": "477",
+      "fieldName": "image",
+      "fieldValue": "None",
+      "description": "图3",
+      "fieldData": "[[\"example.png\", \"None\", \"keep_this_dic\"], {\"image_upload\": true}]",
+      "nodeName": "LoadImage"
+    },
+    {
+      "nodeId": "492",
+      "fieldName": "image",
+      "fieldValue": "None",
+      "description": "图4",
+      "fieldData": "[[\"example.png\", \"None\", \"keep_this_dic\"], {\"image_upload\": true}]",
+      "nodeName": "LoadImage"
+    },
+    {
+      "nodeId": "495",
+      "fieldName": "image",
+      "fieldValue": "None",
+      "description": "图5",
+      "fieldData": "[[\"example.png\", \"None\", \"keep_this_dic\"], {\"image_upload\": true}]",
+      "nodeName": "LoadImage"
+    },
+    {
+      "nodeId": "494",
+      "fieldName": "image",
+      "fieldValue": "None",
+      "description": "图6",
+      "fieldData": "[[\"example.png\", \"None\", \"keep_this_dic\"], {\"image_upload\": true}]",
+      "nodeName": "LoadImage"
+    },
+    {
+      "nodeId": "532",
+      "fieldName": "value",
+      "fieldValue": "2.0000000000000004",
+      "description": "分辨率2.0≈1080×1920",
+      "fieldData": "[\"FLOAT\", {\"step\": 0.01, \"default\": 0}]",
+      "nodeName": "Float"
+    },
+    {
+      "nodeId": "13",
+      "fieldName": "aspect_ratio",
+      "fieldValue": "9:16 (Portrait Widescreen)",
+      "description": "图片比例",
+      "fieldData": "[\"COMBO\", {\"default\": \"1:1 (Square)\", \"options\": [\"1:1 (Square)\", \"2:3 (Portrait Photo)\", \"3:2 (Photo)\", \"3:4 (Portrait Standard)\", \"4:3 (Standard)\", \"9:16 (Portrait Widescreen)\", \"16:9 (Widescreen)\", \"21:9 (Ultrawide)\"], \"tooltip\": \"The aspect ratio for the output dimensions.\", \"multiselect\": false}]",
+      "nodeName": "ResolutionSelector"
+    },
+    {
+      "nodeId": "521",
+      "fieldName": "value",
+      "fieldValue": "false",
+      "description": "保持图片原比例开关",
+      "fieldData": "[\"BOOLEAN\", {}]",
+      "nodeName": "PrimitiveBoolean"
+    },
+    {
+      "nodeId": "527",
+      "fieldName": "value",
+      "fieldValue": "1",
+      "description": "图片数量",
+      "fieldData": "[\"INT\", {\"default\": 0}]",
+      "nodeName": "Int"
+    },
+    {
+      "nodeId": "534",
+      "fieldName": "lora_name",
+      "fieldValue": "NSFW Qwen by TheseAlpacas V2.safetensors",
+      "description": "lora1-NSWF（应用详情）",
+      "fieldData": "[[]]",
+      "nodeName": "LoraLoaderModelOnly"
+    },
+    {
+      "nodeId": "534",
+      "fieldName": "strength_model",
+      "fieldValue": "0.8",
+      "description": "lora1-权重推荐0.8",
+      "fieldData": "[\"FLOAT\", {\"max\": 100, \"min\": -100, \"step\": 0.01, \"default\": 1}]",
+      "nodeName": "LoraLoaderModelOnly"
+    },
+    {
+      "nodeId": "526",
+      "fieldName": "lora_name",
+      "fieldValue": "Pornmaster_QI2.1_Breasts_Slider_V1.safetensors",
+      "description": "lora2-自选",
+      "fieldData": "[[]]",
+      "nodeName": "LoraLoaderModelOnly"
+    },
+    {
+      "nodeId": "526",
+      "fieldName": "strength_model",
+      "fieldValue": "1",
+      "description": "lora2权重-自选",
+      "fieldData": "[\"FLOAT\", {\"max\": 100, \"min\": -100, \"step\": 0.01, \"default\": 1}]",
+      "nodeName": "LoraLoaderModelOnly"
+    },
+    {
+      "nodeId": "515",
+      "fieldName": "value",
+      "fieldValue": "false",
+      "description": "加速开关（开启会降低画质）",
+      "fieldData": "[\"BOOLEAN\", {}]",
+      "nodeName": "PrimitiveBoolean"
+    },
+    {
+      "nodeId": "525",
+      "fieldName": "value",
+      "fieldValue": "false",
+      "description": "ZIP开关(打开是ZIP)",
+      "fieldData": "[\"BOOLEAN\", {}]",
+      "nodeName": "PrimitiveBoolean"
+    },
+    {
+      "nodeId": "528",
+      "fieldName": "value",
+      "fieldValue": "true",
+      "description": "提示词增强开关（优化）",
+      "fieldData": "[\"BOOLEAN\", {}]",
+      "nodeName": "PrimitiveBoolean"
+    },
+    {
+      "nodeId": "497",
+      "fieldName": "prompt",
+      "fieldValue": "",
+      "description": "提示词",
+      "fieldData": "[\"STRING\", {\"default\": \"prompt\", \"multiline\": true}]",
+      "nodeName": "CR Prompt Text"
+    }
+  ]
+}

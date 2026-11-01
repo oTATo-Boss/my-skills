@@ -63,21 +63,41 @@ class QwenTests(unittest.TestCase):
             self.assertEqual(q.configured_key(), 'env-override')
 
     def test_nodes_preserve_slot_order_and_empty_values(self):
-        nodes = q.nodes('换衣服', ['a.png', 'b.png'], '9:16', '2K', 2)
+        nodes = q.nodes('换衣服', ['a.png', 'b.png'], '9:16', 2, 2)
         self.assertEqual([n['nodeId'] for n in nodes[:6]],
-                         ['420', '432', '433', '436', '435', '434'])
+                         ['476', '491', '477', '492', '495', '494'])
         self.assertEqual([n['fieldValue'] for n in nodes[:6]],
                          ['a.png', 'b.png', 'None', 'None', 'None', 'None'])
         values = {n['nodeId']: n['fieldValue'] for n in nodes}
-        self.assertEqual(values['481'], '2000')
-        self.assertEqual(values['482'], '2')
-        self.assertEqual(values['478'], '换衣服')
+        self.assertEqual(values['532'], '2.0')
+        self.assertEqual(values['527'], '2')
+        self.assertEqual(values['497'], '换衣服')
+
+    def test_current_app_fixed_loras_and_switches(self):
+        self.assertEqual(q.APP_ID, '2104225323949101057')
+        self.assertEqual(q.payload_for({'prompt':'edit'}, ['up.png'])['instanceType'], 'ultra')
+        self.assertEqual(q.payload_for({'prompt':'edit','instance':'plus'}, ['up.png'])['instanceType'], 'plus')
+        values = {(n['nodeId'], n['fieldName']): n['fieldValue'] for n in q.nodes('edit', ['up.png'])}
+        self.assertEqual(values[('534', 'lora_name')], 'NSFW Qwen by TheseAlpacas V2.safetensors')
+        self.assertEqual(values[('534', 'strength_model')], '0.8')
+        self.assertEqual(values[('526', 'lora_name')], 'Pornmaster_QI2.1_Breasts_Slider_V1.safetensors')
+        self.assertEqual(values[('526', 'strength_model')], '1')
+        self.assertEqual(values[('13', 'aspect_ratio')], '9:16 (Portrait Widescreen)')
+        for node, expected in [('521', 'false'), ('515', 'false'), ('525', 'false'), ('528', 'true')]:
+            self.assertEqual(values[(node, 'value')], expected)
+        original = {(n['nodeId'], n['fieldName']): n['fieldValue'] for n in q.nodes('edit', ['up.png'], 'original')}
+        self.assertEqual(original[('521', 'value')], 'true')
+        response = Mock(status_code=200)
+        response.json.return_value = {'taskId':'new-app-task','status':'RUNNING'}
+        with patch.object(q.requests, 'post', return_value=response) as post:
+            q.Client('offline-secret').submit({'nodeInfoList':q.nodes('edit', ['up.png'])})
+            self.assertEqual(post.call_args.args[0], 'https://www.runninghub.ai/openapi/v2/run/ai-app/2104225323949101057')
 
     def test_invalid_inputs_rejected_before_upload(self):
         for updates in ({'images': []}, {'images': ['x'] * 7},
                         {'prompt': ' '}, {'count': 5}, {'count': True},
-                        {'quality': '8K'}, {'aspect': 'custom'}):
-            job = dict(prompt='edit', images=['x'], count=1, quality='2K', aspect='9:16')
+                        {'quality': '2K'}, {'megapixels': 0}, {'megapixels': float('nan')}, {'aspect': 'custom'}):
+            job = dict(prompt='edit', images=['x'], count=1, megapixels=2, aspect='9:16')
             job.update(updates)
             with self.subTest(updates=updates), self.assertRaises(ValueError):
                 q.validate(job, check_files=False)
