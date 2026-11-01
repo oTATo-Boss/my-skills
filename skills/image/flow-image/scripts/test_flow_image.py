@@ -127,4 +127,53 @@ class DriverTests(unittest.TestCase):
    m.download=save
    self.assertEqual(m.wait_job(job['request_id'],timeout=1)['media_id'],'verified')
    self.assertTrue(out.exists())
+ def test_reference_content_reused_across_paths_and_scoped_to_project(self):
+  m=self.load()
+  with tempfile.TemporaryDirectory() as d:
+   m.ROOT=Path(d);a=m.ROOT/'first.jpg';b=m.ROOT/'renamed.jpg';a.write_bytes(b'\xff\xd8\xffsame-image');b.write_bytes(a.read_bytes())
+   uploads=[];selections=[];m.lookup_historical_reference=lambda *args:None
+   def upload(page,path,entry,count):
+    uploads.append((m.PROJECT,path));return dict(entry,media_id='1'*8+'-1111-4111-8111-'+'1'*12,state='ready')
+   m.upload_reference=upload;m.select_reference=lambda page,entry,count:selections.append(entry['media_id'])
+   m.PROJECT='project-a';m.reference_digest(a);m.attach_reference(8,a);m.attach_reference(8,b)
+   self.assertEqual(len(uploads),1);self.assertEqual(len(selections),1)
+   # Loading the cache again must retain reuse; a different project cannot borrow it.
+   self.assertEqual(m.cached_reference(m.reference_digest(b))['media_id'],selections[0])
+   m.PROJECT='project-b';m.attach_reference(8,b);self.assertEqual(len(uploads),2)
+ def test_cached_reference_failure_never_silently_uploads_again(self):
+  m=self.load()
+  with tempfile.TemporaryDirectory() as d:
+   m.ROOT=Path(d);p=m.ROOT/'a.jpg';p.write_bytes(b'\xff\xd8\xffsame-image')
+   m.store_reference(m.reference_digest(p),{'media_id':'old','name':'old.jpg','state':'ready'})
+   m.upload_reference=lambda *a:self.fail('A cached reference must not be uploaded again')
+   def missing(*a):raise RuntimeError('cached material missing')
+   m.select_reference=missing
+   with self.assertRaisesRegex(RuntimeError,'missing'):m.attach_reference(8,p)
+ def test_historical_reference_ids_require_exact_prompt_and_count(self):
+  m=self.load();import json,urllib.parse,hashlib
+  prompt='use both images';sha=hashlib.sha256(prompt.encode()).hexdigest()
+  ids=['11111111-1111-4111-8111-111111111111','22222222-2222-4222-8222-222222222222']
+  payload=[None,[[None,None,[[x,None] for x in ids],prompt]]]
+  body=urllib.parse.urlencode({'f.req':json.dumps([[['ogiZ0b',json.dumps(payload)]]])})
+  self.assertEqual(m.historical_reference_ids(body,sha,2),ids)
+  self.assertEqual(m.historical_reference_ids(body,'wrong',2),[])
+  self.assertEqual(m.historical_reference_ids(body,sha,3),[])
+ def test_existing_asset_can_attach_directly_without_add_button(self):
+  m=self.load();mid='11111111-1111-4111-8111-111111111111'
+  snap='uid=1 listbox "资源列表"\nuid=2 textbox "搜索资源"\nuid=3 option "existing.jpg 图片"'
+  m.snapshot=lambda page:snap;m.run_cli=lambda *a,**k:{}
+  m.evaluate=lambda page,js:([{'name':'existing.jpg','id':mid}] if js==m.ASSET_OPTIONS_JS else [{'id':mid,'busy':False,'width':1024,'height':1024}])
+  self.assertEqual(m.select_reference(8,{'name':'existing.jpg','media_id':mid},1)['media_id'],mid)
+ def test_interrupted_upload_is_recovered_without_upload_retry(self):
+  m=self.load()
+  with tempfile.TemporaryDirectory() as d:
+   m.ROOT=Path(d);p=m.ROOT/'a.jpg';p.write_bytes(b'\xff\xd8\xffsame-image')
+   m.lookup_historical_reference=lambda *a:None;uploads=[]
+   def interrupted(*a):uploads.append(1);raise TimeoutError('interrupted')
+   m.upload_reference=interrupted
+   with self.assertRaises(TimeoutError):m.attach_reference(8,p)
+   self.assertEqual(m.cached_reference(m.reference_digest(p))['state'],'uploading')
+   m.select_reference=lambda page,entry,count:dict(entry,media_id='recovered',state='ready')
+   self.assertEqual(m.attach_reference(8,p)['media_id'],'recovered')
+   self.assertEqual(len(uploads),1)
 if __name__=='__main__' :unittest.main()

@@ -2,7 +2,7 @@
 name: flow-image
 description: "Generate and edit images with Nano Banana 2.1 in Google Flow through the local Chrome DevTools CLI persistent session. Use for Flow/Nano Banana image requests, including multiple local reference images; reuse the user's existing Chrome login."
 metadata:
-  version: "1.2.0"
+  version: "1.2.1"
 ---
 
 # Flow 图片生成与编辑
@@ -33,11 +33,17 @@ metadata:
   --aspect 3:4 --output '/绝对路径/合成.jpg'
 ```
 
-- 每个 `--ref` 接受一张本地 JPEG、PNG 或 WebP，可重复传入。脚本先验证全部文件，再逐张上传到同一提示框；**只有参考图数量完全一致且每张已加载，才提交一次生成**。任何参考图失败都停止，不能静默降为单图或文生图。实际可用上限由 Flow 当前界面决定，本版本不宣称已验证任意数量。
+- 每个 `--ref` 接受一张本地 JPEG、PNG 或 WebP，可重复传入。脚本先验证全部文件，再逐张复用已有素材或仅首次上传到同一提示框；**只有参考图数量完全一致且每张已加载，才提交一次生成**。任何参考图失败都停止，不能静默降为单图或文生图。实际可用上限由 Flow 当前界面决定，本版本不宣称已验证任意数量。
 - 提示词说明每张图的作用（如狐狸主体／木屋场景）及需要保留和修改的内容，避免只靠“图1／图2”造成歧义。当前未封装遮罩或视频。
 - `--aspect`：`1:1`（默认）、`16:9`、`9:16`、`4:3`、`3:4`。每次生成一张；输出路径必须是绝对路径，已有文件不覆盖。实际文件后缀按下载内容确定，以成功 JSON 中的 `output` 为准。
 - 输出 JSON 包含 `ok`、`mode`、图片路径、媒体 ID、参考图数量 `reference_count`、尺寸和耗时。查看保存图片，核对参考主体及修改要求后再报告成功；接口成功不等于画面满足要求。
 - 文件锁只保护设置参数、上传参考和确认提交；提交后释放，同一项目中的图片可以重叠生成。不要在其他工具中同时编辑提示框。保持主 Chrome 和 daemon 常驻，不逐张开关或重启。
+
+## 参考图复用
+
+同一项目、相同文件内容（SHA-256）只需上传一次；改文件名、换目录或多个 Agent 连续调用仍复用同一个素材 ID。每笔任务仍会把全部指定参考图重新加入提示框，**复用素材不等于省略参考图**。返回的 `reference_reused_count` 表示本笔复用了几张。
+
+对应关系在包外 `~/.local/share/flow-devtools/reference-cache.json`，按项目隔离，不能把它提交到 Git。升级前已上传的素材优先从本机任务记录和原浏览器请求核对参考图 ID 后接管，不按文件名或相似外观猜测。缓存命中但素材找不到、已知历史引用无法核验、或上次上传状态不确定时，停下来核对；不能静默再上传一个副本。修改图片字节内容会视为新图。上传尝试之前就保存状态，中断后先查找素材再恢复，不盲目重复上传。
 
 ## 连续提交与并发收图
 

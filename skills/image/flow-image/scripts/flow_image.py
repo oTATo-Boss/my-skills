@@ -105,7 +105,7 @@ def prepare(page,aspect):
     return snapshot(page)
 
 REFS_JS=r"""() => [...document.querySelectorAll('button[aria-label="素材"],button[aria-label="Asset"]')]
- .filter(e=>e.getClientRects().length).map(e=>({busy:e.getAttribute('aria-busy')==='true',width:e.querySelector('img')?.naturalWidth||0,height:e.querySelector('img')?.naturalHeight||0}))"""
+ .filter(e=>e.getClientRects().length).map(e=>({busy:e.getAttribute('aria-busy')==='true',width:e.querySelector('img')?.naturalWidth||0,height:e.querySelector('img')?.naturalHeight||0,id:/\/image\/([0-9a-f-]{36})/i.exec(e.querySelector('img')?.src||'')?.[1]||null}))"""
 
 ERRORS_JS="() => [...document.querySelectorAll('.error-tile')].filter(e=>e.getClientRects().length).length"
 
@@ -122,29 +122,106 @@ def validate_reference(path):
     if header.startswith(b'RIFF') and header[8:12]==b'WEBP':return '.webp'
     raise ValueError('Reference must contain a JPEG, PNG or WebP image')
 
-def attach_reference(page,path,expected_count=1):
-    suffix=validate_reference(path)
-    stage_dir=ROOT/'uploads';stage_dir.mkdir(exist_ok=True)
-    staged=stage_dir/('flow-ref-'+uuid.uuid4().hex+suffix)
+def reference_digest(path):
+    validate_reference(path)
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+def reference_cache():
+    path=ROOT/'reference-cache.json'
+    return json.loads(path.read_text()) if path.exists() else {'version':1,'projects':{}}
+
+def cached_reference(digest):
+    return reference_cache()['projects'].get(PROJECT,{}).get(digest)
+
+def store_reference(digest,entry):
+    # Called inside the composer lock, shared by every Agent/process.
+    data=reference_cache();data['projects'].setdefault(PROJECT,{})[digest]=entry
+    target=ROOT/'reference-cache.json';temp=target.with_name(target.name+'.'+uuid.uuid4().hex+'.tmp')
+    try:temp.write_text(json.dumps(data,ensure_ascii=False)+'\n');os.replace(temp,target)
+    finally:temp.unlink(missing_ok=True)
+
+def historical_reference_ids(body,prompt_sha,count):
+    if not request_matches(body,prompt_sha):return []
+    try:
+        outer=json.loads(urllib.parse.parse_qs(body)['f.req'][0]);args=json.loads(outer[0][0][1])
+        ids=[r[0] for r in args[1][0][2]]
+        if len(ids)!=count or any(not isinstance(i,str) or not re.fullmatch(r'[0-9a-f-]{36}',i) for i in ids):return []
+        return ids
+    except (ValueError,KeyError,IndexError,TypeError):return []
+
+def lookup_historical_reference(page,digest):
+    jobs=[json.loads(p.read_text()) for p in (ROOT/'jobs').glob('*.json')]
+    history=ROOT/'history.jsonl'
+    if history.exists():jobs.extend(json.loads(line) for line in history.read_text().splitlines() if line.strip())
+    candidates=[j for j in jobs if j.get('project')==PROJECT and digest in j.get('reference_sha256',[])]
+    if not candidates:return None
+    pid=re.search(r'pid=(\d+)',run_cli('status',as_json=False))
+    names=evaluate(page,"() => Object.fromEntries([...document.querySelectorAll('flow-grid-tile-container img[data-media-id]')].map(im=>[im.getAttribute('data-media-id'),im.closest('flow-grid-tile-container').getAttribute('aria-label')]))")
+    for job in sorted(candidates,key=lambda j:j.get('submitted_at',0),reverse=True):
+        if not pid or int(pid.group(1))!=job.get('daemon_pid') or not job.get('network_request_id'):continue
+        try:body=read_network_body(page,job['network_request_id'],'request')
+        except RuntimeError:continue
+        hashes=job['reference_sha256'];ids=historical_reference_ids(body,job['prompt_sha256'],len(hashes))
+        if not ids:continue
+        for sha,media in zip(hashes,ids):
+            # Keep already-established mappings instead of replacing them with duplicates.
+            if cached_reference(sha) is None:
+                store_reference(sha,{'media_id':media,'name':names.get(media),'state':'ready','provenance_job':job['request_id']})
+        return cached_reference(digest)
+    raise RuntimeError('This reference was used in this project before, but its material ID could not be verified; inspect the cache instead of uploading again')
+
+def open_reference_menu(page):
+    snap=snapshot(page)
+    if not re.search(r'listbox "(?:资源列表|Asset list)"',snap):
+        run_cli('click',page,control(snap,'button',r'^在提示框中添加素材$|^Add assets'))
+
+ASSET_OPTIONS_JS=r"""() => [...document.querySelectorAll('[role=option]')].map(e=>({name:e.querySelector('.asset-title')?.textContent,id:/\/image\/([0-9a-f-]{36})/i.exec(e.querySelector('img')?.src||'')?.[1]||null})).filter(r=>r.name)"""
+
+def select_reference(page,entry,expected_count):
+    open_reference_menu(page)
+    if entry.get('name'):
+        run_cli('fill',page,control(snapshot(page),'textbox',r'^搜索资源$|^Search assets$'),entry['name'])
+    deadline=time.monotonic()+40;selected=None
+    while time.monotonic()<deadline:
+        options=evaluate(page,ASSET_OPTIONS_JS)
+        selected=next((r for r in options if r['id'] and (r['id']==entry['media_id'] if entry.get('media_id') else r['name']==entry['name'])),None)
+        if selected:break
+        if not entry.get('name'):
+            evaluate(page,"() => {const e=document.querySelector('[role=listbox]');if(e)e.scrollTop+=Math.max(e.clientHeight-40,200)}")
+        time.sleep(0.5)
+    if not selected:raise RuntimeError('Cached reference material was not found or is still unavailable; it was not uploaded again')
+    run_cli('click',page,control(snapshot(page),'option','^'+re.escape(selected['name'])+r' (?:图片|Image)$'))
+    rows=evaluate(page,REFS_JS)
+    if not (references_ready(rows,expected_count) and selected['id'] in {r.get('id') for r in rows}):
+        run_cli('click',page,control(snapshot(page),'button',r'^添加到提示$|^Add to prompt$'))
+    while time.monotonic()<deadline:
+        rows=evaluate(page,REFS_JS)
+        if references_ready(rows,expected_count) and selected['id'] in {r.get('id') for r in rows}:
+            return {'media_id':selected['id'],'name':selected['name'],'state':'ready'}
+        time.sleep(0.5)
+    raise TimeoutError('The exact cached reference did not become ready; no generation was submitted')
+
+def upload_reference(page,path,entry,expected_count):
+    stage_dir=ROOT/'uploads';stage_dir.mkdir(exist_ok=True);staged=stage_dir/entry['name']
     shutil.copyfile(path,staged)
     try:
-        run_cli('click',page,control(snapshot(page),'button',r'^在提示框中添加素材$|^Add assets'))
+        open_reference_menu(page)
         run_cli('upload_file',page,control(snapshot(page),'button',r'^上传媒体内容$|^Upload media$'),staged)
-        deadline=time.monotonic()+120
-        while time.monotonic()<deadline:
-            snap=snapshot(page)
-            try:uid=control(snap,'option',r'^'+re.escape(staged.name)+r' (?:图片|Image)$')
-            except ValueError:time.sleep(2);continue
-            run_cli('click',page,uid)
-            run_cli('click',page,control(snapshot(page),'button',r'^添加到提示$|^Add to prompt$'))
-            break
-        else:raise TimeoutError('Reference upload did not complete; no generation was submitted')
-        while time.monotonic()<deadline:
-            if references_ready(evaluate(page,REFS_JS),expected_count):return
-            time.sleep(2)
-        raise TimeoutError('The reference chip did not become ready; no generation was submitted')
-    finally:
-        staged.unlink(missing_ok=True)
+        return select_reference(page,entry,expected_count)
+    finally:staged.unlink(missing_ok=True)
+
+def attach_reference(page,path,expected_count=1):
+    digest=reference_digest(path);entry=cached_reference(digest)
+    if entry is None:entry=lookup_historical_reference(page,digest)
+    if entry is not None:
+        selected=select_reference(page,entry,expected_count)
+        if selected is not None:store_reference(digest,{**entry,**selected})
+        return {'sha256':digest,'reused':True,'media_id':entry.get('media_id') or selected['media_id']}
+    entry={'media_id':None,'name':'flow-ref-'+digest+validate_reference(path),'state':'uploading'}
+    # Persist before upload: an interrupted upload is searched, never blindly repeated.
+    store_reference(digest,entry)
+    selected=upload_reference(page,path,entry,expected_count);store_reference(digest,selected)
+    return {'sha256':digest,'reused':False,'media_id':selected['media_id']}
 
 def download(url,requested):
     if not url.startswith('https://flow-content.google/image/'):raise ValueError('Unexpected image host')
@@ -314,7 +391,8 @@ def submit_job(prompt,output,aspect,reference=None):
         if any(Path(j['output']).with_suffix('')==output.with_suffix('') for j in jobs):raise FileExistsError('Output is reserved by an unfinished job')
         daemon=ensure_daemon();page=page_id();run_cli('select_page',page)
         snap=prepare(page,aspect)
-        for count,path in enumerate(references,start=1):attach_reference(page,path,expected_count=count)
+        attached=[]
+        for count,path in enumerate(references,start=1):attached.append(attach_reference(page,path,expected_count=count))
         if references:snap=snapshot(page)
         baseline={r['requestId'] for r in network_requests(page)}
         baseline_media_ids=[r['id'] for r in evaluate(page,MEDIA_JS)]
@@ -322,7 +400,10 @@ def submit_job(prompt,output,aspect,reference=None):
         run_cli('fill',page,editor,prompt)
         if references and not references_ready(evaluate(page,REFS_JS),len(references)):raise ValueError('Reference disappeared before submission; request was not submitted')
         job={'request_id':uuid.uuid4().hex,'state':'submitting','prompt_sha256':hashlib.sha256(prompt.encode()).hexdigest(),'project':PROJECT,'model':'Nano Banana 2.1','output':str(output),'submitted_at':time.time(),'mode':'image-to-image' if references else 'text-to-image','reference_count':len(references),'baseline_media_ids':baseline_media_ids,'page_id':page,'daemon_pid':int(re.search(r'pid=(\d+)',daemon).group(1))}
-        if references:job['reference_sha256']=[hashlib.sha256(path.read_bytes()).hexdigest() for path in references]
+        if references:
+            job['reference_sha256']=[r['sha256'] for r in attached]
+            job['reference_media_ids']=[r['media_id'] for r in attached]
+        job['reference_reused_count']=sum(r['reused'] for r in attached)
         save_job(job)
         try:
             run_cli('press_key',page,'Enter')
@@ -358,7 +439,7 @@ def wait_job(job_id,timeout=240):
                     latest=json.loads(job_path(job_id).read_text())
                     if latest['state']=='completed':return latest['result']
                     actual=download(selected['src'],Path(job['output']))
-                    result={'ok':True,'job_id':job_id,'mode':job['mode'],'reference_count':job['reference_count'],'output':str(actual),'media_id':selected['id'],'width':selected['width'],'height':selected['height'],'model':job['model'],'project':job['project'],'page_id':page,'daemon_pid':job['daemon_pid'],'network_request_id':job['network_request_id'],'elapsed_seconds':round(time.time()-job['submitted_at'])}
+                    result={'ok':True,'job_id':job_id,'mode':job['mode'],'reference_count':job['reference_count'],'reference_reused_count':job.get('reference_reused_count'),'output':str(actual),'media_id':selected['id'],'width':selected['width'],'height':selected['height'],'model':job['model'],'project':job['project'],'page_id':page,'daemon_pid':job['daemon_pid'],'network_request_id':job['network_request_id'],'elapsed_seconds':round(time.time()-job['submitted_at'])}
                     job.update(state='completed',completed_at=time.time(),result=result);save_job(job);append_history({**job,**result});return result
             if status.isdigit() and int(status)>=400:
                 job.update(state='failed',error='Browser request failed: '+status);save_job(job);append_history({**job,'ok':False})
@@ -386,7 +467,7 @@ def main():
         if args.command=='image':
             if args.no_wait:
                 job=submit_job(args.prompt,Path(args.output).expanduser(),args.aspect,args.ref)
-                result={'ok':True,'job_id':job['request_id'],'state':job['state'],'network_request_id':job['network_request_id'],'reference_count':job['reference_count']}
+                result={'ok':True,'job_id':job['request_id'],'state':job['state'],'network_request_id':job['network_request_id'],'reference_count':job['reference_count'],'reference_reused_count':job['reference_reused_count']}
             else:result=generate(args.prompt,Path(args.output).expanduser(),args.aspect,args.ref)
         elif args.command=='wait':result=wait_job(args.job_id)
         elif args.command=='stop':
