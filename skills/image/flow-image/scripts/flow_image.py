@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Flow image generation through Chrome DevTools CLI's persistent f10 daemon."""
-import argparse,fcntl,hashlib,json,os,re,shutil,ssl,subprocess,sys,time,urllib.request,uuid
+import argparse,contextlib,fcntl,hashlib,json,os,re,shutil,ssl,subprocess,sys,tempfile,time,urllib.parse,urllib.request,uuid
 from pathlib import Path
 ROOT=Path(os.environ.get('FLOW_IMAGE_HOME',str(Path.home()/'.local/share/flow-devtools'))).expanduser()
 CONFIG=json.loads((ROOT/'config.json').read_text()) if (ROOT/'config.json').exists() else {}
@@ -28,6 +28,7 @@ def evaluate(page,source):
 def ensure_daemon():
     status=run_cli('status',as_json=False)
     if 'daemon is not running' in status:
+        if active_jobs():raise RuntimeError('Unfinished jobs depend on the previous daemon; do not restart it automatically')
         run_cli('start','--autoConnect','--headless=false','--isolated=false','--usageStatistics=false','--performanceCrux=false','--workspace='+str(ROOT),'--workspace='+str(Path.home()/'.codex/visualizations'),'--workspace='+str(Path.home()/'Desktop'),as_json=False)
         status=run_cli('status',as_json=False)
     if '1.12.0' not in status or not any(flag in status for flag in ['autoConnect','auto-connect']):raise RuntimeError('Flow daemon must use Chrome DevTools CLI 1.12.0 with autoConnect')
@@ -159,45 +160,216 @@ def download(url,requested):
     with output.open('xb') as f:f.write(blob)
     return output
 
-def generate(prompt,output,aspect,reference=None):
+@contextlib.contextmanager
+def composer_lock():
+    with (ROOT/'generation.lock').open('a') as lock:
+        fcntl.flock(lock,fcntl.LOCK_EX)
+        yield
+
+def job_path(job_id):
+    if not re.fullmatch(r'[0-9a-f]{32}',job_id):raise ValueError('Invalid job ID')
+    return ROOT/'jobs'/(job_id+'.json')
+
+def save_job(job):
+    target=job_path(job['request_id']);target.parent.mkdir(exist_ok=True)
+    temp=target.with_name(target.name+'.'+uuid.uuid4().hex+'.tmp')
+    try:
+        temp.write_text(json.dumps(job,ensure_ascii=False)+'\n');os.replace(temp,target)
+    finally:temp.unlink(missing_ok=True)
+
+def active_jobs():
+    return [d for p in (ROOT/'jobs').glob('*.json') if (d:=json.loads(p.read_text())).get('state') not in ('completed','failed')]
+
+def append_history(job):
+    with (ROOT/'history.lock').open('a') as lock:
+        fcntl.flock(lock,fcntl.LOCK_EX)
+        with (ROOT/'history.jsonl').open('a') as f:f.write(json.dumps(job,ensure_ascii=False)+'\n')
+
+def network_requests(page):
+    rows=[];index=0
+    while True:
+        result=run_cli('list_network_requests',page,'--resourceTypes','fetch','--pageSize',100,'--pageIdx',index)
+        rows.extend(result.get('networkRequests',[]))
+        if not result.get('pagination',{}).get('hasNextPage'):return rows
+        index+=1
+
+def nested_strings(value):
+    if isinstance(value,str):
+        yield value
+        try:decoded=json.loads(value)
+        except ValueError:return
+        if decoded!=value:yield from nested_strings(decoded)
+    elif isinstance(value,(list,dict)):
+        for item in value.values() if isinstance(value,dict) else value:yield from nested_strings(item)
+
+def request_matches(body,prompt_sha):
+    try:payload=json.loads(urllib.parse.parse_qs(body)['f.req'][0])
+    except (KeyError,ValueError,IndexError):return False
+    return any(hashlib.sha256(text.encode()).hexdigest()==prompt_sha for text in nested_strings(payload))
+
+class BodyUnavailable(RuntimeError):pass
+
+def read_network_body(page,reqid,which):
+    # Native CLI truncates inline bodies at 10k. Read a full body in a private,
+    # short-lived directory; never keep tokens, request headers or signed URLs.
+    with tempfile.TemporaryDirectory(prefix='.network-',dir=ROOT) as directory:
+        path=Path(directory)/'body.txt'
+        result=run_cli('get_network_request',page,'--reqid',reqid,'--'+which+'FilePath',path)
+        detail=result['networkRequest']
+        actual=Path(detail.get(which+'BodyFilePath') or path)
+        if actual.is_file():return actual.read_text()
+        raise BodyUnavailable('Browser network '+which+' body is unavailable')
+
+def find_submission(page,baseline,prompt_sha):
+    deadline=time.monotonic()+35
+    while time.monotonic()<deadline:
+        for row in network_requests(page):
+            if row['requestId'] in baseline:continue
+            parsed=urllib.parse.urlparse(row['url'])
+            if row.get('method')!='POST' or parsed.hostname!='flow.google.com' or not parsed.path.endswith('/batchexecute'):continue
+            if request_matches(read_network_body(page,row['requestId'],'request'),prompt_sha):return row['requestId']
+        time.sleep(0.5)
+    raise TimeoutError('Submission was not confirmed; inspect the job before resubmitting')
+
+def rpc_result(body):
+    for line in body.splitlines():
+        try:batch=json.loads(line)
+        except ValueError:continue
+        if not isinstance(batch,list):continue
+        for row in batch:
+            if not isinstance(row,list) or len(row)<3 or row[0]!='wrb.fr' or not isinstance(row[2],str):continue
+            try:payload=json.loads(row[2]);media=payload[0]
+            except (ValueError,IndexError,TypeError):continue
+            if not isinstance(media,list):continue
+            for item in media:
+                try:media_id=item[0];width,height=item[6][2]
+                except (IndexError,TypeError,ValueError):continue
+                if not isinstance(media_id,str) or not re.fullmatch(r'[0-9a-f-]{36}',media_id):continue
+                if not isinstance(width,int) or not isinstance(height,int) or min(width,height)<512:continue
+                prefix='https://flow-content.google/image/'+media_id+'?'
+                src=next((x for x in nested_strings(item) if x.startswith(prefix)),None)
+                if src:return {'id':media_id,'src':src,'width':width,'height':height}
+    return None
+
+def choose_ui_result(rows,prompt_sha):
+    matches=[r for r in rows if hashlib.sha256(r['prompt'].encode()).hexdigest()==prompt_sha]
+    if len(matches)>1:raise RuntimeError('UI result is ambiguous; keep this job and inspect it instead of guessing')
+    return matches[0] if matches else None
+
+def find_ui_result(job):
+    with composer_lock():
+        # UI overlays share the composer. Never inspect them while a different
+        # caller is submitting; network-only polling does not need this lock.
+        if PENDING.exists():return None
+        if any(j['request_id']!=job['request_id'] and j.get('prompt_sha256')==job['prompt_sha256'] for j in active_jobs()):
+            raise RuntimeError('Identical concurrent prompts are ambiguous without the response body; inspect the jobs')
+        page=job['page_id'];state=evaluate(page,STATE_JS)
+        if state.get('draft'):return None
+        if state.get('url')!=PROJECT_URL:raise RuntimeError('Flow project changed during result collection')
+        claimed=set()
+        for file in (ROOT/'jobs').glob('*.json'):
+            other=json.loads(file.read_text())
+            if other['request_id']!=job['request_id'] and other.get('result'):claimed.add(other['result']['media_id'])
+        candidates=evaluate(page,r"""() => [...document.querySelectorAll('flow-grid-tile-container img[data-media-id]')].map(im=>({id:im.getAttribute('data-media-id'),src:im.currentSrc||im.src,width:im.naturalWidth,height:im.naturalHeight,title:im.closest('flow-grid-tile-container')?.getAttribute('aria-label')})).filter(r=>r.width>=512&&r.height>=512)""")
+        excluded=set(job.get('baseline_media_ids',[]))|claimed;matches=[]
+        for row in candidates:
+            if row['id'] in excluded:continue
+            image_uid=None
+            for line in snapshot(page).splitlines():
+                if row['id'] in line and re.search(r'\bimage\b',line):
+                    match=re.search(r'uid=(\S+)',line)
+                    if match:image_uid=match.group(1);break
+            if not image_uid:continue
+            run_cli('hover',page,image_uid)
+            def toggle():
+                run_cli('click',page,control(snapshot(page),'button','^'+re.escape(row['title'])+'$'))
+            prompt=None;opened=False
+            try:
+                # Flow can leave the trigger expanded after Escape; toggle it
+                # closed then open if needed, using native CLI input events.
+                for attempt in range(2):
+                    toggle();deadline=time.monotonic()+1.5
+                    while time.monotonic()<deadline:
+                        info=evaluate(page,"() => ({title:document.querySelector('flow-info-panel .title')?.textContent,prompt:[...document.querySelectorAll('flow-info-panel .prompt-text .text-part')].map(e=>e.textContent).join('')})")
+                        if info.get('title')==row['title'] and info.get('prompt'):
+                            prompt=info['prompt'];opened=True;break
+                        time.sleep(0.1)
+                    if opened:break
+                if prompt is not None:row['prompt']=prompt;matches.append(row)
+            finally:
+                if opened:toggle()
+                else:run_cli('press_key',page,'Escape')
+        return choose_ui_result(matches,job['prompt_sha256'])
+
+def submit_job(prompt,output,aspect,reference=None):
     if not prompt.strip():raise ValueError('Prompt must not be empty')
     if not output.is_absolute():raise ValueError('Use an absolute output path')
-    if any(output.with_suffix(s).exists() for s in ['.jpg','.png','.webp']):raise FileExistsError('Output already exists')
-    if PENDING.exists():raise RuntimeError('An earlier submitted job is unresolved; inspect the Flow project before retrying')
     references=[] if reference is None else ([reference] if isinstance(reference,Path) else list(reference))
     for path in references:validate_reference(path)
-    daemon=ensure_daemon();page=page_id();run_cli('select_page',page)
-    snap=prepare(page,aspect)
-    for count,path in enumerate(references,start=1):
-        attach_reference(page,path,expected_count=count)
-    if references:snap=snapshot(page)
-    baseline={r['id'] for r in evaluate(page,MEDIA_JS)}
-    editor=control(snap,'textbox',r'您希望创作什么|What do you want|Describe|Create')
-    run_cli('fill',page,editor,prompt)
-    if references and not references_ready(evaluate(page,REFS_JS),len(references)):
-        raise ValueError('Reference disappeared before submission; request was not submitted')
-    # Persist before the only submit gesture; never auto-resubmit on timeout.
-    request={'request_id':uuid.uuid4().hex,'prompt_sha256':hashlib.sha256(prompt.encode()).hexdigest(),'project':PROJECT,'model':'Nano Banana 2.1','output':str(output),'baseline':sorted(baseline),'baseline_errors':evaluate(page,ERRORS_JS),'submitted_at':time.time()}
-    request['mode']='image-to-image' if references else 'text-to-image'
-    request['reference_count']=len(references)
-    if references:request['reference_sha256']=[hashlib.sha256(path.read_bytes()).hexdigest() for path in references]
-    PENDING.write_text(json.dumps(request,ensure_ascii=False)+'\n')
-    run_cli('press_key',page,'Enter')
-    deadline=time.monotonic()+240
-    while time.monotonic()<deadline:
-        rows=new_images(evaluate(page,MEDIA_JS),baseline)
-        if rows:
-            selected=rows[0];actual=download(selected['src'],output)
-            result={'ok':True,'mode':request['mode'],'reference_count':len(references),'output':str(actual),'media_id':selected['id'],'width':selected['width'],'height':selected['height'],'model':'Nano Banana 2.1','project':PROJECT,'page_id':page,'daemon_pid':int(re.search(r'pid=(\d+)',daemon).group(1)),'elapsed_seconds':round(time.time()-request['submitted_at'])}
-            with (ROOT/'history.jsonl').open('a') as f:f.write(json.dumps({**request,**result},ensure_ascii=False)+'\n')
-            PENDING.unlink();return result
-        if has_new_failure(evaluate(page,ERRORS_JS),request['baseline_errors']):
-            with (ROOT/'history.jsonl').open('a') as f:
-                f.write(json.dumps({**request,'ok':False,'terminal_state':'failed','error':'Flow displayed a new failed image tile; no automatic retry'},ensure_ascii=False)+'\n')
-            PENDING.unlink()
-            raise RuntimeError('Flow reported that image generation failed; request recorded as failed, not retried')
-        time.sleep(3)
-    raise TimeoutError('Submitted to Flow but no finished image was identified; the request was not retried')
+    with composer_lock():
+        if PENDING.exists():raise RuntimeError('A legacy submitted job is unresolved; let it finish before switching')
+        jobs=active_jobs()
+        if any(j['state'] in ('submitting','unconfirmed') for j in jobs):raise RuntimeError('An earlier submission is unconfirmed; inspect its job before resubmitting')
+        if any(output.with_suffix(ext).exists() for ext in ('.jpg','.png','.webp')):raise FileExistsError('Output already exists')
+        if any(Path(j['output']).with_suffix('')==output.with_suffix('') for j in jobs):raise FileExistsError('Output is reserved by an unfinished job')
+        daemon=ensure_daemon();page=page_id();run_cli('select_page',page)
+        snap=prepare(page,aspect)
+        for count,path in enumerate(references,start=1):attach_reference(page,path,expected_count=count)
+        if references:snap=snapshot(page)
+        baseline={r['requestId'] for r in network_requests(page)}
+        baseline_media_ids=[r['id'] for r in evaluate(page,MEDIA_JS)]
+        editor=control(snap,'textbox',r'您希望创作什么|What do you want|Describe|Create')
+        run_cli('fill',page,editor,prompt)
+        if references and not references_ready(evaluate(page,REFS_JS),len(references)):raise ValueError('Reference disappeared before submission; request was not submitted')
+        job={'request_id':uuid.uuid4().hex,'state':'submitting','prompt_sha256':hashlib.sha256(prompt.encode()).hexdigest(),'project':PROJECT,'model':'Nano Banana 2.1','output':str(output),'submitted_at':time.time(),'mode':'image-to-image' if references else 'text-to-image','reference_count':len(references),'baseline_media_ids':baseline_media_ids,'page_id':page,'daemon_pid':int(re.search(r'pid=(\d+)',daemon).group(1))}
+        if references:job['reference_sha256']=[hashlib.sha256(path.read_bytes()).hexdigest() for path in references]
+        save_job(job)
+        try:
+            run_cli('press_key',page,'Enter')
+            job['network_request_id']=find_submission(page,baseline,job['prompt_sha256'])
+            job.update(state='submitted',accepted_at=time.time());save_job(job)
+        except Exception as exc:
+            job.update(state='unconfirmed');save_job(job);exc.job_id=job['request_id'];raise
+    # Generation proceeds remotely after the short composer lock is released.
+    return job
+
+def wait_job(job_id,timeout=240):
+    job=json.loads(job_path(job_id).read_text())
+    if job['state']=='completed':return job['result']
+    if 'network_request_id' not in job:raise RuntimeError('This submission is unconfirmed; inspect it instead of resubmitting')
+    page=job['page_id'];deadline=time.monotonic()+timeout
+    try:
+        while time.monotonic()<deadline:
+            daemon=run_cli('status',as_json=False)
+            pid=re.search(r'pid=(\d+)',daemon)
+            if not pid or int(pid.group(1))!=job['daemon_pid']:raise RuntimeError('The original DevTools connection changed; request IDs cannot be reused safely')
+            row=next((r for r in network_requests(page) if r['requestId']==job['network_request_id']),None)
+            if row is None:raise RuntimeError('The submitted browser request is no longer available; inspect the job')
+            status=str(row['status'])
+            selected=None
+            if status=='200':
+                try:selected=rpc_result(read_network_body(page,job['network_request_id'],'response'))
+                except BodyUnavailable:pass
+            if not selected and (status=='200' or status.startswith('net::')):selected=find_ui_result(job)
+            if selected:
+                # A second waiter for the same job must not duplicate downloads/history.
+                with (job_path(job_id).with_suffix('.lock')).open('a') as lock:
+                    fcntl.flock(lock,fcntl.LOCK_EX)
+                    latest=json.loads(job_path(job_id).read_text())
+                    if latest['state']=='completed':return latest['result']
+                    actual=download(selected['src'],Path(job['output']))
+                    result={'ok':True,'job_id':job_id,'mode':job['mode'],'reference_count':job['reference_count'],'output':str(actual),'media_id':selected['id'],'width':selected['width'],'height':selected['height'],'model':job['model'],'project':job['project'],'page_id':page,'daemon_pid':job['daemon_pid'],'network_request_id':job['network_request_id'],'elapsed_seconds':round(time.time()-job['submitted_at'])}
+                    job.update(state='completed',completed_at=time.time(),result=result);save_job(job);append_history({**job,**result});return result
+            if status.isdigit() and int(status)>=400:
+                job.update(state='failed',error='Browser request failed: '+status);save_job(job);append_history({**job,'ok':False})
+                raise RuntimeError(job['error'])
+            time.sleep(2)
+        raise TimeoutError('Job is still unresolved; use flow-image wait '+job_id+' to resume without submitting again')
+    except Exception as exc:
+        exc.job_id=job_id;raise
+
+def generate(prompt,output,aspect,reference=None):
+    return wait_job(submit_job(prompt,output,aspect,reference)['request_id'])
 
 def main():
     os.umask(0o077);ROOT.mkdir(parents=True,exist_ok=True);ROOT.chmod(0o700)
@@ -205,18 +377,26 @@ def main():
     sub=parser.add_subparsers(dest='command',required=True)
     sub.add_parser('status');sub.add_parser('stop')
     image=sub.add_parser('image');image.add_argument('prompt');image.add_argument('--output','-o',required=True);image.add_argument('--aspect',choices=['1:1','16:9','9:16','4:3','3:4'],default='1:1')
+    image.add_argument('--no-wait',action='store_true',help='Return the accepted job ID immediately; collect it later with wait')
+    wait=sub.add_parser('wait');wait.add_argument('job_id')
     image.add_argument('--ref',action='append',default=[],type=lambda v:Path(v).expanduser(),help='Absolute JPEG/PNG/WebP reference image; repeat for multiple images in order')
     args=parser.parse_args()
     try:
         if not CONFIG.get('project') or not CONFIG.get('account'):raise ValueError('Configure project and account in FLOW_IMAGE_HOME/config.json first')
-        with (ROOT/'generation.lock').open('w') as lock:
-            fcntl.flock(lock,fcntl.LOCK_EX)
-            if args.command=='image':result=generate(args.prompt,Path(args.output).expanduser(),args.aspect,args.ref)
-            elif args.command=='stop':result={'ok':True,'status':run_cli('stop',as_json=False)}
-            else:
-                status=ensure_daemon();page=page_id();state=evaluate(page,STATE_JS)
-                result={'ok':True,'status':status,'state':state,'pending_job':PENDING.exists()}
+        if args.command=='image':
+            if args.no_wait:
+                job=submit_job(args.prompt,Path(args.output).expanduser(),args.aspect,args.ref)
+                result={'ok':True,'job_id':job['request_id'],'state':job['state'],'network_request_id':job['network_request_id'],'reference_count':job['reference_count']}
+            else:result=generate(args.prompt,Path(args.output).expanduser(),args.aspect,args.ref)
+        elif args.command=='wait':result=wait_job(args.job_id)
+        elif args.command=='stop':
+            with composer_lock():
+                if active_jobs() or PENDING.exists():raise RuntimeError('Unfinished jobs exist; collect their results before stopping the daemon')
+                result={'ok':True,'status':run_cli('stop',as_json=False)}
+        else:
+            status=ensure_daemon();page=page_id();state=evaluate(page,STATE_JS)
+            result={'ok':True,'status':status,'state':state,'pending_job':PENDING.exists(),'jobs':[{k:j.get(k) for k in ('request_id','state','network_request_id','output')} for j in active_jobs()]}
         print(json.dumps(result,ensure_ascii=False));return 0
     except Exception as exc:
-        print(json.dumps({'ok':False,'error_type':type(exc).__name__,'error':str(exc)[:1200],'may_have_submitted':PENDING.exists()},ensure_ascii=False),file=sys.stderr);return 1
+        print(json.dumps({'ok':False,'error_type':type(exc).__name__,'error':str(exc)[:1200],'job_id':getattr(exc,'job_id',None),'may_have_submitted':PENDING.exists() or bool(getattr(exc,'job_id',None))},ensure_ascii=False),file=sys.stderr);return 1
 if __name__=='__main__':raise SystemExit(main())

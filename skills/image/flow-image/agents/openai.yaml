@@ -1,4 +1,4 @@
 interface:
   display_name: "Flow Image"
-  short_description: "用现有 Chrome 常驻会话调用 Flow Nano Banana 2.1 生图与多参考图编辑"
+  short_description: "用现有 Chrome 常驻会话调用 Flow Nano Banana 2.1 生图、多参考图编辑及并发收图"
   default_prompt: "使用 $flow-image 在 Flow 中生成或编辑图片，复用现有 Chrome 常驻会话并保存结果。"

@@ -2,7 +2,7 @@
 name: flow-image
 description: "Generate and edit images with Nano Banana 2.1 in Google Flow through the local Chrome DevTools CLI persistent session. Use for Flow/Nano Banana image requests, including multiple local reference images; reuse the user's existing Chrome login."
 metadata:
-  version: "1.1.0"
+  version: "1.2.0"
 ---
 
 # Flow 图片生成与编辑
@@ -37,13 +37,30 @@ metadata:
 - 提示词说明每张图的作用（如狐狸主体／木屋场景）及需要保留和修改的内容，避免只靠“图1／图2”造成歧义。当前未封装遮罩或视频。
 - `--aspect`：`1:1`（默认）、`16:9`、`9:16`、`4:3`、`3:4`。每次生成一张；输出路径必须是绝对路径，已有文件不覆盖。实际文件后缀按下载内容确定，以成功 JSON 中的 `output` 为准。
 - 输出 JSON 包含 `ok`、`mode`、图片路径、媒体 ID、参考图数量 `reference_count`、尺寸和耗时。查看保存图片，核对参考主体及修改要求后再报告成功；接口成功不等于画面满足要求。
-- 同一提示框由文件锁串行使用，不在其他工具中同时编辑。保持主 Chrome 开着，调用之间保留 daemon；不逐张启动／关闭浏览器，也不重启常驻会话。
+- 文件锁只保护设置参数、上传参考和确认提交；提交后释放，同一项目中的图片可以重叠生成。不要在其他工具中同时编辑提示框。保持主 Chrome 和 daemon 常驻，不逐张开关或重启。
+
+## 连续提交与并发收图
+
+多个 Agent 可直接各自调用 `image`，每个命令等待自己的结果，期间不占用提示框锁。同一个 Agent 要先连续提交多笔，再收图，可使用：
+
+```bash
+~/.local/bin/flow-image image '一只黄色橡皮鸭，蓝碗，白背景' --output '/绝对路径/鸭子.jpg' --no-wait
+~/.local/bin/flow-image image '紫葡萄，黄盘子，浅紫背景' --output '/绝对路径/葡萄.jpg' --no-wait
+~/.local/bin/flow-image wait '<第一笔返回的job_id>'
+~/.local/bin/flow-image wait '<第二笔返回的job_id>'
+```
+
+`--no-wait` 返回“已确认提交”的 `job_id`，不代表图片完成。`wait` 收取已提交任务，**不会再次提交**；已收取的任务再次 `wait` 返回原结果。每笔使用不同的输出路径，正在生成的任务也会预留输出路径。
+
+优先按该次浏览器请求识别结果；Flow 若中止生成连接而页面继续出图，则短暂加锁打开图片详情，核对完整提示词及已认领媒体 ID 后恢复。不能取页面最新图片代替。相同提示词并发且响应体不可读、或详情匹配不唯一时，保留任务并停止猜测，需人工核对。
 
 ## 状态与恢复
 
 必要时运行 `~/.local/bin/flow-image status`，无需每张图先检查或重新连接。账号、项目、模型或已有未完成提示词不符合时，脚本会停止，先处理明确报错。
 
-`~/.local/share/flow-devtools/pending.json` 表示请求可能已经提交。超时先检查标记、当前项目和结果，恢复已有图片；**不能删除标记后盲目重试**。成功会自动移除标记；上传失败未提交不应宣称生成失败或重复生成。参考图会留在 Flow 的项目素材中，临时本地上传副本自动清理。
+新任务独立记录在 `~/.local/share/flow-devtools/jobs/<job_id>.json`，`status` 列出未完成任务。超时使用 `wait <job_id>` 继续收取，不重发。已绑定浏览器请求的在途任务不阻止其他任务提交；`submitting`／`unconfirmed` 表示无法确认提交归属，先核对后再提交新任务。
+
+旧版 `pending.json` 存在时先让旧任务完成或核对其结果，不能直接删除后重试。Chrome／daemon 重启会使原请求编号失效；脚本拒绝拿新连接的同号请求当旧结果。参考图会留在 Flow 项目中，临时本地上传副本及读取的网络正文自动清理，不保存 Cookie 或签名 URL。
 
 需要未封装的 UI 操作时，用 `chrome-devtools --sessionId=f10 ...` 和最新 `take_snapshot`，页 ID 从 `list_pages` 确认，不硬编码 UID。不要回退到 gflow-cli、Flow2API、其他图片服务，或复制 Cookie。只有用户明确要求停止服务时才用 `flow-image stop`。
 

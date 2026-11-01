@@ -65,4 +65,66 @@ class DriverTests(unittest.TestCase):
    m.ensure_daemon=lambda:self.fail('Browser must not be touched for an invalid second reference')
    with self.assertRaisesRegex(ValueError,'Reference'):
     m.generate('combine',root/'output.jpg','1:1',[first,root/'missing.png'])
+ def test_network_response_is_attributed_to_its_own_media(self):
+  m=self.load();import json
+  def body(media):
+   return json.dumps([['wrb.fr','ogiZ0b',json.dumps([[[media,None,None,None,None,None,[None,None,[1024,1024],None,None,['https://flow-content.google/image/'+media+'?signed=test']]]]]),None]])
+  a='11111111-1111-4111-8111-111111111111';b='22222222-2222-4222-8222-222222222222'
+  # B may complete before A; each response must keep its own output identity.
+  self.assertEqual(m.rpc_result(body(b))['id'],b)
+  self.assertEqual(m.rpc_result(body(a))['id'],a)
+  self.assertIsNone(m.rpc_result('not a complete response'))
+ def test_exact_prompt_match_handles_nested_form_encoded_payload(self):
+  m=self.load();import json,urllib.parse,hashlib
+  prompt='a fox & a cabin + snow'*2000
+  body=urllib.parse.urlencode({'f.req':json.dumps([[['rpc',json.dumps([None,[prompt]])]]])})
+  self.assertTrue(m.request_matches(body,hashlib.sha256(prompt.encode()).hexdigest()))
+  self.assertFalse(m.request_matches(body,hashlib.sha256((prompt+'!').encode()).hexdigest()))
+ def test_second_job_can_submit_while_first_waits_and_output_is_reserved(self):
+  m=self.load();import fcntl,json
+  with tempfile.TemporaryDirectory() as d:
+   m.ROOT=Path(d);m.PENDING=m.ROOT/'pending.json'
+   m.ensure_daemon=lambda:'pid=44561 version=1.12.0 auto-connect'
+   m.page_id=lambda:8;m.prepare=lambda *a:'uid=1 textbox "What do you want"'
+   m.run_cli=lambda *a,**kw:{}
+   m.network_requests=lambda *a:[]
+   m.evaluate=lambda *a:[]
+   serial=iter([101,102]);m.find_submission=lambda *a:next(serial)
+   a=m.submit_job('first',m.ROOT/'first.jpg','1:1',[])
+   self.assertEqual(a['state'],'submitted')
+   with (m.ROOT/'generation.lock').open('w') as lock:
+    fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+   b=m.submit_job('second',m.ROOT/'second.jpg','1:1',[])
+   self.assertNotEqual(a['request_id'],b['request_id'])
+   self.assertEqual(a['network_request_id'],101);self.assertEqual(b['network_request_id'],102)
+   with self.assertRaisesRegex(FileExistsError,'reserved'):
+    m.submit_job('third',m.ROOT/'first.jpg','1:1',[])
+ def test_ambiguous_submission_blocks_resubmit_but_known_inflight_jobs_do_not(self):
+  m=self.load();import json
+  with tempfile.TemporaryDirectory() as d:
+   m.ROOT=Path(d);m.PENDING=m.ROOT/'pending.json'
+   m.save_job({'request_id':'a'*32,'state':'submitting','output':str(m.ROOT/'a.jpg')})
+   with self.assertRaisesRegex(RuntimeError,'unconfirmed'):
+    m.submit_job('next',m.ROOT/'b.jpg','1:1',[])
+ def test_ui_recovery_requires_one_exact_prompt_not_the_newest_image(self):
+  m=self.load();import hashlib
+  digest=hashlib.sha256(b'cactus').hexdigest()
+  rows=[{'id':'newest-other','prompt':'grapes'},{'id':'mine','prompt':'cactus'}]
+  self.assertEqual(m.choose_ui_result(rows,digest)['id'],'mine')
+  self.assertIsNone(m.choose_ui_result([rows[0]],digest))
+  with self.assertRaisesRegex(RuntimeError,'ambiguous'):
+   m.choose_ui_result([rows[1],dict(rows[1],id='second-cactus')],digest)
+ def test_aborted_connection_can_recover_its_verified_ui_result(self):
+  m=self.load()
+  with tempfile.TemporaryDirectory() as d:
+   m.ROOT=Path(d);m.PENDING=m.ROOT/'pending.json';out=m.ROOT/'image.jpg'
+   job={'request_id':'b'*32,'state':'submitted','network_request_id':1,'page_id':8,'daemon_pid':44561,'output':str(out),'mode':'text-to-image','reference_count':0,'model':'Nano Banana 2.1','project':'test','submitted_at':0}
+   m.save_job(job)
+   m.run_cli=lambda *a,**kw:'pid=44561'
+   m.network_requests=lambda *a:[{'requestId':1,'status':'net::ERR_ABORTED'}]
+   m.find_ui_result=lambda j:{'id':'verified','src':'test','width':1024,'height':1024}
+   def save(url,path):path.write_bytes(b'\xff\xd8\xff');return path
+   m.download=save
+   self.assertEqual(m.wait_job(job['request_id'],timeout=1)['media_id'],'verified')
+   self.assertTrue(out.exists())
 if __name__=='__main__' :unittest.main()
