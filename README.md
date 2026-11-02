@@ -12,7 +12,7 @@
 | [RH-minimax-H3](skills/video/ai/rh-minimax-h3/SKILL.md) | RunningHub H3 30 秒直出、多图音频参考、Plus/Ultra、批量任务及查询恢复。 | `npx skills add oTATo-Boss/my-skills --skill rh-minimax-h3 -g -a codex --copy -y` |
 | [single-shot-prompt](skills/video/ai/single-shot-prompt/SKILL.md) | 创作、修改和审查不切镜的单镜头短视频提示词。 | `npx skills add oTATo-Boss/my-skills --skill single-shot-prompt -g -a codex --copy -y` |
 | [multi-shot-prompt](skills/video/ai/multi-shot-prompt/SKILL.md) | 编写多镜头视频提示词，并按需编译执行清单、审片和返修。 | `npx skills add oTATo-Boss/my-skills --skill multi-shot-prompt -g -a codex --copy -y` |
-| [json-prompt-system](skills/image/json-prompt-system/SKILL.md) | 生成或还原自拍、生活照、电商服装与试穿的 JSON 图像提示词。 | `npx skills add oTATo-Boss/my-skills --skill json-prompt-system -g -a codex --copy -y` |
+| [json-prompt-system](skills/image/json-prompt-system/SKILL.md) | 生成或还原自拍、生活照、电商服装与试穿的 JSON 图像提示词，含角色、服装与环境块。 | `npx skills add oTATo-Boss/my-skills --skill json-prompt-system -g -a codex --copy -y` |
 | [Character Design（character-design）](skills/image/character-design/SKILL.md) | 建立写实/CG/AAA角色参考板，设计服装并进行妆造与状态裂变。 | `npx skills add oTATo-Boss/my-skills --skill character-design -g -a codex --copy -y` |
 | [nsfw-girl-direction](skills/video/ai/nsfw-girl-direction/SKILL.md) | 成人美女图片与视频创作指导，基准是真实网黄质感，默认尺度按上限露骨；不写提示词。 | `npx skills add oTATo-Boss/my-skills --skill nsfw-girl-direction -g -a codex --copy -y` |
 | [codex-imagegen](skills/image/codex-imagegen/SKILL.md) | 让其他 Agent 通过本机 Codex CLI 生成和编辑图片。 | `npx skills add oTATo-Boss/my-skills --skill codex-imagegen -g -a codex --copy -y` |
