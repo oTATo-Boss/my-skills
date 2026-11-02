@@ -10,7 +10,7 @@
 
 ## 原创工作流
 
-`ai-liveaction-fusion`、`single-shot-prompt`（曾用名 `ai-video-prompt`、`short-video-prompt`）、`json-prompt-system`、`character-outfit-design` 有本地开发记录；`nsfw-beauty-selfie-prompt` 由用户明确确认原创。`character-outfit-design`（角色的服装设计）曾用名为 `fashion-picture`、`otato-fashion-design`。
+`ai-liveaction-fusion`、`single-shot-prompt`（曾用名 `ai-video-prompt`、`short-video-prompt`）、`json-prompt-system`、`character-outfit-design` 有本地开发记录；`nsfw-girl-direction`（曾用名 `nsfw-beauty-selfie-prompt`、`nsfw-seedance-prompt-skill`）由用户明确确认原创。`character-outfit-design`（角色的服装设计）曾用名为 `fashion-picture`、`otato-fashion-design`。
 
 ## 二创与整合版本
 
