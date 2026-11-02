@@ -2,7 +2,7 @@
   "appId": "2104225323949101057",
   "webappName": "Qwen Image2.1 (Unlimited Edition)",
   "snapshot_date": "2026-11-01",
-  "source": "用户 API 示例、LoRA 截图与平台只读节点查询；LoRA强度按截图覆盖示例0，实例按用户后续要求默认ultra；原始图片与提示词已移除。",
+  "source": "用户 API 示例、LoRA 截图与平台只读节点查询；LoRA强度按截图覆盖示例0，实例按用户后续要求默认ultra；原始图片与提示词已移除。 2026-11-02用户最新截图覆盖LoRA1强度为0.4、LoRA2文件名及强度为casual_snapshot_realism_qwen21.safetensors/0.8；未重新查询平台或提交生成。",
   "source_sha256": "eab642a5350249e451a31f0f179a8cd7ed61a9de1d319ca193ad8c7103e3be5b",
   "screenshot_sha256": "efbb810b4b687fae1a40113387c35df3c8b065329bf3d281599bb8727da2f122",
   "instanceType": "ultra",
@@ -98,7 +98,7 @@
     {
       "nodeId": "534",
       "fieldName": "strength_model",
-      "fieldValue": "0.8",
+      "fieldValue": "0.4",
       "description": "lora1-权重推荐0.8",
       "fieldData": "[\"FLOAT\", {\"max\": 100, \"min\": -100, \"step\": 0.01, \"default\": 1}]",
       "nodeName": "LoraLoaderModelOnly"
@@ -106,7 +106,7 @@
     {
       "nodeId": "526",
       "fieldName": "lora_name",
-      "fieldValue": "Pornmaster_QI2.1_Breasts_Slider_V1.safetensors",
+      "fieldValue": "casual_snapshot_realism_qwen21.safetensors",
       "description": "lora2-自选",
       "fieldData": "[[]]",
       "nodeName": "LoraLoaderModelOnly"
@@ -114,7 +114,7 @@
     {
       "nodeId": "526",
       "fieldName": "strength_model",
-      "fieldValue": "1",
+      "fieldValue": "0.8",
       "description": "lora2权重-自选",
       "fieldData": "[\"FLOAT\", {\"max\": 100, \"min\": -100, \"step\": 0.01, \"default\": 1}]",
       "nodeName": "LoraLoaderModelOnly"
@@ -151,5 +151,7 @@
       "fieldData": "[\"STRING\", {\"default\": \"prompt\", \"multiline\": true}]",
       "nodeName": "CR Prompt Text"
     }
-  ]
+  ],
+  "configuration_date": "2026-11-02",
+  "configuration_screenshot_sha256": "14330ccce91402b0ec9fc2aff46aef4c59801c87ec189e7ebfc3f1a5beb35acb"
 }

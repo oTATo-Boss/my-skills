@@ -2,7 +2,7 @@
 name: rh-qwen-image-2-1
 description: Use when 用户指定 RH-Qwen Image 2.1 或 RunningHub 的 Qwen Image2.1 (Unlimited Edition) AI 应用，进行单图修改、多图融合、人物换装、场景替换或风格参考编辑。
 metadata:
-  version: "2.0.0"
+  version: "2.0.1"
 ---
 
 # RH-Qwen Image 2.1
@@ -17,10 +17,10 @@ metadata:
 
 | 固定槽位 | 文件名 | 权重 |
 |---|---|---:|
-| LoRA 1 · 节点534 | `NSFW Qwen by TheseAlpacas V2.safetensors` | 0.8 |
-| LoRA 2 · 节点526 | `Pornmaster_QI2.1_Breasts_Slider_V1.safetensors` | 1 |
+| LoRA 1 · 节点534 | `NSFW Qwen by TheseAlpacas V2.safetensors` | 0.4 |
+| LoRA 2 · 节点526 | `casual_snapshot_realism_qwen21.safetensors` | 0.8 |
 
-文件名和权重按用户截图固定，每次请求都显式传入。用户示例强度为0，但截图和直接要求优先；不以示例0覆盖。没有已核实的触发词，不擅自添加。LoRA名称不改变用户当前图片任务的内容要求。
+文件名和权重按用户2026-11-02最新截图固定，每次请求都显式传入。当前0.4/0.8覆盖此前截图的0.8/1及API示例的0/0。没有已核实的触发词，不擅自添加。LoRA名称不改变用户当前图片任务的内容要求。
 
 ## 参考图和指令
 

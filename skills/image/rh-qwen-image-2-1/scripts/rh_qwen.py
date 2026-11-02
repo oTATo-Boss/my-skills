@@ -22,8 +22,8 @@ ASPECT_VALUES = {'1:1': '1:1 (Square)', '2:3': '2:3 (Portrait Photo)',
                  '4:3': '4:3 (Standard)', '9:16': '9:16 (Portrait Widescreen)',
                  '16:9': '16:9 (Widescreen)', '21:9': '21:9 (Ultrawide)'}
 ASPECTS = ('original', *ASPECT_VALUES)
-FIXED_LORAS = (('534', 'NSFW Qwen by TheseAlpacas V2.safetensors', '0.8'),
-               ('526', 'Pornmaster_QI2.1_Breasts_Slider_V1.safetensors', '1'))
+FIXED_LORAS = (('534', 'NSFW Qwen by TheseAlpacas V2.safetensors', '0.4'),
+               ('526', 'casual_snapshot_realism_qwen21.safetensors', '0.8'))
 
 
 def read_json(path):

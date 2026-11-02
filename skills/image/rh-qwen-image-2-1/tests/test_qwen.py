@@ -79,9 +79,9 @@ class QwenTests(unittest.TestCase):
         self.assertEqual(q.payload_for({'prompt':'edit','instance':'plus'}, ['up.png'])['instanceType'], 'plus')
         values = {(n['nodeId'], n['fieldName']): n['fieldValue'] for n in q.nodes('edit', ['up.png'])}
         self.assertEqual(values[('534', 'lora_name')], 'NSFW Qwen by TheseAlpacas V2.safetensors')
-        self.assertEqual(values[('534', 'strength_model')], '0.8')
-        self.assertEqual(values[('526', 'lora_name')], 'Pornmaster_QI2.1_Breasts_Slider_V1.safetensors')
-        self.assertEqual(values[('526', 'strength_model')], '1')
+        self.assertEqual(values[('534', 'strength_model')], '0.4')
+        self.assertEqual(values[('526', 'lora_name')], 'casual_snapshot_realism_qwen21.safetensors')
+        self.assertEqual(values[('526', 'strength_model')], '0.8')
         self.assertEqual(values[('13', 'aspect_ratio')], '9:16 (Portrait Widescreen)')
         for node, expected in [('521', 'false'), ('515', 'false'), ('525', 'false'), ('528', 'true')]:
             self.assertEqual(values[(node, 'value')], expected)

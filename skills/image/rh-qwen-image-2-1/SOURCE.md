@@ -4,7 +4,7 @@
 - kind: `local`
 - status: `confirmed`
 - source: 用户 2026-10-31 在本会话要求将其 RH Studio「Qwen Image 2.1 多图编辑」制作为独立 Skill；开发目录 `skills/image/rh-qwen-image-2-1`。
-- version: `2.0.0`
+- version: `2.0.1`
 - author: 用户提出需求与应用范围，Codex 辅助编写 Skill、接口参考、Python 执行器和测试；不声明 Qwen 模型、RunningHub 服务或 RH Studio 前端为本包原创。
 - license: unknown；用户未为本新包指定对外许可。第三方应用、模型及服务条款归对应权利方，本包不分发其实现或模型权重。
 - collected_at: `2026-10-31`（首次创建）
@@ -50,3 +50,9 @@
 2026-11-01：用户提供新应用 `2104225323949101057` 的 API 示例及 LoRA 截图，并后续要求 Ultra 默认实例。通过平台只读节点查询确认应用名称 Qwen Image2.1 (Unlimited Edition) 和全部18个字段；[node_map.json](references/node_map.json) 保存脱敏快照及原文、截图SHA-256。截图强度0.8/1优先于示例0/0，固定模型名为 NSFW Qwen by TheseAlpacas V2.safetensors 和 Pornmaster_QI2.1_Breasts_Slider_V1.safetensors。模型权重许可未核实，本包不分发权重。
 
 更新六图顺序、分辨率MP、比例完整值、原比例开关、图片数量、提示词及辅助开关；旧quality字段拒绝提交，避免将2K误当2MP。共享Key、同Key最多3个在途和旧taskId查询恢复继续生效。新应用与两LoRA组合尚未真实出图；此前两次成功任务仅证明旧应用。代码、文档与平台只读查询的验证不冒充新配置加载或生成效果证明。
+
+## 2.0.1 · 更新固定 LoRA 组合
+
+2026-11-02：按用户最新截图，LoRA1保留 NSFW Qwen by TheseAlpacas V2.safetensors，强度从0.8调整为0.4；LoRA2替换为 casual_snapshot_realism_qwen21.safetensors，强度从1调整为0.8。节点534/526、Ultra及其他参数沿用现有配置。同步执行器、离线请求断言、技能说明和节点快照；保留旧配置的历史来源记录。最新截图SHA-256：`14330ccce91402b0ec9fc2aff46aef4c59801c87ec189e7ebfc3f1a5beb35acb`。
+
+本次仅验证离线请求构造与副本一致性，未提交收费生成；新组合的实际加载与出图效果尚未验证。

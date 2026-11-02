@@ -20,7 +20,7 @@
 
 ## RunningHub 图片编辑
 
-- [RH-Qwen Image 2.1（rh-qwen-image-2-1）](rh-qwen-image-2-1/SKILL.md) — 直接调用 RunningHub Qwen Unlimited Edition，固定双 LoRA、默认 Ultra，完成多图编辑与任务恢复；v2.0.0。
+- [RH-Qwen Image 2.1（rh-qwen-image-2-1）](rh-qwen-image-2-1/SKILL.md) — 直接调用 RunningHub Qwen Unlimited Edition，固定双 LoRA、默认 Ultra，完成多图编辑与任务恢复；v2.0.1。
 
 ## Google Flow 执行
 

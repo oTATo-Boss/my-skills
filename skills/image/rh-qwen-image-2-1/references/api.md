@@ -1,6 +1,6 @@
 # 当前应用接口与证据
 
-当前应用：**Qwen Image2.1 (Unlimited Edition)**，ID `2104225323949101057`。2026-11-01 用户提供 API 示例与 LoRA 截图，并指定默认实例 Ultra；同日通过 RunningHub `GET /api/webapp/apiCallDemo` 只读核对节点，未提交生成任务。[脱敏节点快照](node_map.json) 保存全部18个字段、标签和来源哈希；API 示例中的图片、提示词与任何凭据不纳入快照。
+当前应用：**Qwen Image2.1 (Unlimited Edition)**，ID `2104225323949101057`。2026-11-01 用户提供 API 示例与 LoRA 截图，并指定默认实例 Ultra；同日通过 RunningHub `GET /api/webapp/apiCallDemo` 只读核对节点，未提交生成任务。[脱敏节点快照](node_map.json) 保存全部18个字段、标签和来源哈希，并记录2026-11-02用户截图覆盖的LoRA配置；API 示例中的图片、提示词与任何凭据不纳入快照。
 
 | 输入 | nodeId | fieldName | 值与规则 |
 |---|---|---|---|
@@ -10,9 +10,9 @@
 | 保持原比例 | 521 | value | 原比例true，否则false |
 | 图片数量 | 527 | value | 默认字符串1；本地保持1–4上限，平台未给范围 |
 | LoRA1名称 | 534 | lora_name | NSFW Qwen by TheseAlpacas V2.safetensors |
-| LoRA1强度 | 534 | strength_model | 固定字符串0.8 |
-| LoRA2名称 | 526 | lora_name | Pornmaster_QI2.1_Breasts_Slider_V1.safetensors |
-| LoRA2强度 | 526 | strength_model | 固定字符串1 |
+| LoRA1强度 | 534 | strength_model | 固定字符串0.4 |
+| LoRA2名称 | 526 | lora_name | casual_snapshot_realism_qwen21.safetensors |
+| LoRA2强度 | 526 | strength_model | 固定字符串0.8 |
 | 加速开关 | 515 | value | false；节点说明开启会降低画质 |
 | ZIP开关 | 525 | value | false；执行器下载图片，不开启ZIP |
 | 提示词增强 | 528 | value | true；沿用用户示例 |
@@ -20,7 +20,7 @@
 
 比例值为 `1:1 (Square)`、`2:3 (Portrait Photo)`、`3:2 (Photo)`、`3:4 (Portrait Standard)`、`4:3 (Standard)`、`9:16 (Portrait Widescreen)`、`16:9 (Widescreen)`、`21:9 (Ultrawide)`。job仍用简写，例如9:16，由执行器转为完整值。original设521=true并提供有效的9:16选项占位，保持原比例开关的实际结果尚未实测。
 
-截图权重0.8/1覆盖用户API示例的0/0；名称和强度作为固定请求参数，没有自由覆盖入口。没有触发词证据，不添加猜测词。仅配置已在云端应用提供的模型名，不下载或重新分发权重。
+2026-11-02用户最新截图将LoRA1强度改为0.4、LoRA2改为casual_snapshot_realism_qwen21.safetensors且强度0.8，覆盖此前截图的0.8/1与API示例的0/0；名称和强度作为固定请求参数，没有自由覆盖入口。没有触发词证据，不添加猜测词。仅配置已在云端应用提供的模型名，不下载或重新分发权重。
 
 ## RunningHub v2 直连
 
