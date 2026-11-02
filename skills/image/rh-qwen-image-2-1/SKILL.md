@@ -1,26 +1,26 @@
 ---
 name: rh-qwen-image-2-1
-description: Use when 用户指定 RH-Qwen Image 2.1 或 RunningHub 的 Qwen Image2.1 (Unlimited Edition) AI 应用，进行单图修改、多图融合、人物换装、场景替换或风格参考编辑。
+description: Use when 用户指定 RH-Qwen Image 2.1 或 RunningHub 的 Qwen Image2.1 全能无限版 V2 / Unlimited Omni Edition AI 应用，进行文生图、单图修改、多图融合、人物换装、场景替换或风格参考编辑。
 metadata:
-  version: "2.0.1"
+  version: "3.0.0"
 ---
 
 # RH-Qwen Image 2.1
 
-直接调用 RunningHub **Qwen Image2.1 (Unlimited Edition)** AI 应用，ID `2104225323949101057`。与 `rh-minimax-h3` 使用相同的 RunningHub v2 上传、提交和查询原理，应用 ID 与节点映射各自独立。支持 1–6 张有序参考图和非空编辑指令；本技能不提供纯文生图。
+直接调用 RunningHub **Qwen Image2.1 全能无限版 V2 / Unlimited Omni Edition** AI 应用，ID `2104057271167791105`。与 `rh-minimax-h3` 使用相同的 RunningHub v2 上传、提交和查询原理，应用 ID 与节点映射各自独立。支持纯文生图（images为空数组）及1–6张有序参考图编辑，提示词不能为空。
 
 ## 直接 API 执行
 
-使用本包 `scripts/rh_qwen.py` 直接请求 `https://www.runninghub.ai/openapi/v2`：上传参考图 → 提交 `/run/ai-app/2104225323949101057` → 按 taskId 查询 `/query` → 下载结果。不依赖 RH Studio、浏览器登录或网页操作。缺少 API Key 时按下方凭据配置处理。依赖 Python 3.9+、requests、Pillow；缺失时按当前环境的依赖管理方式安装。
+使用本包 `scripts/rh_qwen.py` 直接请求 `https://www.runninghub.ai/openapi/v2`：上传参考图 → 提交 `/run/ai-app/2104057271167791105` → 按 taskId 查询 `/query` → 下载结果。不依赖 RH Studio、浏览器登录或网页操作。缺少 API Key 时按下方凭据配置处理。依赖 Python 3.9+、requests、Pillow；缺失时按当前环境的依赖管理方式安装。
 
-当前应用已按用户 API 示例和平台只读节点查询核对，固定两组 LoRA 与 Ultra 默认实例。**新应用及此 LoRA 组合尚未实际出图测试**；历史两次成功生成属于旧应用，不能当作新配置的效果证明。执行时若接口变化，核对 [接口与证据](references/api.md)。
+当前应用已按用户 API 示例、截图和平台只读节点查询核对，固定底模、两组 LoRA 与 Ultra 默认实例。**新应用及此模型/LoRA组合尚未实际出图测试**；历史两次成功生成属于旧应用，不能当作新配置的效果证明。执行时若接口变化，核对 [接口与证据](references/api.md)。
 
 | 固定槽位 | 文件名 | 权重 |
 |---|---|---:|
-| LoRA 1 · 节点534 | `NSFW Qwen by TheseAlpacas V2.safetensors` | 0.4 |
-| LoRA 2 · 节点526 | `casual_snapshot_realism_qwen21.safetensors` | 0.8 |
+| LoRA 1 · 节点510 | `NSFW Qwen by TheseAlpacas V2.safetensors` | 0.8 |
+| LoRA 2 · 节点526 | `QWEN真实时尚摄影高对比高级感大片风格_电商时尚真实高级感摄影大片.safetensors` | 0.4 |
 
-文件名和权重按用户2026-11-02最新截图固定，每次请求都显式传入。当前0.4/0.8覆盖此前截图的0.8/1及API示例的0/0。没有已核实的触发词，不擅自添加。LoRA名称不改变用户当前图片任务的内容要求。
+文件名和权重按用户2026-11-02本次换应用截图固定，每次请求都显式传入；0.8000000000000002按数值0.8规范化。底模固定为 `noctQUncensoredRealismBuiltOn_v40Base_bf16.safetensors`（节点479/unet_name），覆盖API示例的int8模型。LoRA2模型卡触发词为 `high contrast editorial fashion photography`：编写提示词时纳入风格字段；完整JSON放在JSON字符串字段内，不在JSON外拼接。执行器保留用户提示词，不自动改写或追加。LoRA名称不改变用户当前图片任务的内容要求。
 
 ## 参考图和指令
 
@@ -34,17 +34,17 @@ metadata:
 
 | 参数 | 默认值与范围 |
 |---|---|
-| 参考图 | 1–6 张，每张不超过 30 MiB；传入 images 数组顺序就是图号 |
+| 参考图 | 0–6 张，每张不超过 30 MiB；纯文生图传 `images: []`，有图时数组顺序就是图号 |
 | 比例 | 默认 9:16；original、1:1、3:2、4:3、16:9、2:3、3:4、9:16、21:9 |
-| 分辨率 | `megapixels` 默认 2.0，应用标注约1080×1920；有限正数，实际尺寸以输出为准 |
+| 分辨率 | `megapixels` 默认 2.0；0.1–16，节点13/megapixels；实际尺寸以输出为准 |
 | 张数 | 默认 1；1–4 |
 | 实例 | 默认 ultra；用户可显式指定 default / plus / ultra |
 
-当前应用没有已核实的自定义宽高节点，因此脚本不开放任意尺寸。保持原比例由节点521控制；默认关闭加速和ZIP输出，开启提示词增强，沿用用户API示例。没有已核实的种子、负向提示词、遮罩或采样器参数；需要避免的内容可写在编辑指令中。
+当前应用没有已核实的自定义宽高节点，因此脚本不开放任意尺寸。保持原比例由节点521控制，须有参考图1；平台说明该模式不支持调节MP和张数，脚本仍发送对应占位值，不承诺这两个字段生效。默认关闭加速和ZIP输出；提示词增强按截图开启，覆盖API示例false。采样器er_sde、调度器beta、40步、CFG 3.5均按API示例显式传入，暂不开放自定义。没有已核实的种子、负向提示词或遮罩参数；需要避免的内容可写在指令中。
 
 ## CLI 与恢复
 
-创建 `job.json`（图片路径相对于该 JSON 所在目录，也可用绝对路径）：
+创建 `job.json`（纯文生图将 images 设为 `[]`；图片路径相对于该 JSON 所在目录，也可用绝对路径）：
 
 ```json
 {
@@ -57,7 +57,7 @@ metadata:
 }
 ```
 
-新应用使用百万像素，旧 `quality` 字段会报错，需显式改写为 `megapixels`；不要把旧2K档误当作2MP。旧taskId仍可resume查询，不能重新提交旧节点配置。
+新应用使用百万像素，旧 `quality` 字段会报错，需显式改写为 `megapixels`；不要把旧2K档误当作2MP。旧taskId仍可resume查询，不能重新提交旧节点配置。此前应用的532/value分辨率与534/LoRA1节点已改为13/megapixels与510，不能混用。
 
 `SKILL_DIR` 指本次读取的本技能目录；在用户的任务输出目录执行，生成回执与图片不写入 Skill 包。
 

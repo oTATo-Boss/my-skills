@@ -1,17 +1,26 @@
 {
-  "appId": "2104225323949101057",
-  "webappName": "Qwen Image2.1 (Unlimited Edition)",
-  "snapshot_date": "2026-11-01",
-  "source": "用户 API 示例、LoRA 截图与平台只读节点查询；LoRA强度按截图覆盖示例0，实例按用户后续要求默认ultra；原始图片与提示词已移除。 2026-11-02用户最新截图覆盖LoRA1强度为0.4、LoRA2文件名及强度为casual_snapshot_realism_qwen21.safetensors/0.8；未重新查询平台或提交生成。",
-  "source_sha256": "eab642a5350249e451a31f0f179a8cd7ed61a9de1d319ca193ad8c7103e3be5b",
-  "screenshot_sha256": "efbb810b4b687fae1a40113387c35df3c8b065329bf3d281599bb8727da2f122",
+  "appId": "2104057271167791105",
+  "webappName": "Qwen Image2.1 Unlimited Omni Edition",
+  "webappNameCn": "Qwen Image2.1 全能无限版 V2",
+  "snapshot_date": "2026-11-02",
+  "source": "用户API示例、四张配置/模型卡截图、平台只读apiCallDemo节点查询和现有应用页面的模型全名；截图配置覆盖示例默认模型、LoRA2和提示词增强；未提交生成。",
+  "source_sha256": "424ba1dd362d207d82372e1a0802c43903fdbcb9bc766cf96b5c357aee694bc9",
+  "screenshot_sha256": {
+    "image1": "9ac7c4e2cb2938e88c3dd8c7e9fdd2a2a6bf5869b79876a7bc3c561c2f1eabb8",
+    "image2": "d443e73111e5a6e8ecbd0e5ea096ed21e21453c07870fc8888c6bdd32f39bc94",
+    "image3": "ff9fe760cefbf2c54a846bec1f6923d80b8d1e5929b69d6abf9dbe3ca414f153",
+    "image4": "e2f0de610a4c7284d4975db6af37293e5646227ac11ac17adc2e90d9064b0443"
+  },
   "instanceType": "ultra",
+  "instance_source": "沿用用户此前明确指定的Ultra；新API示例default不覆盖既有要求。",
+  "lora2_model_url": "https://www.runninghub.ai/zh-cn/model/public/2114552841117831169",
+  "lora2_trigger": "high contrast editorial fashion photography",
   "nodeInfoList": [
     {
       "nodeId": "476",
       "fieldName": "image",
       "fieldValue": "None",
-      "description": "图1",
+      "description": "参考图1",
       "fieldData": "[[\"example.png\", \"None\", \"keep_this_dic\"], {\"image_upload\": true}]",
       "nodeName": "LoadImage"
     },
@@ -19,7 +28,7 @@
       "nodeId": "491",
       "fieldName": "image",
       "fieldValue": "None",
-      "description": "图2",
+      "description": "参考图2",
       "fieldData": "[[\"example.png\", \"None\", \"keep_this_dic\"], {\"image_upload\": true}]",
       "nodeName": "LoadImage"
     },
@@ -27,7 +36,7 @@
       "nodeId": "477",
       "fieldName": "image",
       "fieldValue": "None",
-      "description": "图3",
+      "description": "参考图3",
       "fieldData": "[[\"example.png\", \"None\", \"keep_this_dic\"], {\"image_upload\": true}]",
       "nodeName": "LoadImage"
     },
@@ -35,7 +44,7 @@
       "nodeId": "492",
       "fieldName": "image",
       "fieldValue": "None",
-      "description": "图4",
+      "description": "参考图4",
       "fieldData": "[[\"example.png\", \"None\", \"keep_this_dic\"], {\"image_upload\": true}]",
       "nodeName": "LoadImage"
     },
@@ -43,7 +52,7 @@
       "nodeId": "495",
       "fieldName": "image",
       "fieldValue": "None",
-      "description": "图5",
+      "description": "参考图5",
       "fieldData": "[[\"example.png\", \"None\", \"keep_this_dic\"], {\"image_upload\": true}]",
       "nodeName": "LoadImage"
     },
@@ -51,97 +60,9 @@
       "nodeId": "494",
       "fieldName": "image",
       "fieldValue": "None",
-      "description": "图6",
+      "description": "参考图6",
       "fieldData": "[[\"example.png\", \"None\", \"keep_this_dic\"], {\"image_upload\": true}]",
       "nodeName": "LoadImage"
-    },
-    {
-      "nodeId": "532",
-      "fieldName": "value",
-      "fieldValue": "2.0000000000000004",
-      "description": "分辨率2.0≈1080×1920",
-      "fieldData": "[\"FLOAT\", {\"step\": 0.01, \"default\": 0}]",
-      "nodeName": "Float"
-    },
-    {
-      "nodeId": "13",
-      "fieldName": "aspect_ratio",
-      "fieldValue": "9:16 (Portrait Widescreen)",
-      "description": "图片比例",
-      "fieldData": "[\"COMBO\", {\"default\": \"1:1 (Square)\", \"options\": [\"1:1 (Square)\", \"2:3 (Portrait Photo)\", \"3:2 (Photo)\", \"3:4 (Portrait Standard)\", \"4:3 (Standard)\", \"9:16 (Portrait Widescreen)\", \"16:9 (Widescreen)\", \"21:9 (Ultrawide)\"], \"tooltip\": \"The aspect ratio for the output dimensions.\", \"multiselect\": false}]",
-      "nodeName": "ResolutionSelector"
-    },
-    {
-      "nodeId": "521",
-      "fieldName": "value",
-      "fieldValue": "false",
-      "description": "保持图片原比例开关",
-      "fieldData": "[\"BOOLEAN\", {}]",
-      "nodeName": "PrimitiveBoolean"
-    },
-    {
-      "nodeId": "527",
-      "fieldName": "value",
-      "fieldValue": "1",
-      "description": "图片数量",
-      "fieldData": "[\"INT\", {\"default\": 0}]",
-      "nodeName": "Int"
-    },
-    {
-      "nodeId": "534",
-      "fieldName": "lora_name",
-      "fieldValue": "NSFW Qwen by TheseAlpacas V2.safetensors",
-      "description": "lora1-NSWF（应用详情）",
-      "fieldData": "[[]]",
-      "nodeName": "LoraLoaderModelOnly"
-    },
-    {
-      "nodeId": "534",
-      "fieldName": "strength_model",
-      "fieldValue": "0.4",
-      "description": "lora1-权重推荐0.8",
-      "fieldData": "[\"FLOAT\", {\"max\": 100, \"min\": -100, \"step\": 0.01, \"default\": 1}]",
-      "nodeName": "LoraLoaderModelOnly"
-    },
-    {
-      "nodeId": "526",
-      "fieldName": "lora_name",
-      "fieldValue": "casual_snapshot_realism_qwen21.safetensors",
-      "description": "lora2-自选",
-      "fieldData": "[[]]",
-      "nodeName": "LoraLoaderModelOnly"
-    },
-    {
-      "nodeId": "526",
-      "fieldName": "strength_model",
-      "fieldValue": "0.8",
-      "description": "lora2权重-自选",
-      "fieldData": "[\"FLOAT\", {\"max\": 100, \"min\": -100, \"step\": 0.01, \"default\": 1}]",
-      "nodeName": "LoraLoaderModelOnly"
-    },
-    {
-      "nodeId": "515",
-      "fieldName": "value",
-      "fieldValue": "false",
-      "description": "加速开关（开启会降低画质）",
-      "fieldData": "[\"BOOLEAN\", {}]",
-      "nodeName": "PrimitiveBoolean"
-    },
-    {
-      "nodeId": "525",
-      "fieldName": "value",
-      "fieldValue": "false",
-      "description": "ZIP开关(打开是ZIP)",
-      "fieldData": "[\"BOOLEAN\", {}]",
-      "nodeName": "PrimitiveBoolean"
-    },
-    {
-      "nodeId": "528",
-      "fieldName": "value",
-      "fieldValue": "true",
-      "description": "提示词增强开关（优化）",
-      "fieldData": "[\"BOOLEAN\", {}]",
-      "nodeName": "PrimitiveBoolean"
     },
     {
       "nodeId": "497",
@@ -150,8 +71,142 @@
       "description": "提示词",
       "fieldData": "[\"STRING\", {\"default\": \"prompt\", \"multiline\": true}]",
       "nodeName": "CR Prompt Text"
+    },
+    {
+      "nodeId": "528",
+      "fieldName": "value",
+      "fieldValue": "true",
+      "description": "提示词增强",
+      "fieldData": "[\"BOOLEAN\", {}]",
+      "nodeName": "PrimitiveBoolean"
+    },
+    {
+      "nodeId": "515",
+      "fieldName": "value",
+      "fieldValue": "false",
+      "description": "开启加速",
+      "fieldData": "[\"BOOLEAN\", {}]",
+      "nodeName": "PrimitiveBoolean"
+    },
+    {
+      "nodeId": "13",
+      "fieldName": "aspect_ratio",
+      "fieldValue": "9:16 (Portrait Widescreen)",
+      "description": "比例选择",
+      "fieldData": "[\"COMBO\", {\"default\": \"1:1 (Square)\", \"options\": [\"1:1 (Square)\", \"2:3 (Portrait Photo)\", \"3:2 (Photo)\", \"3:4 (Portrait Standard)\", \"4:3 (Standard)\", \"9:16 (Portrait Widescreen)\", \"16:9 (Widescreen)\", \"21:9 (Ultrawide)\"], \"tooltip\": \"The aspect ratio for the output dimensions.\", \"multiselect\": false}]",
+      "nodeName": "ResolutionSelector"
+    },
+    {
+      "nodeId": "521",
+      "fieldName": "value",
+      "fieldValue": "false",
+      "description": "原图比例",
+      "fieldData": "[\"BOOLEAN\", {}]",
+      "nodeName": "PrimitiveBoolean"
+    },
+    {
+      "nodeId": "13",
+      "fieldName": "megapixels",
+      "fieldValue": "2.0",
+      "description": "像素/百万",
+      "fieldData": "[\"FLOAT\", {\"max\": 16, \"min\": 0.1, \"step\": 0.1, \"default\": 1, \"tooltip\": \"Target total megapixels. 1.0 MP ≈ 1024x1024 for square.\"}]",
+      "nodeName": "ResolutionSelector"
+    },
+    {
+      "nodeId": "527",
+      "fieldName": "value",
+      "fieldValue": "1",
+      "description": "数量/张",
+      "fieldData": "[\"INT\", {\"default\": 0}]",
+      "nodeName": "Int"
+    },
+    {
+      "nodeId": "510",
+      "fieldName": "lora_name",
+      "fieldValue": "NSFW Qwen by TheseAlpacas V2.safetensors",
+      "description": "专用lora",
+      "fieldData": "[[]]",
+      "nodeName": "LoraLoaderModelOnly"
+    },
+    {
+      "nodeId": "510",
+      "fieldName": "strength_model",
+      "fieldValue": "0.8",
+      "description": "lora强度",
+      "fieldData": "[\"FLOAT\", {\"max\": 100, \"min\": -100, \"step\": 0.01, \"default\": 1}]",
+      "nodeName": "LoraLoaderModelOnly"
+    },
+    {
+      "nodeId": "526",
+      "fieldName": "lora_name",
+      "fieldValue": "QWEN真实时尚摄影高对比高级感大片风格_电商时尚真实高级感摄影大片.safetensors",
+      "description": "自定义lora",
+      "fieldData": "[[]]",
+      "nodeName": "LoraLoaderModelOnly"
+    },
+    {
+      "nodeId": "526",
+      "fieldName": "strength_model",
+      "fieldValue": "0.4",
+      "description": "lora强度（见应用介绍）",
+      "fieldData": "[\"FLOAT\", {\"max\": 100, \"min\": -100, \"step\": 0.01, \"default\": 1}]",
+      "nodeName": "LoraLoaderModelOnly"
+    },
+    {
+      "nodeId": "525",
+      "fieldName": "value",
+      "fieldValue": "false",
+      "description": "ZIP输出",
+      "fieldData": "[\"BOOLEAN\", {}]",
+      "nodeName": "PrimitiveBoolean"
+    },
+    {
+      "nodeId": "554",
+      "fieldName": "text",
+      "fieldValue": "以下为高级设置区，不懂请保持默认。\nAdvanced Settings Section. Leave as default if unsure.",
+      "description": "高级设置区提示",
+      "fieldData": "[\"STRING\", {\"multiline\": true}]",
+      "nodeName": "JjkText"
+    },
+    {
+      "nodeId": "479",
+      "fieldName": "unet_name",
+      "fieldValue": "noctQUncensoredRealismBuiltOn_v40Base_bf16.safetensors",
+      "description": "选择模型",
+      "fieldData": "[[]]",
+      "nodeName": "UNETLoader"
+    },
+    {
+      "nodeId": "484",
+      "fieldName": "sampler_name",
+      "fieldValue": "er_sde",
+      "description": "采样器",
+      "fieldData": "[[\"euler\", \"euler_cfg_pp\", \"euler_ancestral\", \"euler_ancestral_cfg_pp\", \"heun\", \"heunpp2\", \"exp_heun_2_x0\", \"exp_heun_2_x0_sde\", \"dpm_2\", \"dpm_2_ancestral\", \"lms\", \"dpm_fast\", \"dpm_adaptive\", \"dpmpp_2s_ancestral\", \"dpmpp_2s_ancestral_cfg_pp\", \"dpmpp_sde\", \"dpmpp_sde_gpu\", \"dpmpp_2m\", \"dpmpp_2m_alt\", \"dpmpp_2m_cfg_pp\", \"dpmpp_2m_sde\", \"dpmpp_2m_sde_gpu\", \"dpmpp_2m_sde_heun\", \"dpmpp_2m_sde_heun_gpu\", \"dpmpp_3m_sde\", \"dpmpp_3m_sde_gpu\", \"ddpm\", \"lcm\", \"ipndm\", \"ipndm_v\", \"deis\", \"cfgpp_ud10_ab\", \"res_multistep\", \"res_multistep_cfg_pp\", \"res_multistep_ancestral\", \"res_multistep_ancestral_cfg_pp\", \"gradient_estimation\", \"gradient_estimation_cfg_pp\", \"er_sde\", \"seeds_2\", \"seeds_3\", \"sa_solver\", \"sa_solver_ode_stable\", \"sa_solver_pece\", \"ddim\", \"uni_pc\", \"uni_pc_bh2\", \"legacy_rk\", \"rk\", \"rk_beta\", \"deis_3m_ode\", \"deis_2m_ode\", \"deis_3m\", \"deis_2m\", \"res_6s_ode\", \"res_5s_ode\", \"res_3s_ode\", \"res_2s_ode\", \"res_3m_ode\", \"res_2m_ode\", \"res_6s\", \"res_5s\", \"res_3s\", \"res_2s\", \"res_3m\", \"res_2m\", \"supreme\", \"dpmpp_3m_sde_dynamic_eta\", \"euler_ancestral_dancing\", \"lcm_custom_noise\", \"ttm\", \"clyb_4m_sde_momentumized\", \"dpmpp_dualsde_momentumized\", \"res_momentumized\", \"stork2\", \"stork4\", \"bleh_preset_0\", \"hfe_s1\", \"hfe_s2\", \"hfe_s3\", \"hfe_s4\", \"hfe_s5\", \"hfe_s6\", \"hfe_s7\", \"hfe_s8\", \"hfe3_s1\", \"hfe3_s2\", \"hfe3_s3\", \"hfe3_s4\", \"hfe3_s5\", \"hfe3_s6\", \"hfe3_s7\", \"hfe3_s8\", \"hfe4_s1\", \"hfe4_s2\", \"hfe4_s3\", \"hfe4_s4\", \"hfe4_s5\", \"hfe4_s6\", \"hfe4_s7\", \"hfe4_s8\", \"hfe5_s1\", \"hfe5_s2\", \"hfe5_s3\", \"hfe5_s4\", \"hfe5_s5\", \"hfe5_s6\", \"hfe5_s7\", \"hfe5_s8\", \"hfe_auto\", \"hfe3_auto\", \"hfe4_auto\", \"hfe5_auto\", \"hfx_sharp\", \"hfx_boost\", \"hfx_detail\", \"hfx_stochastic\", \"hfx_momentum\", \"hfx_spectral\", \"hfx_orthogonal\", \"hfx_refine\", \"hfx_focus\", \"hfx_coherence\", \"hfx_sharp_s1\", \"hfx_sharp_s2\", \"hfx_sharp_s3\", \"hfx_sharp_s4\", \"hfx_boost_s1\", \"hfx_boost_s2\", \"hfx_boost_s3\", \"hfx_boost_s4\", \"hfx_detail_s1\", \"hfx_detail_s2\", \"hfx_detail_s3\", \"hfx_detail_s4\", \"hfx_stochastic_s1\", \"hfx_stochastic_s2\", \"hfx_stochastic_s3\", \"hfx_stochastic_s4\", \"hfx_momentum_s1\", \"hfx_momentum_s2\", \"hfx_momentum_s3\", \"hfx_momentum_s4\", \"hfx_spectral_s1\", \"hfx_spectral_s2\", \"hfx_spectral_s3\", \"hfx_spectral_s4\", \"hfx_orthogonal_s1\", \"hfx_orthogonal_s2\", \"hfx_orthogonal_s3\", \"hfx_orthogonal_s4\", \"hfx_refine_s1\", \"hfx_refine_s2\", \"hfx_refine_s3\", \"hfx_refine_s4\", \"hfx_focus_s1\", \"hfx_focus_s2\", \"hfx_focus_s3\", \"hfx_focus_s4\", \"hfx_coherence_s1\", \"hfx_coherence_s2\", \"hfx_coherence_s3\", \"hfx_coherence_s4\"], {\"tooltip\": \"The algorithm used when sampling, this can affect the quality, speed, and style of the generated output.\"}]",
+      "nodeName": "KSampler"
+    },
+    {
+      "nodeId": "484",
+      "fieldName": "scheduler",
+      "fieldValue": "beta",
+      "description": "调度器",
+      "fieldData": "[[\"simple\", \"sgm_uniform\", \"karras\", \"exponential\", \"ddim_uniform\", \"beta\", \"normal\", \"linear_quadratic\", \"kl_optimal\", \"capitanZiT\", \"FlowMatchEulerDiscreteScheduler\", \"bong_tangent\", \"beta57\", \"ays\", \"ays+\", \"ays_30\", \"ays_30+\", \"gits\", \"beta_1_1\", \"power_shift\", \"atan_gentle\", \"atan_focused\", \"atan_steep\", \"karras_tan\", \"logistic\"], {\"tooltip\": \"The scheduler controls how noise is gradually removed to form the image.\"}]",
+      "nodeName": "KSampler"
+    },
+    {
+      "nodeId": "484",
+      "fieldName": "steps",
+      "fieldValue": "40",
+      "description": "采样步数",
+      "fieldData": "[\"INT\", {\"max\": 10000, \"min\": 1, \"default\": 20, \"tooltip\": \"The number of steps used in the denoising process.\"}]",
+      "nodeName": "KSampler"
+    },
+    {
+      "nodeId": "484",
+      "fieldName": "cfg",
+      "fieldValue": "3.5",
+      "description": "CFG值",
+      "fieldData": "[\"FLOAT\", {\"max\": 100, \"min\": 0, \"step\": 0.1, \"round\": 0.01, \"default\": 8, \"tooltip\": \"The Classifier-Free Guidance scale balances creativity and adherence to the prompt. Higher values result in images more closely matching the prompt however too high values will negatively impact quality.\"}]",
+      "nodeName": "KSampler"
     }
-  ],
-  "configuration_date": "2026-11-02",
-  "configuration_screenshot_sha256": "14330ccce91402b0ec9fc2aff46aef4c59801c87ec189e7ebfc3f1a5beb35acb"
+  ]
 }

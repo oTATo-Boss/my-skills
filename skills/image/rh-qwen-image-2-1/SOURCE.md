@@ -4,7 +4,7 @@
 - kind: `local`
 - status: `confirmed`
 - source: 用户 2026-10-31 在本会话要求将其 RH Studio「Qwen Image 2.1 多图编辑」制作为独立 Skill；开发目录 `skills/image/rh-qwen-image-2-1`。
-- version: `2.0.1`
+- version: `3.0.0`
 - author: 用户提出需求与应用范围，Codex 辅助编写 Skill、接口参考、Python 执行器和测试；不声明 Qwen 模型、RunningHub 服务或 RH Studio 前端为本包原创。
 - license: unknown；用户未为本新包指定对外许可。第三方应用、模型及服务条款归对应权利方，本包不分发其实现或模型权重。
 - collected_at: `2026-10-31`（首次创建）
@@ -56,3 +56,11 @@
 2026-11-02：按用户最新截图，LoRA1保留 NSFW Qwen by TheseAlpacas V2.safetensors，强度从0.8调整为0.4；LoRA2替换为 casual_snapshot_realism_qwen21.safetensors，强度从1调整为0.8。节点534/526、Ultra及其他参数沿用现有配置。同步执行器、离线请求断言、技能说明和节点快照；保留旧配置的历史来源记录。最新截图SHA-256：`14330ccce91402b0ec9fc2aff46aef4c59801c87ec189e7ebfc3f1a5beb35acb`。
 
 本次仅验证离线请求构造与副本一致性，未提交收费生成；新组合的实际加载与出图效果尚未验证。
+
+## 3.0.0 · 切换全能无限版 V2
+
+2026-11-02：用户提供新应用API示例与四张配置/模型卡截图，迁移到应用 `2104057271167791105`（中文页面 Qwen Image2.1 全能无限版 V2；API名称 Qwen Image2.1 Unlimited Omni Edition）。只读apiCallDemo核实全部24个字段，并从用户已有页面核实底模完整名 `noctQUncensoredRealismBuiltOn_v40Base_bf16.safetensors`。分辨率迁移至13/megapixels、LoRA1迁移至510；固定两LoRA为NSFW Qwen by TheseAlpacas V2（0.8）与QWEN真实时尚摄影高对比高级感大片风格_电商时尚真实高级感摄影大片（0.4）。提示词增强开启，加速和ZIP关闭；er_sde/beta/40步/CFG3.5沿用新示例，Ultra沿用用户既有指定。
+
+新应用支持文生图与0–6张参考图，MP范围0.1–16；原图比例须有参考图1，该模式平台不支持调节MP/数量。LoRA2模型卡 `https://www.runninghub.ai/zh-cn/model/public/2114552841117831169` 及用户截图确认触发词 `high contrast editorial fashion photography`，交由提示词编写方放入风格字段，执行器不破坏完整JSON。模型卡推荐强度1不覆盖用户截图0.4。截图及API示例哈希保存在node_map.json，无凭据或用户生成内容入库，不分发权重。
+
+离线测试覆盖新节点、底模/LoRA/采样设置、文生图空槽、MP边界与原比例输入校验；共享并发和旧taskId恢复沿用现有机制。只读核对与离线验证不代表新应用实际出图或模型加载成功，未创建收费任务。

@@ -69,19 +69,24 @@ class QwenTests(unittest.TestCase):
         self.assertEqual([n['fieldValue'] for n in nodes[:6]],
                          ['a.png', 'b.png', 'None', 'None', 'None', 'None'])
         values = {n['nodeId']: n['fieldValue'] for n in nodes}
-        self.assertEqual(values['532'], '2.0')
+        self.assertEqual({(n['nodeId'], n['fieldName']): n['fieldValue'] for n in nodes}[('13', 'megapixels')], '2.0')
         self.assertEqual(values['527'], '2')
         self.assertEqual(values['497'], '换衣服')
 
     def test_current_app_fixed_loras_and_switches(self):
-        self.assertEqual(q.APP_ID, '2104225323949101057')
+        self.assertEqual(q.APP_ID, '2104057271167791105')
         self.assertEqual(q.payload_for({'prompt':'edit'}, ['up.png'])['instanceType'], 'ultra')
         self.assertEqual(q.payload_for({'prompt':'edit','instance':'plus'}, ['up.png'])['instanceType'], 'plus')
         values = {(n['nodeId'], n['fieldName']): n['fieldValue'] for n in q.nodes('edit', ['up.png'])}
-        self.assertEqual(values[('534', 'lora_name')], 'NSFW Qwen by TheseAlpacas V2.safetensors')
-        self.assertEqual(values[('534', 'strength_model')], '0.4')
-        self.assertEqual(values[('526', 'lora_name')], 'casual_snapshot_realism_qwen21.safetensors')
-        self.assertEqual(values[('526', 'strength_model')], '0.8')
+        self.assertEqual(values[('510', 'lora_name')], 'NSFW Qwen by TheseAlpacas V2.safetensors')
+        self.assertEqual(values[('510', 'strength_model')], '0.8')
+        self.assertEqual(values[('526', 'lora_name')], 'QWEN真实时尚摄影高对比高级感大片风格_电商时尚真实高级感摄影大片.safetensors')
+        self.assertEqual(values[('526', 'strength_model')], '0.4')
+        self.assertEqual(values[('479', 'unet_name')], 'noctQUncensoredRealismBuiltOn_v40Base_bf16.safetensors')
+        for field, expected in [('sampler_name', 'er_sde'), ('scheduler', 'beta'), ('steps', '40'), ('cfg', '3.5')]:
+            self.assertEqual(values[('484', field)], expected)
+        self.assertNotIn('532', [n['nodeId'] for n in q.nodes('edit', ['up.png'])])
+        self.assertNotIn('534', [n['nodeId'] for n in q.nodes('edit', ['up.png'])])
         self.assertEqual(values[('13', 'aspect_ratio')], '9:16 (Portrait Widescreen)')
         for node, expected in [('521', 'false'), ('515', 'false'), ('525', 'false'), ('528', 'true')]:
             self.assertEqual(values[(node, 'value')], expected)
@@ -91,12 +96,21 @@ class QwenTests(unittest.TestCase):
         response.json.return_value = {'taskId':'new-app-task','status':'RUNNING'}
         with patch.object(q.requests, 'post', return_value=response) as post:
             q.Client('offline-secret').submit({'nodeInfoList':q.nodes('edit', ['up.png'])})
-            self.assertEqual(post.call_args.args[0], 'https://www.runninghub.ai/openapi/v2/run/ai-app/2104225323949101057')
+            self.assertEqual(post.call_args.args[0], 'https://www.runninghub.ai/openapi/v2/run/ai-app/2104057271167791105')
+
+    def test_text_to_image_uses_six_empty_slots(self):
+        job = dict(prompt='a blue cup', images=[])
+        q.validate(job)
+        payload = q.payload_for(job, [])
+        self.assertEqual([n['fieldValue'] for n in payload['nodeInfoList'][:6]], ['None'] * 6)
+        self.assertEqual(next(n['fieldValue'] for n in payload['nodeInfoList'] if n['fieldName'] == 'prompt'), 'a blue cup')
+        for mp in (0.1, 16):
+            q.validate(dict(job, megapixels=mp))
 
     def test_invalid_inputs_rejected_before_upload(self):
-        for updates in ({'images': []}, {'images': ['x'] * 7},
+        for updates in ({'images': [], 'aspect': 'original'}, {'images': ['x'] * 7},
                         {'prompt': ' '}, {'count': 5}, {'count': True},
-                        {'quality': '2K'}, {'megapixels': 0}, {'megapixels': float('nan')}, {'aspect': 'custom'}):
+                        {'quality': '2K'}, {'megapixels': 0}, {'megapixels': 0.09}, {'megapixels': 16.1}, {'megapixels': float('nan')}, {'aspect': 'custom'}):
             job = dict(prompt='edit', images=['x'], count=1, megapixels=2, aspect='9:16')
             job.update(updates)
             with self.subTest(updates=updates), self.assertRaises(ValueError):

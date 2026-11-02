@@ -14,7 +14,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 import requests
 from PIL import Image
 
-APP_ID = '2104225323949101057'
+APP_ID = '2104057271167791105'
 BASE = 'https://www.runninghub.ai/openapi/v2'
 IMAGE_NODES = ('476', '491', '477', '492', '495', '494')
 ASPECT_VALUES = {'1:1': '1:1 (Square)', '2:3': '2:3 (Portrait Photo)',
@@ -22,8 +22,9 @@ ASPECT_VALUES = {'1:1': '1:1 (Square)', '2:3': '2:3 (Portrait Photo)',
                  '4:3': '4:3 (Standard)', '9:16': '9:16 (Portrait Widescreen)',
                  '16:9': '16:9 (Widescreen)', '21:9': '21:9 (Ultrawide)'}
 ASPECTS = ('original', *ASPECT_VALUES)
-FIXED_LORAS = (('534', 'NSFW Qwen by TheseAlpacas V2.safetensors', '0.4'),
-               ('526', 'casual_snapshot_realism_qwen21.safetensors', '0.8'))
+FIXED_MODEL = 'noctQUncensoredRealismBuiltOn_v40Base_bf16.safetensors'
+FIXED_LORAS = (('510', 'NSFW Qwen by TheseAlpacas V2.safetensors', '0.8'),
+               ('526', 'QWEN真实时尚摄影高对比高级感大片风格_电商时尚真实高级感摄影大片.safetensors', '0.4'))
 
 
 def read_json(path):
@@ -70,8 +71,10 @@ def validate(job, check_files=True):
     if not isinstance(job.get('prompt'), str) or not job['prompt'].strip():
         raise ValueError('prompt 不能为空')
     images = job.get('images')
-    if not isinstance(images, list) or not 1 <= len(images) <= 6:
-        raise ValueError('images 必须有 1–6 张参考图，按图1至图6排列')
+    if not isinstance(images, list) or not 0 <= len(images) <= 6:
+        raise ValueError('images 必须是 0–6 张参考图的数组；文生图传空数组，参考图按图1至图6排列')
+    if not images and job.get('aspect') == 'original':
+        raise ValueError('original 需要参考图1；文生图请选择具体比例')
     if any(not isinstance(p, str) or not p.strip() for p in images):
         raise ValueError('images 必须是非空文件路径')
     if type(job.get('count', 1)) is not int or job.get('count', 1) not in range(1, 5):
@@ -79,8 +82,8 @@ def validate(job, check_files=True):
     if 'quality' in job:
         raise ValueError('新应用使用 megapixels（默认2.0），请移除旧 quality 字段；2K不等于2MP')
     mp = job.get('megapixels', 2.0)
-    if type(mp) not in (int, float) or not math.isfinite(mp) or mp <= 0:
-        raise ValueError('megapixels 必须为有限正数，2.0约为1080×1920')
+    if type(mp) not in (int, float) or not math.isfinite(mp) or not 0.1 <= mp <= 16:
+        raise ValueError('megapixels 必须为 0.1–16 的有限数值')
     if job.get('aspect', '9:16') not in ASPECTS:
         raise ValueError('aspect 不支持；custom 缺少可验证宽高节点，暂不开放')
     if job.get('instance', 'ultra') not in ('default', 'plus', 'ultra'):
@@ -98,14 +101,17 @@ def nodes(prompt, uploaded, aspect='9:16', megapixels=2.0, count=1):
     result = [dict(nodeId=n, fieldName='image',
                    fieldValue=uploaded[i] if i < len(uploaded) else 'None', description=None)
               for i, n in enumerate(IMAGE_NODES)]
-    settings = [('532', 'value', str(float(megapixels))),
+    settings = [('13', 'megapixels', str(float(megapixels))),
                 ('13', 'aspect_ratio', ASPECT_VALUES['9:16' if aspect == 'original' else aspect]),
                 ('521', 'value', 'true' if aspect == 'original' else 'false'),
                 ('527', 'value', str(count))]
     for node, name, strength in FIXED_LORAS:
         settings.extend([(node, 'lora_name', name), (node, 'strength_model', strength)])
     settings.extend([('515', 'value', 'false'), ('525', 'value', 'false'),
-                     ('528', 'value', 'true'), ('497', 'prompt', prompt.strip())])
+                     ('528', 'value', 'true'), ('497', 'prompt', prompt.strip()),
+                     ('479', 'unet_name', FIXED_MODEL),
+                     ('484', 'sampler_name', 'er_sde'), ('484', 'scheduler', 'beta'),
+                     ('484', 'steps', '40'), ('484', 'cfg', '3.5')])
     for node, field, value in settings:
         result.append(dict(nodeId=node, fieldName=field, fieldValue=value, description=None))
     return result
