@@ -75,20 +75,20 @@ class QwenTests(unittest.TestCase):
 
     def test_current_app_fixed_loras_and_switches(self):
         self.assertEqual(q.APP_ID, '2104057271167791105')
-        self.assertEqual(q.payload_for({'prompt':'edit'}, ['up.png'])['instanceType'], 'ultra')
-        self.assertEqual(q.payload_for({'prompt':'edit','instance':'plus'}, ['up.png'])['instanceType'], 'plus')
+        self.assertEqual(q.payload_for({'prompt':'edit'}, ['up.png'])['instanceType'], 'plus')
+        self.assertEqual(q.payload_for({'prompt':'edit','instance':'ultra'}, ['up.png'])['instanceType'], 'ultra')
         values = {(n['nodeId'], n['fieldName']): n['fieldValue'] for n in q.nodes('edit', ['up.png'])}
-        self.assertEqual(values[('510', 'lora_name')], 'NSFW Qwen by TheseAlpacas V2.safetensors')
+        self.assertEqual(values[('510', 'lora_name')], 'casual_snapshot_realism_qwen21.safetensors')
         self.assertEqual(values[('510', 'strength_model')], '0.8')
-        self.assertEqual(values[('526', 'lora_name')], 'QWEN真实时尚摄影高对比高级感大片风格_电商时尚真实高级感摄影大片.safetensors')
-        self.assertEqual(values[('526', 'strength_model')], '0.4')
+        self.assertEqual(values[('526', 'lora_name')], 'cndamiph_Candid_Amateur_iPhone_Qwen21_v1.safetensors')
+        self.assertEqual(values[('526', 'strength_model')], '0.5')
         self.assertEqual(values[('479', 'unet_name')], 'noctQUncensoredRealismBuiltOn_v40Base_bf16.safetensors')
         for field, expected in [('sampler_name', 'er_sde'), ('scheduler', 'beta'), ('steps', '40'), ('cfg', '3.5')]:
             self.assertEqual(values[('484', field)], expected)
         self.assertNotIn('532', [n['nodeId'] for n in q.nodes('edit', ['up.png'])])
         self.assertNotIn('534', [n['nodeId'] for n in q.nodes('edit', ['up.png'])])
         self.assertEqual(values[('13', 'aspect_ratio')], '9:16 (Portrait Widescreen)')
-        for node, expected in [('521', 'false'), ('515', 'false'), ('525', 'false'), ('528', 'true')]:
+        for node, expected in [('521', 'false'), ('515', 'true'), ('525', 'false'), ('528', 'true')]:
             self.assertEqual(values[(node, 'value')], expected)
         original = {(n['nodeId'], n['fieldName']): n['fieldValue'] for n in q.nodes('edit', ['up.png'], 'original')}
         self.assertEqual(original[('521', 'value')], 'true')

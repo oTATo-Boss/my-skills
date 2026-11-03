@@ -3,7 +3,7 @@
   "webappName": "Qwen Image2.1 Unlimited Omni Edition",
   "webappNameCn": "Qwen Image2.1 全能无限版 V2",
   "snapshot_date": "2026-11-02",
-  "source": "用户API示例、四张配置/模型卡截图、平台只读apiCallDemo节点查询和现有应用页面的模型全名；截图配置覆盖示例默认模型、LoRA2和提示词增强；未提交生成。",
+  "source": "用户API示例、四张配置/模型卡截图、平台只读apiCallDemo节点查询和现有应用页面的模型全名；截图配置覆盖示例默认模型、LoRA2和提示词增强；未提交生成。 2026-11-03用户最新两张截图覆盖LoRA1/LoRA2文件名与权重、加速开关和Plus默认；第二个LoRA全名从现有应用页面只读核实。",
   "source_sha256": "424ba1dd362d207d82372e1a0802c43903fdbcb9bc766cf96b5c357aee694bc9",
   "screenshot_sha256": {
     "image1": "9ac7c4e2cb2938e88c3dd8c7e9fdd2a2a6bf5869b79876a7bc3c561c2f1eabb8",
@@ -11,10 +11,8 @@
     "image3": "ff9fe760cefbf2c54a846bec1f6923d80b8d1e5929b69d6abf9dbe3ca414f153",
     "image4": "e2f0de610a4c7284d4975db6af37293e5646227ac11ac17adc2e90d9064b0443"
   },
-  "instanceType": "ultra",
-  "instance_source": "沿用用户此前明确指定的Ultra；新API示例default不覆盖既有要求。",
-  "lora2_model_url": "https://www.runninghub.ai/zh-cn/model/public/2114552841117831169",
-  "lora2_trigger": "high contrast editorial fashion photography",
+  "instanceType": "plus",
+  "instance_source": "用户2026-11-03明确指定默认plus，覆盖此前ultra。",
   "nodeInfoList": [
     {
       "nodeId": "476",
@@ -83,7 +81,7 @@
     {
       "nodeId": "515",
       "fieldName": "value",
-      "fieldValue": "false",
+      "fieldValue": "true",
       "description": "开启加速",
       "fieldData": "[\"BOOLEAN\", {}]",
       "nodeName": "PrimitiveBoolean"
@@ -123,7 +121,7 @@
     {
       "nodeId": "510",
       "fieldName": "lora_name",
-      "fieldValue": "NSFW Qwen by TheseAlpacas V2.safetensors",
+      "fieldValue": "casual_snapshot_realism_qwen21.safetensors",
       "description": "专用lora",
       "fieldData": "[[]]",
       "nodeName": "LoraLoaderModelOnly"
@@ -139,7 +137,7 @@
     {
       "nodeId": "526",
       "fieldName": "lora_name",
-      "fieldValue": "QWEN真实时尚摄影高对比高级感大片风格_电商时尚真实高级感摄影大片.safetensors",
+      "fieldValue": "cndamiph_Candid_Amateur_iPhone_Qwen21_v1.safetensors",
       "description": "自定义lora",
       "fieldData": "[[]]",
       "nodeName": "LoraLoaderModelOnly"
@@ -147,7 +145,7 @@
     {
       "nodeId": "526",
       "fieldName": "strength_model",
-      "fieldValue": "0.4",
+      "fieldValue": "0.5",
       "description": "lora强度（见应用介绍）",
       "fieldData": "[\"FLOAT\", {\"max\": 100, \"min\": -100, \"step\": 0.01, \"default\": 1}]",
       "nodeName": "LoraLoaderModelOnly"
@@ -208,5 +206,10 @@
       "fieldData": "[\"FLOAT\", {\"max\": 100, \"min\": 0, \"step\": 0.1, \"round\": 0.01, \"default\": 8, \"tooltip\": \"The Classifier-Free Guidance scale balances creativity and adherence to the prompt. Higher values result in images more closely matching the prompt however too high values will negatively impact quality.\"}]",
       "nodeName": "KSampler"
     }
-  ]
+  ],
+  "configuration_date": "2026-11-03",
+  "configuration_screenshot_sha256": {
+    "image1": "839c44b877d5abdb610c1b4be09b5ef09a0c74b5aeeeb81b60d5562edbd0a040",
+    "image2": "d1607772995f231e888ddaf5cb8c06471f631fef5aa5e7ee208e82a7105a7559"
+  }
 }

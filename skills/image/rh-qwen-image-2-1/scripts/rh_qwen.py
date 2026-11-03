@@ -23,8 +23,8 @@ ASPECT_VALUES = {'1:1': '1:1 (Square)', '2:3': '2:3 (Portrait Photo)',
                  '16:9': '16:9 (Widescreen)', '21:9': '21:9 (Ultrawide)'}
 ASPECTS = ('original', *ASPECT_VALUES)
 FIXED_MODEL = 'noctQUncensoredRealismBuiltOn_v40Base_bf16.safetensors'
-FIXED_LORAS = (('510', 'NSFW Qwen by TheseAlpacas V2.safetensors', '0.8'),
-               ('526', 'QWEN真实时尚摄影高对比高级感大片风格_电商时尚真实高级感摄影大片.safetensors', '0.4'))
+FIXED_LORAS = (('510', 'casual_snapshot_realism_qwen21.safetensors', '0.8'),
+               ('526', 'cndamiph_Candid_Amateur_iPhone_Qwen21_v1.safetensors', '0.5'))
 
 
 def read_json(path):
@@ -86,7 +86,7 @@ def validate(job, check_files=True):
         raise ValueError('megapixels 必须为 0.1–16 的有限数值')
     if job.get('aspect', '9:16') not in ASPECTS:
         raise ValueError('aspect 不支持；custom 缺少可验证宽高节点，暂不开放')
-    if job.get('instance', 'ultra') not in ('default', 'plus', 'ultra'):
+    if job.get('instance', 'plus') not in ('default', 'plus', 'ultra'):
         raise ValueError('instance 必须是 default、plus 或 ultra')
     if check_files:
         for filename in images:
@@ -107,7 +107,7 @@ def nodes(prompt, uploaded, aspect='9:16', megapixels=2.0, count=1):
                 ('527', 'value', str(count))]
     for node, name, strength in FIXED_LORAS:
         settings.extend([(node, 'lora_name', name), (node, 'strength_model', strength)])
-    settings.extend([('515', 'value', 'false'), ('525', 'value', 'false'),
+    settings.extend([('515', 'value', 'true'), ('525', 'value', 'false'),
                      ('528', 'value', 'true'), ('497', 'prompt', prompt.strip()),
                      ('479', 'unet_name', FIXED_MODEL),
                      ('484', 'sampler_name', 'er_sde'), ('484', 'scheduler', 'beta'),
@@ -257,7 +257,7 @@ def prepare_job(job, base):
 def payload_for(job, uploaded):
     return dict(nodeInfoList=nodes(job['prompt'], uploaded, job.get('aspect', '9:16'),
                 job.get('megapixels', 2.0), job.get('count', 1)),
-                instanceType=job.get('instance', 'ultra'), usePersonalQueue='false')
+                instanceType=job.get('instance', 'plus'), usePersonalQueue='false')
 
 
 def run_job(job, state, max_wait):
@@ -352,7 +352,7 @@ def main():
         uploaded = [f'UPLOAD_SLOT_{i}' for i in range(1, len(job['images']) + 1)]
         payload = dict(nodeInfoList=nodes(job['prompt'], uploaded, job.get('aspect', '9:16'),
                        job.get('megapixels', 2.0), job.get('count', 1)),
-                       instanceType=job.get('instance', 'ultra'), usePersonalQueue='false')
+                       instanceType=job.get('instance', 'plus'), usePersonalQueue='false')
         if not args.submit:
             result = {'dryRun': True, 'appId': APP_ID, 'images': job['images'], 'payload': payload}
         else:

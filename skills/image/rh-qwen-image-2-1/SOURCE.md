@@ -4,7 +4,7 @@
 - kind: `local`
 - status: `confirmed`
 - source: 用户 2026-10-31 在本会话要求将其 RH Studio「Qwen Image 2.1 多图编辑」制作为独立 Skill；开发目录 `skills/image/rh-qwen-image-2-1`。
-- version: `3.0.0`
+- version: `3.0.1`
 - author: 用户提出需求与应用范围，Codex 辅助编写 Skill、接口参考、Python 执行器和测试；不声明 Qwen 模型、RunningHub 服务或 RH Studio 前端为本包原创。
 - license: unknown；用户未为本新包指定对外许可。第三方应用、模型及服务条款归对应权利方，本包不分发其实现或模型权重。
 - collected_at: `2026-10-31`（首次创建）
@@ -64,3 +64,9 @@
 新应用支持文生图与0–6张参考图，MP范围0.1–16；原图比例须有参考图1，该模式平台不支持调节MP/数量。LoRA2模型卡 `https://www.runninghub.ai/zh-cn/model/public/2114552841117831169` 及用户截图确认触发词 `high contrast editorial fashion photography`，交由提示词编写方放入风格字段，执行器不破坏完整JSON。模型卡推荐强度1不覆盖用户截图0.4。截图及API示例哈希保存在node_map.json，无凭据或用户生成内容入库，不分发权重。
 
 离线测试覆盖新节点、底模/LoRA/采样设置、文生图空槽、MP边界与原比例输入校验；共享并发和旧taskId恢复沿用现有机制。只读核对与离线验证不代表新应用实际出图或模型加载成功，未创建收费任务。
+
+## 3.0.1 · 抓拍 LoRA、加速与 Plus 默认
+
+2026-11-03：按用户两张最新截图和“默认plus”要求，节点510改为 `casual_snapshot_realism_qwen21.safetensors`，强度0.8；节点526改为 `cndamiph_Candid_Amateur_iPhone_Qwen21_v1.safetensors`，强度0.5。截图截断的LoRA2全名已从用户现有Chrome应用页面的标题属性只读核实。提示词增强、加速均开启，ZIP仍关闭；默认Plus，显式实例覆盖继续有效。应用ID、底模与采样配置沿用3.0.0。
+
+移除当前配置中旧时尚摄影LoRA的模型卡/触发词，历史记录保留；新两组触发词未核实，不猜测追加。两张截图SHA-256写入node_map.json的configuration_screenshot_sha256；保留原应用节点发现日期与来源。本次运行离线请求/恢复回归和CLI预检，不提交收费生成，不声称新组合已完成实际加载或出图效果验证。
