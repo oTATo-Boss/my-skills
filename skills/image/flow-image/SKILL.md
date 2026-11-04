@@ -2,7 +2,7 @@
 name: flow-image
 description: "Generate and edit images with Nano Banana 2.1 in Google Flow through the local Chrome DevTools CLI persistent session. Use for Flow/Nano Banana image requests, including multiple local reference images; reuse the user's existing Chrome login."
 metadata:
-  version: "1.2.1"
+  version: "1.2.2"
 ---
 
 # Flow 图片生成与编辑
@@ -45,6 +45,10 @@ metadata:
 
 对应关系在包外 `~/.local/share/flow-devtools/reference-cache.json`，按项目隔离，不能把它提交到 Git。升级前已上传的素材优先从本机任务记录和原浏览器请求核对参考图 ID 后接管，不按文件名或相似外观猜测。缓存命中但素材找不到、已知历史引用无法核验、或上次上传状态不确定时，停下来核对；不能静默再上传一个副本。修改图片字节内容会视为新图。上传尝试之前就保存状态，中断后先查找素材再恢复，不盲目重复上传。
 
+当前 Flow 的 `/asb/…` 缩略图不直接包含素材 ID。脚本优先读取明确的 `data-media-id`；素材列表与提示框中的缩略图通过同一图片资源和项目网格 ID 对应，无法唯一核验仍停止，不按文件名猜测。直接加入提示框但缩略图尚未加载时会继续等待，不误点已关闭的“添加到提示”。
+
+收图兼容 `/asb/…`：通过现有 Chrome 登录会话读取原尺寸图片，不导出 Cookie；仍按图片实际格式落盘并禁止覆盖。缩略图下载不作为原尺寸成品。
+
 ## 连续提交与并发收图
 
 多个 Agent 可直接各自调用 `image`，每个命令等待自己的结果，期间不占用提示框锁。同一个 Agent 要先连续提交多笔，再收图，可使用：
@@ -72,7 +76,7 @@ metadata:
 
 ## 维护与配置
 
-可执行源码在 [scripts/flow_image.py](scripts/flow_image.py)，离线检查为 `python3 scripts/test_flow_image.py`。本机安装副本为 `~/.agents/skills/image/flow-image/`，快捷命令指向该副本。开发目录按项目安装映射维护。
+可执行源码在 [scripts/flow_image.py](scripts/flow_image.py)，离线检查为 `python3 scripts/test_flow_image.py`（DOM 回归用例另需 Node.js，仅用于测试）。本机安装副本为 `~/.agents/skills/image/flow-image/`，快捷命令指向该副本。开发目录按项目安装映射维护。
 
 运行状态和私有配置位于 `~/.local/share/flow-devtools/`（可用 `FLOW_IMAGE_HOME` 覆盖），不放进 Skill 包或 Git。`config.json` 包含本机 `cli`、`session`、`project` 和预期 `account`；不包含密码或 Cookie。依赖 Python 3.10+ 标准库及已安装、用户已允许连接的 Chrome DevTools CLI 1.12.0。新连接可能需要用户在 Chrome 确认；缺少授权时停下，不反复弹窗。
 

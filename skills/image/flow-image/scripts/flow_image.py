@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Flow image generation through Chrome DevTools CLI's persistent f10 daemon."""
-import argparse,contextlib,fcntl,hashlib,json,os,re,shutil,ssl,subprocess,sys,tempfile,time,urllib.parse,urllib.request,uuid
+import argparse,base64,contextlib,fcntl,hashlib,json,os,re,shutil,ssl,subprocess,sys,tempfile,time,urllib.parse,urllib.request,uuid
 from pathlib import Path
 ROOT=Path(os.environ.get('FLOW_IMAGE_HOME',str(Path.home()/'.local/share/flow-devtools'))).expanduser()
 CONFIG=json.loads((ROOT/'config.json').read_text()) if (ROOT/'config.json').exists() else {}
@@ -49,12 +49,36 @@ STATE_JS=r"""() => {
  const account=[...document.querySelectorAll('[aria-label]')].some(e=>(e.getAttribute('aria-label')||'').includes(__EXPECTED_ACCOUNT__));
  return {url:location.origin+location.pathname,account_ok:account,model_text:trigger?.innerText||'',draft:editor?.innerText?.trim()||''};
 }""".replace('__EXPECTED_ACCOUNT__',json.dumps(CONFIG.get('account','__unconfigured__')))
-MEDIA_JS=r"""() => {
+IMAGE_ID_JS=r"""
+ const uuid=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+ const imageKey=src=>{
+  try {
+   const u=new URL(src);
+   return u.origin==='https://flow.google.com'&&u.pathname.startsWith('/asb/')
+    ?u.origin+u.pathname.replace(/=s\d+(?:-[a-z]+)*$/,''):null;
+  } catch {return null;}
+ };
+ const imageId=im=>{
+  if(!im)return null;
+  const src=im.currentSrc||im.src||'';
+  const direct=im.getAttribute('data-media-id')||/^https:\/\/flow-content\.google\/image\/([0-9a-f-]{36})(?:[?/#]|$)/i.exec(src)?.[1];
+  if(direct&&uuid.test(direct))return direct;
+  const key=imageKey(src);
+  if(!key)return null;
+  // Match the actual image resource to a grid tile with an explicit ID.
+  // A filename alone is not evidence of identity; ambiguity stays unresolved.
+  const ids=new Set([...document.querySelectorAll('flow-grid-tile-container img[data-media-id]')]
+   .filter(g=>imageKey(g.currentSrc||g.src||'')===key)
+   .map(g=>g.getAttribute('data-media-id')).filter(id=>uuid.test(id||'')));
+  return ids.size===1?[...ids][0]:null;
+ };
+"""
+MEDIA_JS="() => {"+IMAGE_ID_JS+r"""
  const out=[];
  [...document.images].forEach((im,position)=>{
   const src=im.currentSrc||im.src||'';
-  const m=/^https:\/\/flow-content\.google\/image\/([0-9a-f-]{36})(?:[?/#]|$)/i.exec(src);
-  if(m)out.push({id:m[1],src,width:im.naturalWidth,height:im.naturalHeight,position});
+  const id=imageId(im);
+  if(id)out.push({id,src,width:im.naturalWidth,height:im.naturalHeight,position});
  });
  return out;
 }"""
@@ -104,8 +128,8 @@ def prepare(page,aspect):
     validate_state(evaluate(page,STATE_JS))
     return snapshot(page)
 
-REFS_JS=r"""() => [...document.querySelectorAll('button[aria-label="素材"],button[aria-label="Asset"]')]
- .filter(e=>e.getClientRects().length).map(e=>({busy:e.getAttribute('aria-busy')==='true',width:e.querySelector('img')?.naturalWidth||0,height:e.querySelector('img')?.naturalHeight||0,id:/\/image\/([0-9a-f-]{36})/i.exec(e.querySelector('img')?.src||'')?.[1]||null}))"""
+REFS_JS="() => {"+IMAGE_ID_JS+r"""return [...document.querySelectorAll('button[aria-label="素材"],button[aria-label="Asset"]')]
+ .filter(e=>e.getClientRects().length).map(e=>({busy:e.getAttribute('aria-busy')==='true',width:e.querySelector('img')?.naturalWidth||0,height:e.querySelector('img')?.naturalHeight||0,id:imageId(e.querySelector('img'))}));}"""
 
 ERRORS_JS="() => [...document.querySelectorAll('.error-tile')].filter(e=>e.getClientRects().length).length"
 
@@ -175,7 +199,7 @@ def open_reference_menu(page):
     if not re.search(r'listbox "(?:资源列表|Asset list)"',snap):
         run_cli('click',page,control(snap,'button',r'^在提示框中添加素材$|^Add assets'))
 
-ASSET_OPTIONS_JS=r"""() => [...document.querySelectorAll('[role=option]')].map(e=>({name:e.querySelector('.asset-title')?.textContent,id:/\/image\/([0-9a-f-]{36})/i.exec(e.querySelector('img')?.src||'')?.[1]||null})).filter(r=>r.name)"""
+ASSET_OPTIONS_JS="() => {"+IMAGE_ID_JS+r"""return [...document.querySelectorAll('[role=option]')].map(e=>({name:e.querySelector('.asset-title')?.textContent,id:imageId(e.querySelector('img'))})).filter(r=>r.name);}"""
 
 def select_reference(page,entry,expected_count):
     open_reference_menu(page)
@@ -193,7 +217,11 @@ def select_reference(page,entry,expected_count):
     run_cli('click',page,control(snapshot(page),'option','^'+re.escape(selected['name'])+r' (?:图片|Image)$'))
     rows=evaluate(page,REFS_JS)
     if not (references_ready(rows,expected_count) and selected['id'] in {r.get('id') for r in rows}):
-        run_cli('click',page,control(snapshot(page),'button',r'^添加到提示$|^Add to prompt$'))
+        # Selecting can attach immediately and close the menu before the chip's
+        # thumbnail loads. Only click Add if the menu still offers that button.
+        try:add=control(snapshot(page),'button',r'^添加到提示$|^Add to prompt$')
+        except ValueError:add=None
+        if add:run_cli('click',page,add)
     while time.monotonic()<deadline:
         rows=evaluate(page,REFS_JS)
         if references_ready(rows,expected_count) and selected['id'] in {r.get('id') for r in rows}:
@@ -223,12 +251,33 @@ def attach_reference(page,path,expected_count=1):
     selected=upload_reference(page,path,entry,expected_count);store_reference(digest,selected)
     return {'sha256':digest,'reused':False,'media_id':selected['media_id']}
 
-def download(url,requested):
-    if not url.startswith('https://flow-content.google/image/'):raise ValueError('Unexpected image host')
-    ctx=ssl.create_default_context(cafile='/etc/ssl/cert.pem')
-    try:
-        with urllib.request.urlopen(url,context=ctx,timeout=120) as response:blob=response.read(40000000)
-    except Exception as exc:raise RuntimeError('Image download failed: '+type(exc).__name__) from None
+def full_image_url(url):
+    return re.sub(r'=s\d+(?:-[a-z]+)*$','=s0',url) if url.startswith('https://flow.google.com/asb/') else url
+
+def download(url,requested,page=None):
+    if url.startswith('https://flow.google.com/asb/'):
+        # /asb/ is authenticated. Read only the image through the existing tab;
+        # never export cookies or request headers to an external HTTP client.
+        source=r"""async () => {
+         const r=await fetch(__URL__);
+         if(!r.ok)throw Error('Flow image fetch failed');
+         const blob=await r.blob();
+         if(!blob.type.startsWith('image/')||blob.size>40000000)throw Error('Invalid Flow image response');
+         return await new Promise((resolve,reject)=>{
+          const reader=new FileReader();
+          reader.onload=()=>resolve(reader.result.split(',')[1]);
+          reader.onerror=()=>reject(Error('Image read failed'));
+          reader.readAsDataURL(blob);
+         });
+        }""".replace('__URL__',json.dumps(full_image_url(url)))
+        try:blob=base64.b64decode(evaluate(page if page is not None else page_id(),source),validate=True)
+        except Exception as exc:raise RuntimeError('Browser image download failed: '+type(exc).__name__) from None
+    elif url.startswith('https://flow-content.google/image/'):
+        ctx=ssl.create_default_context(cafile='/etc/ssl/cert.pem')
+        try:
+            with urllib.request.urlopen(url,context=ctx,timeout=120) as response:blob=response.read(40000000)
+        except Exception as exc:raise RuntimeError('Image download failed: '+type(exc).__name__) from None
+    else:raise ValueError('Unexpected image host')
     if blob.startswith(b'\xff\xd8\xff'):suffix='.jpg'
     elif blob.startswith(b'\x89PNG\r\n\x1a\n'):suffix='.png'
     elif blob.startswith(b'RIFF') and blob[8:12]==b'WEBP':suffix='.webp'
@@ -324,7 +373,7 @@ def rpc_result(body):
                 if not isinstance(media_id,str) or not re.fullmatch(r'[0-9a-f-]{36}',media_id):continue
                 if not isinstance(width,int) or not isinstance(height,int) or min(width,height)<512:continue
                 prefix='https://flow-content.google/image/'+media_id+'?'
-                src=next((x for x in nested_strings(item) if x.startswith(prefix)),None)
+                src=next((x for x in nested_strings(item) if x.startswith(prefix) or x.startswith('https://flow.google.com/asb/')),None)
                 if src:return {'id':media_id,'src':src,'width':width,'height':height}
     return None
 
@@ -353,7 +402,7 @@ def find_ui_result(job):
             if row['id'] in excluded:continue
             image_uid=None
             for line in snapshot(page).splitlines():
-                if row['id'] in line and re.search(r'\bimage\b',line):
+                if (row['id'] in line or 'url='+json.dumps(row['src'],ensure_ascii=False) in line) and re.search(r'\bimage\b',line):
                     match=re.search(r'uid=(\S+)',line)
                     if match:image_uid=match.group(1);break
             if not image_uid:continue
@@ -438,7 +487,8 @@ def wait_job(job_id,timeout=240):
                     fcntl.flock(lock,fcntl.LOCK_EX)
                     latest=json.loads(job_path(job_id).read_text())
                     if latest['state']=='completed':return latest['result']
-                    actual=download(selected['src'],Path(job['output']))
+                    actual=(download(selected['src'],Path(job['output']),page) if selected['src'].startswith('https://flow.google.com/asb/')
+                            else download(selected['src'],Path(job['output'])))
                     result={'ok':True,'job_id':job_id,'mode':job['mode'],'reference_count':job['reference_count'],'reference_reused_count':job.get('reference_reused_count'),'output':str(actual),'media_id':selected['id'],'width':selected['width'],'height':selected['height'],'model':job['model'],'project':job['project'],'page_id':page,'daemon_pid':job['daemon_pid'],'network_request_id':job['network_request_id'],'elapsed_seconds':round(time.time()-job['submitted_at'])}
                     job.update(state='completed',completed_at=time.time(),result=result);save_job(job);append_history({**job,**result});return result
             if status.isdigit() and int(status)>=400:

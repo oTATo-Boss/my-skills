@@ -1,7 +1,43 @@
-import importlib.util,unittest,tempfile,contextlib,io,sys
+import importlib.util,unittest,tempfile,contextlib,io,sys,json,subprocess
 from unittest.mock import patch
 from pathlib import Path
 class DriverTests(unittest.TestCase):
+ def dom(self,source,ambiguous=False):
+  fixture=Path(__file__).with_name('dom_fixture.cjs')
+  result=subprocess.run(['node',str(fixture)],input=json.dumps({'source':source,'ambiguous':ambiguous}),text=True,capture_output=True,check=True)
+  return json.loads(result.stdout)
+ def test_asb_asset_and_composer_chip_resolve_to_exact_grid_media_id(self):
+  m=self.load();mid='cd82b996-cc81-40f8-bd2a-fee0f96556f0'
+  self.assertEqual(self.dom(m.ASSET_OPTIONS_JS),[{'name':'reference.jpg','id':mid}])
+  self.assertEqual(self.dom(m.REFS_JS),[{'busy':False,'width':896,'height':1200,'id':mid}])
+ def test_asb_images_are_included_in_result_baseline_alongside_legacy_urls(self):
+  m=self.load()
+  self.assertEqual([r['id'] for r in self.dom(m.MEDIA_JS)],['cd82b996-cc81-40f8-bd2a-fee0f96556f0','22222222-2222-4222-8222-222222222222'])
+ def test_ambiguous_asb_thumbnail_never_guesses_a_media_id(self):
+  m=self.load()
+  self.assertIsNone(self.dom(m.ASSET_OPTIONS_JS,ambiguous=True)[0]['id'])
+  self.assertIsNone(self.dom(m.REFS_JS,ambiguous=True)[0]['id'])
+ def test_asb_rpc_response_retains_its_own_output_identity(self):
+  m=self.load();mid='11111111-1111-4111-8111-111111111111';url='https://flow.google.com/asb/opaque-result=s1200-rw'
+  body=json.dumps([['wrb.fr','ogiZ0b',json.dumps([[[mid,None,None,None,None,None,[None,None,[896,1200],None,None,[url]]]]])]])
+  self.assertEqual(m.rpc_result(body),{'id':mid,'src':url,'width':896,'height':1200})
+ def test_asb_download_uses_existing_browser_session_and_preserves_output(self):
+  m=self.load();import base64
+  blob=b'RIFF'+bytes(4)+b'WEBP'+b'image-data';m.page_id=lambda:8
+  m.evaluate=lambda page,source:base64.b64encode(blob).decode()
+  with tempfile.TemporaryDirectory() as d:
+   try:output=m.download('https://flow.google.com/asb/opaque-result=s1200-rw',Path(d)/'image.jpg')
+   except ValueError as e:self.fail('A verified Flow asb image must be downloadable: '+str(e))
+   self.assertEqual(output,Path(d)/'image.webp');self.assertEqual(output.read_bytes(),blob)
+   with self.assertRaises(FileExistsError):m.download('https://flow.google.com/asb/opaque-result=s1200-rw',Path(d)/'image.jpg')
+ def test_asb_download_rejects_other_origins_before_browser_access(self):
+  m=self.load();m.evaluate=lambda *a:self.fail('Untrusted image URL must not reach the browser')
+  with self.assertRaises(ValueError):m.download('https://flow.google.com.evil.test/asb/opaque',Path('/unused.jpg'))
+ def test_asb_download_requests_original_instead_of_grid_thumbnail(self):
+  m=self.load()
+  self.assertEqual(m.full_image_url('https://flow.google.com/asb/opaque=s512-rw'),'https://flow.google.com/asb/opaque=s0')
+  self.assertEqual(m.full_image_url('https://flow.google.com/asb/opaque=s3200-rw'),'https://flow.google.com/asb/opaque=s0')
+  self.assertEqual(m.full_image_url('https://flow-content.google/image/id?signed=test'),'https://flow-content.google/image/id?signed=test')
  def load(self):
   p=Path(__file__).with_name('flow_image.py');self.assertTrue(p.exists(),'Flow CLI driver is not implemented yet')
   s=importlib.util.spec_from_file_location('flow_image',p);m=importlib.util.module_from_spec(s);s.loader.exec_module(m);return m
@@ -164,6 +200,15 @@ class DriverTests(unittest.TestCase):
   m.snapshot=lambda page:snap;m.run_cli=lambda *a,**k:{}
   m.evaluate=lambda page,js:([{'name':'existing.jpg','id':mid}] if js==m.ASSET_OPTIONS_JS else [{'id':mid,'busy':False,'width':1024,'height':1024}])
   self.assertEqual(m.select_reference(8,{'name':'existing.jpg','media_id':mid},1)['media_id'],mid)
+ def test_direct_attachment_waits_for_thumbnail_when_add_button_has_closed(self):
+  m=self.load();mid='11111111-1111-4111-8111-111111111111'
+  snap='uid=1 listbox "资源列表"\nuid=2 textbox "搜索资源"\nuid=3 option "existing.jpg 图片"'
+  m.snapshot=lambda page:snap;m.run_cli=lambda *a,**k:{}
+  chips=iter([[{'id':None,'busy':False,'width':0,'height':0}],[{'id':mid,'busy':False,'width':1024,'height':1024}]])
+  m.evaluate=lambda page,js:([{'name':'existing.jpg','id':mid}] if js==m.ASSET_OPTIONS_JS else next(chips))
+  try:result=m.select_reference(8,{'name':'existing.jpg','media_id':mid},1)
+  except ValueError as e:self.fail('A directly attached reference must be allowed to finish loading: '+str(e))
+  self.assertEqual(result['media_id'],mid)
  def test_interrupted_upload_is_recovered_without_upload_retry(self):
   m=self.load()
   with tempfile.TemporaryDirectory() as d:
