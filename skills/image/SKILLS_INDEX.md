@@ -1,12 +1,12 @@
 # image 项目技能索引
 
-技能数量：6
+技能数量：7
 
 [返回项目总索引](../../SKILLS_INDEX.md)
 
 ## 什么时候查本分类
 
-视觉创意指导、图片生成、角色资产、服装妆造及 JSON 提示词。
+视觉创意指导、图片生成、角色与多视角场景资产、服装妆造及 JSON 提示词。
 
 ## 技能入口
 
@@ -25,3 +25,7 @@
 ## Google Flow 执行
 
 - [flow-image](flow-image/SKILL.md) — 通过 Chrome DevTools CLI 常驻会话使用 Flow Nano Banana 2.1 文生图、多参考图编辑与重叠生成及参考图复用；v1.2.2。
+
+## 场景资产设计
+
+- [场景资产设计（scene-asset-design）](scene-asset-design/SKILL.md) — 从参考拆解、空间规划到四向场景原图、连续性验收与标注拼板，支持设计、提示词和完整资产制作。

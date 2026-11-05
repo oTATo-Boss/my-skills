@@ -118,3 +118,7 @@
 2026-11-01：`flow-image` v1.2.0 改为提交阶段短锁、在途任务独立跟踪，新增 `--no-wait`／`wait`；已确认两笔请求同时 pending 并各自正确收图，16 项离线检查通过。
 
 2026-11-01：`flow-image` v1.2.1 修复重复上传参考图，新增按项目和文件内容复用已上传素材及历史引用核验；两轮双参考附件实测 0 次上传，21 项检查通过。
+
+## 2026-11-05 · 场景资产设计
+
+用户提供 `scene-asset-design.zip`，明确确认由本人使用 GPT 制作，并要求安装到项目与本机及推送。首次纳入 `skills/image/scene-asset-design/`，原包 5 个文件内容与权限不变，补充来源及导入记录；原包未声明版本号和许可证。项目当前维护 26 个 Skill，安装映射为 `image/scene-asset-design`。来源与归属证据见 [SOURCE.md](skills/image/scene-asset-design/SOURCE.md)。

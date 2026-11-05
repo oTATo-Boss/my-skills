@@ -26,6 +26,7 @@
     "visual-creative-director": "director/visual-creative-director",
     "midjourney-generate": "image/midjourney-generate",
     "rh-qwen-image-2-1": "image/rh-qwen-image-2-1",
-    "flow-image": "image/flow-image"
+    "flow-image": "image/flow-image",
+    "scene-asset-design": "image/scene-asset-design"
   }
 }

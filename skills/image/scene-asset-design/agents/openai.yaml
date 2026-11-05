@@ -1,0 +1,13 @@
+interface:
+  display_name: 场景资产设计
+  short_description: 从参考分析、空间规划到一致的多视角场景资产，支持设计、提示词与实际制作
+  default_prompt: 用 $scene-asset-design 分析我的场景需求和参考素材，建立统一空间、光线与材质，按需求完成可复用的多视角场景资产。
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true
