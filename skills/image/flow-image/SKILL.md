@@ -2,7 +2,7 @@
 name: flow-image
 description: "Generate and edit images with Nano Banana 2.1 in Google Flow through the local Chrome DevTools CLI persistent session. Use for Flow/Nano Banana image requests, including multiple local reference images; reuse the user's existing Chrome login."
 metadata:
-  version: "1.2.2"
+  version: "1.2.3"
 ---
 
 # Flow 图片生成与编辑
@@ -46,6 +46,8 @@ metadata:
 对应关系在包外 `~/.local/share/flow-devtools/reference-cache.json`，按项目隔离，不能把它提交到 Git。升级前已上传的素材优先从本机任务记录和原浏览器请求核对参考图 ID 后接管，不按文件名或相似外观猜测。缓存命中但素材找不到、已知历史引用无法核验、或上次上传状态不确定时，停下来核对；不能静默再上传一个副本。修改图片字节内容会视为新图。上传尝试之前就保存状态，中断后先查找素材再恢复，不盲目重复上传。
 
 当前 Flow 的 `/asb/…` 缩略图不直接包含素材 ID。脚本优先读取明确的 `data-media-id`；素材列表与提示框中的缩略图通过同一图片资源和项目网格 ID 对应，无法唯一核验仍停止，不按文件名猜测。直接加入提示框但缩略图尚未加载时会继续等待，不误点已关闭的“添加到提示”。
+
+选择与点击均按同一个素材 ID 执行，同名条目不取第一项。缓存只有名称、没有 ID 且存在多个同名结果时，停止核对，不重新上传。已知 ID 的旧 `/asb/` 素材不在当前网格时，临时搜索项目库，让带明确 ID 的图块出现并核对同一图片资源，完成后恢复原搜索状态。已核验的资源映射仅留在当前页面内存中，支持网格虚拟滚动；不把图片地址写入磁盘缓存。页面被切换时停止并保留当前页面。
 
 收图兼容 `/asb/…`：通过现有 Chrome 登录会话读取原尺寸图片，不导出 Cookie；仍按图片实际格式落盘并禁止覆盖。缩略图下载不作为原尺寸成品。
 

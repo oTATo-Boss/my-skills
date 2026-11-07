@@ -58,6 +58,7 @@ IMAGE_ID_JS=r"""
     ?u.origin+u.pathname.replace(/=s\d+(?:-[a-z]+)*$/,''):null;
   } catch {return null;}
  };
+ const verifiedResources=globalThis[Symbol.for('flow-image.verified-resources')]||=new Map();
  const imageId=im=>{
   if(!im)return null;
   const src=im.currentSrc||im.src||'';
@@ -67,9 +68,12 @@ IMAGE_ID_JS=r"""
   if(!key)return null;
   // Match the actual image resource to a grid tile with an explicit ID.
   // A filename alone is not evidence of identity; ambiguity stays unresolved.
-  const ids=new Set([...document.querySelectorAll('flow-grid-tile-container img[data-media-id]')]
+  const ids=verifiedResources.get(key)||new Set();
+  [...document.querySelectorAll('flow-grid-tile-container img[data-media-id]')]
    .filter(g=>imageKey(g.currentSrc||g.src||'')===key)
-   .map(g=>g.getAttribute('data-media-id')).filter(id=>uuid.test(id||'')));
+   .map(g=>g.getAttribute('data-media-id')).filter(id=>uuid.test(id||''))
+   .forEach(id=>ids.add(id));
+  if(ids.size)verifiedResources.set(key,ids);
   return ids.size===1?[...ids][0]:null;
  };
 """
@@ -198,23 +202,72 @@ def open_reference_menu(page):
     snap=snapshot(page)
     if not re.search(r'listbox "(?:资源列表|Asset list)"',snap):
         run_cli('click',page,control(snap,'button',r'^在提示框中添加素材$|^Add assets'))
+        deadline=time.monotonic()+8
+        while time.monotonic()<deadline:
+            if re.search(r'listbox "(?:资源列表|Asset list)"',snapshot(page)):return
+            time.sleep(0.4)
+        raise RuntimeError('Reference menu did not open; no upload or generation was submitted')
 
 ASSET_OPTIONS_JS="() => {"+IMAGE_ID_JS+r"""return [...document.querySelectorAll('[role=option]')].map(e=>({name:e.querySelector('.asset-title')?.textContent,id:imageId(e.querySelector('img'))})).filter(r=>r.name);}"""
+CLICK_REFERENCE_JS="() => {"+IMAGE_ID_JS+r"""
+ const matches=[...document.querySelectorAll('[role=option]')]
+  .filter(e=>e.getClientRects().length&&imageId(e.querySelector('img'))===__MEDIA_ID__);
+ if(matches.length!==1)return null;
+ matches[0].click();return __MEDIA_ID__;
+}"""
+PROJECT_SEARCH_JS=r"""() => {
+ const input=document.querySelector('input[aria-label="搜索"],input[aria-label="Search"]');
+ return input?{url:location.origin+location.pathname,value:input.value,active:!!input.parentElement.querySelector('button[aria-label="返回"],button[aria-label="Back"]')}:null;
+}"""
 
-def select_reference(page,entry,expected_count):
+@contextlib.contextmanager
+def reference_library_identity(page,entry):
+    # ASB resources have no UUID in their URL. Expose the actual ID-bearing grid
+    # tile when virtualization removed it; filenames narrow the view, not identity.
+    original=evaluate(page,PROJECT_SEARCH_JS)
+    if original is None:raise RuntimeError('Project search is unavailable; the reference was not uploaded again')
+    if original['url']!=PROJECT_URL:raise RuntimeError('Flow project changed; the current page was preserved')
+    run_cli('press_key',page,'Escape')
+    try:
+        run_cli('fill',page,control(snapshot(page),'textbox',r'^搜索$|^Search$'),entry['name'])
+        deadline=time.monotonic()+10
+        source='() => !!document.querySelector('+json.dumps('flow-grid-tile-container img[data-media-id="'+entry['media_id']+'"]')+')'
+        while not evaluate(page,source):
+            if time.monotonic()>=deadline:raise RuntimeError('The cached media ID could not be verified in the project library; it was not uploaded again')
+            time.sleep(0.4)
+        yield
+    finally:
+        current=evaluate(page,PROJECT_SEARCH_JS)
+        if not current or current['url']!=original['url']:raise RuntimeError('Flow project changed during reference verification; the current page was preserved')
+        snap=snapshot(page)
+        if re.search(r'listbox "(?:资源列表|Asset list)"',snap):
+            run_cli('press_key',page,'Escape');snap=snapshot(page)
+        if original['active']:
+            run_cli('fill',page,control(snap,'textbox',r'^搜索$|^Search$'),original['value'])
+        else:
+            run_cli('click',page,control(snap,'button',r'^返回$|^Back$'))
+
+def select_reference(page,entry,expected_count,_library_checked=False):
     open_reference_menu(page)
     if entry.get('name'):
         run_cli('fill',page,control(snapshot(page),'textbox',r'^搜索资源$|^Search assets$'),entry['name'])
     deadline=time.monotonic()+40;selected=None
     while time.monotonic()<deadline:
         options=evaluate(page,ASSET_OPTIONS_JS)
-        selected=next((r for r in options if r['id'] and (r['id']==entry['media_id'] if entry.get('media_id') else r['name']==entry['name'])),None)
+        matches=[r for r in options if r['id']==entry['media_id']] if entry.get('media_id') else [r for r in options if r['name']==entry.get('name')]
+        if len(matches)>1:raise RuntimeError('Reference material is ambiguous; verify its media ID instead of selecting a same-name copy or uploading again')
+        selected=next((r for r in matches if r['id']),None)
         if selected:break
+        if not _library_checked and entry.get('media_id') and entry.get('name') and any(r['name']==entry['name'] and not r['id'] for r in options):
+            with reference_library_identity(page,entry):
+                return select_reference(page,entry,expected_count,_library_checked=True)
         if not entry.get('name'):
             evaluate(page,"() => {const e=document.querySelector('[role=listbox]');if(e)e.scrollTop+=Math.max(e.clientHeight-40,200)}")
         time.sleep(0.5)
     if not selected:raise RuntimeError('Cached reference material was not found or is still unavailable; it was not uploaded again')
-    run_cli('click',page,control(snapshot(page),'option','^'+re.escape(selected['name'])+r' (?:图片|Image)$'))
+    clicked=evaluate(page,CLICK_REFERENCE_JS.replace('__MEDIA_ID__',json.dumps(selected['id'])))
+    if clicked!=selected['id']:raise RuntimeError('The exact reference option changed or became ambiguous; no generation was submitted')
+    deadline=time.monotonic()+40
     rows=evaluate(page,REFS_JS)
     if not (references_ready(rows,expected_count) and selected['id'] in {r.get('id') for r in rows}):
         # Selecting can attach immediately and close the menu before the chip's
@@ -227,7 +280,7 @@ def select_reference(page,entry,expected_count):
         if references_ready(rows,expected_count) and selected['id'] in {r.get('id') for r in rows}:
             return {'media_id':selected['id'],'name':selected['name'],'state':'ready'}
         time.sleep(0.5)
-    raise TimeoutError('The exact cached reference did not become ready; no generation was submitted')
+    raise TimeoutError('The exact cached reference did not become ready; expected '+str(expected_count)+' chips including '+selected['id']+', observed '+json.dumps(rows)+'; no generation was submitted')
 
 def upload_reference(page,path,entry,expected_count):
     stage_dir=ROOT/'uploads';stage_dir.mkdir(exist_ok=True);staged=stage_dir/entry['name']
@@ -341,7 +394,8 @@ def read_network_body(page,reqid,which):
     with tempfile.TemporaryDirectory(prefix='.network-',dir=ROOT) as directory:
         path=Path(directory)/'body.txt'
         result=run_cli('get_network_request',page,'--reqid',reqid,'--'+which+'FilePath',path)
-        detail=result['networkRequest']
+        if isinstance(result,list):result=result[0] if result else {}
+        detail=result.get('networkRequest') or {}
         actual=Path(detail.get(which+'BodyFilePath') or path)
         if actual.is_file():return actual.read_text()
         raise BodyUnavailable('Browser network '+which+' body is unavailable')

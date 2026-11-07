@@ -2,14 +2,48 @@ import importlib.util,unittest,tempfile,contextlib,io,sys,json,subprocess
 from unittest.mock import patch
 from pathlib import Path
 class DriverTests(unittest.TestCase):
- def dom(self,source,ambiguous=False):
+ def dom(self,source,ambiguous=False,**options):
   fixture=Path(__file__).with_name('dom_fixture.cjs')
-  result=subprocess.run(['node',str(fixture)],input=json.dumps({'source':source,'ambiguous':ambiguous}),text=True,capture_output=True,check=True)
+  result=subprocess.run(['node',str(fixture)],input=json.dumps({'source':source,'ambiguous':ambiguous,**options}),text=True,capture_output=True,check=True)
   return json.loads(result.stdout)
  def test_asb_asset_and_composer_chip_resolve_to_exact_grid_media_id(self):
   m=self.load();mid='cd82b996-cc81-40f8-bd2a-fee0f96556f0'
   self.assertEqual(self.dom(m.ASSET_OPTIONS_JS),[{'name':'reference.jpg','id':mid}])
   self.assertEqual(self.dom(m.REFS_JS),[{'busy':False,'width':896,'height':1200,'id':mid}])
+ def test_verified_asb_identity_survives_grid_virtualization(self):
+  m=self.load()
+  self.assertEqual(self.dom(m.ASSET_OPTIONS_JS,hideGridAfterFirstResolution=True),[{'name':'reference.jpg','id':'cd82b996-cc81-40f8-bd2a-fee0f96556f0'}])
+ def test_offscreen_cached_reference_is_verified_in_library_and_search_is_restored(self):
+  m=self.load();wanted='11111111-1111-4111-8111-111111111111';state={'picker':True,'exposed':False,'attached':False,'query':''}
+  def snap(page):
+   text='uid=library textbox "搜索"\nuid=back button "返回"\nuid=add button "在提示框中添加素材"'
+   return text+('\nuid=picker listbox "资源列表"\nuid=search textbox "搜索资源"' if state['picker'] else '')
+  def cli(command,page,*args,**kw):
+   if command=='press_key':state['picker']=False
+   elif command=='click' and args[0]=='back':state.update(query='',exposed=False)
+   elif command=='click':state['picker']=True
+   elif command=='fill' and args[0]=='library':state.update(query=args[1],exposed=True)
+  def browser(page,source):
+   if source==m.ASSET_OPTIONS_JS:return [{'name':'reference.jpg','id':wanted if state['exposed'] else None}]
+   if source==m.REFS_JS:return [{'id':wanted,'busy':False,'width':896,'height':1200}] if state['attached'] else []
+   if 'matches[0].click()' in source:state['attached']=True;return wanted
+   if 'input[aria-label' in source:return {'url':m.PROJECT_URL,'value':'','active':False}
+   return state['exposed']
+  m.snapshot=snap;m.run_cli=cli;m.evaluate=browser
+  import itertools
+  ticks=itertools.count()
+  with patch.object(m.time,'sleep'),patch.object(m.time,'monotonic',side_effect=lambda:next(ticks)):
+   try:result=m.select_reference(8,{'media_id':wanted,'name':'reference.jpg'},1)
+   except RuntimeError as e:self.fail('A cached ASB asset outside the current grid must be resolved through verified library IDs: '+str(e))
+  self.assertEqual(result['media_id'],wanted);self.assertTrue(state['attached']);self.assertEqual(state['query'],'')
+ def test_library_recovery_does_not_restore_over_user_navigation(self):
+  m=self.load();states=iter([{'url':m.PROJECT_URL,'value':'','active':False},None]);actions=[]
+  m.evaluate=lambda page,source:next(states) if source==m.PROJECT_SEARCH_JS else True
+  m.snapshot=lambda page:'uid=search textbox "搜索"\nuid=back button "返回"'
+  m.run_cli=lambda *a,**k:actions.append(a)
+  with self.assertRaisesRegex(RuntimeError,'changed'):
+   with m.reference_library_identity(8,{'name':'reference.jpg','media_id':'known'}):pass
+  self.assertNotIn(('click',8,'back'),actions)
  def test_asb_images_are_included_in_result_baseline_alongside_legacy_urls(self):
   m=self.load()
   self.assertEqual([r['id'] for r in self.dom(m.MEDIA_JS)],['cd82b996-cc81-40f8-bd2a-fee0f96556f0','22222222-2222-4222-8222-222222222222'])
@@ -185,6 +219,66 @@ class DriverTests(unittest.TestCase):
    def missing(*a):raise RuntimeError('cached material missing')
    m.select_reference=missing
    with self.assertRaisesRegex(RuntimeError,'missing'):m.attach_reference(8,p)
+ def test_cached_timeout_preserves_mapping_without_reupload(self):
+  m=self.load()
+  with tempfile.TemporaryDirectory() as d:
+   m.ROOT=Path(d);p=m.ROOT/'a.jpg';p.write_bytes(b'\xff\xd8\xffsame-image')
+   entry={'media_id':'known','name':'known.jpg','state':'ready'}
+   m.store_reference(m.reference_digest(p),entry)
+   m.upload_reference=lambda *a:self.fail('Timeout must not create another upload')
+   def timeout(*a):raise TimeoutError('reference not ready')
+   m.select_reference=timeout
+   with self.assertRaises(TimeoutError):m.attach_reference(8,p)
+   self.assertEqual(m.cached_reference(m.reference_digest(p)),entry)
+ def test_unverifiable_history_does_not_start_a_new_upload(self):
+  m=self.load()
+  with tempfile.TemporaryDirectory() as d:
+   m.ROOT=Path(d);p=m.ROOT/'a.jpg';p.write_bytes(b'\xff\xd8\xffsame-image')
+   def unverified(*a):raise RuntimeError('history cannot be verified')
+   m.lookup_historical_reference=unverified
+   m.upload_reference=lambda *a:self.fail('Unverified history must not create another upload')
+   with self.assertRaisesRegex(RuntimeError,'history'):m.attach_reference(8,p)
+   self.assertIsNone(m.cached_reference(m.reference_digest(p)))
+ def test_same_name_material_is_clicked_by_exact_media_id(self):
+  m=self.load();wanted='22222222-2222-4222-8222-222222222222';attached=[]
+  m.snapshot=lambda page:'uid=1 listbox "资源列表"\nuid=2 textbox "搜索资源"\nuid=3 option "reference.jpg 图片"\nuid=4 option "reference.jpg 图片"'
+  m.run_cli=lambda *a,**k:{}
+  def browser(page,source):
+   if source==m.REFS_JS:return [{'id':mid,'busy':False,'width':896,'height':1200} for mid in attached]
+   observation=self.dom(source,duplicateNames=True,captureClick=True)
+   attached.extend(observation['clicked'])
+   return observation['result']
+  m.evaluate=browser
+  try:result=m.select_reference(8,{'media_id':wanted,'name':'reference.jpg'},1)
+  except ValueError as e:self.fail('A verified media ID must remain selectable among same-name siblings: '+str(e))
+  self.assertEqual(result['media_id'],wanted)
+  self.assertEqual(attached,[wanted])
+ def test_unidentified_duplicate_materials_stop_before_clicking(self):
+  m=self.load();clicked=[]
+  m.snapshot=lambda page:'uid=1 listbox "资源列表"\nuid=2 textbox "搜索资源"\nuid=3 option "reference.jpg 图片"\nuid=4 option "reference.jpg 图片"'
+  m.run_cli=lambda *a,**k:{}
+  def browser(page,source):
+   observation=self.dom(source,duplicateNames=True,captureClick=True);clicked.extend(observation['clicked']);return observation['result']
+  m.evaluate=browser
+  with self.assertRaises((RuntimeError,ValueError)):m.select_reference(8,{'media_id':None,'name':'reference.jpg','state':'uploading'},1)
+  self.assertEqual(clicked,[])
+ def test_unavailable_network_body_stops_history_verification(self):
+  m=self.load()
+  with tempfile.TemporaryDirectory() as d:
+   m.ROOT=Path(d)
+   for response in ([],[{'type':'text','text':'body unavailable'}],{'networkRequest':None}):
+    with self.subTest(response=response):
+     m.run_cli=lambda *a,**k:response
+     try:
+      with self.assertRaises(m.BodyUnavailable):m.read_network_body(8,1,'request')
+     except (TypeError,KeyError,AttributeError) as e:self.fail('Missing body must report BodyUnavailable: '+str(e))
+ def test_reference_menu_waits_for_its_search_control(self):
+  m=self.load();snapshots=iter(['uid=1 button "在提示框中添加素材"','uid=1 button "在提示框中添加素材"','uid=2 listbox "资源列表"\nuid=3 textbox "搜索资源"']);calls=[]
+  m.snapshot=lambda page:next(snapshots)
+  m.run_cli=lambda *a,**k:calls.append(a)
+  with patch.object(m.time,'sleep'):m.open_reference_menu(8)
+  self.assertEqual(calls,[('click',8,'1')])
+  with self.assertRaises(StopIteration):next(snapshots)
  def test_historical_reference_ids_require_exact_prompt_and_count(self):
   m=self.load();import json,urllib.parse,hashlib
   prompt='use both images';sha=hashlib.sha256(prompt.encode()).hexdigest()
@@ -198,14 +292,14 @@ class DriverTests(unittest.TestCase):
   m=self.load();mid='11111111-1111-4111-8111-111111111111'
   snap='uid=1 listbox "资源列表"\nuid=2 textbox "搜索资源"\nuid=3 option "existing.jpg 图片"'
   m.snapshot=lambda page:snap;m.run_cli=lambda *a,**k:{}
-  m.evaluate=lambda page,js:([{'name':'existing.jpg','id':mid}] if js==m.ASSET_OPTIONS_JS else [{'id':mid,'busy':False,'width':1024,'height':1024}])
+  m.evaluate=lambda page,js:([{'name':'existing.jpg','id':mid}] if js==m.ASSET_OPTIONS_JS else ([{'id':mid,'busy':False,'width':1024,'height':1024}] if js==m.REFS_JS else mid))
   self.assertEqual(m.select_reference(8,{'name':'existing.jpg','media_id':mid},1)['media_id'],mid)
  def test_direct_attachment_waits_for_thumbnail_when_add_button_has_closed(self):
   m=self.load();mid='11111111-1111-4111-8111-111111111111'
   snap='uid=1 listbox "资源列表"\nuid=2 textbox "搜索资源"\nuid=3 option "existing.jpg 图片"'
   m.snapshot=lambda page:snap;m.run_cli=lambda *a,**k:{}
   chips=iter([[{'id':None,'busy':False,'width':0,'height':0}],[{'id':mid,'busy':False,'width':1024,'height':1024}]])
-  m.evaluate=lambda page,js:([{'name':'existing.jpg','id':mid}] if js==m.ASSET_OPTIONS_JS else next(chips))
+  m.evaluate=lambda page,js:([{'name':'existing.jpg','id':mid}] if js==m.ASSET_OPTIONS_JS else (next(chips) if js==m.REFS_JS else mid))
   try:result=m.select_reference(8,{'name':'existing.jpg','media_id':mid},1)
   except ValueError as e:self.fail('A directly attached reference must be allowed to finish loading: '+str(e))
   self.assertEqual(result['media_id'],mid)
