@@ -6,7 +6,7 @@ Read the rendered image itself. The prompt is not evidence that the requested de
 
 1. **Design fidelity:** every locked garment, shoe, accessory, color, material, closure, and prohibited-substitution rule is respected.
 2. **View consistency:** front, back, left, and right depict the same design. Check repeated-element count, side placement, hem length, seams, hardware, shoes, and accessory quantity.
-3. **Physical credibility:** projecting parts have supports; transparent parts have thickness and edges; fabric responds to gravity and body volume; shoes contact the floor.
+3. **Physical credibility:** projecting parts have supports; transparent parts have thickness and edges; fabric responds to gravity and body volume; shoes contact the floor. Inspect yarn or weave thickness at a plausible scale, material-specific tension changes and slack folds, and transparent-layer overlap where applicable. Mesh spacing and direction should respond to local stretch.
 4. **Air mannequin:** no face, skin, hair, neck, hands, legs, feet, or visible mannequin shell appears. Garments retain believable support.
 5. **Capture realism:** the neutral background and light match the chosen realistic/CG/AAA treatment; a real white wall is required only for the photographic branch; shadows and reflections are plausible.
 6. **Framing:** the four views are complete, similarly scaled, ordered front/back/left/right, and not cropped.
