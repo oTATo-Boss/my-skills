@@ -4,7 +4,7 @@
 - kind: `local`
 - status: `confirmed`
 - source: 本地开发／维护目录 `skills/image/json-prompt-system`；当前维护仓库 https://github.com/oTATo-Boss/my-skills
-- version: 3.0.0
+- version: 3.1.0
 - author: oTATo-Boss（用户本人）；2026-10-30 在当前对话明确确认本人制作，Agent 辅助编写／整理。
 - license: unknown；当前保留资料未包含足以确认的技能许可声明。
 - collected_at: unknown；没有可靠安装／导入日期。
@@ -12,6 +12,8 @@
 - evidence: [SOURCE_NOTES.md](</Users/griffith/Desktop/AI/我的项目/my skills/SOURCE_NOTES.md>)；[INSTALL_MAP.json](</Users/griffith/Desktop/AI/我的项目/my skills/INSTALL_MAP.json>)；当前入口 SHA-256 `61450e478e71a61f6614baa5f0e5b93f15de3491e7cae63493d8ce6b0a3e987c`（本次记录快照）。
 
 ## 版本记录
+
+- 2026-11-07，v3.1.0：四模式的“多图参考规则”改为 REFERENCE_RULES 动态插槽，由 Agent 根据本次实际参考图编写图号、职责和保留要求；拼装脚本接收参考规则文件，无图时使用明确的文生图说明。
 
 - 2026-11-07，v3.0.0：四套 fixed.md 来自 model.otato.art 后台提示词快照（mirrorTemplate、frontTemplate、portraitTemplate、ecommerceEditorialTemplate）；时尚大片四份动作卡资料取自网站项目 1b2f5fa 的 json-prompt-system/modes/ecommerce-editorial/。默认交付完整提示词，支持显式纯 JSON；移除服装渲染和模特上身。
 
