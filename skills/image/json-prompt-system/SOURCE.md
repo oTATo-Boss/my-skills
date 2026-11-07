@@ -4,7 +4,7 @@
 - kind: `local`
 - status: `confirmed`
 - source: 本地开发／维护目录 `skills/image/json-prompt-system`；当前维护仓库 https://github.com/oTATo-Boss/my-skills
-- version: 2.1.0
+- version: 3.0.0
 - author: oTATo-Boss（用户本人）；2026-10-30 在当前对话明确确认本人制作，Agent 辅助编写／整理。
 - license: unknown；当前保留资料未包含足以确认的技能许可声明。
 - collected_at: unknown；没有可靠安装／导入日期。
@@ -12,6 +12,8 @@
 - evidence: [SOURCE_NOTES.md](</Users/griffith/Desktop/AI/我的项目/my skills/SOURCE_NOTES.md>)；[INSTALL_MAP.json](</Users/griffith/Desktop/AI/我的项目/my skills/INSTALL_MAP.json>)；当前入口 SHA-256 `61450e478e71a61f6614baa5f0e5b93f15de3491e7cae63493d8ce6b0a3e987c`（本次记录快照）。
 
 ## 版本记录
+
+- 2026-11-07，v3.0.0：四套 fixed.md 来自 model.otato.art 后台提示词快照（mirrorTemplate、frontTemplate、portraitTemplate、ecommerceEditorialTemplate）；时尚大片四份动作卡资料取自网站项目 1b2f5fa 的 json-prompt-system/modes/ecommerce-editorial/。默认交付完整提示词，支持显式纯 JSON；移除服装渲染和模特上身。
 
 - 2026-11-02，v2.1.0：补齐独立使用所需的三块信息，并修正两处实测问题。
   - 三种生活图模式新增 `角色与服装` 块，`mirror-selfie` 与 `front-camera-selfie` 新增 `环境与光线` 块；`third-person` 原本有环境描述，只补角色与服装。

@@ -30,7 +30,7 @@ json-prompt-system Core Workflow
 步骤1：先选 mode
 - 不允许跳过 mode 判断。
 - 动作变量层先判断镜面自拍、前置自拍或第三视角。
-- 电商效果库或用户显式指定电商任务，按电商 mode 工作，不参与动作库 AUTO 判断。
+- 用户显式指定时尚大片时，按 ecommerce-editorial 专属流程工作，不参与动作库 AUTO 判断。
 
 步骤2：确认动作母题
 - 一个成品只保留一个动作主轴。

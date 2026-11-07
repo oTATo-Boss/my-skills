@@ -24,7 +24,7 @@ json-prompt-system Core Rule
 - 任何任务开始前，必须先参考 `core/mode_selector.txt` 选择 mode。
 - locked mode / modeHint 最高优先级，高于图片识别、用户文本和历史上下文。
 - 只有 `AUTO` 允许在 `mirror-selfie`、`front-camera-selfie`、`third-person` 之间自主判断。
-- `ecommerce-clothing` 与 `ecommerce-tryon` 只在效果库或用户显式指定电商任务时启用，不参与动作库 AUTO 判断。
+- `ecommerce-editorial` 在明确指定时尚大片时启用，不参与动作库 AUTO 判断。
 - 非 `AUTO` 不允许切换 mode，不允许输出其他 mode 的模板结构、术语或拍摄逻辑。
 
 5. 身体与物理规则
@@ -76,7 +76,7 @@ json-prompt-system Core Rule
   - 环境：场景类型、空间与陈设、生活痕迹、光源与时点、环境色与明暗、空间合理性。环境必须能解释光线和支撑关系。
 - 三块内容必须和动作、构图、光线一致；冲突时以动作与拍摄方式为准，回头改这三块，不要硬塞。
 - 角色与服装正文只出现在这两块里，动作字段仍然只写边界、牵引、遮挡和受力。
-- `ecommerce-clothing` 与 `ecommerce-tryon` 不适用本节：它们的商品信息由电商任务本身提供。
+- 时尚大片使用专属字段和身份保护规则。
 
 13. 文件定位补充
 - 本 JSON 是完整提示词的一个组成部分，不承担网站端 MD 提示词、参考图编排或后端逻辑；只补齐让 JSON 能独立成立所需的最小信息。
