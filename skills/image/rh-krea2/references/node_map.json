@@ -1,0 +1,214 @@
+{
+  "appId": "2080156609159286785",
+  "webappName": "krea2 Image to Image/Image Editing N version",
+  "snapshot_date": "2026-11-08",
+  "source": "用户API文本、配置截图和平台apiCallDemo只读查询；不含示例提示词、示例素材或凭据。截图覆盖模型与双LoRA配置。 用户同日追加默认约1K、关闭原图比例、1张；执行端采用1.0MP和9:16。",
+  "sha256": {
+    "api_text": "36564714f7f6acb113df2817cb69e5649f7e0e9531305e105c2e5a86c0875ca5",
+    "configuration_screenshot": "7b14f8a700f4b761d9793e6d2383c4d6016d4f00be8dc00be7aad2cd8af10f52"
+  },
+  "nodeInfoList": [
+    {
+      "nodeId": "72",
+      "fieldName": "image",
+      "fieldValue": "UPLOAD_SLOT_1",
+      "description": "参考图片",
+      "nodeName": "LoadImage",
+      "fieldData": "[[\"example.png\", \"None\", \"keep_this_dic\"], {\"image_upload\": true}]"
+    },
+    {
+      "nodeId": "99",
+      "fieldName": "text",
+      "fieldValue": "",
+      "description": "用户输入",
+      "nodeName": "JjkText",
+      "fieldData": "[\"STRING\", {\"multiline\": true}]"
+    },
+    {
+      "nodeId": "142",
+      "fieldName": "value",
+      "fieldValue": "false",
+      "description": "其他比例（默认原图比例）",
+      "nodeName": "PrimitiveBoolean",
+      "fieldData": "[\"BOOLEAN\", {}]"
+    },
+    {
+      "nodeId": "83",
+      "fieldName": "aspect_ratio",
+      "fieldValue": "9:16 (Portrait Widescreen)",
+      "description": "其他比例选择（打开上方开关才生效）",
+      "nodeName": "ResolutionSelector",
+      "fieldData": "[\"COMBO\", {\"default\": \"1:1 (Square)\", \"options\": [\"1:1 (Square)\", \"2:3 (Portrait Photo)\", \"3:2 (Photo)\", \"3:4 (Portrait Standard)\", \"4:3 (Standard)\", \"9:16 (Portrait Widescreen)\", \"16:9 (Widescreen)\", \"21:9 (Ultrawide)\"], \"tooltip\": \"The aspect ratio for the output dimensions.\", \"multiselect\": false}]"
+    },
+    {
+      "nodeId": "141",
+      "fieldName": "value",
+      "fieldValue": "1.5000000000000002",
+      "description": "像素/百万",
+      "nodeName": "Float",
+      "fieldData": "[\"FLOAT\", {\"step\": 0.01, \"default\": 0}]"
+    },
+    {
+      "nodeId": "131",
+      "fieldName": "value",
+      "fieldValue": "2.2500000000000004",
+      "description": "参考强度",
+      "nodeName": "easy float",
+      "fieldData": "[\"FLOAT\", {\"max\": 18446744073709551615, \"min\": -1.8446744073709552e19, \"step\": 0.01, \"default\": 0}]"
+    },
+    {
+      "nodeId": "132",
+      "fieldName": "strength_model",
+      "fieldValue": "0",
+      "description": "胸部调节（范围-10～+15）",
+      "nodeName": "LoraLoaderModelOnly",
+      "fieldData": "[\"FLOAT\", {\"max\": 100, \"min\": -100, \"step\": 0.01, \"default\": 1}]"
+    },
+    {
+      "nodeId": "105",
+      "fieldName": "value",
+      "fieldValue": "1",
+      "description": "数量/张",
+      "nodeName": "Int",
+      "fieldData": "[\"INT\", {\"default\": 0}]"
+    },
+    {
+      "nodeId": "130",
+      "fieldName": "unet_name",
+      "fieldValue": "krea2MuseByStable_v15TurboFp8.safetensors",
+      "description": "生图模型",
+      "nodeName": "UNETLoader",
+      "fieldData": "[[]]"
+    },
+    {
+      "nodeId": "133",
+      "fieldName": "lora_name",
+      "fieldValue": "realism_engine_krea2_v3.1_new.safetensors",
+      "description": "自定义lora1",
+      "nodeName": "LoraLoaderModelOnly",
+      "fieldData": "[[]]"
+    },
+    {
+      "nodeId": "133",
+      "fieldName": "strength_model",
+      "fieldValue": "0",
+      "description": "lora强度",
+      "nodeName": "LoraLoaderModelOnly",
+      "fieldData": "[\"FLOAT\", {\"max\": 100, \"min\": -100, \"step\": 0.01, \"default\": 1}]"
+    },
+    {
+      "nodeId": "145",
+      "fieldName": "lora_name",
+      "fieldValue": "realism_engine_krea2_v3.1_new.safetensors",
+      "description": "自定义lora2",
+      "nodeName": "LoraLoaderModelOnly",
+      "fieldData": "[[]]"
+    },
+    {
+      "nodeId": "145",
+      "fieldName": "strength_model",
+      "fieldValue": "0",
+      "description": "lora强度",
+      "nodeName": "LoraLoaderModelOnly",
+      "fieldData": "[\"FLOAT\", {\"max\": 100, \"min\": -100, \"step\": 0.01, \"default\": 1}]"
+    },
+    {
+      "nodeId": "119",
+      "fieldName": "value",
+      "fieldValue": "false",
+      "description": "Zip输出",
+      "nodeName": "PrimitiveBoolean",
+      "fieldData": "[\"BOOLEAN\", {}]"
+    }
+  ],
+  "configured_payload": {
+    "nodeInfoList": [
+      {
+        "nodeId": "72",
+        "fieldName": "image",
+        "fieldValue": "UPLOAD_SLOT_1",
+        "description": null
+      },
+      {
+        "nodeId": "99",
+        "fieldName": "text",
+        "fieldValue": "",
+        "description": null
+      },
+      {
+        "nodeId": "142",
+        "fieldName": "value",
+        "fieldValue": "true",
+        "description": null
+      },
+      {
+        "nodeId": "83",
+        "fieldName": "aspect_ratio",
+        "fieldValue": "9:16 (Portrait Widescreen)",
+        "description": null
+      },
+      {
+        "nodeId": "141",
+        "fieldName": "value",
+        "fieldValue": "1.0",
+        "description": null
+      },
+      {
+        "nodeId": "131",
+        "fieldName": "value",
+        "fieldValue": "2.25",
+        "description": null
+      },
+      {
+        "nodeId": "132",
+        "fieldName": "strength_model",
+        "fieldValue": "0",
+        "description": null
+      },
+      {
+        "nodeId": "105",
+        "fieldName": "value",
+        "fieldValue": "1",
+        "description": null
+      },
+      {
+        "nodeId": "130",
+        "fieldName": "unet_name",
+        "fieldValue": "FinePorn_V6.1_INT8_20261105.safetensors",
+        "description": null
+      },
+      {
+        "nodeId": "133",
+        "fieldName": "lora_name",
+        "fieldValue": "realism_engine_krea2_v3.1_new.safetensors",
+        "description": null
+      },
+      {
+        "nodeId": "133",
+        "fieldName": "strength_model",
+        "fieldValue": "0.4",
+        "description": null
+      },
+      {
+        "nodeId": "145",
+        "fieldName": "lora_name",
+        "fieldValue": "Krea-2-Turbo-HTT_c1-st10000.safetensors",
+        "description": null
+      },
+      {
+        "nodeId": "145",
+        "fieldName": "strength_model",
+        "fieldValue": "0.4",
+        "description": null
+      },
+      {
+        "nodeId": "119",
+        "fieldName": "value",
+        "fieldValue": "false",
+        "description": null
+      }
+    ],
+    "instanceType": "default",
+    "usePersonalQueue": false
+  }
+}

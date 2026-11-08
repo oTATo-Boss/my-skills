@@ -27,6 +27,7 @@
     "midjourney-generate": "image/midjourney-generate",
     "rh-qwen-image-2-1": "image/rh-qwen-image-2-1",
     "flow-image": "image/flow-image",
-    "scene-asset-design": "image/scene-asset-design"
+    "scene-asset-design": "image/scene-asset-design",
+    "rh-krea2": "image/rh-krea2"
   }
 }

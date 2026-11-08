@@ -1,6 +1,6 @@
 # image 项目技能索引
 
-技能数量：7
+技能数量：8
 
 [返回项目总索引](../../SKILLS_INDEX.md)
 
@@ -19,6 +19,8 @@
 - [midjourney-generate](midjourney-generate/SKILL.md) — 判断 MJ 任务并通过 Apilio 执行生成、变体、放大、编辑、状态恢复及下载交付。
 
 ## RunningHub 图片编辑
+
+- [RH Krea2（rh-krea2）](rh-krea2/SKILL.md) — 直连RunningHub单参考图编辑，固定截图底模与双LoRA 0.4，默认约1K/1张、可选比例，支持参考强度、共享并发与任务恢复；v1.0.0。
 
 - [RH-Qwen Image 2.1（rh-qwen-image-2-1）](rh-qwen-image-2-1/SKILL.md) — 直接调用 RunningHub Qwen 全能无限版 V2，固定底模与双 LoRA、默认 Plus，支持文生图、多图编辑与任务恢复；v3.0.1。
 
