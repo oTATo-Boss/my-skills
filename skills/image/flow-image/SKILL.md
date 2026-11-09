@@ -1,13 +1,15 @@
 ---
 name: flow-image
-description: "Generate and edit images with Nano Banana 2.1 in Google Flow through the local Chrome DevTools CLI persistent session. Use for Flow/Nano Banana image requests, including multiple local reference images; reuse the user's existing Chrome login."
+description: "Generate and edit images with Nano Banana 2.1 in Google Flow through the existing Chrome session. Use for Flow/Nano Banana image requests and multiple references; refresh and retry unusual-traffic failures until success, then deliver Flow's 2K download."
 metadata:
-  version: "1.2.3"
+  version: "1.2.4"
 ---
 
 # Flow 图片生成与编辑
 
 调用本机 `~/.local/bin/flow-image`，通过 Chrome DevTools CLI **1.12.0** 的常驻会话 `f10` 操作现有 Chrome。使用用户指定的 `bahadir` 主个人资料和固定 Flow 项目；在 Flow 的实际界面核对 **Nano Banana 2.1**。模型名称是页面选项，不是 API 模型参数。
+
+**默认完成条件：遇到流量异常刷新网页重试，直到成功；生成成功后使用 Flow「下载 → 2K 已高清重塑」，核验实际文件后交付。** 下方 CLI 保存的生成原图只是中间结果，不能直接作为默认最终成品。本版本由执行 Agent 衔接异常恢复和 2K 菜单操作，CLI 尚未自动封装这两步。
 
 ## 执行
 
@@ -36,7 +38,7 @@ metadata:
 - 每个 `--ref` 接受一张本地 JPEG、PNG 或 WebP，可重复传入。脚本先验证全部文件，再逐张复用已有素材或仅首次上传到同一提示框；**只有参考图数量完全一致且每张已加载，才提交一次生成**。任何参考图失败都停止，不能静默降为单图或文生图。实际可用上限由 Flow 当前界面决定，本版本不宣称已验证任意数量。
 - 提示词说明每张图的作用（如狐狸主体／木屋场景）及需要保留和修改的内容，避免只靠“图1／图2”造成歧义。当前未封装遮罩或视频。
 - `--aspect`：`1:1`（默认）、`16:9`、`9:16`、`4:3`、`3:4`。每次生成一张；输出路径必须是绝对路径，已有文件不覆盖。实际文件后缀按下载内容确定，以成功 JSON 中的 `output` 为准。
-- 输出 JSON 包含 `ok`、`mode`、图片路径、媒体 ID、参考图数量 `reference_count`、尺寸和耗时。查看保存图片，核对参考主体及修改要求后再报告成功；接口成功不等于画面满足要求。
+- 输出 JSON 包含 `ok`、`mode`、原图路径、媒体 ID、参考图数量 `reference_count`、原图尺寸和耗时。`ok=true` 表示原图已收取；继续执行下方 2K 下载，查看最终文件并核对参考主体及修改要求后再报告完成。不能把原图 JSON 中的尺寸当作 2K 文件尺寸。
 - 文件锁只保护设置参数、上传参考和确认提交；提交后释放，同一项目中的图片可以重叠生成。不要在其他工具中同时编辑提示框。保持主 Chrome 和 daemon 常驻，不逐张开关或重启。
 
 ## 参考图复用
@@ -70,11 +72,32 @@ metadata:
 
 必要时运行 `~/.local/bin/flow-image status`，无需每张图先检查或重新连接。账号、项目、模型或已有未完成提示词不符合时，脚本会停止，先处理明确报错。
 
+### 流量异常：刷新并持续重试
+
+用户指定的处理策略是优先按网络不稳定恢复。页面或对应生成响应明确出现「流量异常」「异常流量」「unusual traffic」等同义错误时，**刷新当前 Flow 网页，恢复同一任务并重试，直到生成成功**；不要因一次或固定次数失败就放弃，也不要直接要求用户换网络。该策略不代表已证明每次异常的网络根因。
+
+1. 核对错误属于本笔任务，而非页面残留的旧失败图块。先排除已成功的结果；只有已明确失败的生成才重新提交。保留完整原提示词、比例、全部参考图及顺序、原任务 ID 和失败证据，重试不擅自改写提示词或省略参考。
+2. 在提示框锁内处理页面恢复；先收取同页其他任务已经可用的结果、记录仍在途的任务。确认没有用户自己的未完成草稿后，用同一 `f10` 会话执行 `chrome-devtools --sessionId=f10 navigate_page <当前pageId> --type reload`。只刷新网页，不重启 Chrome 或 daemon，不新建项目或切换账号。
+3. 刷新后重新 `list_pages`、`take_snapshot`，核对账号、固定项目及 Nano Banana 2.1，重新设置原比例和 x1。参考图按既有 SHA-256／素材 ID 缓存逐张重新加入并核对全部就绪，不能借重试重复上传素材。
+4. 保留失败任务及每轮重试记录。CLI 已标记 `failed` 时可重新调用原 `image` 命令；仍为 `submitted`／`unconfirmed` 时，先按对应响应或准确关联的失败图块确认终止，再仅把该笔记录标记为 `failed` 并记录原因，之后提交下一轮。不能删除 `pending.json`、清空 jobs 或把所有在途任务都标失败来绕过保护。
+5. 仍报流量异常时再次刷新、重试；轮次之间短暂等待，避免紧密连点。每次均复用原参数与参考图，直到成功，或用户明确要求停止。登录失效、权限不足、内容拒绝等其他错误按实际原因处理，不能冒充流量异常无限重发。
+
+**刷新会使页面内请求记录失效。** 刷新前仍在途或提交归属不明的任务，先按原任务、完整提示词和已认领媒体 ID 核对结果，不拿新页面的同号网络请求当原请求，也不把单纯超时／`net::ERR_ABORTED` 当作已确认失败。必要时用下述详情核对路径恢复；仍有歧义时保留现场，不猜测重发。
+
 新任务独立记录在 `~/.local/share/flow-devtools/jobs/<job_id>.json`，`status` 列出未完成任务。超时使用 `wait <job_id>` 继续收取，不重发。已绑定浏览器请求的在途任务不阻止其他任务提交；`submitting`／`unconfirmed` 表示无法确认提交归属，先核对后再提交新任务。
 
-旧版 `pending.json` 存在时先让旧任务完成或核对其结果，不能直接删除后重试。Chrome／daemon 重启会使原请求编号失效；脚本拒绝拿新连接的同号请求当旧结果。参考图会留在 Flow 项目中，临时本地上传副本及读取的网络正文自动清理，不保存 Cookie 或签名 URL。
+旧版 `pending.json` 存在时先让旧任务完成或核对其结果，不能直接删除后重试。网页刷新或 Chrome／daemon 重启会使原请求记录失效；不能沿用失效编号。参考图会留在 Flow 项目中，临时本地上传副本及读取的网络正文自动清理，不保存 Cookie 或签名 URL。
 
 需要未封装的 UI 操作时，用 `chrome-devtools --sessionId=f10 ...` 和最新 `take_snapshot`，页 ID 从 `list_pages` 确认，不硬编码 UID。不要回退到 gflow-cli、Flow2API、其他图片服务，或复制 Cookie。只有用户明确要求停止服务时才用 `flow-image stop`。
+
+## 成功后下载并交付 2K
+
+1. 用本笔成功 JSON 的 `media_id` 精确定位项目中的图片图块；必要时打开详情核对完整提示词。不要选择页面最新图、同名第一张或参考图。先记录下载目录已有文件，避免把旧的 2K 下载误当本次成品。
+2. 用最新快照与原生 CLI 悬停该图块，打开其「更多选项 → 下载」，选择 **「2K 已高清重塑」**（英文界面选择对应的 2K 选项）。实测同菜单还含「1K 原始尺寸」和「4K 已高清重塑」；本任务选 2K。UID 每次重新读取，不硬编码。
+3. 等待「正在对图片进行高清重塑，系统随后会自动开始下载」对应的处理与实际下载完成。菜单点击成功、提示出现或原图 `ok=true` 都不等于 2K 文件已保存。若此阶段报流量异常，按上方流程刷新后，对**已成功的同一张图片**重试 2K 下载，无需重新生图。
+4. 从浏览器真实下载目录取得本次文件，或通过当前 Chrome 会话接收该下载的图片 Blob。以本次触发、目标图片身份、下载文件名和完成时间共同确认归属；同名或并发下载无法唯一关联时停止猜测。将最终文件保存到约定的绝对路径，不覆盖已有文件；必要时保留原图并另存 `-2K` 文件。
+5. 用文件本身核对格式、像素尺寸并查看画面。2K 随比例变化，不要求强行改成 2048×2048；本次真实 3:4 样本为 **1792×2400 JPEG**，Flow 文件名带 `_2K.jpg`。文件名仅作辅助证据，不能单凭名字断言分辨率。不能用改名、修改原图 URL 的尺寸参数或本地插值代替 Flow 的 2K 高清重塑。
+6. 最终交付该 2K 文件的路径与实际像素尺寸。2K 选项不可用或下载未完成时明确报告尚未完成，不能静默交付 1K 原图并宣称成功。除用户另行指定外，默认每张成功图都走此流程。
 
 ## 维护与配置
 

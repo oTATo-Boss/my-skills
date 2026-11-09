@@ -26,7 +26,7 @@
 
 ## Google Flow 执行
 
-- [flow-image](flow-image/SKILL.md) — 通过 Chrome DevTools CLI 常驻会话使用 Flow Nano Banana 2.1 文生图、多参考图编辑与重叠生成及参考图复用；v1.2.3。
+- [flow-image](flow-image/SKILL.md) — 通过现有 Chrome 使用 Flow Nano Banana 2.1 生图、多参考图与重叠生成；流量异常刷新重试，默认交付 Flow 2K 下载；v1.2.4。
 
 ## 场景资产设计
 
