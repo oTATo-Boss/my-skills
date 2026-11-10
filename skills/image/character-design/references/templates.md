@@ -14,7 +14,7 @@
 | 全身三视图 | [body-three](../assets/templates/realistic-base/body-three.txt) | [body-three](../assets/templates/beauty/body-three.txt) | [body-three](../assets/templates/handsome/body-three.txt) |
 | 综合板 | [board](../assets/templates/realistic-base/board.txt) | [board](../assets/templates/beauty/board.txt) | [board](../assets/templates/handsome/board.txt) |
 
-新基础版和帅哥版快速板默认采用16:9左半身、右上头部四视、右下全身四视；分阶段仍用原三张整图拼接结构。美女版恢复整体重写前的女模特模板，仅服装为纯白色基础款合身短袖T恤和黑色基础款运动短裤（裤长至大腿中部）；原文阶段冲突沿用分流说明中的历史适配。已有分阶段源图时使用拼接脚本。原写实快速综合板只生成新整板，不提供分阶段或拼接模式；下文CG／AAA模式不覆盖各写实模板的明确规格。
+新基础版和帅哥版快速板默认采用16:9左半身、右上头部四视、右下全身四视；分阶段仍用原三张整图拼接结构。美女版恢复整体重写前的女模特模板，仅服装为纯白色基础款合身短袖T恤和黑色基础款运动短裤（裤长至大腿中部）；美女综合宫格板现采用3:4竖版，上方头部四视（0°/45°/90°/180°）、下方左侧半身、右侧全身正面/侧面/背面三视；其他四阶段与原有审美、肤质、摄影要求保持。原文阶段冲突沿用分流说明中的适配。已有分阶段源图时使用拼接脚本。原写实快速综合板只生成新整板，不提供分阶段或拼接模式；下文CG／AAA模式不覆盖各写实模板的明确规格。
 
 ## CG／AAA基础模板
 
