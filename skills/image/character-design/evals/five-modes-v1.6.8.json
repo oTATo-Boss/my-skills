@@ -1,0 +1,46 @@
+{
+  "skill": "character-design",
+  "version": "1.6.8",
+  "checked_date": "2026-11-11",
+  "role_modes": {
+    "真人通用": "realistic-base",
+    "美女": "beauty",
+    "帅哥": "handsome",
+    "通用3D": "cg",
+    "AAA CG": "aaa"
+  },
+  "templates_per_mode": 5,
+  "role_template_total": 25,
+  "shared_auxiliary_templates": 4,
+  "stage_standards": {
+    "portrait.txt": "1:1",
+    "head-four.txt": "16:9",
+    "half.txt": "3:4",
+    "body-three.txt": "9:16",
+    "board.txt": "3:4"
+  },
+  "relocation": {
+    "assets/templates/realistic/board.txt": "assets/templates/realistic-base/board.txt"
+  },
+  "template_content": "全部assets原文件内容与权限保持；仅原样移动认可的写实宫格到真人通用模式。",
+  "preserved_assets_count": 31,
+  "source_hashes_checked": 29,
+  "retired_old_board_restored": false,
+  "script_tests": {
+    "command": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "skills/image/character-design/scripts",
+      "-p",
+      "test_*.py"
+    ],
+    "count": 19,
+    "result": "passed"
+  },
+  "new_image_generation": false,
+  "link_checks": 80
+}

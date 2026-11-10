@@ -11,7 +11,7 @@
 ## 技能入口
 
 - [json-prompt-system](json-prompt-system/SKILL.md) — 生成对镜自拍、前置自拍、他拍与时尚大片的完整生图提示词，支持仅输出动作 JSON，参考图规则按任务编写；v3.1.0。
-- [Character Design（character-design）](character-design/SKILL.md) — 区分真人模板、自定义3D与AAA写实建模风格，完成角色参考板、服装造型与状态裂变；当前 v1.6.7，宫格统一3:4头部四视＋左半身＋右侧全身三视，独立全身统一9:16横向三视。
+- [Character Design（character-design）](character-design/SKILL.md) — 区分真人模板、自定义3D与AAA写实建模风格，完成角色参考板、服装造型与状态裂变；当前 v1.6.8，五个角色模式各五模板；宫格统一3:4，独立全身统一9:16横向三视。
 - [codex-imagegen](codex-imagegen/SKILL.md) — 供其他 Agent 通过本机已登录的 Codex CLI 调用生图与图片编辑能力。
 
 ## Midjourney 执行

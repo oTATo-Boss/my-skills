@@ -1,11 +1,12 @@
 [
   {
-    "template": "assets/templates/realistic/board.txt",
+    "template": "assets/templates/realistic-base/board.txt",
     "source_title": "写实角色资产宫格图",
     "source_sha256": "00a6fd12e0f075c2a16d728559a2d1397c20b052b49c97befe8a85b0043917d3",
     "snapshot_date": "2026-10-28",
     "packaged_sha256": "0fc645539d9231acfc553f79e57fce1bb4b70b112b598180e88909c3ba202463",
-    "adaptation": "1.6.2按用户认可的完整服装设计生图结果替换真人流程默认宫格入口，沿用3:4头部四视＋左半身＋右侧全身三视与真实摄影要求；结尾人物及完整服装设计按任务填写，保留原来源摘要。"
+    "adaptation": "1.6.2按用户认可的完整服装设计生图结果替换真人流程默认宫格入口，沿用3:4头部四视＋左半身＋右侧全身三视与真实摄影要求；结尾人物及完整服装设计按任务填写，保留原来源摘要。；1.6.8按用户纠正原样归入真人通用模式，作为四个既有建档模板的第五个综合宫格模板，内容未改。",
+    "relocated_from": "assets/templates/realistic/board.txt"
   },
   {
     "template": "assets/templates/cg/portrait.txt",
@@ -133,25 +134,25 @@
   {
     "template": "assets/templates/realistic-base/portrait.txt",
     "source": "adapted from assets/templates/beauty/portrait.txt; user instruction 2026-10-29",
-    "adaptation": "通用基础服装版：普通T恤、裤子、鞋子；保留五阶段，与一步到位无默认服装综合板分流；1.6.5该路线仅保留四个独立阶段，旧board已移除，源图用脚本拼接。",
+    "adaptation": "通用基础服装版：普通T恤、裤子、鞋子；保留五阶段，与一步到位无默认服装综合板分流；1.6.5该路线仅保留四个独立阶段，旧board已移除，源图用脚本拼接。；1.6.8与已认可写实宫格板归入同一个真人通用模式，每模式五模板，正文未改。",
     "packaged_sha256": "77953262fcf6c893a779085b662f895fddd7d8520de558fa10b684ae12bc333b"
   },
   {
     "template": "assets/templates/realistic-base/head-four.txt",
     "source": "adapted from assets/templates/beauty/head-four.txt; user instruction 2026-10-29",
-    "adaptation": "通用基础服装版：普通T恤、裤子、鞋子；保留五阶段，与一步到位无默认服装综合板分流；1.6.5该路线仅保留四个独立阶段，旧board已移除，源图用脚本拼接。",
+    "adaptation": "通用基础服装版：普通T恤、裤子、鞋子；保留五阶段，与一步到位无默认服装综合板分流；1.6.5该路线仅保留四个独立阶段，旧board已移除，源图用脚本拼接。；1.6.8与已认可写实宫格板归入同一个真人通用模式，每模式五模板，正文未改。",
     "packaged_sha256": "48f0dd5d6e6913210033f0bc759594301c9346c59910e0b1449f951c0b637ba0"
   },
   {
     "template": "assets/templates/realistic-base/half.txt",
     "source": "adapted from assets/templates/beauty/half.txt; user instruction 2026-10-29",
-    "adaptation": "通用基础服装版：普通T恤、裤子、鞋子；保留五阶段，与一步到位无默认服装综合板分流；1.6.5该路线仅保留四个独立阶段，旧board已移除，源图用脚本拼接。",
+    "adaptation": "通用基础服装版：普通T恤、裤子、鞋子；保留五阶段，与一步到位无默认服装综合板分流；1.6.5该路线仅保留四个独立阶段，旧board已移除，源图用脚本拼接。；1.6.8与已认可写实宫格板归入同一个真人通用模式，每模式五模板，正文未改。",
     "packaged_sha256": "2b214e47ffe078b8355e42105a435ea0d5f75c2b97810ac41e66935271f93b22"
   },
   {
     "template": "assets/templates/realistic-base/body-three.txt",
     "source": "adapted from assets/templates/beauty/body-three.txt; user instruction 2026-10-29",
-    "adaptation": "通用基础服装版：普通T恤、裤子、鞋子；保留五阶段，与一步到位无默认服装综合板分流；1.6.5该路线仅保留四个独立阶段，旧board已移除，源图用脚本拼接。；1.6.7仅修复画幅、取景/视图顺序或人物数据插槽，审美/肤质/体型/服装/摄影段保持。",
+    "adaptation": "通用基础服装版：普通T恤、裤子、鞋子；保留五阶段，与一步到位无默认服装综合板分流；1.6.5该路线仅保留四个独立阶段，旧board已移除，源图用脚本拼接。；1.6.7仅修复画幅、取景/视图顺序或人物数据插槽，审美/肤质/体型/服装/摄影段保持。；1.6.8与已认可写实宫格板归入同一个真人通用模式，每模式五模板，正文未改。",
     "packaged_sha256": "7bbffcaa8646aa186bc041a27fce976d665100f4c7c9f05137cffaf3d191f357"
   },
   {

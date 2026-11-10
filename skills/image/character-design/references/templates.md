@@ -1,45 +1,39 @@
 # 模板选择与使用
 
-只读取当前阶段与当前画风需要的文件。模板中现有占位符填写本次内容，不把某个角色写入共享模板。未提供的参考不虚构。
+角色设计固定为 **真人通用、美女、帅哥、通用3D、AAA CG五个模式，每个模式五个模板，共25份角色模板**。角色模式决定原有审美、肤质、体型、服装和画风；快速整板与分阶段是同一模式内的执行方式。
 
-## 写实用途选型
+## 五个模式的完整模板入口
 
-先按[写实模板分流](realistic-routes.md)选择用途，再选阶段。真人流程默认的[写实角色宫格板](../assets/templates/realistic/board.txt)采用用户认可的3:4布局：上方头部四视、下方左半身、右侧全身三视。结尾 `{{输入具体角色设定}}` 必须同时包含完整服装设计；未指定款式时先设计穿搭，再与人物信息一次提交。实际成功输入见[城市通勤完整示例](../assets/examples/realistic-board-city-commute.txt)，示例人物与衣服不作为其他任务默认设定。下表列出基础建档与专用审美流程；通用基础服装版仅保留四个源图阶段，其旧宫格模板已删除，已有源图直接脚本拼接。
+| 角色模式 | 正面肖像 | 头部四视 | 正面半身 | 全身三视 | 综合宫格板 |
+|---|---|---|---|---|---|
+| 真人通用 | [portrait](../assets/templates/realistic-base/portrait.txt) | [head-four](../assets/templates/realistic-base/head-four.txt) | [half](../assets/templates/realistic-base/half.txt) | [body-three](../assets/templates/realistic-base/body-three.txt) | [board](../assets/templates/realistic-base/board.txt) |
+| 美女 | [portrait](../assets/templates/beauty/portrait.txt) | [head-four](../assets/templates/beauty/head-four.txt) | [half](../assets/templates/beauty/half.txt) | [body-three](../assets/templates/beauty/body-three.txt) | [board](../assets/templates/beauty/board.txt) |
+| 帅哥 | [portrait](../assets/templates/handsome/portrait.txt) | [head-four](../assets/templates/handsome/head-four.txt) | [half](../assets/templates/handsome/half.txt) | [body-three](../assets/templates/handsome/body-three.txt) | [board](../assets/templates/handsome/board.txt) |
+| 通用3D | [portrait](../assets/templates/cg/portrait.txt) | [head-four](../assets/templates/cg/head-four.txt) | [half](../assets/templates/cg/half.txt) | [body-three](../assets/templates/cg/body-three.txt) | [board](../assets/templates/cg/board.txt) |
+| AAA CG | [portrait](../assets/templates/aaa/portrait.txt) | [head-four](../assets/templates/aaa/head-four.txt) | [half](../assets/templates/aaa/half.txt) | [body-three](../assets/templates/aaa/body-three.txt) | [board](../assets/templates/aaa/board.txt) |
 
-| 阶段 | 通用基础服装版 | 美女专用版 | 帅哥专用基础版 |
-|---|---|---|---|
-| 正面肖像 | [portrait](../assets/templates/realistic-base/portrait.txt) | [portrait](../assets/templates/beauty/portrait.txt) | [portrait](../assets/templates/handsome/portrait.txt) |
-| 头部四视图 | [head-four](../assets/templates/realistic-base/head-four.txt) | [head-four](../assets/templates/beauty/head-four.txt) | [head-four](../assets/templates/handsome/head-four.txt) |
-| 正面半身 | [half](../assets/templates/realistic-base/half.txt) | [half](../assets/templates/beauty/half.txt) | [half](../assets/templates/handsome/half.txt) |
-| 全身三视图 | [body-three](../assets/templates/realistic-base/body-three.txt) | [body-three](../assets/templates/beauty/body-three.txt) | [body-three](../assets/templates/handsome/body-three.txt) |
-| 综合板 | [三张整图脚本拼接](board-composition.md)（无独立宫格模板） | [board](../assets/templates/beauty/board.txt) | [board](../assets/templates/handsome/board.txt) |
+## 五个阶段的规格
 
-全部五套快速宫格综合板默认统一3:4竖版：上方头部四视（0°/45°/90°/180°）、下方左侧半身、右侧全身正面/侧面/背面三视；帅哥版也沿用此格式。通用基础服装版不再提供快速宫格生成入口；需要直接生成真人宫格时使用上方写实角色宫格板。分阶段仍用原三张整图拼接结构。美女版恢复整体重写前的女模特模板，仅服装为纯白色基础款合身短袖T恤和黑色基础款运动短裤（裤长至大腿中部）；美女综合宫格板现采用3:4竖版，上方头部四视（0°/45°/90°/180°）、下方左侧半身、右侧全身正面/侧面/背面三视；其他四阶段与原有审美、肤质、摄影要求保持。现用模板已直接写明各阶段画幅、取景和视图顺序，人物数据插槽已完整统一；不再依赖运行时纠正旧冲突。已有分阶段源图时使用拼接脚本。原写实快速综合板只生成新整板，不提供分阶段或拼接模式；下文CG／AAA模式不覆盖各写实模板的明确规格。
+| 模板 | 画幅与内容 |
+|---|---|
+| `portrait.txt` | 1:1，正面肖像 |
+| `head-four.txt` | 16:9，一行0°正面、45°斜侧、90°侧面、180°背面头部四视 |
+| `half.txt` | 3:4，正面waist-up半身，完整头顶，下缘位于肚脐下方至胯骨上方 |
+| `body-three.txt` | 9:16竖版画布，同一行从左至右正面、90°侧面、180°背面三个完整全身 |
+| `board.txt` | 3:4竖版，上方头部四视＋下方左侧半身＋右侧全身三视 |
 
-## CG／AAA基础模板
+模板中现有占位符填写本次内容，不把某个角色写入共享模板。未提供的参考不虚构。所有模式保留自己的画风、审美、肤质、体型与服装规则，不能用其他模式的设定覆盖它。
 
-| 阶段 | 通用3D-CG | AAA-CG |
-|---|---|---|
-| 正面肖像 | [portrait](../assets/templates/cg/portrait.txt) | [portrait](../assets/templates/aaa/portrait.txt) |
-| 头部四视图 | [head-four](../assets/templates/cg/head-four.txt) | [head-four](../assets/templates/aaa/head-four.txt) |
-| 正面半身 | [half](../assets/templates/cg/half.txt) | [half](../assets/templates/aaa/half.txt) |
-| 全身三视图 | [body-three](../assets/templates/cg/body-three.txt) | [body-three](../assets/templates/aaa/body-three.txt) |
-| 综合板 | [board](../assets/templates/cg/board.txt) | [board](../assets/templates/aaa/board.txt) |
+## 同一模式内的两种执行方式
 
-软件模板已纠错的快照是版本起点；随包适配阶段独立排版和模块化风格字段。输出是参考图片，不包含真实绑定、网格或三维模型数据。
+- **快速整板生成**：使用所选模式的 `board.txt`，按实际人物、服装、妆造、特征参考与文字直接生成综合板，无须先制作中间图。模板带 `{{输出模式}}` 时填写“快速整板生成”。已有身份保持，不重新融脸。
+- **分阶段精细制作**：依次使用同一模式的肖像、头部、半身和全身模板建立资产；最终读取已验收的头部、半身、全身三张完整源图，调用[拼接脚本](board-composition.md)。综合板模板可提供快速生成和布局规格，但已有源图不为“完成第五模板”再次生图。
 
-## CG／AAA综合模板的运行模式
+真人通用的综合板就是原先已获认可的写实角色宫格板，现在与其四个建档阶段放在同一目录。前四个阶段保留普通基础服装要求；综合板按其原有规则在结尾填写人物与完整服装设计，未指定款式时先设计穿搭。实际成功输入见[城市通勤完整示例](../assets/examples/realistic-board-city-commute.txt)，示例人物与服装不固定为新角色默认设定。
 
-CG／AAA综合模板均提供 `{{输出模式}}`、`{{本次输入与参考职责}}`。运行前明确填一种模式；不让图片模型自行选择：
+通用3D与AAA的头部、全身分别使用独立head-four、body-three模板；综合板不承担视角补齐。头部条带与全身三视图各为一张整图，不拆分角度。已有全身不重复补齐；缺手、裁边、身份漂移等随机缺陷按相同提示词、参考与规格重抽，不自行改画幅或重设计。已有三张源图拼接时保留完整内容，最终实际尺寸由源图自然形成，不强制精确3:4。
 
-- `快速整板生成`：三类画风均支持。实际人物/服装/妆造/特征参考＋文字说明，直接生成完整多视角角色板；无需已有头部、半身或全身中间图，不强制使用打底服或先拼接。已定身份保持，其余按本次整体设计要求执行。
-- `综合板`：作为排版规格与裂变参考，不默认再次调用生图。三张完整源图交[排版脚本](board-composition.md)拼接，不拆分任何视角。若某一源图有生成缺陷，沿用其原始输入重抽，仅替换采用版本，不改其提示词或其他合格图。
-
-头部与全身分别使用独立head-four、body-three模板，综合模板不再承担补齐模式。同一阶段只需要一张最终可用的9:16竖版画布、正面/侧面/背面横向排列的全身三视图，随机缺陷允许原条件重抽。已有可用全身图时禁止再次补齐，拼接阶段不生成新图；发现生成缺陷直接在任务授权内沿用原提示词、参考和规格重抽，不改成横版或自动更改设计。
-
-快速模式是生成新整板；`综合板`模式是已有源图的排版规格，二者不可混用。写实基础路线已有源图直接按其拼接说明处理，原写实快速综合板不进入分阶段。各模板都不要求“为了排版统一”重绘已确认面部。
-
-通用CG与AAA快速综合板也采用统一3:4格式，上方头部四视条带、下方左侧半身、右侧全身三视。AAA独立全身及通用CG独立全身阶段统一为9:16竖版画布，正面/侧面/背面在同一行内横向三视；已有三张源图拼接时完整保留源图及其内部视图，不为了快速板规格拆裁或重做源图。
+五个角色模式共25份模板；下方四份服装/造型/状态模板是共用辅助模块，不计入角色模式或各模式五份模板。输出是参考图片，不包含真实绑定、网格或三维模型数据。
 
 ## 服装与裂变模板
 
