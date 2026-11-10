@@ -26,8 +26,8 @@
     "source_title": "3D:CG角色资产宫格图",
     "source_sha256": "64e5088df922b744b8f788d658a6ccd9e56872849c1c1142e1c2bd1cc537e120",
     "snapshot_date": "2026-10-28",
-    "packaged_sha256": "de6ab9318d96b51bd0e456df2359c6e13b8e0191ab2b4c6bece6a4fbffd9deda",
-    "adaptation": "1.5.1移除头部／全身补齐模式，使用独立模板隔离阶段排版；原风格与材质段保持。"
+    "packaged_sha256": "22b8242bab79361dd1ba18e33d9b1306201d40879da8766fbca095862bd6d8e4",
+    "adaptation": "1.5.1移除头部／全身补齐模式，使用独立模板隔离阶段排版；原风格与材质段保持。；1.6.4快速综合板统一为3:4头部四视（0/45/90/180）＋下方左半身＋右侧全身三视，原风格/审美/衣物及独立阶段规格保持。"
   },
   {
     "template": "assets/templates/aaa/portrait.txt",
@@ -58,8 +58,8 @@
     "source_title": "AAA-CG角色资产宫格图",
     "source_sha256": "8d27cbc5c9e152aff9802fe2128a9670aab6977071df776e19712d87ac50effb",
     "snapshot_date": "2026-10-28",
-    "packaged_sha256": "7d9d3cd78d5a1edea6d495ab9a0fe0f04798b82db420af5ba6b7d57739f0e5d1",
-    "adaptation": "1.5.0用户指定全身区域为2×2四视；通用CG全身补齐为9:16四宫格，AAA头部转独立模板；风格段保持；1.6.0按用户确认修正为精细写实3A角色建模与CG渲染视觉目标，保留解剖和材质技术细节及阶段排版。"
+    "packaged_sha256": "5ee1dfee8908635a4d268ce4fd6a78ffc09e01f8ba27dec25ea3a4638f8cd7fd",
+    "adaptation": "1.5.0用户指定全身区域为2×2四视；通用CG全身补齐为9:16四宫格，AAA头部转独立模板；风格段保持；1.6.0按用户确认修正为精细写实3A角色建模与CG渲染视觉目标，保留解剖和材质技术细节及阶段排版。；1.6.4快速综合板统一为3:4头部四视（0/45/90/180）＋下方左半身＋右侧全身三视，原风格/审美/衣物及独立阶段规格保持。"
   },
   {
     "template": "assets/templates/outfit/extract.txt",
@@ -155,14 +155,14 @@
   {
     "template": "assets/templates/realistic-base/board.txt",
     "source": "adapted from assets/templates/beauty/board.txt; user instruction 2026-10-29",
-    "adaptation": "通用基础服装版：普通T恤、裤子、鞋子；保留五阶段，与一步到位无默认服装综合板分流",
-    "packaged_sha256": "e63ead4aa206215f93a6d6f144057529198c495dd9f298acad453147ecdeadb8"
+    "adaptation": "通用基础服装版：普通T恤、裤子、鞋子；保留五阶段，与一步到位无默认服装综合板分流；1.6.4快速综合板统一为3:4头部四视（0/45/90/180）＋下方左半身＋右侧全身三视，原风格/审美/衣物及独立阶段规格保持。",
+    "packaged_sha256": "0d10186c9a6d3b3ac0fb34c696be1d950ac6d974013e82447410bcc17d8b35a2"
   },
   {
     "template": "assets/templates/handsome/board.txt",
     "source": "local adaptation of assets/templates/realistic-base/board.txt; user requested handsome variant 2026-10-29",
-    "adaptation": "成年男性帅哥专用，强制高颜值和完美身材且类型不固定；1.3.1服装简化为黑色短裤，去掉旧通用穿着与排除清单",
-    "packaged_sha256": "14ab3ba22e4555fa630cc086112a0e0b2d29b604a1502594b99f02e3710be292"
+    "adaptation": "成年男性帅哥专用，强制高颜值和完美身材且类型不固定；1.3.1服装简化为黑色短裤，去掉旧通用穿着与排除清单；1.6.4快速综合板统一为3:4头部四视（0/45/90/180）＋下方左半身＋右侧全身三视，原风格/审美/衣物及独立阶段规格保持。",
+    "packaged_sha256": "5476495151fede2d0d6b70832dfdc524441f5382af1e6a9f9c0f39f7f720df37"
   },
   {
     "template": "assets/templates/handsome/body-three.txt",
