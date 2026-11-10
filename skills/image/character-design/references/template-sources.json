@@ -4,8 +4,8 @@
     "source_title": "写实角色资产宫格图",
     "source_sha256": "00a6fd12e0f075c2a16d728559a2d1397c20b052b49c97befe8a85b0043917d3",
     "snapshot_date": "2026-10-28",
-    "packaged_sha256": "232c6f8b0177f84c405a8811964b34b903f86ffb28f1c14f11dd8a5471f317ba",
-    "adaptation": "1.3.0仅保留一步到位快速综合板，无默认服装；实际参考与原结尾设计插槽共同控制，不再承担分阶段拼接"
+    "packaged_sha256": "0fc645539d9231acfc553f79e57fce1bb4b70b112b598180e88909c3ba202463",
+    "adaptation": "1.6.2按用户认可的完整服装设计生图结果替换真人流程默认宫格入口，沿用3:4头部四视＋左半身＋右侧全身三视与真实摄影要求；结尾人物及完整服装设计按任务填写，保留原来源摘要。"
   },
   {
     "template": "assets/templates/cg/portrait.txt",

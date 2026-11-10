@@ -1,0 +1,49 @@
+{
+  "skill": "character-design",
+  "version": "1.6.2",
+  "confirmed_date": "2026-11-10",
+  "decision": "用户认可realistic-outfit-v1效果，并要求替换真人流程的宫格图模板。",
+  "template": "assets/templates/realistic/board.txt",
+  "template_sha256": "0fc645539d9231acfc553f79e57fce1bb4b70b112b598180e88909c3ba202463",
+  "approved_prompt": "assets/examples/realistic-board-city-commute.txt",
+  "approved_prompt_sha256": "6042bf1aa5dfd283a873844fa6a87afdebbc74de1057f2169ee25688b0362011",
+  "approved_image": {
+    "artifact": "realistic-outfit-v1.png",
+    "sha256": "9ba49d66f1eed08ba40509d7a9fe28662745bb4b8f2efcbda2aea774f7c6b8e4",
+    "dimensions": [
+      1086,
+      1448
+    ],
+    "committed": false
+  },
+  "runs": [
+    {
+      "id": "realistic-empty-1",
+      "input": "纯文生图，原模板设计插槽留空，无参考图",
+      "generation": "moderation_blocked",
+      "moderation_stage": "output",
+      "category": "sexual"
+    },
+    {
+      "id": "realistic-empty-2",
+      "input": "同一原始提示词重试，无参考图",
+      "generation": "moderation_blocked",
+      "moderation_stage": "output",
+      "category": "sexual"
+    },
+    {
+      "id": "realistic-city-commute-1",
+      "input": "纯文生图，成年角色，完整城市通勤服装设计，无参考图",
+      "prompt_sha256": "6042bf1aa5dfd283a873844fa6a87afdebbc74de1057f2169ee25688b0362011",
+      "generation": "succeeded",
+      "user_confirmed": true,
+      "visual_review": "头部四视、半身、全身正侧背三视均存在；衣物基本符合；半身下边缘略低于模板要求。"
+    }
+  ],
+  "scope": "实测为保存的完整示例输入，通用模板保留其摄影和布局并补充服装填写要求；未额外生成通用化版本。",
+  "limitations": [
+    "审核原因未知，不能把两次拦截归因于服装缺失。",
+    "未验证跨次身份稳定性、参考锁脸或未来生成成功率。",
+    "其他真人专用模板、CG/AAA、拼接脚本未在本次修改或重新实测。"
+  ]
+}
