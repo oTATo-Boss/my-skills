@@ -1,0 +1,69 @@
+{
+  "skill": "character-design",
+  "version": "1.6.7",
+  "checked_date": "2026-11-11",
+  "stage_standards": {
+    "portrait.txt": "1:1",
+    "head-four.txt": "16:9",
+    "half.txt": "3:4",
+    "body-three.txt": "9:16",
+    "board.txt": "3:4"
+  },
+  "stage_templates_checked": 25,
+  "stage_templates": [
+    "assets/templates/aaa/board.txt",
+    "assets/templates/aaa/body-three.txt",
+    "assets/templates/aaa/half.txt",
+    "assets/templates/aaa/head-four.txt",
+    "assets/templates/aaa/portrait.txt",
+    "assets/templates/beauty/board.txt",
+    "assets/templates/beauty/body-three.txt",
+    "assets/templates/beauty/half.txt",
+    "assets/templates/beauty/head-four.txt",
+    "assets/templates/beauty/portrait.txt",
+    "assets/templates/cg/board.txt",
+    "assets/templates/cg/body-three.txt",
+    "assets/templates/cg/half.txt",
+    "assets/templates/cg/head-four.txt",
+    "assets/templates/cg/portrait.txt",
+    "assets/templates/handsome/board.txt",
+    "assets/templates/handsome/body-three.txt",
+    "assets/templates/handsome/half.txt",
+    "assets/templates/handsome/head-four.txt",
+    "assets/templates/handsome/portrait.txt",
+    "assets/templates/realistic-base/body-three.txt",
+    "assets/templates/realistic-base/half.txt",
+    "assets/templates/realistic-base/head-four.txt",
+    "assets/templates/realistic-base/portrait.txt",
+    "assets/templates/realistic/board.txt"
+  ],
+  "active_board_count": 5,
+  "active_body_three_count": 5,
+  "source_hashes_checked": 29,
+  "source_hash_mismatches": 0,
+  "protected_content_sha256": {
+    "assets/templates/beauty/portrait.txt": "da7acea304996ec530e94a83d4357a9ca61a54ce29df97b2a02c87d70ddc230b",
+    "assets/templates/beauty/head-four.txt": "103d0595b00957a7f6f582476c49ab9d7aa0cced3cfd8fd4ff6f22829cf9076a",
+    "assets/templates/beauty/body-three.txt": "cf3e197308d295b1517dd374630b644fd4a18f00aed8999065ecf2d599d83905",
+    "assets/templates/realistic-base/body-three.txt": "f488fe789520f24f04cc28db50c77189c3c0fb35c2d62dffd041d0336dc9b449"
+  },
+  "protected_content_review": "美女审美/肤质/体型/服装/摄影段逐字一致；基础全身仅替换误留赤脚/脚趾为既定鞋履取景；其他assets内容与权限保持。",
+  "script_tests": {
+    "command": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "skills/image/character-design/scripts",
+      "-p",
+      "test_*.py"
+    ],
+    "count": 19,
+    "result": "passed"
+  },
+  "new_image_generation": false,
+  "limitations": "静态一致性与脚本回归不代表重新完成各模板生图或身份一致性验证；分阶段拼接保留整图，最终像素自然形成，不强制精确3:4。",
+  "link_checks": 78
+}

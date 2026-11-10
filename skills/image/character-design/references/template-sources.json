@@ -72,7 +72,8 @@
   {
     "template": "assets/four-view-template.txt",
     "source": "character-outfit-design v1.0.1 (adapted)",
-    "packaged_sha256": "fc462846e12540659db49c57fb87d604351289e09e8f90f6df744fd6af5d8550"
+    "packaged_sha256": "34454c25fe527f3adde78fa7e22270f7e7f9621c8709f2701b8bb8547393fde4",
+    "adaptation": "；1.6.7仅补更此前服装质感修订后漏记的包内容摘要，模板内容未改。"
   },
   {
     "template": "assets/character-styling-template.txt",
@@ -89,18 +90,18 @@
     "source_title": "1-女模特1比1面部特写",
     "snapshot_date": "2026-10-29",
     "source_sha256": "c3a09de4f29e8657f79d8a993f0d478de375414ee3c2edcdbadc05eca8821dc8",
-    "packaged_sha256": "e7355d37723eed704d6fb1cd0192dc6261173f4e3fc413ef58ecd86f7feb173e",
+    "packaged_sha256": "b909bf83fcc3d8ec0354b9c61370466f33b25d83e540d4c4b6863ca0c2e69fdd",
     "role": "美女专用原文快照；调用前按 references/realistic-routes.md 处理原文冲突",
-    "adaptation": "1.4.3基于恢复后的原女模特模板，仅完整服装段按用户原文改为白色基础款合身短袖T恤、黑色基础款运动短裤至大腿中部、柔软棉质面料与日常休闲感，其余保持"
+    "adaptation": "1.4.3基于恢复后的原女模特模板，仅完整服装段按用户原文改为白色基础款合身短袖T恤、黑色基础款运动短裤至大腿中部、柔软棉质面料与日常休闲感，其余保持；1.6.7仅修复画幅、取景/视图顺序或人物数据插槽，审美/肤质/体型/服装/摄影段保持。"
   },
   {
     "template": "assets/templates/beauty/head-four.txt",
     "source_title": "2-女模特头部四视图",
     "snapshot_date": "2026-10-29",
     "source_sha256": "645dd72e1a63ff0926d88cea82ebe90d348b95899e877a47d6fde32011b69d26",
-    "packaged_sha256": "cee058b9601b4d5c9747c878c8cdb33006297fb782da056e68a0f288a8e0593b",
+    "packaged_sha256": "3f9efac71971186a8d487aa631099dd1873279002190611922f5aa308cb5f5eb",
     "role": "美女专用原文快照；调用前按 references/realistic-routes.md 处理原文冲突",
-    "adaptation": "1.4.3基于恢复后的原女模特模板，仅完整服装段按用户原文改为白色基础款合身短袖T恤、黑色基础款运动短裤至大腿中部、柔软棉质面料与日常休闲感，其余保持"
+    "adaptation": "1.4.3基于恢复后的原女模特模板，仅完整服装段按用户原文改为白色基础款合身短袖T恤、黑色基础款运动短裤至大腿中部、柔软棉质面料与日常休闲感，其余保持；1.6.7仅修复画幅、取景/视图顺序或人物数据插槽，审美/肤质/体型/服装/摄影段保持。"
   },
   {
     "template": "assets/templates/beauty/half.txt",
@@ -116,9 +117,9 @@
     "source_title": "4-女模特全身三视图",
     "snapshot_date": "2026-10-29",
     "source_sha256": "9cc6d99653f2e680d42719c73aea74ad2cec59c89e7182043f5fece77a750211",
-    "packaged_sha256": "04ef883e994d57a43b2e1b33bee18a35af8e517ac63ddb03828e6725eec78f20",
+    "packaged_sha256": "67728fd925207728d3432355ad822008f2c9d0200750a702ca43956e7273bc2c",
     "role": "美女专用原文快照；调用前按 references/realistic-routes.md 处理原文冲突",
-    "adaptation": "1.4.3基于恢复后的原女模特模板，仅完整服装段按用户原文改为白色基础款合身短袖T恤、黑色基础款运动短裤至大腿中部、柔软棉质面料与日常休闲感，其余保持"
+    "adaptation": "1.4.3基于恢复后的原女模特模板，仅完整服装段按用户原文改为白色基础款合身短袖T恤、黑色基础款运动短裤至大腿中部、柔软棉质面料与日常休闲感，其余保持；1.6.7仅修复画幅、取景/视图顺序或人物数据插槽，审美/肤质/体型/服装/摄影段保持。"
   },
   {
     "template": "assets/templates/beauty/board.txt",
@@ -150,8 +151,8 @@
   {
     "template": "assets/templates/realistic-base/body-three.txt",
     "source": "adapted from assets/templates/beauty/body-three.txt; user instruction 2026-10-29",
-    "adaptation": "通用基础服装版：普通T恤、裤子、鞋子；保留五阶段，与一步到位无默认服装综合板分流；1.6.5该路线仅保留四个独立阶段，旧board已移除，源图用脚本拼接。",
-    "packaged_sha256": "783ff3f6fa98eaf91f336294b6b4b05ae4d13a916f77b0ac1bd25c013cd7b4fc"
+    "adaptation": "通用基础服装版：普通T恤、裤子、鞋子；保留五阶段，与一步到位无默认服装综合板分流；1.6.5该路线仅保留四个独立阶段，旧board已移除，源图用脚本拼接。；1.6.7仅修复画幅、取景/视图顺序或人物数据插槽，审美/肤质/体型/服装/摄影段保持。",
+    "packaged_sha256": "7bbffcaa8646aa186bc041a27fce976d665100f4c7c9f05137cffaf3d191f357"
   },
   {
     "template": "assets/templates/handsome/board.txt",
