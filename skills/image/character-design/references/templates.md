@@ -23,7 +23,7 @@
 | 正面肖像 | [portrait](../assets/templates/cg/portrait.txt) | [portrait](../assets/templates/aaa/portrait.txt) |
 | 头部四视图 | [head-four](../assets/templates/cg/head-four.txt) | [head-four](../assets/templates/aaa/head-four.txt) |
 | 正面半身 | [half](../assets/templates/cg/half.txt) | [half](../assets/templates/aaa/half.txt) |
-| 全身 | [body-four](../assets/templates/cg/body-four.txt) | [body-four](../assets/templates/aaa/body-four.txt) |
+| 全身三视图 | [body-three](../assets/templates/cg/body-three.txt) | [body-three](../assets/templates/aaa/body-three.txt) |
 | 综合板 | [board](../assets/templates/cg/board.txt) | [board](../assets/templates/aaa/board.txt) |
 
 软件模板已纠错的快照是版本起点；随包适配阶段独立排版和模块化风格字段。输出是参考图片，不包含真实绑定、网格或三维模型数据。
@@ -35,11 +35,11 @@ CG／AAA综合模板均提供 `{{输出模式}}`、`{{本次输入与参考职�
 - `快速整板生成`：三类画风均支持。实际人物/服装/妆造/特征参考＋文字说明，直接生成完整多视角角色板；无需已有头部、半身或全身中间图，不强制使用打底服或先拼接。已定身份保持，其余按本次整体设计要求执行。
 - `综合板`：作为排版规格与裂变参考，不默认再次调用生图。三张完整源图交[排版脚本](board-composition.md)拼接，不拆分任何视角。若某一源图有生成缺陷，沿用其原始输入重抽，仅替换采用版本，不改其提示词或其他合格图。
 
-头部与全身分别使用独立head-four、body-four模板，综合模板不再承担补齐模式。同一阶段只需要一张最终可用的9:16全身四视图，随机缺陷允许原条件重抽。已有可用全身图时禁止再次补齐，拼接阶段不生成新图；发现生成缺陷直接在任务授权内沿用原提示词、参考和规格重抽，不改成横版或自动更改设计。
+头部与全身分别使用独立head-four、body-three模板，综合模板不再承担补齐模式。同一阶段只需要一张最终可用的9:16竖版画布、正面/侧面/背面横向排列的全身三视图，随机缺陷允许原条件重抽。已有可用全身图时禁止再次补齐，拼接阶段不生成新图；发现生成缺陷直接在任务授权内沿用原提示词、参考和规格重抽，不改成横版或自动更改设计。
 
 快速模式是生成新整板；`综合板`模式是已有源图的排版规格，二者不可混用。写实基础路线已有源图直接按其拼接说明处理，原写实快速综合板不进入分阶段。各模板都不要求“为了排版统一”重绘已确认面部。
 
-通用CG与AAA快速综合板也采用统一3:4格式，上方头部四视条带、下方左侧半身、右侧全身三视。AAA独立全身及通用CG独立全身阶段仍为9:16、2×2四宫格；已有三张源图拼接时完整保留源图及其内部视图，不为了快速板规格拆裁或重做源图。
+通用CG与AAA快速综合板也采用统一3:4格式，上方头部四视条带、下方左侧半身、右侧全身三视。AAA独立全身及通用CG独立全身阶段统一为9:16竖版画布，正面/侧面/背面在同一行内横向三视；已有三张源图拼接时完整保留源图及其内部视图，不为了快速板规格拆裁或重做源图。
 
 ## 服装与裂变模板
 

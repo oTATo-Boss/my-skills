@@ -1,6 +1,6 @@
 # 三张整图直接拼接
 
-只用三张已验收的完整源图：16:9头部四视图、3:4半身图、9:16全身多视图（写实三视；通用CG/AAA为2×2四视）。不拆出单个角度、不裁切、不自动去留白、不重绘。
+只用三张已验收的完整源图：16:9头部四视图、3:4半身图、9:16全身三视图（写实、通用CG与AAA均为正面/侧面/背面横向排列）。不拆出单个角度、不裁切、不自动去留白、不重绘。
 
 ## 与PS相同的顺序
 
@@ -28,7 +28,7 @@
 python3 <skill-root>/scripts/compose_board.py --config <project>/board-layout-v03.json --output <project>/base-board-v03.png
 ```
 
-使用[compose_board.py](../scripts/compose_board.py)。`style`取`realistic`、`cg`或`aaa`，不改变拼接方式。每个角色/状态恰好引用三张完整图片；AAA的全身四视图也以一张完整图片传入。新任务不创建旧式`panels/crop/box`配置，不调用旧分格裁切方式；历史显式配置仅保留兼容读取，不能作为新流程默认。
+使用[compose_board.py](../scripts/compose_board.py)。`style`取`realistic`、`cg`或`aaa`，不改变拼接方式。每个角色/状态恰好引用三张完整图片；通用CG与AAA的全身三视图均以一张完整图片传入。新任务不创建旧式`panels/crop/box`配置，不调用旧分格裁切方式；历史显式配置仅保留兼容读取，不能作为新流程默认。
 
 正常不设置`output_width`，最终宽度等于头部原图宽度。只有用户另行指定输出尺寸时才设置该字段进行整体等比导出，不推断固定4K；`background`只影响源图透明区域，默认白色，不增加边距。整数像素取整可能有约1像素的比例差。
 
