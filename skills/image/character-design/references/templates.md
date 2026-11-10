@@ -4,7 +4,7 @@
 
 ## 写实用途选型
 
-先按[写实模板分流](realistic-routes.md)选择用途，再选阶段。真人流程默认的[写实角色宫格板](../assets/templates/realistic/board.txt)采用用户认可的3:4布局：上方头部四视、下方左半身、右侧全身三视。结尾 `{{输入具体角色设定}}` 必须同时包含完整服装设计；未指定款式时先设计穿搭，再与人物信息一次提交。实际成功输入见[城市通勤完整示例](../assets/examples/realistic-board-city-commute.txt)，示例人物与衣服不作为其他任务默认设定。下表三套保留基础建档与专用审美流程。
+先按[写实模板分流](realistic-routes.md)选择用途，再选阶段。真人流程默认的[写实角色宫格板](../assets/templates/realistic/board.txt)采用用户认可的3:4布局：上方头部四视、下方左半身、右侧全身三视。结尾 `{{输入具体角色设定}}` 必须同时包含完整服装设计；未指定款式时先设计穿搭，再与人物信息一次提交。实际成功输入见[城市通勤完整示例](../assets/examples/realistic-board-city-commute.txt)，示例人物与衣服不作为其他任务默认设定。下表列出基础建档与专用审美流程；通用基础服装版仅保留四个源图阶段，其旧宫格模板已删除，已有源图直接脚本拼接。
 
 | 阶段 | 通用基础服装版 | 美女专用版 | 帅哥专用基础版 |
 |---|---|---|---|
@@ -12,9 +12,9 @@
 | 头部四视图 | [head-four](../assets/templates/realistic-base/head-four.txt) | [head-four](../assets/templates/beauty/head-four.txt) | [head-four](../assets/templates/handsome/head-four.txt) |
 | 正面半身 | [half](../assets/templates/realistic-base/half.txt) | [half](../assets/templates/beauty/half.txt) | [half](../assets/templates/handsome/half.txt) |
 | 全身三视图 | [body-three](../assets/templates/realistic-base/body-three.txt) | [body-three](../assets/templates/beauty/body-three.txt) | [body-three](../assets/templates/handsome/body-three.txt) |
-| 综合板 | [board](../assets/templates/realistic-base/board.txt) | [board](../assets/templates/beauty/board.txt) | [board](../assets/templates/handsome/board.txt) |
+| 综合板 | [三张整图脚本拼接](board-composition.md)（无独立宫格模板） | [board](../assets/templates/beauty/board.txt) | [board](../assets/templates/handsome/board.txt) |
 
-全部六套快速宫格综合板默认统一3:4竖版：上方头部四视（0°/45°/90°/180°）、下方左侧半身、右侧全身正面/侧面/背面三视；通用基础服装版和帅哥版也沿用此格式。分阶段仍用原三张整图拼接结构。美女版恢复整体重写前的女模特模板，仅服装为纯白色基础款合身短袖T恤和黑色基础款运动短裤（裤长至大腿中部）；美女综合宫格板现采用3:4竖版，上方头部四视（0°/45°/90°/180°）、下方左侧半身、右侧全身正面/侧面/背面三视；其他四阶段与原有审美、肤质、摄影要求保持。原文阶段冲突沿用分流说明中的适配。已有分阶段源图时使用拼接脚本。原写实快速综合板只生成新整板，不提供分阶段或拼接模式；下文CG／AAA模式不覆盖各写实模板的明确规格。
+全部五套快速宫格综合板默认统一3:4竖版：上方头部四视（0°/45°/90°/180°）、下方左侧半身、右侧全身正面/侧面/背面三视；帅哥版也沿用此格式。通用基础服装版不再提供快速宫格生成入口；需要直接生成真人宫格时使用上方写实角色宫格板。分阶段仍用原三张整图拼接结构。美女版恢复整体重写前的女模特模板，仅服装为纯白色基础款合身短袖T恤和黑色基础款运动短裤（裤长至大腿中部）；美女综合宫格板现采用3:4竖版，上方头部四视（0°/45°/90°/180°）、下方左侧半身、右侧全身正面/侧面/背面三视；其他四阶段与原有审美、肤质、摄影要求保持。原文阶段冲突沿用分流说明中的适配。已有分阶段源图时使用拼接脚本。原写实快速综合板只生成新整板，不提供分阶段或拼接模式；下文CG／AAA模式不覆盖各写实模板的明确规格。
 
 ## CG／AAA基础模板
 
