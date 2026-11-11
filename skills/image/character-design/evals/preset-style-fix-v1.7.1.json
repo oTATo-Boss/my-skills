@@ -15,11 +15,50 @@
     "input": "纯文字角色及完整预设，无参考图，无编辑目标",
     "character": "成年东亚女性、酒红短发、银灰夹克、黑工装裤",
     "generated_candidates": 1,
-    "actual_size": [1086, 1448],
+    "actual_size": [
+      1086,
+      1448
+    ],
     "visual_review": "相较用户反馈图，眼睛、眼睑和鼻唇设计更明确动画化，皮肤以平滑体积和受控渐变为主",
     "remaining_deviation": "左侧半身延伸至大腿，超出模板规定的肚脐下方至胯骨上方取景",
     "user_approved": false
   },
   "images_included_in_skill": false,
-  "limits": "单个纯文宫格候选未覆盖所有角色、输入方式或模板，不证明与原项目逐像素相同，不代表未来生成一致性或成功率"
+  "limits": "用户确认覆盖本次网红美女宫格的视觉效果；保留半身取景与局部服装偏差，不推定所有角色、输入方式或五套模板稳定通过。生成图片和完整测试输入留在工作目录，不附Skill。",
+  "follow_up_tests": [
+    {
+      "character": "同一酒红短发、银灰夹克、炭灰工装裤成年角色",
+      "execution": "native-image-generation",
+      "input": "仅替换旧提示词完整预设段，无参考图纯文生成",
+      "generated_candidates": 1,
+      "actual_size": [
+        1086,
+        1448
+      ],
+      "visual_review": "面部比例、鼻唇块面与发束动画化更明确，头部四视和完整全身三视齐全",
+      "remaining_deviations": [
+        "左侧半身取景延伸至大腿",
+        "腕部配饰偏腕表形状"
+      ],
+      "user_approved": false
+    },
+    {
+      "character": "27岁成年东亚女性网红美女，摩卡棕长卷发、象牙白一字肩针织短裙、黑色及膝靴",
+      "execution": "native-image-generation",
+      "input": "完整预设与通用3D宫格模板，原创文字设定，无参考图",
+      "generated_candidates": 1,
+      "actual_size": [
+        1086,
+        1448
+      ],
+      "visual_review": "明确的动画化面部与立体发束，头部四视、正面半身和完整全身三视齐全",
+      "remaining_deviations": [
+        "左侧半身仍延伸至胯部以下",
+        "背面腰带被头发遮挡，侧面与正面腰线高度略有差异"
+      ],
+      "user_approved": true,
+      "approval_date": "2026-11-11",
+      "approval_evidence": "用户在查看网红美女宫格后回复：OK，没问题，推送。"
+    }
+  ]
 }
