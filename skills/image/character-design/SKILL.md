@@ -2,7 +2,7 @@
 name: character-design
 description: "设计角色与可复用参考资产：从文字、人物小传或外貌参考确定长相，制作面部与全身综合参考板，设计/提取服装并进行换装、妆造和状态裂变；可调用或增补文字风格预设。支持快速整板与分阶段制作，适配写实、通用3D-CG、AAA-CG；不承担场景设计、剧情分镜或视频生成。"
 metadata:
-  version: "1.7.0"
+  version: "1.7.1"
 ---
 
 # Character Design

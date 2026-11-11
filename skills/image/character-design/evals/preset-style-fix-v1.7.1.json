@@ -1,0 +1,25 @@
+{
+  "skill_version": "1.7.1",
+  "preset_version": "1.0.1",
+  "date": "2026-11-11",
+  "reported_failure": "首版预设一次结果偏写实，弱于原项目纯3D动画质感",
+  "failed_generation_full_input_available": false,
+  "observed_prompt_regression": [
+    "通用化时删除原项目有效的动画电影造型/渲染锚点",
+    "加入Gently simplify和subtle stylization等弱化风格强度的表述"
+  ],
+  "fix": "保留用户指定名称，恢复造型/渲染校准锚点；正常人体比例只约束身体，面部保持明确动画化；完整风格段注入cg模板，人物及产品参考不覆盖画风",
+  "test": {
+    "template": "cg/board",
+    "execution": "native-image-generation",
+    "input": "纯文字角色及完整预设，无参考图，无编辑目标",
+    "character": "成年东亚女性、酒红短发、银灰夹克、黑工装裤",
+    "generated_candidates": 1,
+    "actual_size": [1086, 1448],
+    "visual_review": "相较用户反馈图，眼睛、眼睑和鼻唇设计更明确动画化，皮肤以平滑体积和受控渐变为主",
+    "remaining_deviation": "左侧半身延伸至大腿，超出模板规定的肚脐下方至胯骨上方取景",
+    "user_approved": false
+  },
+  "images_included_in_skill": false,
+  "limits": "单个纯文宫格候选未覆盖所有角色、输入方式或模板，不证明与原项目逐像素相同，不代表未来生成一致性或成功率"
+}
