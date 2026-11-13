@@ -4,7 +4,7 @@
 - kind: `local`
 - status: `confirmed`
 - source: 本地开发／维护目录 `skills/image/json-prompt-system`；当前维护仓库 https://github.com/oTATo-Boss/my-skills
-- version: 3.1.0
+- version: 3.2.0
 - author: oTATo-Boss（用户本人）；2026-10-30 在当前对话明确确认本人制作，Agent 辅助编写／整理。
 - license: unknown；当前保留资料未包含足以确认的技能许可声明。
 - collected_at: unknown；没有可靠安装／导入日期。
@@ -32,3 +32,7 @@
 ## 2026-10-30 · 当前作者归属最终确认
 
 用户明确确认本技能为本人制作；以本次直接确认取代此前“仅记录为本人／二创版本”的归属表述。Agent 辅助实现不改变本项目作者登记。工具、第三方依赖、参考资料、继承模板及素材的原作者与许可仍分别保留，不将技能归属扩展为这些外部资源的原创声明。
+
+## 3.2.0 显式摄影设计
+
+依据用户批准的 xhs-girl V2 完整升级增加 opt-in `--photography` 与实际分辨率文字选项 `--resolution`。摄影入口独立使用摄影卡和中性固定包装，原模式默认输出保持兼容。增加摄影卡结构、关系与参考图号校验，重复字段拒绝与完整例子。脚本只证明结构和组装，语义冲突与实际出图另做审看。回归见 `tests/test_photography.py`；联动实测记录在 xhs-girl/verification。

@@ -2,10 +2,16 @@
 name: json-prompt-system
 description: 从文本或参考图生成、还原或修复对镜自拍、前置自拍、他拍和时尚大片提示词。默认输出固定 Markdown 与动作 JSON 拼好的完整生图提示词；明确要求只要 JSON 时输出纯动作卡。
 metadata:
-  version: "3.1.0"
+  version: "3.2.0"
 ---
 
 # JSON Prompt System
+
+## 已有明确摄影设计时
+
+用户或上层 xhs-girl 已决定机位、构图、光线和成像时，先走[显式摄影入口](references/photography/README.md)。使用 `--photography` 和完整 `摄影设计` 卡，按真实规格传 `--resolution`。此分支读取摄影入口与摄影卡后直接拼装，旧生活照默认不参与。`--json-only` 保持纯 JSON，输出摄影卡。
+
+未提供明确摄影设计时，沿用以下原有模式。
 
 ## 选择模式
 

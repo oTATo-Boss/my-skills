@@ -1,0 +1,512 @@
+[
+  {
+    "id": "R01",
+    "title": "绿台面斜坐",
+    "screen": 1,
+    "source_size": [
+      3600,
+      2338
+    ],
+    "crop": [
+      460,
+      807,
+      1009,
+      1538
+    ],
+    "source_sha256": "6526e7186cb974cbc8635f392c5a7098d42703497d7719944421ba1214fb027e",
+    "file": "assets/reference-covers/01-green-counter.jpg"
+  },
+  {
+    "id": "R02",
+    "title": "秋景毛耳罩",
+    "screen": 1,
+    "source_size": [
+      3600,
+      2338
+    ],
+    "crop": [
+      1685,
+      661,
+      2235,
+      1393
+    ],
+    "source_sha256": "6526e7186cb974cbc8635f392c5a7098d42703497d7719944421ba1214fb027e",
+    "file": "assets/reference-covers/02-earmuffs.jpg"
+  },
+  {
+    "id": "R03",
+    "title": "白帽高位俯拍",
+    "screen": 1,
+    "source_size": [
+      3600,
+      2338
+    ],
+    "crop": [
+      2298,
+      833,
+      2847,
+      1565
+    ],
+    "source_sha256": "6526e7186cb974cbc8635f392c5a7098d42703497d7719944421ba1214fb027e",
+    "file": "assets/reference-covers/03-white-hat.jpg"
+  },
+  {
+    "id": "R04",
+    "title": "日光薯条街头",
+    "screen": 1,
+    "source_size": [
+      3600,
+      2338
+    ],
+    "crop": [
+      2911,
+      608,
+      3460,
+      1210
+    ],
+    "source_sha256": "6526e7186cb974cbc8635f392c5a7098d42703497d7719944421ba1214fb027e",
+    "file": "assets/reference-covers/04-fries.jpg"
+  },
+  {
+    "id": "R05",
+    "title": "草地童话配色",
+    "screen": 1,
+    "source_size": [
+      3600,
+      2338
+    ],
+    "crop": [
+      2298,
+      1740,
+      2847,
+      2286
+    ],
+    "source_sha256": "6526e7186cb974cbc8635f392c5a7098d42703497d7719944421ba1214fb027e",
+    "file": "assets/reference-covers/05-fairytale.jpg"
+  },
+  {
+    "id": "R06",
+    "title": "横置近脸",
+    "screen": 2,
+    "source_size": [
+      3600,
+      2338
+    ],
+    "crop": [
+      460,
+      834,
+      1009,
+      1566
+    ],
+    "source_sha256": "60f71e8846cba8148a47687ecbf7febd0cd780595a9ce4ea8ad441dbe07d0ad8",
+    "file": "assets/reference-covers/06-rotated-face.jpg"
+  },
+  {
+    "id": "R07",
+    "title": "粉针织长椅",
+    "screen": 2,
+    "source_size": [
+      3600,
+      2338
+    ],
+    "crop": [
+      1073,
+      608,
+      1622,
+      1064
+    ],
+    "source_sha256": "60f71e8846cba8148a47687ecbf7febd0cd780595a9ce4ea8ad441dbe07d0ad8",
+    "file": "assets/reference-covers/07-pink-bench.jpg"
+  },
+  {
+    "id": "R08",
+    "title": "暖格窗低头",
+    "screen": 2,
+    "source_size": [
+      3600,
+      2338
+    ],
+    "crop": [
+      1685,
+      649,
+      2235,
+      1381
+    ],
+    "source_sha256": "60f71e8846cba8148a47687ecbf7febd0cd780595a9ce4ea8ad441dbe07d0ad8",
+    "file": "assets/reference-covers/08-warm-window.jpg"
+  },
+  {
+    "id": "R09",
+    "title": "帽檐点脸",
+    "screen": 2,
+    "source_size": [
+      3600,
+      2338
+    ],
+    "crop": [
+      2298,
+      856,
+      2847,
+      1587
+    ],
+    "source_sha256": "60f71e8846cba8148a47687ecbf7febd0cd780595a9ce4ea8ad441dbe07d0ad8",
+    "file": "assets/reference-covers/09-cap-cheek.jpg"
+  },
+  {
+    "id": "R10",
+    "title": "灰衣遮嘴",
+    "screen": 2,
+    "source_size": [
+      3600,
+      2338
+    ],
+    "crop": [
+      2911,
+      608,
+      3460,
+      1234
+    ],
+    "source_sha256": "60f71e8846cba8148a47687ecbf7febd0cd780595a9ce4ea8ad441dbe07d0ad8",
+    "file": "assets/reference-covers/10-covered-mouth.jpg"
+  },
+  {
+    "id": "R11",
+    "title": "日光新发色",
+    "screen": 3,
+    "source_size": [
+      3600,
+      2338
+    ],
+    "crop": [
+      1073,
+      660,
+      1622,
+      1392
+    ],
+    "source_sha256": "8de1ce70f991b9a339c41cec0d93e4fedab7e3d26813de650c9a090a5ec7c085",
+    "file": "assets/reference-covers/11-hair-sun.jpg"
+  },
+  {
+    "id": "R12",
+    "title": "粉衣珍珠托腮",
+    "screen": 3,
+    "source_size": [
+      3600,
+      2338
+    ],
+    "crop": [
+      1685,
+      796,
+      2235,
+      1529
+    ],
+    "source_sha256": "8de1ce70f991b9a339c41cec0d93e4fedab7e3d26813de650c9a090a5ec7c085",
+    "file": "assets/reference-covers/12-pink-pearl.jpg"
+  },
+  {
+    "id": "R13",
+    "title": "白羽绒卷发",
+    "screen": 3,
+    "source_size": [
+      3600,
+      2338
+    ],
+    "crop": [
+      2298,
+      981,
+      2847,
+      1713
+    ],
+    "source_sha256": "8de1ce70f991b9a339c41cec0d93e4fedab7e3d26813de650c9a090a5ec7c085",
+    "file": "assets/reference-covers/13-white-puffer.jpg"
+  },
+  {
+    "id": "R14",
+    "title": "木栏旅行人像",
+    "screen": 3,
+    "source_size": [
+      3600,
+      2338
+    ],
+    "crop": [
+      460,
+      982,
+      1009,
+      1715
+    ],
+    "source_sha256": "8de1ce70f991b9a339c41cec0d93e4fedab7e3d26813de650c9a090a5ec7c085",
+    "file": "assets/reference-covers/14-meadow.jpg"
+  },
+  {
+    "id": "R15",
+    "title": "居家镜前穿搭",
+    "screen": 3,
+    "source_size": [
+      3600,
+      2338
+    ],
+    "crop": [
+      2911,
+      797,
+      3460,
+      1529
+    ],
+    "source_sha256": "8de1ce70f991b9a339c41cec0d93e4fedab7e3d26813de650c9a090a5ec7c085",
+    "file": "assets/reference-covers/15-mirror-cap.jpg"
+  },
+  {
+    "id": "R16",
+    "title": "港口收腿坐姿",
+    "screen": 4,
+    "source_size": [
+      3600,
+      2338
+    ],
+    "crop": [
+      460,
+      931,
+      1009,
+      1662
+    ],
+    "source_sha256": "ca3ceb653659bf66e1ea03b01e81e2ac8a1cf3d8bc15b2c7ff5c2064872d84ca",
+    "file": "assets/reference-covers/16-harbor.jpg"
+  },
+  {
+    "id": "R17",
+    "title": "斜向近脸",
+    "screen": 4,
+    "source_size": [
+      3600,
+      2338
+    ],
+    "crop": [
+      1073,
+      608,
+      1622,
+      1157
+    ],
+    "source_sha256": "ca3ceb653659bf66e1ea03b01e81e2ac8a1cf3d8bc15b2c7ff5c2064872d84ca",
+    "file": "assets/reference-covers/17-diagonal-face.jpg"
+  },
+  {
+    "id": "R18",
+    "title": "香槟裙旅行人像",
+    "screen": 4,
+    "source_size": [
+      3600,
+      2338
+    ],
+    "crop": [
+      1685,
+      746,
+      2235,
+      1478
+    ],
+    "source_sha256": "ca3ceb653659bf66e1ea03b01e81e2ac8a1cf3d8bc15b2c7ff5c2064872d84ca",
+    "file": "assets/reference-covers/18-gown.jpg"
+  },
+  {
+    "id": "R19",
+    "title": "灰黑毛帽街头",
+    "screen": 4,
+    "source_size": [
+      3600,
+      2338
+    ],
+    "crop": [
+      2298,
+      955,
+      2847,
+      1687
+    ],
+    "source_sha256": "ca3ceb653659bf66e1ea03b01e81e2ac8a1cf3d8bc15b2c7ff5c2064872d84ca",
+    "file": "assets/reference-covers/19-dark-fur.jpg"
+  },
+  {
+    "id": "R20",
+    "title": "海桥黄昏蹲姿",
+    "screen": 4,
+    "source_size": [
+      3600,
+      2338
+    ],
+    "crop": [
+      2911,
+      783,
+      3460,
+      1515
+    ],
+    "source_sha256": "ca3ceb653659bf66e1ea03b01e81e2ac8a1cf3d8bc15b2c7ff5c2064872d84ca",
+    "file": "assets/reference-covers/20-bridge-dusk.jpg"
+  },
+  {
+    "id": "R21",
+    "title": "白墙绿色玩偶",
+    "screen": 5,
+    "source_size": [
+      3600,
+      2338
+    ],
+    "crop": [
+      460,
+      797,
+      1009,
+      1529
+    ],
+    "source_sha256": "0d7c052e81b56cc5e2854a74b532a2c912e3d37c121a6f2a8d2fe8d7393982da",
+    "file": "assets/reference-covers/21-doll-wall.jpg"
+  },
+  {
+    "id": "R22",
+    "title": "蓝袖高位俯拍",
+    "screen": 5,
+    "source_size": [
+      3600,
+      2338
+    ],
+    "crop": [
+      1685,
+      654,
+      2235,
+      1386
+    ],
+    "source_sha256": "0d7c052e81b56cc5e2854a74b532a2c912e3d37c121a6f2a8d2fe8d7393982da",
+    "file": "assets/reference-covers/22-blue-overhead.jpg"
+  },
+  {
+    "id": "R23",
+    "title": "白毛衣木栏",
+    "screen": 5,
+    "source_size": [
+      3600,
+      2338
+    ],
+    "crop": [
+      1073,
+      1218,
+      1622,
+      1950
+    ],
+    "source_sha256": "0d7c052e81b56cc5e2854a74b532a2c912e3d37c121a6f2a8d2fe8d7393982da",
+    "file": "assets/reference-covers/23-sweater-rail.jpg"
+  },
+  {
+    "id": "R24",
+    "title": "绿外套风中侧望",
+    "screen": 5,
+    "source_size": [
+      3600,
+      2338
+    ],
+    "crop": [
+      2298,
+      824,
+      2847,
+      1556
+    ],
+    "source_sha256": "0d7c052e81b56cc5e2854a74b532a2c912e3d37c121a6f2a8d2fe8d7393982da",
+    "file": "assets/reference-covers/24-green-coat.jpg"
+  },
+  {
+    "id": "R25",
+    "title": "居家眨眼",
+    "screen": 5,
+    "source_size": [
+      3600,
+      2338
+    ],
+    "crop": [
+      2911,
+      608,
+      3460,
+      1234
+    ],
+    "source_sha256": "0d7c052e81b56cc5e2854a74b532a2c912e3d37c121a6f2a8d2fe8d7393982da",
+    "file": "assets/reference-covers/25-home-wink.jpg"
+  },
+  {
+    "id": "R26",
+    "title": "秋日隔桌咖啡",
+    "screen": 6,
+    "source_size": [
+      3600,
+      2338
+    ],
+    "crop": [
+      1685,
+      684,
+      2235,
+      1416
+    ],
+    "source_sha256": "16559102e5ffa01d459a3c1538b4be3aa966c26912d8a536cedf38deaf1fa652",
+    "file": "assets/reference-covers/26-autumn-coffee.jpg"
+  },
+  {
+    "id": "R27",
+    "title": "粉发日落双图",
+    "screen": 6,
+    "source_size": [
+      3600,
+      2338
+    ],
+    "crop": [
+      1073,
+      608,
+      1622,
+      1284
+    ],
+    "source_sha256": "16559102e5ffa01d459a3c1538b4be3aa966c26912d8a536cedf38deaf1fa652",
+    "file": "assets/reference-covers/27-pink-sunset.jpg"
+  },
+  {
+    "id": "R28",
+    "title": "黑刘海近距俯拍",
+    "screen": 6,
+    "source_size": [
+      3600,
+      2338
+    ],
+    "crop": [
+      2298,
+      894,
+      2847,
+      1626
+    ],
+    "source_sha256": "16559102e5ffa01d459a3c1538b4be3aa966c26912d8a536cedf38deaf1fa652",
+    "file": "assets/reference-covers/28-bob-overhead.jpg"
+  },
+  {
+    "id": "R29",
+    "title": "霓虹夜街",
+    "screen": 6,
+    "source_size": [
+      3600,
+      2338
+    ],
+    "crop": [
+      2911,
+      684,
+      3460,
+      1416
+    ],
+    "source_sha256": "16559102e5ffa01d459a3c1538b4be3aa966c26912d8a536cedf38deaf1fa652",
+    "file": "assets/reference-covers/29-hongkong.jpg"
+  },
+  {
+    "id": "R30",
+    "title": "双人近距离合照",
+    "screen": 6,
+    "source_size": [
+      3600,
+      2338
+    ],
+    "crop": [
+      460,
+      867,
+      1009,
+      1599
+    ],
+    "source_sha256": "16559102e5ffa01d459a3c1538b4be3aa966c26912d8a536cedf38deaf1fa652",
+    "file": "assets/reference-covers/30-friends.jpg"
+  }
+]

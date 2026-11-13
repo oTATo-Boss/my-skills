@@ -1,0 +1,38 @@
+[
+  {
+    "id": "F01",
+    "source_name": "01_门外全身.jpg",
+    "sha256": "609d710cbc6cfa87c61d8c9d87d25ec0eede79aebf2cbcae64b4b2a87f4b6d0c",
+    "file": "F01.jpg"
+  },
+  {
+    "id": "F02",
+    "source_name": "02_窗边半身.jpg",
+    "sha256": "a1f99e6938c6ff31b4d140b9a8bffe4e7db7e4f250e3a7f5291d8df1b72b814e",
+    "file": "F02.jpg"
+  },
+  {
+    "id": "F03",
+    "source_name": "03_长椅坐姿.jpg",
+    "sha256": "e22fed7c018391e7c8dcd96017bcc6ecb09f876b3b9bc3cb2cdb8e6ccd4b4940",
+    "file": "F03.jpg"
+  },
+  {
+    "id": "F04",
+    "source_name": "01_新裤子与新唱片.jpg",
+    "sha256": "56952c9df69f5fc52455449aaa951b4b37f262e549c4318a5c88f1b5d82291ed",
+    "file": "F04.jpg"
+  },
+  {
+    "id": "F05",
+    "source_name": "02_这张唱片买到了.jpg",
+    "sha256": "89a0e5815a61c7be074eb2fff19cf26095113ccd9ef0a11398962ba7ed14f111",
+    "file": "F05.jpg"
+  },
+  {
+    "id": "F06",
+    "source_name": "03_走两步等你.jpg",
+    "sha256": "ff91494677d4751ff334ba0068f4e0e5390f0d974640359e7bd128aada2ae486",
+    "file": "F06.jpg"
+  }
+]

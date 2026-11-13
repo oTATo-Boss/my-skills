@@ -6,7 +6,7 @@
 
 ## 用途分类
 
-- [director](skills/director/SKILLS_INDEX.md) — 视频导演、跨媒介视觉创意与小红书人像出片审美。（4 个技能）
+- [director](skills/director/SKILLS_INDEX.md) — 视频导演、跨媒介视觉创意与摄影案例驱动的小红书人像出片。（4 个技能）
 
 - [dev](skills/dev/SKILLS_INDEX.md) — 工作流需求分析、能力匹配、独立执行项目生成与运行验收。（1 个技能）
 
