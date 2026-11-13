@@ -10,7 +10,7 @@
 
 ## 原创工作流
 
-`ai-liveaction-fusion`、`single-shot-prompt`（曾用名 `ai-video-prompt`、`short-video-prompt`）、`json-prompt-system`、`character-outfit-design` 有本地开发记录；`nsfw-girl-direction`（曾用名 `nsfw-beauty-selfie-prompt`、`nsfw-seedance-prompt-skill`）由用户明确确认原创。`character-outfit-design`（角色的服装设计）曾用名为 `fashion-picture`、`otato-fashion-design`。
+`ai-liveaction-fusion`、`single-shot-prompt`（曾用名 `ai-video-prompt`、`short-video-prompt`）、`json-prompt-system`、`character-outfit-design` 有本地开发记录；`x-girl`（曾用名 `nsfw-girl-direction`、`nsfw-beauty-selfie-prompt`、`nsfw-seedance-prompt-skill`）由用户明确确认原创。`character-outfit-design`（角色的服装设计）曾用名为 `fashion-picture`、`otato-fashion-design`。
 
 ## 二创与整合版本
 
@@ -122,3 +122,7 @@
 ## 2026-11-05 · 场景资产设计
 
 用户提供 `scene-asset-design.zip`，明确确认由本人使用 GPT 制作，并要求安装到项目与本机及推送。首次纳入 `skills/image/scene-asset-design/`，原包 5 个文件内容与权限不变，补充来源及导入记录；原包未声明版本号和许可证。项目当前维护 26 个 Skill，安装映射为 `image/scene-asset-design`。来源与归属证据见 [SOURCE.md](skills/image/scene-asset-design/SOURCE.md)。
+
+## 2026-11-13 · x-girl v4.2.0 替换与统一命名
+
+按用户要求，将去皮土豆项目 `skills/x-girl/` 的完整 v4.2.0 导入本仓库 `skills/video/ai/x-girl/`，替换原 `nsfw-girl-direction` v3.3.0；保留创作资料与来源历史、更新索引、安装映射和安装说明，当前统一标识为 `x-girl`。本机仍使用独立实体副本，Claude 入口指向该安装副本。技能数量不变。

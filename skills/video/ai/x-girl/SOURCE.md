@@ -1,21 +1,29 @@
 # 来源记录
 
-- skill: `nsfw-girl-direction`
+- skill: `x-girl`
 - kind: `local`
 - status: `confirmed`
-- source: 本地开发／维护目录 `skills/video/ai/nsfw-girl-direction`；当前维护仓库 https://github.com/oTATo-Boss/my-skills
-- version: 3.3.0
+- source: 本地开发／维护目录 `skills/video/ai/x-girl`；当前维护仓库 https://github.com/oTATo-Boss/my-skills
+- version: 4.2.0
 - author: oTATo-Boss（用户本人）；2026-10-30 在当前对话明确确认本人制作，Agent 辅助编写／整理。
 - license: MIT
 - collected_at: unknown；没有可靠安装／导入日期。
-- recorded_at: `2026-11-02`
-- evidence: [SOURCE_NOTES.md](</Users/griffith/Desktop/AI/我的项目/my skills/SOURCE_NOTES.md>)；[INSTALL_MAP.json](</Users/griffith/Desktop/AI/我的项目/my skills/INSTALL_MAP.json>)；当前入口 SHA-256 `3f628a54d698f3181e64ad80d648302f2da69f29ffc84ed369a80fbbe35bd8ab`（本次记录快照）。；包内声明 [package.json](<package.json>)。
+- recorded_at: `2026-11-13`
+- evidence: [SOURCE_NOTES.md](</Users/griffith/Desktop/AI/我的项目/my skills/SOURCE_NOTES.md>)；[INSTALL_MAP.json](</Users/griffith/Desktop/AI/我的项目/my skills/INSTALL_MAP.json>)；当前入口 SHA-256 `5a09a87fdbdac12dbb001d6c8a56cf7de070e5ac5938fdc591016cd3dc7cba99`（v4.2.0 同步记录快照）。；包内声明 [package.json](<package.json>)。
 
 ## 本地调整与边界
+
+- 2026-11-13：用户指定以 `/Users/griffith/Desktop/土豆/@去皮土豆oTATo/skills/x-girl/` 的 v4.2.0 完整包替换本维护仓库与本机旧版；保留原有客户端元数据，创作内容按来源包同步。统一当前标识为 `x-girl`，旧名仅作历史追溯。
 
 - 开发目录与本机安装目录保留独立实体副本，来源资料按项目约定同步。
 
 ## 版本记录
+
+- 2026-11-13，v4.2.0：按用户要求正式改名 `nsfw-girl-direction` → `x-girl`；同步目录、入口 name、包信息、README/SOURCE、项目索引与 workflow 引用、knowledge 与参考文档链接，以及外部安装副本与 `~/.claude` 软链接、维护仓库目录。
+
+- 2026-11-13，v4.1.0：把风格库从「查找表」改成「组装器」，解决产出滑回成人内容套路的问题。人设只留气质、不绑衣服；单品拆成上装／下装／连体／外套／材质／颜色／服装状态七个原料轴自由组装；新增「必有一件打破预期的单品」「相邻产出色系／材质／单品品类／服装状态不重复」两条规则、禁用清单（白衬衫当睡裙、亮片小黑裙、黑裙深V、粉白睡裙、运动背心裸搭等）、五组好例子与五组坏例子（few-shot）；氛围表去掉服装列、状态表去掉「穿什么」列，服装完全由原料轴组装；设计卡新增「反套路＋防重复」自检字段。入口、README、SOURCE、package、索引同步。
+
+- 2026-11-13，v4.0.0：把私域「网黄福利姬」创作方法论抽通用后并入——新增「先好看，再骚」的门槛与顺序、氛围调子句、骚的四个变量（视角与部位／动作／表情／服装状态）、「露要具体」与「往上不是默认」的尺度补丁；新增 `references/style-library.md`（人设穿搭表、氛围方向、状态组合），拍摄方式从三种扩到五种（新增架机固定、第一人称被拍），并入图片／视频样本观察精华（竖幅优先、镜头在人身上、一组图三种组织、开头就在状态里、结尾停在动作里、可切一次镜、制服只取元素）。创作方向、风格库与设计卡定为必读；并把固定产出定为八字段「创作设计卡」（新增 `references/design-card.md`），每次使用都产出，停在创作参数层、不写提示词。土豆专属内容（身份、资料路径、工作流、发布口径）留在项目参考原处，不进 skill。
 
 - 2026-11-02，v3.3.0：新增“不露也骚”一节——模型或平台不能露时，尺度可以降、关系不能降；给出四条杠杆（眼神停住、嘴停在半路、身体往镜头送、手做没做完的事）与“先减露、再减幅度、最后才动关系”的降级顺序；入口与自查同步。
 

@@ -10,7 +10,6 @@
     "multi-shot-prompt": "video/ai/multi-shot-prompt",
     "json-prompt-system": "image/json-prompt-system",
     "character-design": "image/character-design",
-    "nsfw-girl-direction": "video/ai/nsfw-girl-direction",
     "codex-imagegen": "image/codex-imagegen",
     "direct-video": "director/direct-video",
     "design-review": "web design/design/design-review",
@@ -28,6 +27,7 @@
     "rh-qwen-image-2-1": "image/rh-qwen-image-2-1",
     "flow-image": "image/flow-image",
     "scene-asset-design": "image/scene-asset-design",
-    "rh-krea2": "image/rh-krea2"
+    "rh-krea2": "image/rh-krea2",
+    "x-girl": "video/ai/x-girl"
   }
 }

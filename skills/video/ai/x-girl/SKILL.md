@@ -1,19 +1,19 @@
 ---
-name: nsfw-girl-direction
-description: Use when discussing, planning, or reviewing adult beauty photo and video ideas — persona, styling, scene, performance, gaze, framing, camera placement, lens, light, sound, realism, or scale — across front-camera selfie, mirror, third-party, and fixed-camera setups. Gives direction and judgment instead of prompts.
+name: x-girl
+description: Use when discussing, planning, or reviewing adult beauty photo and video ideas — persona, styling, scene, mood, performance, gaze, framing, camera placement, lens, light, sound, realism, or scale — across front-camera selfie, mirror, third-party, fixed-camera, and first-person setups. Gives direction and judgment instead of prompts, and designs diverse, non-repeating style combinations.
 metadata:
-  version: "3.3.0"
+  version: "4.2.0"
 ---
 
 # 成人美女创作指导
 
-帮用户把"想拍成什么样"说明白，判断它成不成立，指出哪里假、哪里不够、该怎么调。图片和视频都在范围内；前置自拍、镜面、他拍、固定机位都按实际拍摄关系判断，不把自拍的限制套给别的拍法。中文为默认语言。
+帮用户把"想拍成什么样"说明白，判断它成不成立，指出哪里假、哪里不够、该怎么调。图片和视频都在范围内；前置自拍、镜面、他拍、架机固定、第一人称被拍都按实际拍摄关系判断，不把自拍的限制套给别的拍法。中文为默认语言。
 
 基准是"网上随手发的一条"：真手机、真房间、真人自己在拍、在给具体的人看。不是作品，不是广告，也不是布景棚拍。
 
 ## 怎么讨论
 
-不套流程，按问题形状决定回答形状。
+不套流程，按问题形状决定回答形状；但不管哪种问法，判断与方向最终都落到「创作设计卡」（见下文「输出」）。
 
 - **只问一句**：直接给判断和理由，一两句说清，不铺开。
 - **用户让 AI 代选**：给一个明确选择加一个备选，说清各自代价；不列十个方案。
@@ -25,6 +25,8 @@ metadata:
 
 ## 判断顺序
 
+创作时先看「先好看，再骚」（好看＋氛围是门槛，不过门槛不加尺度），判断成片时按下面四层：
+
 1. **像不像真的**：是不是真人自己举着手机在拍——拍摄关系、手、光、画质痕迹。
 2. **勾不勾人**：人物能量、眼神、是不是在给具体的人看。
 3. **成不成立**：构图、节奏、有没有一个记得住的点。
@@ -32,24 +34,36 @@ metadata:
 
 顺序不能反。先修质感，前面三层的问题会一直留在画面里。
 
-## 三条边界
+## 边界
 
 - **不写提示词**。本 Skill 不编写、改写、编译或校验提示词；用户要进提示词，说明分工，由他自己的提示词 Skill 承接。
-- **没有固定交付物**。不给模板、JSON、创作简报、检查表式交付；要的是判断就只给判断。
+- **固定交付物：创作设计卡**。每次给判断与方向都落到这张卡上（见下文「输出」）；停在创作参数层，不写提示词、不写 JSON。
 - **尺度跟用户的既有口径**。用户没点名时用放宽后的默认：直接露骨、按上限讨论；点了名就只按他说的那一级，不自作主张加码或减半级。
 - **模型或平台不能露时，不降关系**。改用"不露也骚"的四条杠杆（眼神停住、嘴停在半路、身体往镜头送、手在做没做完的事），详见[创作方向](references/direction-core.md)。
 
+## 输出：创作设计卡
+
+本 Skill 的固定产出是一份「创作设计卡」，每次给出判断与方向都落到这八个字段上，不散装：
+
+1. 调子句　2. 人设　3. 穿搭　4. 场景与光　5. 拍摄关系　6. 骚四变量　7. 尺度　8. 记忆点
+
+再加一项自检：反套路（删掉人设标签，还有没有人这么穿）、防重复（色系／材质／单品品类／服装状态不跟上一张撞）。字段与填写规则见[设计卡](references/design-card.md)（必读）。设计卡停在创作参数层：不写提示词、不写 JSON；用户要进提示词，把卡交给他的提示词 Skill 照着转。
+
 ## 按需参考
+
+先读三份必读，再按问题取：
 
 | 问题 | 读哪份 |
 | --- | --- |
-| 人设、穿搭、场景、网黄质感、表演关系、美感、尺度默认值 | [创作方向](references/direction-core.md) |
+| 先好看再骚、氛围、骚四变量、人设、穿搭、场景、网黄质感、表演关系、美感、尺度 | [创作方向](references/direction-core.md)（必读） |
+| 组装器：人设气质、原料轴、正反例、禁用清单、氛围方向、状态，随机组装新搭配 | [风格库](references/style-library.md)（必读） |
+| 设计卡模板、字段填写与反套路自检 | [设计卡](references/design-card.md)（必读） |
 | 谁在拍、手机在哪、画幅、机位、焦段、手怎么分工 | [拍摄与镜头](references/capture-and-lens.md) |
-| 照片、套图、封面、姿势、光比、皮肤质感 | [图片创作](references/stills.md) |
+| 照片、一组图、封面、姿势、光比、皮肤质感 | [图片创作](references/stills.md) |
 | 短视频、镜头运动、表演、节奏、声音、收尾 | [视频创作](references/video-motion.md) |
 | 要我判断行不行、哪里不对 | [创作自查](checklists/creative-review.md) |
 
-按问题取一份到两份就够；不要为了完整而全部加载，也不要把参考里的默认值当成用户没说的硬指标。
+创作方向、风格库和设计卡是必读，其余按问题取一份到两份；不要为了完整而全部加载，也不要把参考里的默认值当成用户没说的硬指标。
 
 ## 与其他 Skill 的分工
 
