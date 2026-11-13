@@ -5,7 +5,7 @@
 - status: `confirmed`
 - author: oTATo-Boss 提出审美方向并指定原始资料，Codex 辅助提炼与编写。
 - source: 用户指定的小红书公开创作资料整合，作为独立的图片与视频审美指导 Skill 维护。
-- version: `1.1.0`
+- version: `1.2.0`
 - recorded_at: `2026-11-14`
 - license: 原始资料未附单独许可声明，本记录不新增许可。
 - evidence: 来源项目为「去皮土豆 oTATo」，以下按原项目相对路径定位；正文参考均随本包提供。
@@ -25,3 +25,7 @@
 - 黄洁滢等对广州青年城市摄影的实地研究记录了参考小红书笔记选择拍摄地、同一场景反复试拍并回看照片的现象。本文据此讨论“人物自己愿意分享什么”这个选片视角。研究对象限于当地受访者。[《城市日常摄影活动中的地方意义重塑——以广州青年群体为例》图 3 及第 3.2.1 节](https://cdn.sciengine.com/doi/pdfView/CCBBC666DC394E02BC753755AFB03A8F)
 - 摄影师 Ines Thomsen 在访谈中谈到，观察对方如何自拍，可以了解本人喜欢的侧面和视角。这一做法为判断个人偏好提供了依据。[摄影师访谈 Beyond Beauty](https://www.fujifilm-x.com/en-us/stories/beyond-beauty-making-meaningful-connections-through-portrait-photography/)
 - [选片中的审美取舍](references/editorial-choices.md)里的服装、妆面、便利店及唱片店片例为本版新编。它们用于解释取舍，尚未用小红书真人笔记样本实测。外部资料仅作阅读归因，未收录其图片或长段原文。
+
+## 1.2.0 小红书原帖观察
+
+新增[原帖观察](references/xhs-field-notes.md)，含八个封面比较、三组完整图序和两段照片编排视频的视觉记录，逐项链接作者公开笔记。正文的精致成片与首图取舍结合了用户本次明确的审美目标及所见画面。观察范围限于这些样本。公开作者保留各自作品权利，本包仅收录文字分析和笔记链接。
