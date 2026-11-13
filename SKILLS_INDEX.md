@@ -1,12 +1,12 @@
 # my-skills 技能索引
 
-技能数量：27
+技能数量：28
 
 本索引只登记本仓库维护的 Skill，用于项目技能选型与复用。开发目录按本机分类路径组织，安装位置以 INSTALL_MAP.json 为准；每个 Skill 根目录的 SOURCE.md 保存来源、版本、许可与证据；历史范围说明保留在 SOURCE_NOTES.md。
 
 ## 用途分类
 
-- [director](skills/director/SKILLS_INDEX.md) — 视频导演与跨媒介视觉创意指导。（2 个技能）
+- [director](skills/director/SKILLS_INDEX.md) — 视频导演、跨媒介视觉创意与小红书人像出片审美。（3 个技能）
 
 - [dev](skills/dev/SKILLS_INDEX.md) — 工作流需求分析、能力匹配、独立执行项目生成与运行验收。（1 个技能）
 
