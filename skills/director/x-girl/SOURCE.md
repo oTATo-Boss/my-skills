@@ -3,7 +3,7 @@
 - skill: `x-girl`
 - kind: `local`
 - status: `confirmed`
-- source: 本地开发／维护目录 `skills/video/ai/x-girl`；当前维护仓库 https://github.com/oTATo-Boss/my-skills
+- source: 本地开发／维护目录 `skills/director/x-girl`；当前维护仓库 https://github.com/oTATo-Boss/my-skills
 - version: 5.1.0
 - author: oTATo-Boss（用户本人）；2026-10-30 在当前对话明确确认本人制作，Agent 辅助编写／整理。
 - license: MIT

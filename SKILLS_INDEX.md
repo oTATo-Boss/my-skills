@@ -6,11 +6,11 @@
 
 ## 用途分类
 
-- [director](skills/director/SKILLS_INDEX.md) — 视频导演、跨媒介视觉创意与小红书人像出片审美。（3 个技能）
+- [director](skills/director/SKILLS_INDEX.md) — 视频导演、跨媒介视觉创意与小红书人像出片审美。（4 个技能）
 
 - [dev](skills/dev/SKILLS_INDEX.md) — 工作流需求分析、能力匹配、独立执行项目生成与运行验收。（1 个技能）
 
-- [video](skills/video/SKILLS_INDEX.md) — AI 视频参考与提示词、实拍融合、代码视频、导演编剧与生产管理。（8 个技能）
+- [video](skills/video/SKILLS_INDEX.md) — AI 视频参考与提示词、实拍融合、代码视频、导演编剧与生产管理。（7 个技能）
 - [image](skills/image/SKILLS_INDEX.md) — 视觉创意指导、图片生成与编辑、角色与多视角资产、可扩充风格预设、服装妆造及 JSON 提示词。（8 个技能）
 - [web design](<skills/web design/SKILLS_INDEX.md>) — 网页视觉设计、界面精修、动效与视觉效果。（6 个技能）
 - [social-media](skills/social-media/SKILLS_INDEX.md) — 社交内容策划、素材、成片、发布交付与后台分析。（1 个技能）
