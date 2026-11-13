@@ -1,6 +1,6 @@
 # 来源记录
 
-- skill: `xsh-girl`
+- skill: `xhs-girl`
 - kind: `local`
 - status: `confirmed`
 - author: oTATo-Boss 提出审美方向并指定原始资料，Codex 辅助提炼与编写。
