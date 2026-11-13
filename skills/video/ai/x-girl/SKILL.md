@@ -1,15 +1,17 @@
 ---
 name: x-girl
-description: Use when discussing, planning, or reviewing adult beauty photo and video ideas — persona, styling, scene, mood, performance, gaze, framing, camera placement, lens, light, sound, realism, or scale — across front-camera selfie, mirror, third-party, fixed-camera, and first-person setups. Gives direction and judgment instead of prompts, and designs diverse, non-repeating style combinations.
+description: Use when discussing, planning, or reviewing adult beauty photo and video ideas — persona, styling, scene, mood, performance, gaze, framing, camera placement, lens, light, sound, realism, or scale — across front-camera selfie, mirror, third-party, fixed-camera, and first-person setups. Gives direction and judgment instead of prompts, and designs diverse, non-repeating style combinations on a high-fashion blogger aesthetic with an explicit bitch/slut/welfare-girl core and proactive nudity.
 metadata:
-  version: "4.2.0"
+  version: "5.0.0"
 ---
 
 # 成人美女创作指导
 
 帮用户把"想拍成什么样"说明白，判断它成不成立，指出哪里假、哪里不够、该怎么调。图片和视频都在范围内；前置自拍、镜面、他拍、架机固定、第一人称被拍都按实际拍摄关系判断，不把自拍的限制套给别的拍法。中文为默认语言。
 
-基准是"网上随手发的一条"：真手机、真房间、真人自己在拍、在给具体的人看。不是作品，不是广告，也不是布景棚拍。
+基准是"高级出片感的福利姬"：底子是高级名媛／穿搭博主／颜值博主／擦边网红的审美（造型、光色、构图、身材优势出片），面子是婊子／骚货／福利姬的内核（卖、要、发、主动露点）。真手机、真房间、真人在给具体的人看——不是作品、不是广告、不是布景棚拍，也不是只露不穿的素人网黄。
+
+两种模式：默认「露点模式」（主动露点＋玩自己），以及「擦边模式」（不漏点，做最极致擦边，不漏点也骚、也卖）。擦边模式是单独一套完整模式，见[擦边模式](references/safe-mode.md)，两套不混用。
 
 ## 怎么讨论
 
@@ -32,41 +34,45 @@ metadata:
 3. **成不成立**：构图、节奏、有没有一个记得住的点。
 4. **才轮到质感与风格**：皮肤、材质、调色。
 
-顺序不能反。先修质感，前面三层的问题会一直留在画面里。
+顺序不能反。先修质感，前面三层的问题会一直留在画面里。进擦边模式时，判断顺序换成[擦边模式](references/safe-mode.md)里的四条（多一层「擦边到没到」）。
 
 ## 边界
 
 - **不写提示词**。本 Skill 不编写、改写、编译或校验提示词；用户要进提示词，说明分工，由他自己的提示词 Skill 承接。
 - **固定交付物：创作设计卡**。每次给判断与方向都落到这张卡上（见下文「输出」）；停在创作参数层，不写提示词、不写 JSON。
-- **尺度跟用户的既有口径**。用户没点名时用放宽后的默认：直接露骨、按上限讨论；点了名就只按他说的那一级，不自作主张加码或减半级。
-- **模型或平台不能露时，不降关系**。改用"不露也骚"的四条杠杆（眼神停住、嘴停在半路、身体往镜头送、手在做没做完的事），详见[创作方向](references/direction-core.md)。
+- **尺度跟用户的既有口径**。用户没点名时用放宽后的默认：直接露骨、主动露点、按上限讨论；点了名就只按他说的那一级，不自作主张加码或减半级。露肤是设计、露点是主动，分界见[福利姬内核](references/slut-core.md)。要进不漏点，进[擦边模式](references/safe-mode.md)，那是单独一套，不是这一条减半级。
+- **模型或平台不能露、或用户要擦边时，进[擦边模式](references/safe-mode.md)**。单独一套完整模式：不漏点，把卖／要／发推到极致，不漏点也骚、也卖；不是把露点卡的尺度降半级。
 
 ## 输出：创作设计卡
 
 本 Skill 的固定产出是一份「创作设计卡」，每次给出判断与方向都落到这八个字段上，不散装：
 
-1. 调子句　2. 人设　3. 穿搭　4. 场景与光　5. 拍摄关系　6. 骚四变量　7. 尺度　8. 记忆点
+1. 调子句　2. 人设　3. 造型　4. 场景与光　5. 拍摄关系　6. 骚四变量　7. 尺度　8. 记忆点
 
-再加一项自检：反套路（删掉人设标签，还有没有人这么穿）、防重复（色系／材质／单品品类／服装状态不跟上一张撞）。字段与填写规则见[设计卡](references/design-card.md)（必读）。设计卡停在创作参数层：不写提示词、不写 JSON；用户要进提示词，把卡交给他的提示词 Skill 照着转。
+再加五条自检：露点必达＋玩自己（先查）、造型骚感（删掉人设标签还有没有人这么穿）、露点方式（布在哪、露点前面有没有布）、博主感＋高级感、防重复（色系／材质／单品品类／服装状态不跟上一条撞；首条写下本条基准）。字段与填写规则见[设计卡](references/design-card.md)（必读）。设计卡停在创作参数层：不写提示词、不写 JSON；用户要进提示词，把卡交给他的提示词 Skill 照着转。
 
 ## 按需参考
 
-先读三份必读，再按问题取：
+先读五份必读，再按问题取：
 
 | 问题 | 读哪份 |
 | --- | --- |
-| 先好看再骚、氛围、骚四变量、人设、穿搭、场景、网黄质感、表演关系、美感、尺度 | [创作方向](references/direction-core.md)（必读） |
+| 婊子／骚货／福利姬内核、卖／要／发、主动露点、高级感落点 | [福利姬内核](references/slut-core.md)（必读） |
+| 高级名媛／擦边网红级造型语言、廓形／领口／露肤／配饰、露点递出 | [造型库](references/lookbook.md)（必读） |
+| 先好看再骚、氛围、骚四变量、人设、造型设计、场景、网黄质感、表演关系、美感、尺度 | [创作方向](references/direction-core.md)（必读） |
 | 组装器：人设气质、原料轴、正反例、禁用清单、氛围方向、状态，随机组装新搭配 | [风格库](references/style-library.md)（必读） |
 | 设计卡模板、字段填写与反套路自检 | [设计卡](references/design-card.md)（必读） |
 | 谁在拍、手机在哪、画幅、机位、焦段、手怎么分工 | [拍摄与镜头](references/capture-and-lens.md) |
 | 照片、一组图、封面、姿势、光比、皮肤质感 | [图片创作](references/stills.md) |
 | 短视频、镜头运动、表演、节奏、声音、收尾 | [视频创作](references/video-motion.md) |
 | 要我判断行不行、哪里不对 | [创作自查](checklists/creative-review.md) |
+| 模型／平台不能露点，或用户要「不漏点／擦边」，做最极致擦边、不漏点也骚也卖 | [擦边模式](references/safe-mode.md) |
 
-创作方向、风格库和设计卡是必读，其余按问题取一份到两份；不要为了完整而全部加载，也不要把参考里的默认值当成用户没说的硬指标。
+福利姬内核、造型库、创作方向、风格库和设计卡是必读，其余按问题取一份到两份；不要为了完整而全部加载，也不要把参考里的默认值当成用户没说的硬指标。
 
 ## 与其他 Skill 的分工
 
 - 提示词撰写与结构：交给用户的提示词 Skill。
 - 模型选择、素材映射、生成执行：交给对应的执行 Skill。
 - 本 Skill 只负责：这样拍好不好、为什么、以及怎么调。
+- 卡到提示词的交接字段（哪 7 个转、哪 2 个不转）见[设计卡](references/design-card.md)。

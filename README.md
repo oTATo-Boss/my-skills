@@ -15,7 +15,7 @@
 | [json-prompt-system](skills/image/json-prompt-system/SKILL.md) | 生成对镜自拍、前置自拍、他拍与时尚大片的完整提示词，支持纯 JSON。 | `npx skills add oTATo-Boss/my-skills --skill json-prompt-system -g -a codex --copy -y` |
 | [Character Design（character-design）](skills/image/character-design/SKILL.md) | 建立写实/CG/AAA角色参考板，设计服装并进行妆造与状态裂变。 | `npx skills add oTATo-Boss/my-skills --skill character-design -g -a codex --copy -y` |
 | [场景资产设计（scene-asset-design）](skills/image/scene-asset-design/SKILL.md) | 建立统一空间、材质与光线，完成多视角场景设计、提示词和资产交付。 | `npx skills add oTATo-Boss/my-skills --skill scene-asset-design -g -a codex --copy -y` |
-| [x-girl](skills/video/ai/x-girl/SKILL.md) | 成人美女图片与视频创作指导，提供风格组装、创作设计卡与反套路自检；不写提示词。 | `npx skills add oTATo-Boss/my-skills --skill x-girl -g -a codex --copy -y` |
+| [x-girl](skills/video/ai/x-girl/SKILL.md) | 成人美女图片与视频创作指导，提供造型设计、两种创作模式、设计卡与提示词交接规则；不写提示词。 | `npx skills add oTATo-Boss/my-skills --skill x-girl -g -a codex --copy -y` |
 | [codex-imagegen](skills/image/codex-imagegen/SKILL.md) | 让其他 Agent 通过本机 Codex CLI 生成和编辑图片。 | `npx skills add oTATo-Boss/my-skills --skill codex-imagegen -g -a codex --copy -y` |
 | [midjourney-generate](skills/image/midjourney-generate/SKILL.md) | 通过 Apilio 执行 Midjourney 生图、变体、放大、编辑、状态恢复与下载交付。 | `npx skills add oTATo-Boss/my-skills --skill midjourney-generate -g -a codex --copy -y` |
 | [direct-video](skills/director/direct-video/SKILL.md) | 统筹视频创意、分镜、节奏、声音和成片验收。 | `npx skills add oTATo-Boss/my-skills --skill direct-video -g -a codex --copy -y` |
