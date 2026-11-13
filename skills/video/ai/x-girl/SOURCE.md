@@ -4,12 +4,12 @@
 - kind: `local`
 - status: `confirmed`
 - source: 本地开发／维护目录 `skills/video/ai/x-girl`；当前维护仓库 https://github.com/oTATo-Boss/my-skills
-- version: 5.0.0
+- version: 5.1.0
 - author: oTATo-Boss（用户本人）；2026-10-30 在当前对话明确确认本人制作，Agent 辅助编写／整理。
 - license: MIT
 - collected_at: unknown；没有可靠安装／导入日期。
 - recorded_at: `2026-11-13`
-- evidence: [SOURCE_NOTES.md](</Users/griffith/Desktop/AI/我的项目/my skills/SOURCE_NOTES.md>)；[INSTALL_MAP.json](</Users/griffith/Desktop/AI/我的项目/my skills/INSTALL_MAP.json>)；当前入口 SHA-256 `f32db0cf6c422c69a36655336368282800328050a7d63938814d3ce1671c8064`（v5.0.0 重新获取同步快照）。；包内声明 [package.json](<package.json>)。
+- evidence: [SOURCE_NOTES.md](</Users/griffith/Desktop/AI/我的项目/my skills/SOURCE_NOTES.md>)；[INSTALL_MAP.json](</Users/griffith/Desktop/AI/我的项目/my skills/INSTALL_MAP.json>)；当前入口 SHA-256 `58b9ce4b16b7fe4e8765d14558586323a70474cd2495992851e1d5f4e1ec36c6`（v5.1.0 画面方法更新快照）。；包内声明 [package.json](<package.json>)。
 
 ## 本地调整与边界
 
@@ -18,6 +18,8 @@
 - 开发目录与本机安装目录保留独立实体副本，来源资料按项目约定同步。
 
 ## 版本记录
+
+- 2026-11-13，v5.1.0：按用户确认的分析范围优化通用画面方法，参考去皮土豆项目 `workflow/work-mode.md`、`workflow/image-workflow.md`、`workflow/video-workflow.md`、`参考/小红书/小红书出片感引导规则.md`。只吸收摄影、造型、动作表情与可见关系判断；不复制项目人物身份、具体五官、工具、确认节点与参考数量。清理强制反差、防重复配额、妆容与材质一票否决、低画质与意外真实性配额；保留内容尺度与模式条款，补设计卡交接和普通人像验收。验证只证明规则与同步状态，不宣称实际生成审美提升。
 
 - 2026-11-13，v5.0.0 卡→提示词交接字段：`design-card.md`「卡与提示词的分工」从一句带过扩成字段级约定——转给提示词 Skill 的 7 个字段（调子句／人设／造型／场景与光／拍摄关系／骚四变量／尺度，逐项职责写死），不转的 2 项（记忆点、自检）；`SKILL.md` 分工节加指路。目的：换提示词 Skill 或换人不靠默契，照字段转不漏项。版本号暂不动。
 
