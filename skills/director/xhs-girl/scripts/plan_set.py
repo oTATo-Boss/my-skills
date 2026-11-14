@@ -230,8 +230,6 @@ def main():
         return
     finish = rng.choice([f for f in FINISHES if f not in SITUATIONAL])
     base_scene = a.scene or rng.choice(s["scenes"])
-    # post mode: two nearby spots in the same outing, alternated, so close-ups don't share one backdrop
-    alt_scene = a.scene or rng.choice([x for x in s["scenes"] if x != base_scene])
     exprs = rng.sample(EXPRESSIONS, len(types))
     hands = rng.sample(HANDS, len(types))
     props = rng.sample(s["props"], len(types))
@@ -246,14 +244,14 @@ def main():
         for k, v in look.items():
             print(f"- {k}：{v}")
         print(f"- 后期：{finish}（{FINISHES[finish]}）")
-        print(f"- 场景：{base_scene}；{alt_scene}（同一次出门的两个地点，各张交替）\n")
+        print(f"- 场景：{base_scene}（全组共用；提示词每张都要写同一套光线和背景细节，让模型把这组图对应到同一时间地点）\n")
     for i, t in enumerate(types, 1):
         w, dist, refs, fixed = SHOT_TYPES[t]
         if a.mode == "mixed":
             look = draw_look(rng, season, a.direction)
             finish = rng.choice([f for f in FINISHES if f not in SITUATIONAL])
             base_scene = a.scene or rng.choice(s["scenes"])
-        here = base_scene if (a.mode == "mixed" or i % 2) else alt_scene
+        here = rng.choice(s["scenes"]) if a.mode == "mixed" else base_scene
         scene = rng.choice(fixed) if (fixed and not a.scene) else here
         fin = TYPE_FINISH.get(t, finish)
         print(f"## 第 {i} 张 · {t}（{dist}景，参考 {refs}）\n")
