@@ -1,0 +1,26 @@
+{
+  "version": "1.7.3",
+  "date": "2026-11-14",
+  "template": "assets/templates/beauty/body-three.txt",
+  "template_sha256": "1d6a91943317ff00bd6f3cb64824a75eace135e9464ab4a813a10416592c148f",
+  "prompt_sha256": "b24c00e8243631ff65b16a657389b733c7a33bcb10caf7a2a5457268fc229230",
+  "reference_role": "用户提供肖像仅锁定成年女性身份、发型、发色与肤色，不提供身材实测数据",
+  "tool": "built-in image_gen",
+  "requested_aspect": "9:16",
+  "attempts": 1,
+  "status": "blocked",
+  "image_created": false,
+  "error_code": "moderation_blocked",
+  "moderation_stage": "output",
+  "categories": [
+    "sexual"
+  ],
+  "request_id": "66c33b86-bbe1-46e1-a771-38d5fca0ef48",
+  "changes": "五模板服装按用户提供原文统一；全身身材段与用户原文、半身和综合板统一，移除额外低腰及局部体型强化；各阶段画幅、取景和视角顺序保持",
+  "limitations": [
+    "服务拦截不能确定具体触发句",
+    "没有返回图像，不能判断长相、服装或身材比例效果",
+    "没有改写提示词再次尝试，也未切换服务"
+  ],
+  "static_validation": "单独检查模板变更、29条源摘要和本地链接；静态通过不代表生图通过"
+}
