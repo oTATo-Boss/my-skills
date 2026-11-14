@@ -107,6 +107,41 @@ SEASON = {
     },
 }
 
+# outfit 模式专属穿搭：有设计感主单品，至少两处露肤，主打身材
+OUTFIT_LOOKS = {
+    "winter": [
+        "黑色交叉绑带露背短上衣配低腰牛仔超短裙和灰色腿袜、银色腰链、大圈耳环",
+        "白色斜肩毛绒短外套敞开配黑色蕾丝抹胸和低腰热裤、粉色堆堆袜、玛丽珍",
+        "粉色露肩短款罗纹针织上衣配低腰格纹迷你裙和黑色过膝袜、银色 choker",
+        "黑色一字领短外套（单扣只扣腰部）配黑色吊带和包臀迷你裙、黑色腿袜",
+        "米白毛绒短开衫全敞配黑色交叉细吊带和低腰直筒牛仔裤、腰链，锁骨全露",
+        "仿皮草短外套（开着穿）配黑色露腰绑带小背心和超短牛仔热裤、堆堆袜",
+        "深红露肩罗纹连衣裙，裙摆到大腿中段，腰部有腰链收束",
+        "黑色露脐交叉绑带短上衣配灰色低腰百褶迷你裙和黑色腿袜、银饰多件叠戴",
+    ],
+    "spring": [
+        "白色细吊带蕾丝短裙，腰部缎带系蝴蝶结，露腰露腿",
+        "粉色斜肩短款针织配低腰白色超短迷你裙和白色堆堆袜、发夹",
+        "浅蓝色斜肩牛仔外套（短款，露腰）配低腰格纹热裤和白色长袜",
+        "白色露背绑带短上衣配碎花超短裙和玛丽珍，露出整片后背",
+        "奶白色单肩短款针织配低腰黑色迷你裙和蝴蝶结腿袜、银色细项链",
+    ],
+    "summer": [
+        "黑色细吊带镂空蕾丝短裙，半透明裙摆到大腿上段",
+        "白色露背交叉绑带比基尼上衣配低腰牛仔超短裤和金属腰链",
+        "橙色单肩短款罗纹配低腰热裤和大圈耳环、草编帽",
+        "粉色薄肩带露背短连衣裙，低背到腰，裙摆飘逸到大腿中段",
+        "黑色细肩带露腰背心配超短白色百褶裙和白色运动袜、厚底鞋",
+    ],
+    "autumn": [
+        "黑色露肩一字领短毛衣配低腰迷你裙和黑色腿袜、银色 choker",
+        "棕色麂皮短外套（开着穿）配黑色露脐打底和低腰迷你裙",
+        "白色短款露肩针织配低腰格纹超短裙和黑色过膝袜、小方包",
+        "黑色紧身露脐短上衣配低腰皮质包臀裙和堆堆袜、金属腰链",
+        "灰色细肩带短连衣裙，裙摆到大腿中段，外搭敞开的针织开衫",
+    ],
+}
+
 EXPRESSIONS = ["单眼wink", "嘟嘴", "抿嘴笑、眼睛弯起来", "冷脸直视、嘴唇微张", "鼓腮", "歪头睁大眼装无辜",
                "闭眼仰脸", "轻咬下唇", "笑出一点牙", "微微吐舌", "斜眼看镜头", "回眸", "低头垂眼", "惊讶O型嘴", "眯眼笑"]
 HANDS = ["手指点在唇边", "比耶贴在脸颊旁", "双手框住眼睛", "托腮", "捂嘴", "手指勾住帽檐往下拉", "撩起一边刘海",
@@ -177,15 +212,16 @@ def draw_types(rng, count, forced, focus):
     return names
 
 
-def draw_look(rng, season):
+def draw_look(rng, season, focus="face"):
     vibe = rng.choice(list(VIBES))
     s = SEASON[season]
+    outfit = rng.choice(OUTFIT_LOOKS[season]) if focus == "outfit" else rng.choice(s["outfit"])
     return {
         "气质": vibe,
         "妆容": VIBES[vibe],
         "发型": f"{rng.choice(HAIR_COLOR)}、{rng.choice(HAIR_CUT)}、{rng.choice(HAIR_STYLE)}",
         "头饰": rng.choice(s["head"]),
-        "穿搭": rng.choice(s["outfit"]),
+        "穿搭": outfit,
         "美甲": rng.choice(NAILS),
     }
 
@@ -205,7 +241,7 @@ def main():
     season = season_for(a.month)
     s = SEASON[season]
     types = draw_types(rng, a.count, a.type, a.focus)
-    look = draw_look(rng, season)
+    look = draw_look(rng, season, a.focus)
     finish = rng.choice([f for f in FINISHES if f not in SITUATIONAL])
     base_scene = a.scene or rng.choice(s["scenes"])
     # post mode: two nearby spots in the same outing, alternated, so close-ups don't share one backdrop
@@ -213,6 +249,9 @@ def main():
     exprs = rng.sample(EXPRESSIONS, len(types))
     hands = rng.sample(HANDS, len(types))
     props = rng.sample(s["props"], len(types))
+    BODY_FOCUS = ["腰线", "长腿", "上围曲线", "肩颈锁骨", "整体比例", "背部"]
+    body_focuses = [BODY_FOCUS[i % len(BODY_FOCUS)] for i in range(len(types))]
+    rng.shuffle(body_focuses)
 
     print(f"# 抽签方案（{season}，{a.mode}，{a.focus}，{len(types)} 张）\n")
     print("用户已指定的人物、单品、地点或风格替换对应项；其余照用，不自行重抽。\n")
@@ -225,7 +264,7 @@ def main():
     for i, t in enumerate(types, 1):
         w, dist, refs, fixed = SHOT_TYPES[t]
         if a.mode == "mixed":
-            look = draw_look(rng, season)
+            look = draw_look(rng, season, a.focus)
             finish = rng.choice([f for f in FINISHES if f not in SITUATIONAL])
             base_scene = a.scene or rng.choice(s["scenes"])
         here = base_scene if (a.mode == "mixed" or i % 2) else alt_scene
@@ -236,6 +275,8 @@ def main():
             for k, v in look.items():
                 print(f"- {k}：{v}")
         print(f"- 场景：{scene}")
+        if a.focus == "outfit":
+            print(f"- 展示重点：{body_focuses[i - 1]}（读 references/silhouette-studies.md 对应行，写穿搭细节和机位）")
         print(f"- 表情：{exprs[i - 1]}（与画面类型冲突时改用该类型自带的视线）")
         print(f"- 手势：{hands[i - 1]}（与画面类型冲突时改用该类型自带的手部动作）")
         print(f"- 道具：{props[i - 1]}（画面里放不下就省略）")
