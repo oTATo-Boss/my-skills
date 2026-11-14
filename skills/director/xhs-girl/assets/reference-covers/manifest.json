@@ -508,5 +508,2129 @@
     ],
     "source_sha256": "16559102e5ffa01d459a3c1538b4be3aa966c26912d8a536cedf38deaf1fa652",
     "file": "assets/reference-covers/30-friends.jpg"
+  },
+  {
+    "id": "R31",
+    "title": "格窗棕椅侧坐",
+    "batch": "2026-11-14-additional",
+    "screen": 37,
+    "source_file": "37.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      255,
+      368,
+      561,
+      774
+    ],
+    "source_sha256": "fed84c5e975c2d5dd4b10310225adebbc854498a1c460085ebf7c311f5b56c93",
+    "file": "assets/reference-covers/31-window-chair.jpg",
+    "tags": [
+      "居家侧倚",
+      "窗光",
+      "修身裙"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R32",
+    "title": "窗边黑抹胸暗调",
+    "batch": "2026-11-14-additional",
+    "screen": 37,
+    "source_file": "37.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      596,
+      368,
+      902,
+      774
+    ],
+    "source_sha256": "fed84c5e975c2d5dd4b10310225adebbc854498a1c460085ebf7c311f5b56c93",
+    "file": "assets/reference-covers/32-dark-window.jpg",
+    "tags": [
+      "暗调光影",
+      "窗帘",
+      "扶手椅"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R33",
+    "title": "黑发手指贴唇",
+    "batch": "2026-11-14-additional",
+    "screen": 37,
+    "source_file": "37.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      937,
+      368,
+      1242,
+      673
+    ],
+    "source_sha256": "fed84c5e975c2d5dd4b10310225adebbc854498a1c460085ebf7c311f5b56c93",
+    "file": "assets/reference-covers/33-lip-gesture.jpg",
+    "tags": [
+      "手势贴脸",
+      "长卷发",
+      "普通墙面"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R34",
+    "title": "粉针织沙发侧倚",
+    "batch": "2026-11-14-additional",
+    "screen": 37,
+    "source_file": "37.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      1277,
+      368,
+      1583,
+      774
+    ],
+    "source_sha256": "fed84c5e975c2d5dd4b10310225adebbc854498a1c460085ebf7c311f5b56c93",
+    "file": "assets/reference-covers/34-pink-sofa.jpg",
+    "tags": [
+      "居家侧倚",
+      "针织",
+      "阅读"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R35",
+    "title": "椅上交腿镜自拍",
+    "batch": "2026-11-14-additional",
+    "screen": 37,
+    "source_file": "37.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      1617,
+      368,
+      1917,
+      774
+    ],
+    "source_sha256": "fed84c5e975c2d5dd4b10310225adebbc854498a1c460085ebf7c311f5b56c93",
+    "file": "assets/reference-covers/35-chair-mirror.jpg",
+    "tags": [
+      "镜前自拍",
+      "椅子",
+      "木地板"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R36",
+    "title": "地铁吊带近拍",
+    "batch": "2026-11-14-additional",
+    "screen": 37,
+    "source_file": "37.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      255,
+      872,
+      561,
+      1274
+    ],
+    "source_sha256": "fed84c5e975c2d5dd4b10310225adebbc854498a1c460085ebf7c311f5b56c93",
+    "file": "assets/reference-covers/36-subway-close.jpg",
+    "tags": [
+      "怼脸自拍",
+      "蕾丝领",
+      "地铁"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R37",
+    "title": "黑刘海长耳饰",
+    "batch": "2026-11-14-additional",
+    "screen": 37,
+    "source_file": "37.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      596,
+      872,
+      902,
+      1275
+    ],
+    "source_sha256": "fed84c5e975c2d5dd4b10310225adebbc854498a1c460085ebf7c311f5b56c93",
+    "file": "assets/reference-covers/37-fringe-earrings.jpg",
+    "tags": [
+      "怼脸自拍",
+      "耳饰",
+      "黑发"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R38",
+    "title": "桌面侧跪",
+    "batch": "2026-11-14-additional",
+    "screen": 37,
+    "source_file": "37.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      937,
+      770,
+      1242,
+      1177
+    ],
+    "source_sha256": "fed84c5e975c2d5dd4b10310225adebbc854498a1c460085ebf7c311f5b56c93",
+    "file": "assets/reference-covers/38-table-kneel.jpg",
+    "tags": [
+      "坐蹲半身",
+      "侧跪",
+      "修身裙"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R39",
+    "title": "黑外套侧脸近照",
+    "batch": "2026-11-14-additional",
+    "screen": 37,
+    "source_file": "37.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      1277,
+      872,
+      1583,
+      1275
+    ],
+    "source_sha256": "fed84c5e975c2d5dd4b10310225adebbc854498a1c460085ebf7c311f5b56c93",
+    "file": "assets/reference-covers/39-jacket-close.jpg",
+    "tags": [
+      "怼脸自拍",
+      "外套",
+      "遮挡贴纸"
+    ],
+    "partial": true
+  },
+  {
+    "id": "R40",
+    "title": "白衣椅上跪坐",
+    "batch": "2026-11-14-additional",
+    "screen": 37,
+    "source_file": "37.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      1617,
+      894,
+      1917,
+      1275
+    ],
+    "source_sha256": "fed84c5e975c2d5dd4b10310225adebbc854498a1c460085ebf7c311f5b56c93",
+    "file": "assets/reference-covers/40-white-chair.jpg",
+    "tags": [
+      "坐蹲半身",
+      "壁灯",
+      "木椅"
+    ],
+    "partial": true
+  },
+  {
+    "id": "R41",
+    "title": "门前黑衣全身",
+    "batch": "2026-11-14-additional",
+    "screen": 38,
+    "source_file": "38.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      255,
+      514,
+      561,
+      920
+    ],
+    "source_sha256": "75f070e120bb14877a89a3b885d435ae98d607d7b6b8061a231f8dc93db346d5",
+    "file": "assets/reference-covers/41-door-black.jpg",
+    "tags": [
+      "全身街拍",
+      "门框",
+      "袜子"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R42",
+    "title": "高位裁脸穿搭镜照",
+    "batch": "2026-11-14-additional",
+    "screen": 38,
+    "source_file": "38.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      596,
+      493,
+      902,
+      900
+    ],
+    "source_sha256": "75f070e120bb14877a89a3b885d435ae98d607d7b6b8061a231f8dc93db346d5",
+    "file": "assets/reference-covers/42-cropped-mirror.jpg",
+    "tags": [
+      "镜前自拍",
+      "高位",
+      "裁脸穿搭"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R43",
+    "title": "米色背心短裤镜照",
+    "batch": "2026-11-14-additional",
+    "screen": 38,
+    "source_file": "38.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      937,
+      391,
+      1242,
+      796
+    ],
+    "source_sha256": "75f070e120bb14877a89a3b885d435ae98d607d7b6b8061a231f8dc93db346d5",
+    "file": "assets/reference-covers/43-beige-mirror.jpg",
+    "tags": [
+      "镜前自拍",
+      "背心",
+      "家居"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R44",
+    "title": "复古房间侧坐",
+    "batch": "2026-11-14-additional",
+    "screen": 38,
+    "source_file": "38.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      1277,
+      493,
+      1583,
+      900
+    ],
+    "source_sha256": "75f070e120bb14877a89a3b885d435ae98d607d7b6b8061a231f8dc93db346d5",
+    "file": "assets/reference-covers/44-vintage-room.jpg",
+    "tags": [
+      "居家侧倚",
+      "蕾丝",
+      "桌面摆件"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R45",
+    "title": "灰裙沙发盘腿",
+    "batch": "2026-11-14-additional",
+    "screen": 38,
+    "source_file": "38.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      1617,
+      514,
+      1917,
+      920
+    ],
+    "source_sha256": "75f070e120bb14877a89a3b885d435ae98d607d7b6b8061a231f8dc93db346d5",
+    "file": "assets/reference-covers/45-gray-sofa.jpg",
+    "tags": [
+      "居家侧倚",
+      "简洁穿搭",
+      "沙发"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R46",
+    "title": "黑底金属饰品直闪",
+    "batch": "2026-11-14-additional",
+    "screen": 39,
+    "source_file": "39.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      255,
+      474,
+      561,
+      879
+    ],
+    "source_sha256": "72c113f04ae46c76f162edbd56b5c27bdf96708dbc3c60bc9434149ab60440ab",
+    "file": "assets/reference-covers/46-metal-flash.jpg",
+    "tags": [
+      "直闪夜拍",
+      "金属饰品",
+      "侧身"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R47",
+    "title": "围栏前低位跪姿",
+    "batch": "2026-11-14-additional",
+    "screen": 39,
+    "source_file": "39.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      596,
+      453,
+      902,
+      859
+    ],
+    "source_sha256": "72c113f04ae46c76f162edbd56b5c27bdf96708dbc3c60bc9434149ab60440ab",
+    "file": "assets/reference-covers/47-fence-kneel.jpg",
+    "tags": [
+      "坐蹲半身",
+      "停车场",
+      "围栏"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R48",
+    "title": "蓝色主题侧跪",
+    "batch": "2026-11-14-additional",
+    "screen": 39,
+    "source_file": "39.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      937,
+      351,
+      1242,
+      755
+    ],
+    "source_sha256": "72c113f04ae46c76f162edbd56b5c27bdf96708dbc3c60bc9434149ab60440ab",
+    "file": "assets/reference-covers/48-blue-costume.jpg",
+    "tags": [
+      "坐蹲半身",
+      "主题造型",
+      "侧跪"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R49",
+    "title": "夕阳纸牌主题坐姿",
+    "batch": "2026-11-14-additional",
+    "screen": 39,
+    "source_file": "39.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      1277,
+      453,
+      1583,
+      859
+    ],
+    "source_sha256": "72c113f04ae46c76f162edbd56b5c27bdf96708dbc3c60bc9434149ab60440ab",
+    "file": "assets/reference-covers/49-cards-sunset.jpg",
+    "tags": [
+      "坐蹲半身",
+      "主题造型",
+      "夕阳"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R50",
+    "title": "楼梯扶膝坐姿",
+    "batch": "2026-11-14-additional",
+    "screen": 39,
+    "source_file": "39.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      1617,
+      474,
+      1917,
+      880
+    ],
+    "source_sha256": "72c113f04ae46c76f162edbd56b5c27bdf96708dbc3c60bc9434149ab60440ab",
+    "file": "assets/reference-covers/50-stair-seat.jpg",
+    "tags": [
+      "坐蹲半身",
+      "楼梯",
+      "黑短靴"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R51",
+    "title": "眼镜大圈耳环近拍",
+    "batch": "2026-11-14-additional",
+    "screen": 39,
+    "source_file": "39.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      255,
+      979,
+      561,
+      1275
+    ],
+    "source_sha256": "72c113f04ae46c76f162edbd56b5c27bdf96708dbc3c60bc9434149ab60440ab",
+    "file": "assets/reference-covers/51-glasses-close.jpg",
+    "tags": [
+      "怼脸自拍",
+      "眼镜",
+      "耳环"
+    ],
+    "partial": true
+  },
+  {
+    "id": "R52",
+    "title": "店前木凳灰衣坐姿",
+    "batch": "2026-11-14-additional",
+    "screen": 39,
+    "source_file": "39.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      596,
+      958,
+      902,
+      1275
+    ],
+    "source_sha256": "72c113f04ae46c76f162edbd56b5c27bdf96708dbc3c60bc9434149ab60440ab",
+    "file": "assets/reference-covers/52-bench-gray.jpg",
+    "tags": [
+      "坐蹲半身",
+      "木凳",
+      "贴身上衣"
+    ],
+    "partial": true
+  },
+  {
+    "id": "R53",
+    "title": "夜间露背回望",
+    "batch": "2026-11-14-additional",
+    "screen": 39,
+    "source_file": "39.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      937,
+      874,
+      1242,
+      1278
+    ],
+    "source_sha256": "72c113f04ae46c76f162edbd56b5c27bdf96708dbc3c60bc9434149ab60440ab",
+    "file": "assets/reference-covers/53-night-back.jpg",
+    "tags": [
+      "背侧回望",
+      "露背",
+      "挂脖"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R54",
+    "title": "高位短外套镜照",
+    "batch": "2026-11-14-additional",
+    "screen": 39,
+    "source_file": "39.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      1277,
+      958,
+      1583,
+      1275
+    ],
+    "source_sha256": "72c113f04ae46c76f162edbd56b5c27bdf96708dbc3c60bc9434149ab60440ab",
+    "file": "assets/reference-covers/54-high-mirror.jpg",
+    "tags": [
+      "镜前自拍",
+      "蕾丝",
+      "俯拍"
+    ],
+    "partial": true
+  },
+  {
+    "id": "R55",
+    "title": "室内直闪网纱",
+    "batch": "2026-11-14-additional",
+    "screen": 39,
+    "source_file": "39.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      1617,
+      979,
+      1917,
+      1275
+    ],
+    "source_sha256": "72c113f04ae46c76f162edbd56b5c27bdf96708dbc3c60bc9434149ab60440ab",
+    "file": "assets/reference-covers/55-mesh-flash.jpg",
+    "tags": [
+      "直闪夜拍",
+      "网纱",
+      "饰品"
+    ],
+    "partial": true
+  },
+  {
+    "id": "R56",
+    "title": "黑楼梯近拍",
+    "batch": "2026-11-14-additional",
+    "screen": 40,
+    "source_file": "40.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      255,
+      446,
+      561,
+      852
+    ],
+    "source_sha256": "f64f81499b4c870e054c4ecfa21aba1e847e4f985d1334ce5c21e8811c59e4a5",
+    "file": "assets/reference-covers/56-black-stairs.jpg",
+    "tags": [
+      "手势贴脸",
+      "楼梯",
+      "暗调"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R57",
+    "title": "吧台地面屈腿坐姿",
+    "batch": "2026-11-14-additional",
+    "screen": 40,
+    "source_file": "40.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      596,
+      425,
+      902,
+      830
+    ],
+    "source_sha256": "f64f81499b4c870e054c4ecfa21aba1e847e4f985d1334ce5c21e8811c59e4a5",
+    "file": "assets/reference-covers/57-bar-floor.jpg",
+    "tags": [
+      "坐蹲半身",
+      "吧台",
+      "石砖"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R58",
+    "title": "玻璃走廊全身",
+    "batch": "2026-11-14-additional",
+    "screen": 40,
+    "source_file": "40.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      937,
+      342,
+      1242,
+      748
+    ],
+    "source_sha256": "f64f81499b4c870e054c4ecfa21aba1e847e4f985d1334ce5c21e8811c59e4a5",
+    "file": "assets/reference-covers/58-glass-corridor.jpg",
+    "tags": [
+      "全身街拍",
+      "玻璃",
+      "走廊"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R59",
+    "title": "红帽手套主题近拍",
+    "batch": "2026-11-14-additional",
+    "screen": 40,
+    "source_file": "40.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      1277,
+      425,
+      1583,
+      831
+    ],
+    "source_sha256": "f64f81499b4c870e054c4ecfa21aba1e847e4f985d1334ce5c21e8811c59e4a5",
+    "file": "assets/reference-covers/59-red-gloves.jpg",
+    "tags": [
+      "道具贴脸",
+      "主题造型",
+      "红帽"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R60",
+    "title": "街头绑带上衣长裤",
+    "batch": "2026-11-14-additional",
+    "screen": 40,
+    "source_file": "40.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      1617,
+      467,
+      1917,
+      873
+    ],
+    "source_sha256": "f64f81499b4c870e054c4ecfa21aba1e847e4f985d1334ce5c21e8811c59e4a5",
+    "file": "assets/reference-covers/60-street-straps.jpg",
+    "tags": [
+      "全身街拍",
+      "绑带",
+      "长裤"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R61",
+    "title": "浪边粉色镂空泳装",
+    "batch": "2026-11-14-additional",
+    "screen": 40,
+    "source_file": "40.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      255,
+      950,
+      561,
+      1275
+    ],
+    "source_sha256": "f64f81499b4c870e054c4ecfa21aba1e847e4f985d1334ce5c21e8811c59e4a5",
+    "file": "assets/reference-covers/61-pink-beach.jpg",
+    "tags": [
+      "风景人像",
+      "海边",
+      "镂空"
+    ],
+    "partial": true
+  },
+  {
+    "id": "R62",
+    "title": "船上粉色泳装渔夫帽",
+    "batch": "2026-11-14-additional",
+    "screen": 40,
+    "source_file": "40.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      596,
+      930,
+      902,
+      1275
+    ],
+    "source_sha256": "f64f81499b4c870e054c4ecfa21aba1e847e4f985d1334ce5c21e8811c59e4a5",
+    "file": "assets/reference-covers/62-boat-pink.jpg",
+    "tags": [
+      "风景人像",
+      "船只",
+      "渔夫帽"
+    ],
+    "partial": true
+  },
+  {
+    "id": "R63",
+    "title": "蓝调运动背心侧脸",
+    "batch": "2026-11-14-additional",
+    "screen": 40,
+    "source_file": "40.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      937,
+      846,
+      1242,
+      1252
+    ],
+    "source_sha256": "f64f81499b4c870e054c4ecfa21aba1e847e4f985d1334ce5c21e8811c59e4a5",
+    "file": "assets/reference-covers/63-sport-blue.jpg",
+    "tags": [
+      "风景人像",
+      "运动",
+      "棒球帽"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R64",
+    "title": "饮料与手势近照",
+    "batch": "2026-11-14-additional",
+    "screen": 40,
+    "source_file": "40.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      1277,
+      930,
+      1583,
+      1275
+    ],
+    "source_sha256": "f64f81499b4c870e054c4ecfa21aba1e847e4f985d1334ce5c21e8811c59e4a5",
+    "file": "assets/reference-covers/64-drink-gesture.jpg",
+    "tags": [
+      "道具贴脸",
+      "饮料",
+      "麻花辫"
+    ],
+    "partial": true
+  },
+  {
+    "id": "R65",
+    "title": "紫色局部光近脸",
+    "batch": "2026-11-14-additional",
+    "screen": 40,
+    "source_file": "40.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      1617,
+      972,
+      1917,
+      1275
+    ],
+    "source_sha256": "f64f81499b4c870e054c4ecfa21aba1e847e4f985d1334ce5c21e8811c59e4a5",
+    "file": "assets/reference-covers/65-purple-close.jpg",
+    "tags": [
+      "怼脸自拍",
+      "局部彩光",
+      "耳饰"
+    ],
+    "partial": true
+  },
+  {
+    "id": "R66",
+    "title": "灰毛领高位自拍",
+    "batch": "2026-11-14-additional",
+    "screen": 41,
+    "source_file": "41.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      255,
+      449,
+      561,
+      854
+    ],
+    "source_sha256": "df45cd39dc5b81b813534592bbd5b0b5a7fe1b100d4baebda6611f6ac6a08517",
+    "file": "assets/reference-covers/66-fur-overhead.jpg",
+    "tags": [
+      "高位俯拍抬眼",
+      "毛领",
+      "街墙"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R67",
+    "title": "短发皮衣天台",
+    "batch": "2026-11-14-additional",
+    "screen": 41,
+    "source_file": "41.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      596,
+      428,
+      902,
+      807
+    ],
+    "source_sha256": "df45cd39dc5b81b813534592bbd5b0b5a7fe1b100d4baebda6611f6ac6a08517",
+    "file": "assets/reference-covers/67-rooftop-short-hair.jpg",
+    "tags": [
+      "背侧回望",
+      "皮衣",
+      "天台"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R68",
+    "title": "窗边白衣蹲姿",
+    "batch": "2026-11-14-additional",
+    "screen": 41,
+    "source_file": "41.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      937,
+      344,
+      1242,
+      750
+    ],
+    "source_sha256": "df45cd39dc5b81b813534592bbd5b0b5a7fe1b100d4baebda6611f6ac6a08517",
+    "file": "assets/reference-covers/68-window-crouch.jpg",
+    "tags": [
+      "坐蹲半身",
+      "窗框",
+      "白长袖"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R69",
+    "title": "粉帽粉包夜间直闪",
+    "batch": "2026-11-14-additional",
+    "screen": 41,
+    "source_file": "41.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      1277,
+      428,
+      1583,
+      833
+    ],
+    "source_sha256": "df45cd39dc5b81b813534592bbd5b0b5a7fe1b100d4baebda6611f6ac6a08517",
+    "file": "assets/reference-covers/69-pink-cap-flash.jpg",
+    "tags": [
+      "直闪夜拍",
+      "Y2K",
+      "粉帽"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R70",
+    "title": "海边黑短上衣",
+    "batch": "2026-11-14-additional",
+    "screen": 41,
+    "source_file": "41.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      1617,
+      469,
+      1917,
+      874
+    ],
+    "source_sha256": "df45cd39dc5b81b813534592bbd5b0b5a7fe1b100d4baebda6611f6ac6a08517",
+    "file": "assets/reference-covers/70-black-beach.jpg",
+    "tags": [
+      "风景人像",
+      "海边",
+      "短上衣"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R71",
+    "title": "水边遮阳伞白上衣",
+    "batch": "2026-11-14-additional",
+    "screen": 41,
+    "source_file": "41.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      255,
+      952,
+      561,
+      1275
+    ],
+    "source_sha256": "df45cd39dc5b81b813534592bbd5b0b5a7fe1b100d4baebda6611f6ac6a08517",
+    "file": "assets/reference-covers/71-waterside-white.jpg",
+    "tags": [
+      "风景人像",
+      "水面",
+      "遮阳伞"
+    ],
+    "partial": true
+  },
+  {
+    "id": "R72",
+    "title": "暗室弧形顶坐姿",
+    "batch": "2026-11-14-additional",
+    "screen": 41,
+    "source_file": "41.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      596,
+      907,
+      902,
+      1275
+    ],
+    "source_sha256": "df45cd39dc5b81b813534592bbd5b0b5a7fe1b100d4baebda6611f6ac6a08517",
+    "file": "assets/reference-covers/72-arched-room.jpg",
+    "tags": [
+      "居家侧倚",
+      "暖灯",
+      "暗室"
+    ],
+    "partial": true
+  },
+  {
+    "id": "R73",
+    "title": "躺卧前置近拍",
+    "batch": "2026-11-14-additional",
+    "screen": 41,
+    "source_file": "41.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      937,
+      848,
+      1242,
+      1254
+    ],
+    "source_sha256": "df45cd39dc5b81b813534592bbd5b0b5a7fe1b100d4baebda6611f6ac6a08517",
+    "file": "assets/reference-covers/73-reclined-selfie.jpg",
+    "tags": [
+      "躺拍俯视",
+      "前置",
+      "斜构图"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R74",
+    "title": "床边蓝衣长裤镜照",
+    "batch": "2026-11-14-additional",
+    "screen": 41,
+    "source_file": "41.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      1277,
+      932,
+      1583,
+      1275
+    ],
+    "source_sha256": "df45cd39dc5b81b813534592bbd5b0b5a7fe1b100d4baebda6611f6ac6a08517",
+    "file": "assets/reference-covers/74-bed-mirror.jpg",
+    "tags": [
+      "镜前自拍",
+      "长裤",
+      "居家"
+    ],
+    "partial": true
+  },
+  {
+    "id": "R75",
+    "title": "红色长外套灰墙",
+    "batch": "2026-11-14-additional",
+    "screen": 41,
+    "source_file": "41.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      1617,
+      973,
+      1917,
+      1275
+    ],
+    "source_sha256": "df45cd39dc5b81b813534592bbd5b0b5a7fe1b100d4baebda6611f6ac6a08517",
+    "file": "assets/reference-covers/75-red-coat.jpg",
+    "tags": [
+      "全身街拍",
+      "长外套",
+      "灰墙"
+    ],
+    "partial": true
+  },
+  {
+    "id": "R76",
+    "title": "沙发侧身露背",
+    "batch": "2026-11-14-additional",
+    "screen": 42,
+    "source_file": "42.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      255,
+      499,
+      561,
+      904
+    ],
+    "source_sha256": "68e5c1765cb7f1e83c81550755e7645cd2f01fe73d5b24db11188a3b673328b4",
+    "file": "assets/reference-covers/76-sofa-back.jpg",
+    "tags": [
+      "背侧回望",
+      "露背",
+      "沙发"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R77",
+    "title": "榻榻米房间扶头坐姿",
+    "batch": "2026-11-14-additional",
+    "screen": 42,
+    "source_file": "42.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      596,
+      452,
+      902,
+      857
+    ],
+    "source_sha256": "68e5c1765cb7f1e83c81550755e7645cd2f01fe73d5b24db11188a3b673328b4",
+    "file": "assets/reference-covers/77-tatami-sofa.jpg",
+    "tags": [
+      "居家侧倚",
+      "格纹",
+      "榻榻米"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R78",
+    "title": "罐墙前粉色直闪",
+    "batch": "2026-11-14-additional",
+    "screen": 42,
+    "source_file": "42.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      937,
+      362,
+      1242,
+      768
+    ],
+    "source_sha256": "68e5c1765cb7f1e83c81550755e7645cd2f01fe73d5b24db11188a3b673328b4",
+    "file": "assets/reference-covers/78-can-wall.jpg",
+    "tags": [
+      "直闪夜拍",
+      "Y2K",
+      "罐墙"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R79",
+    "title": "海边车门旁粉背心",
+    "batch": "2026-11-14-additional",
+    "screen": 42,
+    "source_file": "42.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      1277,
+      477,
+      1583,
+      883
+    ],
+    "source_sha256": "68e5c1765cb7f1e83c81550755e7645cd2f01fe73d5b24db11188a3b673328b4",
+    "file": "assets/reference-covers/79-car-door.jpg",
+    "tags": [
+      "风景人像",
+      "车门",
+      "海边"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R80",
+    "title": "素墙地毯屈腿",
+    "batch": "2026-11-14-additional",
+    "screen": 42,
+    "source_file": "42.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      1617,
+      518,
+      1917,
+      924
+    ],
+    "source_sha256": "68e5c1765cb7f1e83c81550755e7645cd2f01fe73d5b24db11188a3b673328b4",
+    "file": "assets/reference-covers/80-plain-wall.jpg",
+    "tags": [
+      "坐蹲半身",
+      "地毯",
+      "简洁穿搭"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R81",
+    "title": "蓝桌椅高位坐姿",
+    "batch": "2026-11-14-additional",
+    "screen": 42,
+    "source_file": "42.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      937,
+      867,
+      1242,
+      1273
+    ],
+    "source_sha256": "68e5c1765cb7f1e83c81550755e7645cd2f01fe73d5b24db11188a3b673328b4",
+    "file": "assets/reference-covers/81-blue-chairs.jpg",
+    "tags": [
+      "高位俯拍抬眼",
+      "运动外套",
+      "桌椅"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R82",
+    "title": "店前举杯迷彩外套",
+    "batch": "2026-11-14-additional",
+    "screen": 43,
+    "source_file": "43.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      255,
+      343,
+      561,
+      748
+    ],
+    "source_sha256": "ae91c8408bf0a7670aebb493c5d32f7b167330bcf774e4b530d5cfecb7f3a1ff",
+    "file": "assets/reference-covers/82-shop-drink.jpg",
+    "tags": [
+      "道具贴脸",
+      "迷彩",
+      "店铺招牌"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R83",
+    "title": "田野窗台侧坐",
+    "batch": "2026-11-14-additional",
+    "screen": 43,
+    "source_file": "43.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      596,
+      338,
+      902,
+      701
+    ],
+    "source_sha256": "ae91c8408bf0a7670aebb493c5d32f7b167330bcf774e4b530d5cfecb7f3a1ff",
+    "file": "assets/reference-covers/83-field-window.jpg",
+    "tags": [
+      "居家侧倚",
+      "窗台",
+      "田野"
+    ],
+    "partial": true
+  },
+  {
+    "id": "R84",
+    "title": "门边猫耳帽针织坐姿",
+    "batch": "2026-11-14-additional",
+    "screen": 43,
+    "source_file": "43.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      1277,
+      338,
+      1583,
+      727
+    ],
+    "source_sha256": "ae91c8408bf0a7670aebb493c5d32f7b167330bcf774e4b530d5cfecb7f3a1ff",
+    "file": "assets/reference-covers/84-door-cat-hat.jpg",
+    "tags": [
+      "坐蹲半身",
+      "针织",
+      "猫耳帽"
+    ],
+    "partial": true
+  },
+  {
+    "id": "R85",
+    "title": "灰墙黑短T长裤",
+    "batch": "2026-11-14-additional",
+    "screen": 43,
+    "source_file": "43.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      1617,
+      363,
+      1917,
+      769
+    ],
+    "source_sha256": "ae91c8408bf0a7670aebb493c5d32f7b167330bcf774e4b530d5cfecb7f3a1ff",
+    "file": "assets/reference-covers/85-gray-wall-trousers.jpg",
+    "tags": [
+      "背侧回望",
+      "长裤",
+      "腰线"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R86",
+    "title": "沙发举杯侧坐",
+    "batch": "2026-11-14-additional",
+    "screen": 43,
+    "source_file": "43.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      255,
+      847,
+      561,
+      1253
+    ],
+    "source_sha256": "ae91c8408bf0a7670aebb493c5d32f7b167330bcf774e4b530d5cfecb7f3a1ff",
+    "file": "assets/reference-covers/86-sofa-glass.jpg",
+    "tags": [
+      "居家侧倚",
+      "酒杯",
+      "薄开衫"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R87",
+    "title": "酒红开衫店门近拍",
+    "batch": "2026-11-14-additional",
+    "screen": 43,
+    "source_file": "43.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      596,
+      800,
+      902,
+      1206
+    ],
+    "source_sha256": "ae91c8408bf0a7670aebb493c5d32f7b167330bcf774e4b530d5cfecb7f3a1ff",
+    "file": "assets/reference-covers/87-burgundy-cardigan.jpg",
+    "tags": [
+      "手势贴脸",
+      "针织",
+      "店门"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R88",
+    "title": "红砖街头侧身",
+    "batch": "2026-11-14-additional",
+    "screen": 43,
+    "source_file": "43.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      937,
+      712,
+      1242,
+      1117
+    ],
+    "source_sha256": "ae91c8408bf0a7670aebb493c5d32f7b167330bcf774e4b530d5cfecb7f3a1ff",
+    "file": "assets/reference-covers/88-brick-side.jpg",
+    "tags": [
+      "背侧回望",
+      "红砖",
+      "长卷发"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R89",
+    "title": "棒球帽耳机近自拍",
+    "batch": "2026-11-14-additional",
+    "screen": 43,
+    "source_file": "43.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      1277,
+      826,
+      1583,
+      1232
+    ],
+    "source_sha256": "ae91c8408bf0a7670aebb493c5d32f7b167330bcf774e4b530d5cfecb7f3a1ff",
+    "file": "assets/reference-covers/89-cap-headphones.jpg",
+    "tags": [
+      "怼脸自拍",
+      "棒球帽",
+      "耳机"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R90",
+    "title": "粉吊带牛仔夜闪",
+    "batch": "2026-11-14-additional",
+    "screen": 43,
+    "source_file": "43.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      1617,
+      889,
+      1917,
+      1275
+    ],
+    "source_sha256": "ae91c8408bf0a7670aebb493c5d32f7b167330bcf774e4b530d5cfecb7f3a1ff",
+    "file": "assets/reference-covers/90-pink-tank-night.jpg",
+    "tags": [
+      "直闪夜拍",
+      "吊带",
+      "牛仔"
+    ],
+    "partial": true
+  },
+  {
+    "id": "R91",
+    "title": "横置水边裙装",
+    "batch": "2026-11-14-additional",
+    "screen": 44,
+    "source_file": "44.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      255,
+      496,
+      561,
+      902
+    ],
+    "source_sha256": "8845ef5044bc44a837978551a2360a5cb33e2af42db2a749d9d5e859fc62a988",
+    "file": "assets/reference-covers/91-rotated-water.jpg",
+    "tags": [
+      "风景人像",
+      "横置",
+      "水面"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R92",
+    "title": "毛绒外套吊带桌边",
+    "batch": "2026-11-14-additional",
+    "screen": 44,
+    "source_file": "44.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      596,
+      448,
+      902,
+      854
+    ],
+    "source_sha256": "8845ef5044bc44a837978551a2360a5cb33e2af42db2a749d9d5e859fc62a988",
+    "file": "assets/reference-covers/92-fur-table.jpg",
+    "tags": [
+      "隔桌对拍",
+      "毛绒",
+      "吊带"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R93",
+    "title": "车内多图拼接",
+    "batch": "2026-11-14-additional",
+    "screen": 44,
+    "source_file": "44.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      937,
+      360,
+      1242,
+      766
+    ],
+    "source_sha256": "8845ef5044bc44a837978551a2360a5cb33e2af42db2a749d9d5e859fc62a988",
+    "file": "assets/reference-covers/93-car-collage.jpg",
+    "tags": [
+      "居家侧倚",
+      "车内",
+      "拼接"
+    ],
+    "partial": true
+  },
+  {
+    "id": "R94",
+    "title": "猫与人物贴脸",
+    "batch": "2026-11-14-additional",
+    "screen": 44,
+    "source_file": "44.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      1277,
+      476,
+      1583,
+      880
+    ],
+    "source_sha256": "8845ef5044bc44a837978551a2360a5cb33e2af42db2a749d9d5e859fc62a988",
+    "file": "assets/reference-covers/94-cat-close.jpg",
+    "tags": [
+      "宠物同框",
+      "猫",
+      "怼脸自拍"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R95",
+    "title": "玩偶围绕躺拍",
+    "batch": "2026-11-14-additional",
+    "screen": 44,
+    "source_file": "44.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      1617,
+      537,
+      1917,
+      942
+    ],
+    "source_sha256": "8845ef5044bc44a837978551a2360a5cb33e2af42db2a749d9d5e859fc62a988",
+    "file": "assets/reference-covers/95-plush-bed.jpg",
+    "tags": [
+      "躺拍俯视",
+      "玩偶",
+      "彩色针织"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R96",
+    "title": "窗边毛绒桌拍",
+    "batch": "2026-11-14-additional",
+    "screen": 45,
+    "source_file": "45.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      255,
+      338,
+      561,
+      727
+    ],
+    "source_sha256": "0bf4a80d820e918dbeecddf36ca07fb37d2eaef5c288f31f811585530b64ad93",
+    "file": "assets/reference-covers/96-fur-window-table.jpg",
+    "tags": [
+      "隔桌对拍",
+      "窗光",
+      "毛绒"
+    ],
+    "partial": true
+  },
+  {
+    "id": "R97",
+    "title": "花苞盘发露肩近照",
+    "batch": "2026-11-14-additional",
+    "screen": 45,
+    "source_file": "45.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      596,
+      338,
+      902,
+      686
+    ],
+    "source_sha256": "0bf4a80d820e918dbeecddf36ca07fb37d2eaef5c288f31f811585530b64ad93",
+    "file": "assets/reference-covers/97-bun-close.jpg",
+    "tags": [
+      "怼脸自拍",
+      "盘发",
+      "露肩"
+    ],
+    "partial": true
+  },
+  {
+    "id": "R98",
+    "title": "蓝围巾主题公园",
+    "batch": "2026-11-14-additional",
+    "screen": 44,
+    "source_file": "44.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      937,
+      897,
+      1242,
+      1272
+    ],
+    "source_sha256": "8845ef5044bc44a837978551a2360a5cb33e2af42db2a749d9d5e859fc62a988",
+    "file": "assets/reference-covers/98-blue-scarf.jpg",
+    "tags": [
+      "全身街拍",
+      "围巾",
+      "主题公园"
+    ],
+    "partial": true
+  },
+  {
+    "id": "R99",
+    "title": "耳饰围巾怼脸",
+    "batch": "2026-11-14-additional",
+    "screen": 45,
+    "source_file": "45.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      1277,
+      338,
+      1583,
+      713
+    ],
+    "source_sha256": "0bf4a80d820e918dbeecddf36ca07fb37d2eaef5c288f31f811585530b64ad93",
+    "file": "assets/reference-covers/99-earring-close.jpg",
+    "tags": [
+      "怼脸自拍",
+      "耳饰",
+      "围巾"
+    ],
+    "partial": true
+  },
+  {
+    "id": "R100",
+    "title": "手指框脸自拍",
+    "batch": "2026-11-14-additional",
+    "screen": 45,
+    "source_file": "45.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      1617,
+      405,
+      1917,
+      774
+    ],
+    "source_sha256": "0bf4a80d820e918dbeecddf36ca07fb37d2eaef5c288f31f811585530b64ad93",
+    "file": "assets/reference-covers/100-frame-face.jpg",
+    "tags": [
+      "手势贴脸",
+      "条纹",
+      "室内"
+    ],
+    "partial": true
+  },
+  {
+    "id": "R101",
+    "title": "暗光室内侧坐",
+    "batch": "2026-11-14-additional",
+    "screen": 45,
+    "source_file": "45.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      255,
+      826,
+      561,
+      1232
+    ],
+    "source_sha256": "0bf4a80d820e918dbeecddf36ca07fb37d2eaef5c288f31f811585530b64ad93",
+    "file": "assets/reference-covers/101-dim-seat.jpg",
+    "tags": [
+      "暗调光影",
+      "室内",
+      "手势"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R102",
+    "title": "毛领高位抬眼",
+    "batch": "2026-11-14-additional",
+    "screen": 45,
+    "source_file": "45.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      596,
+      785,
+      902,
+      1190
+    ],
+    "source_sha256": "0bf4a80d820e918dbeecddf36ca07fb37d2eaef5c288f31f811585530b64ad93",
+    "file": "assets/reference-covers/102-fur-high-angle.jpg",
+    "tags": [
+      "高位俯拍抬眼",
+      "毛领",
+      "弯腿"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R103",
+    "title": "木地板极高位抬眼",
+    "batch": "2026-11-14-additional",
+    "screen": 45,
+    "source_file": "45.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      937,
+      735,
+      1242,
+      1103
+    ],
+    "source_sha256": "0bf4a80d820e918dbeecddf36ca07fb37d2eaef5c288f31f811585530b64ad93",
+    "file": "assets/reference-covers/103-deck-overhead.jpg",
+    "tags": [
+      "高位俯拍抬眼",
+      "木地板"
+    ],
+    "partial": true
+  },
+  {
+    "id": "R104",
+    "title": "白门前蹲姿",
+    "batch": "2026-11-14-additional",
+    "screen": 45,
+    "source_file": "45.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      1277,
+      812,
+      1583,
+      1116
+    ],
+    "source_sha256": "0bf4a80d820e918dbeecddf36ca07fb37d2eaef5c288f31f811585530b64ad93",
+    "file": "assets/reference-covers/104-white-door-crouch.jpg",
+    "tags": [
+      "坐蹲半身",
+      "毛绒",
+      "门板"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R105",
+    "title": "咖啡杯贴嘴",
+    "batch": "2026-11-14-additional",
+    "screen": 45,
+    "source_file": "45.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      1617,
+      873,
+      1917,
+      1178
+    ],
+    "source_sha256": "0bf4a80d820e918dbeecddf36ca07fb37d2eaef5c288f31f811585530b64ad93",
+    "file": "assets/reference-covers/105-cup-close.jpg",
+    "tags": [
+      "道具贴脸",
+      "遮半脸",
+      "帽子"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R106",
+    "title": "瓷砖墙蕾丝桌拍",
+    "batch": "2026-11-14-additional",
+    "screen": 46,
+    "source_file": "46.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      255,
+      526,
+      561,
+      932
+    ],
+    "source_sha256": "1bfede9b0bec3d81580cfcad6ad4ca55053e61f3adfe9e8010ee433e64ef4849",
+    "file": "assets/reference-covers/106-tile-table.jpg",
+    "tags": [
+      "隔桌对拍",
+      "蕾丝",
+      "瓷砖"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R107",
+    "title": "居酒屋桌边看手机",
+    "batch": "2026-11-14-additional",
+    "screen": 46,
+    "source_file": "46.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      596,
+      464,
+      902,
+      869
+    ],
+    "source_sha256": "1bfede9b0bec3d81580cfcad6ad4ca55053e61f3adfe9e8010ee433e64ef4849",
+    "file": "assets/reference-covers/107-izakaya-table.jpg",
+    "tags": [
+      "隔桌对拍",
+      "菜单",
+      "木墙"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R108",
+    "title": "黑刘海扶后脑自拍",
+    "batch": "2026-11-14-additional",
+    "screen": 46,
+    "source_file": "46.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      937,
+      377,
+      1242,
+      783
+    ],
+    "source_sha256": "1bfede9b0bec3d81580cfcad6ad4ca55053e61f3adfe9e8010ee433e64ef4849",
+    "file": "assets/reference-covers/108-fringe-selfie.jpg",
+    "tags": [
+      "怼脸自拍",
+      "扶头",
+      "普通墙"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R109",
+    "title": "玩偶抱怀贴脸",
+    "batch": "2026-11-14-additional",
+    "screen": 46,
+    "source_file": "46.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      1277,
+      390,
+      1583,
+      693
+    ],
+    "source_sha256": "1bfede9b0bec3d81580cfcad6ad4ca55053e61f3adfe9e8010ee433e64ef4849",
+    "file": "assets/reference-covers/109-plush-face.jpg",
+    "tags": [
+      "道具贴脸",
+      "玩偶",
+      "砖墙"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R110",
+    "title": "白窗逆光近自拍",
+    "batch": "2026-11-14-additional",
+    "screen": 46,
+    "source_file": "46.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      1617,
+      451,
+      1917,
+      857
+    ],
+    "source_sha256": "1bfede9b0bec3d81580cfcad6ad4ca55053e61f3adfe9e8010ee433e64ef4849",
+    "file": "assets/reference-covers/110-bright-selfie.jpg",
+    "tags": [
+      "手势贴脸",
+      "逆光",
+      "毛衣"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R111",
+    "title": "桌椅俯拍局部自拍",
+    "batch": "2026-11-14-additional",
+    "screen": 46,
+    "source_file": "46.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      255,
+      1030,
+      561,
+      1275
+    ],
+    "source_sha256": "1bfede9b0bec3d81580cfcad6ad4ca55053e61f3adfe9e8010ee433e64ef4849",
+    "file": "assets/reference-covers/111-table-overhead.jpg",
+    "tags": [
+      "高位俯拍抬眼",
+      "桌椅",
+      "咖啡"
+    ],
+    "partial": true
+  },
+  {
+    "id": "R112",
+    "title": "海港逆光侧脸",
+    "batch": "2026-11-14-additional",
+    "screen": 46,
+    "source_file": "46.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      596,
+      968,
+      902,
+      1275
+    ],
+    "source_sha256": "1bfede9b0bec3d81580cfcad6ad4ca55053e61f3adfe9e8010ee433e64ef4849",
+    "file": "assets/reference-covers/112-harbor-profile.jpg",
+    "tags": [
+      "风景人像",
+      "海港",
+      "侧脸"
+    ],
+    "partial": true
+  },
+  {
+    "id": "R113",
+    "title": "暗室合掌坐姿",
+    "batch": "2026-11-14-additional",
+    "screen": 46,
+    "source_file": "46.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      937,
+      882,
+      1242,
+      1185
+    ],
+    "source_sha256": "1bfede9b0bec3d81580cfcad6ad4ca55053e61f3adfe9e8010ee433e64ef4849",
+    "file": "assets/reference-covers/113-dim-prayer.jpg",
+    "tags": [
+      "坐蹲半身",
+      "暗室",
+      "合掌"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R114",
+    "title": "粉帽俯拍笑脸",
+    "batch": "2026-11-14-additional",
+    "screen": 46,
+    "source_file": "46.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      1277,
+      792,
+      1583,
+      1198
+    ],
+    "source_sha256": "1bfede9b0bec3d81580cfcad6ad4ca55053e61f3adfe9e8010ee433e64ef4849",
+    "file": "assets/reference-covers/114-pink-hat-high.jpg",
+    "tags": [
+      "高位俯拍抬眼",
+      "粉帽",
+      "笑脸"
+    ],
+    "partial": false
+  },
+  {
+    "id": "R115",
+    "title": "暖墙低位仰拍",
+    "batch": "2026-11-14-additional",
+    "screen": 46,
+    "source_file": "46.webp",
+    "source_size": [
+      2000,
+      1299
+    ],
+    "crop": [
+      1617,
+      955,
+      1917,
+      1275
+    ],
+    "source_sha256": "1bfede9b0bec3d81580cfcad6ad4ca55053e61f3adfe9e8010ee433e64ef4849",
+    "file": "assets/reference-covers/115-low-angle.jpg",
+    "tags": [
+      "低位仰拍",
+      "暖墙",
+      "长发"
+    ],
+    "partial": true
   }
 ]
