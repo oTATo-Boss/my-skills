@@ -34,9 +34,11 @@ def main():
             if ref not in ids:
                 failures.append(f"Unknown cover {ref} in type {name}")
     for season in plan_set.SEASON.values():
-        for key in ("head", "outfit", "props", "scenes"):
+        for key in ("head", "props", "scenes"):
             if len(season[key]) < 4:
                 failures.append(f"Season pool too small: {key}")
+    if len(plan_set.TOPS) < 12 or len(plan_set.BOTTOMS) < 8 or len(plan_set.DIRECTIONS) < 8:
+        failures.append("Look component pools too small")
     if failures:
         print("\n".join(failures))
         sys.exit(1)

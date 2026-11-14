@@ -1,6 +1,7 @@
 """Draw a varied shot plan for one xhs-girl photo set.
 
 Run from the skill root:
+  python3 scripts/plan_set.py --look-only            # 只抽造型（出造型板时）
   python3 scripts/plan_set.py --count 4
   python3 scripts/plan_set.py --count 3 --mode mixed
   python3 scripts/plan_set.py --count 4 --scene "便利店门口" --type 怼脸自拍
@@ -49,98 +50,69 @@ NAILS = ["裸粉猫眼长甲", "黑色短甲", "奶白钻饰长甲", "酒红短�
 SEASON = {
     "winter": {
         "head": ["猫耳毛线帽", "毛绒护耳雷锋帽", "毛绒耳罩", "粗针毛线帽", "贝雷帽", "一排彩色小发夹", "毛绒发箍", "无头饰"],
-        "outfit": [
-            "敞开的白色短款羽绒服配黑色小吊带和灰色百褶短裙",
-            "毛领短款皮衣配白色蕾丝打底和格纹迷你裙、黑色过膝袜",
-            "奶白长毛绒外套配牛仔热裤和灰色堆堆袜",
-            "蓬松马海毛开衫半敞配粉色抹胸和低腰牛仔裤",
-            "黑色露肩修身上衣配腰链和灰色低腰短裙",
-            "戴上兜帽的毛领连帽外套配短裙和长筒腿袜",
-            "仿皮草短外套配黑色吊带和低腰直筒牛仔裤",
-            "粉色绒面短外套配白色泡泡袖衬衫和蓬蓬裙",
-            "红白条纹厚毛衣配牛仔短裙和乐福鞋",
-            "黑色长大衣配格纹围巾和短裙、乐福鞋",
-            "机车皮夹克配露脐紧身打底和工装短裤",
-            "灰色宽松连帽卫衣配白色短裙和腿袜",
-        ],
         "props": ["毛绒玩偶挂件", "热可可纸杯", "烤红薯", "糖葫芦", "草莓蛋糕", "暖手宝", "拍立得", "长毛绒围巾一角", "可颂面包", "奶茶吸管"],
         "scenes": ["便利店门口", "车内副驾", "卧室飘窗", "冬日海边", "公园枯草地", "地铁车厢", "抓娃娃机前", "书店书架间", "面包店门口", "老街石板路", "游乐园旋转木马旁", "天台黄昏"],
     },
     "spring": {
         "head": ["蝴蝶结发带", "抓夹", "一排小发夹", "棒球帽", "渔夫帽", "无头饰"],
-        "outfit": [
-            "短款针织开衫配吊带和碎花迷你裙",
-            "白色泡泡袖上衣配牛仔短裙",
-            "浅粉色毛衣马甲配衬衫和百褶裙",
-            "短款牛仔外套配露脐小背心和低腰长裤",
-            "法式方领连衣裙配玛丽珍鞋",
-            "运动外套配网球短裙和白袜",
-        ],
         "props": ["花束", "冰美式", "草莓", "拍立得", "风筝", "小狗", "冰淇淋"],
         "scenes": ["樱花树下", "花店门口", "校园操场", "公园草地", "河边台阶", "老洋房街角", "咖啡店窗边", "车内副驾"],
     },
     "summer": {
         "head": ["发带", "抓夹", "草编帽", "棒球帽", "耳边别一朵花", "无头饰"],
-        "outfit": [
-            "细吊带背心配低腰热裤",
-            "露背针织吊带配牛仔短裙",
-            "碎花抹胸配亚麻短裤",
-            "白色小背心配超短百褶裙",
-            "比基尼外搭透明防晒衬衫",
-            "印花度假吊带裙",
-        ],
         "props": ["冰棍", "椰子", "西瓜", "冰美式", "水枪", "贝壳"],
         "scenes": ["海边沙滩", "泳池边", "便利店冰柜前", "夜市小摊", "海岛小路", "车内副驾", "天台黄昏"],
     },
     "autumn": {
         "head": ["贝雷帽", "棒球帽", "毛线帽", "抓夹", "一排小发夹", "无头饰"],
-        "outfit": [
-            "短款皮衣配白色打底和格纹短裙",
-            "灰色针织开衫配蕾丝吊带和低腰牛仔裤",
-            "棕色麂皮外套配露脐上衣和短裤",
-            "条纹毛衣配百褶短裙和长袜",
-            "风衣配黑色紧身上衣和迷你裙",
-            "工装马甲配白T和短裙",
-        ],
         "props": ["热拿铁", "栗子", "落叶", "面包", "拍立得", "毛绒挂件"],
         "scenes": ["银杏街道", "秋林小路", "面包店门口", "书店", "老街石板路", "车内副驾", "天台黄昏", "公园长椅"],
     },
 }
 
-# outfit 模式专属穿搭：有设计感主单品，至少两处露肤，主打身材
-OUTFIT_LOOKS = {
-    "winter": [
-        "黑色交叉绑带露背短上衣配低腰牛仔超短裙和灰色腿袜、银色腰链、大圈耳环",
-        "白色斜肩毛绒短外套敞开配黑色蕾丝抹胸和低腰热裤、粉色堆堆袜、玛丽珍",
-        "粉色露肩短款罗纹针织上衣配低腰格纹迷你裙和黑色过膝袜、银色 choker",
-        "黑色一字领短外套（单扣只扣腰部）配黑色吊带和包臀迷你裙、黑色腿袜",
-        "米白毛绒短开衫全敞配黑色交叉细吊带和低腰直筒牛仔裤、腰链，锁骨全露",
-        "仿皮草短外套（开着穿）配黑色露腰绑带小背心和超短牛仔热裤、堆堆袜",
-        "深红露肩罗纹连衣裙，裙摆到大腿中段，腰部有腰链收束",
-        "黑色露脐交叉绑带短上衣配灰色低腰百褶迷你裙和黑色腿袜、银饰多件叠戴",
-    ],
-    "spring": [
-        "白色细吊带蕾丝短裙，腰部缎带系蝴蝶结，露腰露腿",
-        "粉色斜肩短款针织配低腰白色超短迷你裙和白色堆堆袜、发夹",
-        "浅蓝色斜肩牛仔外套（短款，露腰）配低腰格纹热裤和白色长袜",
-        "白色露背绑带短上衣配碎花超短裙和玛丽珍，露出整片后背",
-        "奶白色单肩短款针织配低腰黑色迷你裙和蝴蝶结腿袜、银色细项链",
-    ],
-    "summer": [
-        "黑色细吊带镂空蕾丝短裙，半透明裙摆到大腿上段",
-        "白色露背交叉绑带比基尼上衣配低腰牛仔超短裤和金属腰链",
-        "橙色单肩短款罗纹配低腰热裤和大圈耳环、草编帽",
-        "粉色薄肩带露背短连衣裙，低背到腰，裙摆飘逸到大腿中段",
-        "黑色细肩带露腰背心配超短白色百褶裙和白色运动袜、厚底鞋",
-    ],
-    "autumn": [
-        "黑色露肩一字领短毛衣配低腰迷你裙和黑色腿袜、银色 choker",
-        "棕色麂皮短外套（开着穿）配黑色露脐打底和低腰迷你裙",
-        "白色短款露肩针织配低腰格纹超短裙和黑色过膝袜、小方包",
-        "黑色紧身露脐短上衣配低腰皮质包臀裙和堆堆袜、金属腰链",
-        "灰色细肩带短连衣裙，裙摆到大腿中段，外搭敞开的针织开衫",
-    ],
+
+# 造型按部件组合抽取，不存整套搭配：整套示例会被模型照抄，组合才有变化。
+DIRECTIONS = {
+    "美式辣妹": "黑、牛仔蓝、银",
+    "韩系甜辣": "粉、白、黑",
+    "Y2K 千禧": "亮银、浅蓝、粉紫",
+    "芭蕾风": "奶白、浅粉、裸色",
+    "学院辣妹": "藏青、红格纹、白",
+    "机车酷女": "黑、深灰、银",
+    "运动辣妹": "白、亮蓝或草绿、灰",
+    "法式慵懒": "奶油白、酒红、棕",
+    "地雷甜酷": "黑、粉、白蕾丝",
+    "港风复古": "酒红、墨绿、黑",
+    "奶油温柔": "奶油黄、燕麦、白",
+    "美拉德": "焦糖、咖啡、奶白",
 }
+TOPS = [  # 主单品，每件都自带露肤点
+    "一字肩紧身短上衣（露肩露腰）", "斜肩单袖针织短上衣（露一侧肩）", "交叉绑带露背短上衣",
+    "蕾丝边小抹胸", "胸前系蝴蝶结的细吊带短背心", "镂空罗纹露脐长袖", "只扣两颗扣的 V 领短开衫（当上衣穿）",
+    "下摆系在胸下的绑结衬衫（露腰）", "方领泡泡袖短上衣（露锁骨和腰）", "挂脖露背针织背心",
+    "半拉链运动短上衣（拉到锁骨下）", "缎面细吊带背心", "侧边抽绳露腰长袖", "毛绒边小抹胸",
+    "领口带金属环的削肩背心", "网纱长袖叠穿小吊带",
+]
+BOTTOMS = [  # 下装全部是短款，保证露腿
+    "低腰牛仔超短裙", "低腰皮质包臀短裙", "百褶迷你裙", "白色蓬蓬蛋糕短裙", "不对称叠片短裙",
+    "牛仔热裤", "低腰工装短裤", "针织包臀短裙", "缎面斜裁迷你裙", "网球短裙", "蕾丝边南瓜短裤",
+]
+OUTERS = {
+    "winter": ["浅灰长毛绒短外套", "奶白短款羽绒服", "毛领短皮衣", "焦糖色毛毛短外套", "格纹毛呢短外套", "粗针短开衫", "仿皮草短外套"],
+    "spring": ["短款牛仔外套", "机车皮夹克", "短款针织开衫", "短西装", "运动夹克", "无外套"],
+    "summer": ["透明防晒衬衫", "无外套", "无外套", "无外套"],
+    "autumn": ["机车皮夹克", "麂皮短外套", "短款针织开衫", "短风衣", "格纹短外套", "无外套"],
+}
+WEAR = ["敞开穿", "滑到手肘", "披在肩上", "一侧滑落露肩"]
+LEGS = {
+    "winter": ["灰色堆堆袜", "黑色过膝袜", "蝴蝶结腿袜", "白色长筒袜", "黑色薄丝袜", "光腿"],
+    "spring": ["白色短袜", "蕾丝短袜", "光腿", "过膝袜"],
+    "summer": ["光腿", "白色短袜"],
+    "autumn": ["黑色过膝袜", "灰色堆堆袜", "黑色薄丝袜", "光腿", "白色长筒袜"],
+}
+SHOES = ["厚底玛丽珍", "乐福鞋", "复古德训鞋", "厚底短靴", "芭蕾平底鞋", "毛绒短靴", "尖头小猫跟", "厚底板鞋"]
+ACCESSORIES = ["大圈银耳环", "珍珠耳钉", "choker", "细项链叠戴", "金属腰链", "铆钉皮腰带", "星星发夹",
+               "蝴蝶结发夹", "毛绒包挂", "小方包斜挎", "腋下包", "细框眼镜", "手机挂链", "多枚戒指叠戴"]
 
 EXPRESSIONS = ["单眼wink", "嘟嘴", "抿嘴笑、眼睛弯起来", "冷脸直视、嘴唇微张", "鼓腮", "歪头睁大眼装无辜",
                "闭眼仰脸", "轻咬下唇", "笑出一点牙", "微微吐舌", "斜眼看镜头", "回眸", "低头垂眼", "惊讶O型嘴", "眯眼笑"]
@@ -212,16 +184,22 @@ def draw_types(rng, count, forced, focus):
     return names
 
 
-def draw_look(rng, season, focus="face"):
+def draw_look(rng, season, direction=None):
     vibe = rng.choice(list(VIBES))
+    d = direction if direction in DIRECTIONS else rng.choice(list(DIRECTIONS))
     s = SEASON[season]
-    outfit = rng.choice(OUTFIT_LOOKS[season]) if focus == "outfit" else rng.choice(s["outfit"])
+    outer = rng.choice(OUTERS[season])
+    outer = "无外套" if outer == "无外套" else f"{outer}，{rng.choice(WEAR)}"
     return {
-        "气质": vibe,
-        "妆容": VIBES[vibe],
-        "发型": f"{rng.choice(HAIR_COLOR)}、{rng.choice(HAIR_CUT)}、{rng.choice(HAIR_STYLE)}",
+        "风格方向": f"{d}（配色：{DIRECTIONS[d]}，按配色给下面每件定颜色）",
+        "主单品": rng.choice(TOPS),
+        "下装": rng.choice(BOTTOMS),
+        "外层": outer,
+        "腿和鞋": f"{rng.choice(LEGS[season])}，{rng.choice(SHOES)}",
+        "饰品": "、".join(rng.sample(ACCESSORIES, 3)),
         "头饰": rng.choice(s["head"]),
-        "穿搭": outfit,
+        "妆容": f"{vibe}：{VIBES[vibe]}",
+        "发型": f"{rng.choice(HAIR_COLOR)}、{rng.choice(HAIR_CUT)}、{rng.choice(HAIR_STYLE)}",
         "美甲": rng.choice(NAILS),
     }
 
@@ -235,13 +213,21 @@ def main():
     ap.add_argument("--month", type=int, default=datetime.date.today().month)
     ap.add_argument("--type", action="append", default=[], help="force a picture type, repeatable")
     ap.add_argument("--scene", help="user-given location for the whole set")
+    ap.add_argument("--direction", help="user-given style direction, one of DIRECTIONS")
+    ap.add_argument("--look-only", action="store_true", help="only draw a look, for a styling board")
     ap.add_argument("--seed", type=int)
     a = ap.parse_args()
     rng = random.Random(a.seed)
     season = season_for(a.month)
     s = SEASON[season]
     types = draw_types(rng, a.count, a.type, a.focus)
-    look = draw_look(rng, season, a.focus)
+    look = draw_look(rng, season, a.direction)
+    if a.look_only:
+        print(f"# 造型抽签（{season}）\n")
+        print("按 references/styling.md 的六要素把每项写成具体款式和颜色；用户已指定的项直接替换。\n")
+        for k, v in look.items():
+            print(f"- {k}：{v}")
+        return
     finish = rng.choice([f for f in FINISHES if f not in SITUATIONAL])
     base_scene = a.scene or rng.choice(s["scenes"])
     # post mode: two nearby spots in the same outing, alternated, so close-ups don't share one backdrop
@@ -264,7 +250,7 @@ def main():
     for i, t in enumerate(types, 1):
         w, dist, refs, fixed = SHOT_TYPES[t]
         if a.mode == "mixed":
-            look = draw_look(rng, season, a.focus)
+            look = draw_look(rng, season, a.direction)
             finish = rng.choice([f for f in FINISHES if f not in SITUATIONAL])
             base_scene = a.scene or rng.choice(s["scenes"])
         here = base_scene if (a.mode == "mixed" or i % 2) else alt_scene
