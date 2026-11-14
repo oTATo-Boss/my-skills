@@ -14,6 +14,6 @@
 | 镜前叠穿 | [mirror-outfit](mirror-outfit.json) | mirror-selfie | R15 |
 | 前置表情近照 | [front-selfie](front-selfie.json) | front-camera-selfie | R28 的近距关系迁移 |
 
-JSON prompt 根目录执行 `python3 scripts/compose.py third-person --photography --resolution 1K --ratio 3:4 < /absolute/path/record-store.json`。其他关系更换命令中的模式，并保持卡内拍摄关系一致。只要 JSON 加 `--json-only`。
+当前 json-prompt-system 已回退至 v3.1.0；这些文件作为本包独立摄影设计示例使用，可交付原 JSON 或组织成自然语言正文。不要将它们传给旧动作卡拼装脚本，已撤回的摄影参数不再可用。
 
 双参考例子运行前实际上传对应的两张图。只拿到一张身份图时，应删除第二项并把摄影关系作为文字设计，不能声称工具见过图2。

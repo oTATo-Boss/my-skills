@@ -1,12 +1,10 @@
-"""Check portable links, reference assets and runnable photography examples."""
+"""Check portable links, reference assets and standalone photography examples."""
 from pathlib import Path
 import json
 import re
-import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-JSON_SKILL = ROOT.parents[1] / 'image/json-prompt-system'
 
 
 def main():
@@ -38,11 +36,8 @@ def main():
     for path in examples:
         card = json.loads(path.read_text())
         mode = card['摄影设计']['相机']['拍摄关系']
-        result = subprocess.run([sys.executable, str(JSON_SKILL / 'scripts/compose.py'),
-            mode, '--photography', '--resolution', '1K', '--json-only'],
-            input=path.read_text(), text=True, capture_output=True)
-        if result.returncode or json.loads(result.stdout) != card:
-            failures.append(f'Example failed: {path.name}: {result.stderr}')
+        if mode not in {'third-person', 'front-camera-selfie', 'mirror-selfie', 'ecommerce-editorial'}:
+            failures.append(f'Unknown relationship in standalone example: {path.name}')
     for failure in failures:
         print(failure, file=sys.stderr)
     print(json.dumps({'links_checked': links, 'cases': len(manifest),
