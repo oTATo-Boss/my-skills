@@ -49,17 +49,32 @@ def main():
         if int(r["id"][1:]) >= 31:
             if not r.get("batch") or not r.get("tags") or not isinstance(r.get("partial"), bool):
                 failures.append(f"Missing batch/tags/partial: {r['id']}")
-            if r.get("source_file") != f"{r['screen']}.webp":
+            if r.get("origin_kind") == "original-image":
+                name = r.get("source_file")
+                if not isinstance(name, str) or not name or Path(name).name != name:
+                    failures.append(f"Invalid original source filename: {r['id']}")
+                if digest != r["source_sha256"] or digest != r.get("asset_sha256"):
+                    failures.append(f"Original bytes differ: {r['id']}")
+                if r["crop"] != [0, 0, w, h]:
+                    failures.append(f"Original image must remain uncropped: {r['id']}")
+                try:
+                    with Image.open(path) as image:
+                        if image.size != (w, h):
+                            failures.append(f"Original dimensions differ: {r['id']}")
+                except (OSError, ValueError):
+                    pass  # Report decoding failures in the full image check below.
+            elif r.get("source_file") != f"{r.get('screen')}.webp":
                 failures.append(f"Invalid source filename: {r['id']}")
     ImageFile.LOAD_TRUNCATED_IMAGES = False
-    images = list((ROOT / "assets/reference-covers").glob("*.jpg"))
+    images = [p for p in (ROOT / "assets/reference-covers").iterdir()
+              if p.suffix.lower() in {".jpg", ".jpeg", ".png", ".webp"}]
     for path in images:
         try:
             with Image.open(path) as image:
                 image.verify()
             with Image.open(path) as image:
                 image.load()
-            if not path.read_bytes().endswith(b"\xff\xd9"):
+            if path.suffix.lower() in {".jpg", ".jpeg"} and not path.read_bytes().endswith(b"\xff\xd9"):
                 failures.append(f"Missing JPEG end marker: {path.name}")
         except (OSError, ValueError) as exc:
             failures.append(f"Invalid image {path.name}: {exc}")
@@ -97,7 +112,7 @@ def main():
         print("\n".join(failures))
         sys.exit(1)
     print(f"OK: {len(plan_set.SHOT_TYPES)} types, {len(manifest)} covers, "
-          f"{len(plan_set.SCENES)} scenes, {len(images)} JPEGs decoded; provenance and links valid")
+          f"{len(plan_set.SCENES)} scenes, {len(images)} images decoded; provenance and links valid")
 
 
 if __name__ == "__main__":

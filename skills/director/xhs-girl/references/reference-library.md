@@ -1,6 +1,6 @@
 # 参考导航：先找到本次真正相关的图
 
-[全部图号与单图链接](../assets/reference-covers/README.md)共 115 张。[manifest](../assets/reference-covers/manifest.json)保存来源与裁框；总览用于找图，观察细节必须打开单张。以下分组是检索入口，不是固定套装。
+[全部图号与单图链接](../assets/reference-covers/README.md)共 192 张（115 张截图裁图＋77 张完整原图）。[manifest](../assets/reference-covers/manifest.json)保存来源与裁框；总览用于找图，观察细节必须打开单张。以下分组是检索入口，不是固定套装。
 
 | 本次目标 | 优先看 | 可以迁移的关系 |
 |---|---|---|
@@ -33,3 +33,14 @@
 - R48、R49、R59 等有明显主题元素；可分析配色与姿态，不强行变成每次造型的默认元素。
 - 从相同截图重叠区域导入的相同封面只保留一次。其他相似穿搭、人物或地点的不同照片仍可作为独立图例。
 - R 编号是本库检索号，不等于生图工具中图1、图2的上传编号。
+
+## 2026-11-17 新收录的 77 张完整原图
+
+按[完整原图批次指南](photo-batch-20261117.md)选择近脸、眼镜短发、裁脸穿搭、餐桌、户外、暗光或主题造型。R116–R192 全部保留原字节与分辨率；画面类型卡及抽签方案已接入相关新图号。局部图用于穿法，不自动承担身份参考。
+
+两组连续照片可用于同造型组图研究：R156–R158 的灰白叠穿三张，以及 R171–R175 的白拉链上衣矮墙五张。逐张变化来自观看关系和动作，固定环境和已确认造型。
+
+- [R116–R135](../assets/reference-covers/contact-sheet-07.jpg)
+- [R136–R155](../assets/reference-covers/contact-sheet-08.jpg)
+- [R156–R175](../assets/reference-covers/contact-sheet-09.jpg)
+- [R176–R192](../assets/reference-covers/contact-sheet-10.jpg)
