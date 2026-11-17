@@ -13,3 +13,8 @@ node_modules/
 # Local working records, previews and generated outputs.
 /work/
 /output/
+
+# Publish only the skill packages; keep project administration and records local.
+/*
+!/skills/
+!/.gitignore
