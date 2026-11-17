@@ -1,3 +1,3 @@
 interface:
   display_name: "xhs-girl"
-  short_description: "分析真实样本的八维特征，按导演判断从多图取材、整合方案并对照审片"
+  short_description: "按八维样本多图取材，交付拍摄企划、参考分工、分张设计与完整提示词"
