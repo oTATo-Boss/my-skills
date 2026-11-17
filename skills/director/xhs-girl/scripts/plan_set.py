@@ -1,4 +1,4 @@
-"""Draw a varied shot plan for one xhs-girl photo set.
+"""Optional random exploration for an explicitly requested xhs-girl candidate set.
 
 Run from the skill root:
   python3 scripts/plan_set.py --look-only            # 只抽造型（出造型板时）
@@ -9,7 +9,9 @@ Run from the skill root:
 --focus face (default) favours close-ups; --focus outfit favours mirror, seated and full-body.
 post  (default): one post, same makeup/hair/outfit/finish, every shot a different picture type.
 mixed: independent images, each with its own look, scene and finish.
-The draw is random by design; pass --seed only to reproduce a plan.
+The default creative workflow uses director-method.md and reference_index.py instead.
+Use this draw only for explicit random/exploratory requests; inspect and reconcile candidates.
+Pass --seed only to reproduce a plan.
 """
 import argparse
 import datetime

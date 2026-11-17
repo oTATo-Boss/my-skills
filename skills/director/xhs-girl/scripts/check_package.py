@@ -14,6 +14,7 @@ from PIL import Image, ImageFile
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 import plan_set  # noqa: E402
+from reference_index import validate_visual  # noqa: E402
 
 
 def main():
@@ -43,6 +44,7 @@ def main():
             failures.append(f"Duplicate source crop: {r['id']}")
         crops.add(crop_key)
         digest = hashlib.sha256(path.read_bytes()).hexdigest()
+        failures.extend(validate_visual(r, digest))
         if digest in hashes:
             failures.append(f"Duplicate image bytes: {hashes[digest]} and {r['id']}")
         hashes[digest] = r["id"]
@@ -112,7 +114,7 @@ def main():
         print("\n".join(failures))
         sys.exit(1)
     print(f"OK: {len(plan_set.SHOT_TYPES)} types, {len(manifest)} covers, "
-          f"{len(plan_set.SCENES)} scenes, {len(images)} images decoded; provenance and links valid")
+          f"{len(plan_set.SCENES)} scenes, {len(images)} images decoded; eight-facet reviews, provenance and links valid")
 
 
 if __name__ == "__main__":

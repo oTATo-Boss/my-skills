@@ -10,6 +10,8 @@ import tempfile
 import unittest
 
 from PIL import Image
+from datetime import date
+from reference_index import FACETS
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -35,6 +37,11 @@ class OriginalPhotoTests(unittest.TestCase):
                        source_size=[64 + index, 80], crop=[0, 0, 64 + index, 80],
                        source_sha256=digest, asset_sha256=digest,
                        batch="test-originals", tags=["近脸"], partial=False)
+            row["visual"] = {"schema_version": 1,
+                             "facets": {name: {"tags": [], "observation": "测试图仅为单色图，无可分析信息", "evidence": "not_visible"} for name in FACETS},
+                             "transferable_mechanism": "合成单色图仅验证导入边界，不作审美参考",
+                             "limitations": ["合成测试夹具"],
+                             "review": {"date": date.today().isoformat(), "method": "visual-inspection", "image_sha256": digest}}
             self.rows.append(row)
             self.photo_rows.append(row)
         self.save()
@@ -75,6 +82,20 @@ class OriginalPhotoTests(unittest.TestCase):
         result = self.check()
         self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
         self.assertIn("Invalid image", result.stdout)
+
+    def test_rejects_visual_review_bound_to_other_image(self):
+        self.photo_rows[0]["visual"]["review"]["image_sha256"] = "0" * 64
+        self.save()
+        result = self.check()
+        self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
+        self.assertIn("Visual review image changed", result.stdout)
+
+    def test_rejects_missing_visual_facet(self):
+        del self.photo_rows[0]["visual"]["facets"]["expression"]
+        self.save()
+        result = self.check()
+        self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
+        self.assertIn("Expected eight visual facets", result.stdout)
 
     def test_original_dimensions_must_match_metadata(self):
         self.photo_rows[0]["source_size"] = [640, 800]
