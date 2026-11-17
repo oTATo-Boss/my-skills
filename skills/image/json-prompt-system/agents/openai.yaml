@@ -1,4 +1,4 @@
 interface:
-  display_name: "JSON Prompt System"
+  display_name: "json-prompt-system"
   short_description: "生成自拍、他拍与时尚大片完整提示词，支持纯 JSON"
   default_prompt: "Use $json-prompt-system to compose a complete image prompt from my text or reference image."

@@ -1,0 +1,4 @@
+
+interface:
+  short_description: "面向导演查询代码视频、素材编辑、合成特效、三维、声音字幕与渲染交付的输入条件和能力边界。"
+  display_name: "motion-video-capabilities"

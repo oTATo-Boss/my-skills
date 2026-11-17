@@ -1,4 +1,4 @@
 interface:
-  display_name: "Workflow Builder"
+  display_name: "workflow-builder"
   short_description: "按需求搭建或整合已有项目中的工作流，验证独立执行与流程交接"
   default_prompt: "使用 $workflow-builder，根据我的需求搭建工作流或接入已有项目，并验证独立运行与必要交接。"

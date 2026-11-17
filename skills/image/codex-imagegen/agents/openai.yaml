@@ -1,0 +1,4 @@
+
+interface:
+  short_description: "供其他 Agent 通过本机已登录的 Codex CLI 调用生图与图片编辑能力。"
+  display_name: "codex-imagegen"

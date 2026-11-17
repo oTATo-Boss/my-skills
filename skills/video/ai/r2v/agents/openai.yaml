@@ -1,0 +1,4 @@
+
+interface:
+  short_description: "跨模型选择直接参考或端点引导，判断资产用途、最小补齐与制作交接依据。"
+  display_name: "r2v"

@@ -6,6 +6,7 @@
 - author: oTATo-Boss 提出审美方向并指定原始资料，Codex 辅助提炼与编写。
 - source: 用户指定的小红书公开创作资料整合，作为独立的图片与视频审美指导 Skill 维护。
 - version: `3.5.0`
+- collected_at: unknown；自研 Skill 无独立收集日期，各批参考图片的导入日期见下方版本记录。
 - recorded_at: `2026-11-17`
 - license: 原始资料未附单独许可声明，本记录不新增许可。
 - evidence: 来源项目为「去皮土豆 oTATo」，以下按原项目相对路径定位；正文参考均随本包提供。

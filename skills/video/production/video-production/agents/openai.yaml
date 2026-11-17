@@ -1,0 +1,4 @@
+
+interface:
+  short_description: "按需协同编剧、统筹、连续性和制作交付，支持整片、系列、局部修改及中断恢复。"
+  display_name: "video-production"
