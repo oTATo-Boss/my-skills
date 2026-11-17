@@ -9,3 +9,7 @@ venv/
 node_modules/
 *.log
 .local/
+
+# Local working records, previews and generated outputs.
+/work/
+/output/
