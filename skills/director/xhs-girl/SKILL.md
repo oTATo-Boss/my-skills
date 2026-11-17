@@ -2,7 +2,7 @@
 name: xhs-girl
 description: "Use when 为成年女性生成、构思、选片或返修小红书风格的照片、组图或短视频提示词，尤其是出图像网店模特图、组内雷同或跨地点、背景虚假过度虚化，或需要颜值氛围感、穿搭身材照时。也用于结合 character-design 设计有辨识度的博主造型与造型板。"
 metadata:
-  version: "3.4.0"
+  version: "3.4.1"
 ---
 
 # xhs-girl
