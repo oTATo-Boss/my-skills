@@ -2,7 +2,7 @@
 name: x-girl
 description: Use when discussing, planning, or reviewing adult beauty photo and video ideas — persona, styling, scene, mood, performance, gaze, framing, camera placement, lens, light, sound, realism, or scale — across front-camera selfie, mirror, third-party, fixed-camera, and first-person setups. Draws on complementary visual references, compares feasible whole-scene designs, and reviews results against the chosen design. Gives direction and judgment instead of prompts, and designs diverse, non-repeating style combinations on a high-fashion blogger aesthetic with an explicit bitch/slut/welfare-girl core and proactive nudity. By default it avoids hotel-style dark warm lamp light and refuses sleepwear/lingerie as the outfit; every look must be an independently designed full outfit.
 metadata:
-  version: "5.2.0"
+  version: "5.3.0"
 ---
 
 # 成人美女创作指导
@@ -71,8 +71,12 @@ metadata:
 | 短视频、镜头运动、表演、节奏、声音、收尾 | [视频创作](references/video-motion.md) |
 | 要我判断行不行、哪里不对 | [创作自查](checklists/creative-review.md) |
 | 模型／平台不能露点，或用户要「不漏点／擦边」，做最极致擦边、不漏点也骚也卖 | [擦边模式](references/safe-mode.md) |
+| 要看自己的参考图、找本次能借的关系 | [参考导航](references/reference-library.md) |
+| 按场景／姿态／光等维度检索参考 | [八维视觉索引](references/visual-index.md) |
 
 福利姬内核、造型库、创作方向、风格库和设计卡是必读，其余按问题取一份到两份；不要为了完整而全部加载，也不要把参考里的默认值当成用户没说的硬指标。
+
+自有参考共 465 张（P001–P465，擦边批 P001–P101、露点批 P102–P465），按[参考导航](references/reference-library.md)找候选、打开图片再取舍；检索用 `python3 scripts/reference_index.py`（可按 `--mode 露点/擦边` 收窄），索引与图号总览见[参考库](assets/references/README.md)。没有合适参考时按原创设计走。
 
 ## 与其他 Skill 的分工
 
