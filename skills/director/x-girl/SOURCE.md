@@ -4,7 +4,7 @@
 - kind: `local`
 - status: `confirmed`
 - source: 本地开发／维护目录 `skills/director/x-girl`；当前维护仓库 https://github.com/oTATo-Boss/my-skills
-- version: 5.2.0
+- version: 5.4.0
 - author: oTATo-Boss（用户本人）；2026-10-30 在当前对话明确确认本人制作，Agent 辅助编写／整理。
 - license: MIT
 - collected_at: unknown；没有可靠安装／导入日期。
@@ -19,6 +19,7 @@
 
 - 2026-11-18，v5.2.0：借鉴本仓库 `xhs-girl` v4.4.0 的 `references/director-method.md` 与 `references/review.md`（源码提交 `28e600b`），改写为 x-girl 的多图取材、完整候选比较与按设计审片。取材使用任务附件或 x-girl 自有参考目录，素材由用户后续补充。新增导演方法和自有参考目录说明，接入原八字段设计卡与创作自查。
 - 2026-11-18，v5.3.0：接入自有参考库 465 张（擦边批 P001–P101、露点批 P102–P465），逐图记 `mode`，两批均逐图八维标注（第二批由子代理分批看图完成，写入前统一校验 evidence 与场景大类）；模式按原尺寸逐张复核，45 张存疑单独记录；文件名与 manifest 标题统一。按 `xhs-girl` 的组织方式建 `assets/references/manifest.json` 八维索引、`references/reference-library.md` 目标导航、`references/visual-index.md` 字段规范与 `scripts/reference_index.py` 只读检索；图号平铺，来源文件、尺寸与 SHA-256 逐图留档。索引只定位候选，取舍仍按导演方法看图。批次来源为用户 2026-11-18 提供的图。
+- 2026-11-18，v5.4.0：同步 `xhs-girl` v4.5.0 逐图核对方法。记录参考实际所见、设计决定、八字段卡内落点、下游实际提交的 Prompt 原句及成片证据。由下游编写 Prompt，`x-girl` 回查设计是否落实。自有参考、索引和其余原有创作资料沿用。
 
 - 2026-11-14，v5.1.0 两条默认禁线（用户要求）：① 光与空间默认不做酒店客房式暗调、不做暖黄台灯主光，默认自然光或生活顶光，用户点名才用；② 造型默认不准用睡裙／睡袍／家居服／成套贴身内衣，也不准照搬角色参考图自带的白色运动内衣与黑内裤，必须独立设计完整服装搭配（上装／下装或连体＋外套＋材质＋配饰＋穿法），露点靠穿法递出。改 `SKILL.md`（边界加两条、版本与描述）、`direction-core.md`（造型设计、场景、网黄质感的光、美感）、`style-library.md`（禁用清单、氛围方向表下注、人设说明）、`lookbook.md`（造型核心加一条、反套路自检加一条）、`slut-core.md`（主动露点、高级的落点）、`design-card.md`（造型与场景字段规则、造型骚感自检）、`safe-mode.md`（服装不设限不等于睡衣／内衣）、`checklists/creative-review.md`（通用与尺度各加一条）、`README.md`、`package.json`、`SKILLS_INDEX.md`。
 
