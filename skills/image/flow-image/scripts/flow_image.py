@@ -331,6 +331,9 @@ def download(url,requested,page=None):
             with urllib.request.urlopen(url,context=ctx,timeout=120) as response:blob=response.read(40000000)
         except Exception as exc:raise RuntimeError('Image download failed: '+type(exc).__name__) from None
     else:raise ValueError('Unexpected image host')
+    return save_image(blob,requested)
+
+def save_image(blob,requested):
     if blob.startswith(b'\xff\xd8\xff'):suffix='.jpg'
     elif blob.startswith(b'\x89PNG\r\n\x1a\n'):suffix='.png'
     elif blob.startswith(b'RIFF') and blob[8:12]==b'WEBP':suffix='.webp'
@@ -344,6 +347,51 @@ def composer_lock():
     with (ROOT/'generation.lock').open('a') as lock:
         fcntl.flock(lock,fcntl.LOCK_EX)
         yield
+
+def download_2k(media_id,output):
+    media_id=media_id.lower()
+    if not re.fullmatch(r'[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}',media_id):
+        raise ValueError('Use the exact Flow media ID')
+    if not output.is_absolute():
+        raise ValueError('Use an absolute output path')
+    browser_function=Path(__file__).with_name('capture_2k.js').read_text(encoding='utf-8')
+
+    with (ROOT/'download-2k.lock').open('a') as lock:
+        fcntl.flock(lock,fcntl.LOCK_EX)
+        if output.exists() or any(output.with_suffix(ext).exists() for ext in ('.jpg','.png','.webp')):
+            raise FileExistsError('Output already exists')
+        page=page_id()
+
+        def capture(action):
+            params=json.dumps({'action':action,'mediaId':media_id,'projectUrl':PROJECT_URL})
+            source=f"""async () => {{
+              try {{ return await ({browser_function})({params}); }}
+              catch (error) {{ return {{captureError: error.message}}; }}
+            }}"""
+            result=evaluate(page,source)
+            if isinstance(result,dict) and 'captureError' in result:
+                raise RuntimeError(result['captureError'])
+            return result
+
+        with composer_lock():
+            state=evaluate(page,STATE_JS)
+            if state['url'].rstrip('/')!=PROJECT_URL or not state['account_ok']:
+                raise RuntimeError('Open the fixed Flow project in your bahadir Chrome')
+            capture('start')
+
+        deadline=time.monotonic()+120
+        while time.monotonic()<deadline:
+            result=capture('read')
+            if result:
+                if 'error' in result:
+                    capture('finish')
+                    raise RuntimeError(result['error'])
+                actual=save_image(base64.b64decode(result['data'],validate=True),output)
+                capture('finish')
+                return {'ok':True,'media_id':media_id,'output':str(actual),
+                        'width':result['width'],'height':result['height']}
+            time.sleep(1)
+        raise TimeoutError('Flow 2K is still pending. Run download-2k again for the same media ID to resume.')
 
 def job_path(job_id):
     if not re.fullmatch(r'[0-9a-f]{32}',job_id):raise ValueError('Invalid job ID')
@@ -564,6 +612,9 @@ def main():
     image=sub.add_parser('image');image.add_argument('prompt');image.add_argument('--output','-o',required=True);image.add_argument('--aspect',choices=['1:1','16:9','9:16','4:3','3:4'],default='1:1')
     image.add_argument('--no-wait',action='store_true',help='Return the accepted job ID immediately; collect it later with wait')
     wait=sub.add_parser('wait');wait.add_argument('job_id')
+    upscale=sub.add_parser('download-2k',help='Save the 2K image from an open Flow download submenu')
+    upscale.add_argument('media_id')
+    upscale.add_argument('--output','-o',required=True,type=lambda value:Path(value).expanduser())
     image.add_argument('--ref',action='append',default=[],type=lambda v:Path(v).expanduser(),help='Absolute JPEG/PNG/WebP reference image; repeat for multiple images in order')
     args=parser.parse_args()
     try:
@@ -574,6 +625,7 @@ def main():
                 result={'ok':True,'job_id':job['request_id'],'state':job['state'],'network_request_id':job['network_request_id'],'reference_count':job['reference_count'],'reference_reused_count':job['reference_reused_count']}
             else:result=generate(args.prompt,Path(args.output).expanduser(),args.aspect,args.ref)
         elif args.command=='wait':result=wait_job(args.job_id)
+        elif args.command=='download-2k':result=download_2k(args.media_id,args.output)
         elif args.command=='stop':
             with composer_lock():
                 if active_jobs() or PENDING.exists():raise RuntimeError('Unfinished jobs exist; collect their results before stopping the daemon')

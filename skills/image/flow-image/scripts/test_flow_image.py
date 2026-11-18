@@ -315,4 +315,20 @@ class DriverTests(unittest.TestCase):
    m.select_reference=lambda page,entry,count:dict(entry,media_id='recovered',state='ready')
    self.assertEqual(m.attach_reference(8,p)['media_id'],'recovered')
    self.assertEqual(len(uploads),1)
+ def test_2k_capture_saves_to_requested_path_without_overwriting(self):
+  import base64
+  m=self.load()
+  media='87723799-ba98-46a3-936b-3b702b5ddde8'
+  jpeg=b'\xff\xd8\xfftest'
+  m.page_id=lambda:142
+  with tempfile.TemporaryDirectory() as d:
+   m.ROOT=Path(d)
+   output=m.ROOT/'delivery'/'image.jpg'
+   artifact={'data':base64.b64encode(jpeg).decode(),'width':1792,'height':2400}
+   with patch.object(m,'evaluate',side_effect=[{'url':m.PROJECT_URL,'account_ok':True},'started',artifact,True]) as script:
+    result=m.download_2k(media,output)
+    self.assertEqual(output.read_bytes(),jpeg)
+    self.assertEqual(result,{'ok':True,'media_id':media,'output':str(output),'width':1792,'height':2400})
+    with self.assertRaises(FileExistsError):m.download_2k(media,output)
+    self.assertEqual(script.call_count,4)
 if __name__=='__main__' :unittest.main()
