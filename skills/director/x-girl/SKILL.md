@@ -1,8 +1,8 @@
 ---
 name: x-girl
-description: Use when discussing, planning, or reviewing adult beauty photo and video ideas — persona, styling, scene, mood, performance, gaze, framing, camera placement, lens, light, sound, realism, or scale — across front-camera selfie, mirror, third-party, fixed-camera, and first-person setups. Gives direction and judgment instead of prompts, and designs diverse, non-repeating style combinations on a high-fashion blogger aesthetic with an explicit bitch/slut/welfare-girl core and proactive nudity. By default it avoids hotel-style dark warm lamp light and refuses sleepwear/lingerie as the outfit; every look must be an independently designed full outfit.
+description: Use when discussing, planning, or reviewing adult beauty photo and video ideas — persona, styling, scene, mood, performance, gaze, framing, camera placement, lens, light, sound, realism, or scale — across front-camera selfie, mirror, third-party, fixed-camera, and first-person setups. Draws on complementary visual references, compares feasible whole-scene designs, and reviews results against the chosen design. Gives direction and judgment instead of prompts, and designs diverse, non-repeating style combinations on a high-fashion blogger aesthetic with an explicit bitch/slut/welfare-girl core and proactive nudity. By default it avoids hotel-style dark warm lamp light and refuses sleepwear/lingerie as the outfit; every look must be an independently designed full outfit.
 metadata:
-  version: "5.1.0"
+  version: "5.2.0"
 ---
 
 # 成人美女创作指导
@@ -15,12 +15,14 @@ metadata:
 
 ## 怎么讨论
 
-不套流程，按问题形状决定回答形状；但不管哪种问法，判断与方向最终都落到「创作设计卡」（见下文「输出」）。
+按问题选择路径，创作方向和修改建议落到「创作设计卡」（见下文「输出」）。
 
 - **只问一句**：直接给判断和理由，一两句说清，不铺开。
 - **用户让 AI 代选**：给一个明确选择加一个备选，说清各自代价；不列十个方案。
 - **只有模糊感觉**（"不够高级""不够骚""说不上哪里怪"）：先翻译成具体的画面问题——是光太平、姿势太标准、没有对象感、衣服不对，还是拍摄关系穿帮。
-- **给了参考图或参考片**：先说出参考里真正起作用的是什么（角度、光、动作、构图、质感），再说哪些能迁移、哪些是那条片子独有的。
+- **完整原创设计**：读[导演方法](references/director-method.md)。先确定画面目标并按缺口取材，再比较至少两个能拍成的完整候选。选定之后写设计卡。已有明确的人物、造型、场地或拍法作为共同条件，只在可变范围内设计。
+- **给了参考图或参考片**：实际看过再判断哪个画面关系值得借、怎样适配。完整原创按导演方法做多图分工。用户要单图或单片忠实复拍时，核对可见的拍摄关系，按已锁定的条件设计。
+- **已有成片，只要审阅**：读[创作自查](checklists/creative-review.md#按设计审片)，对照原设计和本次实际取材判断，指出首要偏差和对应的修正。没有原设计时，按用户已说明的目标和成片所见判断。
 - **信息不够**：只问最少的必要问题——拍谁、给谁看、第一眼要看到什么、要不要动、尺度到哪。
 
 讨论里，画面中的女性称"她"，提需求的人称"用户"，不要混用。
@@ -63,6 +65,7 @@ metadata:
 | 先好看再骚、氛围、骚四变量、人设、造型设计、场景、网黄质感、表演关系、美感、尺度 | [创作方向](references/direction-core.md)（必读） |
 | 组装器：人设气质、原料轴、正反例、禁用清单、氛围方向、状态，随机组装新搭配 | [风格库](references/style-library.md)（必读） |
 | 设计卡模板、字段填写与反套路自检 | [设计卡](references/design-card.md)（必读） |
+| 完整原创、多图或多片段取材、完整候选比较 | [导演方法](references/director-method.md) |
 | 谁在拍、手机在哪、画幅、机位、焦段、手怎么分工 | [拍摄与镜头](references/capture-and-lens.md) |
 | 照片、一组图、封面、姿势、光比、皮肤质感 | [图片创作](references/stills.md) |
 | 短视频、镜头运动、表演、节奏、声音、收尾 | [视频创作](references/video-motion.md) |
