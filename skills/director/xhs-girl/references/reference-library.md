@@ -1,6 +1,6 @@
 # 参考导航：先找到本次真正相关的图
 
-[全部图号与单图链接](../assets/reference-covers/README.md)共 192 张（115 张截图裁图＋77 张完整原图）。[manifest](../assets/reference-covers/manifest.json)保存来源与裁框；总览用于找图，观察细节必须打开单张。先用[八维视觉索引](visual-index.md)分别检索需要的特征，再按[导演方法](director-method.md)看图与分配贡献。以下分组是补充检索入口，不是固定套装。
+[全部图号与单图链接](../assets/reference-covers/README.md)共 406 张（115 张截图裁图＋291 张按源文件原样保存的图片）。[manifest](../assets/reference-covers/manifest.json)保存来源与裁框；总览用于找图，观察细节必须打开单张。先用[八维视觉索引](visual-index.md)分别检索需要的特征，再按[导演方法](director-method.md)看图与分配贡献。以下分组是补充检索入口，不是固定套装。
 
 | 本次目标 | 优先看 | 可以迁移的关系 |
 |---|---|---|
@@ -44,3 +44,7 @@
 - [R136–R155](../assets/reference-covers/contact-sheet-08.jpg)
 - [R156–R175](../assets/reference-covers/contact-sheet-09.jpg)
 - [R176–R192](../assets/reference-covers/contact-sheet-10.jpg)
+
+## 2026-11-19 新收录的 214 张图片
+
+[新增图片导航](photo-batch-20261119.md)覆盖 R193–R406，含近脸妆发、街面取景、局部搭配、镜照、撑坐与明暗分区的对比入口。所有新图已接入[八维视觉索引](visual-index.md)，并附 11 页总览。
