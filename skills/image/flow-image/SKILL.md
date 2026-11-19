@@ -2,7 +2,7 @@
 name: flow-image
 description: "Generate and edit images with Nano Banana 2.1 in Google Flow through the existing Chrome session. Use for Flow/Nano Banana image requests and multiple references; refresh and retry unusual-traffic failures until success, then deliver Flow's 2K download."
 metadata:
-  version: "1.2.5"
+  version: "1.2.6"
 ---
 
 # Flow 图片生成与编辑

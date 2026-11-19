@@ -26,7 +26,7 @@
 
 ## Google Flow 执行
 
-- [flow-image](flow-image/SKILL.md) — 通过现有 Chrome 使用 Flow Nano Banana 2.1 生图、多参考图与重叠生成，将 2K 成品直存指定路径。v1.2.5。
+- [flow-image](flow-image/SKILL.md) — 通过现有 Chrome 使用 Flow Nano Banana 2.1 生图、多参考图与重叠生成，将 2K 成品直存指定路径。v1.2.6。
 
 ## 场景资产设计
 

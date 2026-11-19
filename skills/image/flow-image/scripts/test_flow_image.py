@@ -75,6 +75,33 @@ class DriverTests(unittest.TestCase):
  def load(self):
   p=Path(__file__).with_name('flow_image.py');self.assertTrue(p.exists(),'Flow CLI driver is not implemented yet')
   s=importlib.util.spec_from_file_location('flow_image',p);m=importlib.util.module_from_spec(s);s.loader.exec_module(m);return m
+ def test_prepare_selects_one_image_when_ratio_closes_settings(self):
+  for closes_panel in (False, True):
+   with self.subTest(closes_panel=closes_panel):
+    m=self.load()
+    trigger='uid=settings button "设置触发器"'
+    panel=trigger+'\nuid=ratio radio "3:4"\nuid=count radio "x1"'
+    after_ratio=trigger if closes_panel else panel
+    snapshots=[panel,after_ratio]+([panel] if closes_panel else [])+[trigger]
+    state={'url':m.PROJECT_URL,'account_ok':True,'model_text':'Nano Banana 2.1 x1','draft':''}
+    actions=[('click',8,'ratio')]+([('click',8,'settings')] if closes_panel else [])
+    with patch.object(m,'snapshot',side_effect=snapshots), patch.object(m,'evaluate',return_value=state), patch.object(m,'run_cli') as cli:
+     self.assertEqual(m.prepare(8,'3:4'),trigger)
+     self.assertEqual([call.args for call in cli.call_args_list],actions+[('click',8,'count'),('press_key',8,'Escape')])
+ def test_upload_reference_accepts_current_and_legacy_button_labels(self):
+  for label in ('上传媒体','上传媒体内容','Upload media'):
+   with self.subTest(label=label), tempfile.TemporaryDirectory() as directory:
+    m=self.load();m.ROOT=Path(directory)
+    original=m.ROOT/'original.jpg';original.write_bytes(b'reference')
+    entry={'name':'reference.jpg'};staged=m.ROOT/'uploads'/entry['name'];selected={'media_id':'verified'}
+    def upload(command,page,uid,path):
+     self.assertEqual((command,page,uid,path),('upload_file',8,'upload',staged))
+     self.assertEqual(path.read_bytes(),b'reference')
+    with patch.object(m,'open_reference_menu'), patch.object(m,'snapshot',return_value=f'uid=upload button "{label}"'), patch.object(m,'run_cli',side_effect=upload) as cli, patch.object(m,'select_reference',return_value=selected) as select:
+     self.assertEqual(m.upload_reference(8,original,entry,2),selected)
+     cli.assert_called_once()
+     select.assert_called_once_with(8,entry,2)
+     self.assertFalse(staged.exists())
  def test_model_is_verified_before_submit(self):
   m=self.load()
   with self.assertRaises(ValueError):m.validate_state({'url':m.PROJECT_URL,'account_ok':True,'model_text':'Nano Banana Pro x1','draft':''})

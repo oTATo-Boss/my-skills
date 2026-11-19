@@ -2,7 +2,7 @@
 name: x-girl
 description: Use when discussing, planning, or reviewing adult beauty photo and video ideas — persona, styling, scene, mood, performance, gaze, framing, camera placement, lens, light, sound, realism, or scale — across front-camera selfie, mirror, third-party, fixed-camera, and first-person setups. Draws on complementary visual references, compares feasible whole-scene designs, and reviews results against the chosen design. Gives direction and judgment instead of prompts, and designs diverse, non-repeating style combinations on a high-fashion blogger aesthetic with an explicit bitch/slut/welfare-girl core and proactive nudity. By default it avoids hotel-style dark warm lamp light and refuses sleepwear/lingerie as the outfit; every look must be an independently designed full outfit.
 metadata:
-  version: "5.4.0"
+  version: "5.5.0"
 ---
 
 # 成人美女创作指导
@@ -20,7 +20,7 @@ metadata:
 - **只问一句**：直接给判断和理由，一两句说清，不铺开。
 - **用户让 AI 代选**：给一个明确选择加一个备选，说清各自代价；不列十个方案。
 - **只有模糊感觉**（"不够高级""不够骚""说不上哪里怪"）：先翻译成具体的画面问题——是光太平、姿势太标准、没有对象感、衣服不对，还是拍摄关系穿帮。
-- **完整原创设计**：读[导演方法](references/director-method.md)。先确定画面目标并按缺口取材，再比较至少两个能拍成的完整候选。选定之后写设计卡。已有明确的人物、造型、场地或拍法作为共同条件，只在可变范围内设计。
+- **完整原创设计**：读[导演方法](references/director-method.md)。先确定画面目标，按八维索引找参考。地点未定时先打开原图，比较场景、背景、光影和质感，再定地点和氛围。每组参考图不设数量上限，同一维度可以组合多张图，一张图也可以贡献多个协调的维度。按整体美感、完成度和成片效果分配用图，再比较至少两个能拍成的完整候选，选定后写设计卡。已有明确的人物、造型、场地或拍法作为共同条件，只在可变范围内设计。
 - **给了参考图或参考片**：打开原图或相关片段，按[逐图核对](references/director-method.md#逐图核对)说明实际看见什么、它改变了哪项决定、落实到卡里哪个字段。忠实复拍时记录具体保留的关系。
 - **已有成片，只要审阅**：读[创作自查](checklists/creative-review.md#按设计审片)，对照原设计和本次实际取材判断，指出首要偏差和对应的修正。没有原设计时，按用户已说明的目标和成片所见判断。
 - **信息不够**：只问最少的必要问题——拍谁、给谁看、第一眼要看到什么、要不要动、尺度到哪。

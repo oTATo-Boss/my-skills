@@ -126,7 +126,13 @@ def prepare(page,aspect):
         run_cli('click',page,trigger);snap=snapshot(page)
     ratio=choice(snap,aspect)
     run_cli('click',page,ratio);snap=snapshot(page)
-    count=choice(snap,'x1')
+    try:
+        count=choice(snap,'x1')
+    except ValueError:
+        # Clicking a ratio can close the settings popover; reopen it for the count.
+        trigger=control(snap,'button',r'^设置触发器$|^Settings')
+        run_cli('click',page,trigger);snap=snapshot(page)
+        count=choice(snap,'x1')
     run_cli('click',page,count)
     run_cli('press_key',page,'Escape')
     validate_state(evaluate(page,STATE_JS))
@@ -287,7 +293,7 @@ def upload_reference(page,path,entry,expected_count):
     shutil.copyfile(path,staged)
     try:
         open_reference_menu(page)
-        run_cli('upload_file',page,control(snapshot(page),'button',r'^上传媒体内容$|^Upload media$'),staged)
+        run_cli('upload_file',page,control(snapshot(page),'button',r'^上传媒体(?:内容)?$|^Upload media$'),staged)
         return select_reference(page,entry,expected_count)
     finally:staged.unlink(missing_ok=True)
 
