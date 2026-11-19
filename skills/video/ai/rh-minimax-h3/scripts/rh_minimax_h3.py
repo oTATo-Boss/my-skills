@@ -24,9 +24,9 @@ from pathlib import Path
 from urllib.parse import urlsplit
 
 import requests
+from build_jobs import APP_ID, AUDIO_NODES, IMAGE_NODES, LEGACY_IMAGE_COUNT
 from rh_queue import Queue, TERMINAL
 
-APP_ID = '2101232638873858050'
 SUPPORTED_APP_IDS = {APP_ID}
 BASE = os.getenv('RUNNINGHUB_BASE_URL', 'https://www.runninghub.ai').rstrip('/')
 MAX_CONCURRENT = 3
@@ -44,11 +44,18 @@ API_KEY = configured_api_key()
 HALT = threading.Event()  # 有任务等待超时仍在远端运行时置位，不再启动新的提交
 
 
-def checked_json(response):
+class NodeInfoMismatch(RuntimeError):
+    """RunningHub 明确拒绝了参数校验，且未返回任务 ID。"""
+
+
+def checked_json(response, *, is_submission=False):
     response.raise_for_status()
     data = response.json()
     if not isinstance(data, dict):
         raise RuntimeError('API 返回的 JSON 不是对象')
+    if is_submission and not data.get('taskId') and '803' in (str(data.get('code')), str(data.get('errorCode'))):
+        detail = data.get('errorMessage') or data.get('message') or data.get('msg')
+        raise NodeInfoMismatch(f'803 NODE_INFO_MISMATCH: {detail or "提交节点与工作流不匹配"}')
     if data.get('code') not in (None, 0, 200, '0', '200'):
         raise RuntimeError(f"API code={data.get('code')}: {data.get('message') or data.get('msg')}")
     if data.get('errorCode') not in (None, '', 0, '0') and data.get('status') not in ('FAILED', 'CANCEL', 'CANCELLED'):
@@ -63,7 +70,7 @@ def headers():
 def post_json(path, body, timeout=(15, 90)):
     response = requests.post(BASE + path, headers={**headers(), 'Content-Type': 'application/json'},
                              json=body, timeout=timeout)
-    return checked_json(response)
+    return checked_json(response, is_submission=path.startswith('/openapi/v2/run/ai-app/'))
 
 
 def redact(value):
@@ -90,6 +97,41 @@ def safe_name(value):
 def is_placeholder(value):
     return isinstance(value, str) and (value.startswith(('（填', '(填')) or
         bool(re.search(r'<(?:真实|填)[^<>]*>', value)))
+
+
+def empty_media(value):
+    return value is None or (isinstance(value, str) and value.strip().lower() in ('', 'none', 'null'))
+
+
+def normalize_job(job):
+    """移除当前应用的空素材槽，兼容旧版真实图片计数。"""
+    if not isinstance(job, dict) or job.get('appId') != APP_ID:
+        return job
+    nodes = job.get('nodeInfoList')
+    if not isinstance(nodes, list) or not all(isinstance(n, dict) for n in nodes):
+        return job
+    keyed_nodes = [((str(n.get('nodeId')), str(n.get('fieldName'))), n) for n in nodes]
+    optional_media = {(node_id, 'image') for node_id in IMAGE_NODES[1:]}
+    optional_media.update((node_id, 'audio') for node_id in AUDIO_NODES)
+    unused = {key for key, node in keyed_nodes
+              if key in optional_media and 'fieldValue' in node and empty_media(node['fieldValue'])}
+    legacy = [n for key, n in keyed_nodes if key == LEGACY_IMAGE_COUNT]
+    if legacy:
+        name = safe_name(job.get('name'))
+        try:
+            count = int(str(legacy[0].get('fieldValue')))
+        except ValueError:
+            count = 0
+        if len(legacy) != 1 or not 1 <= count <= len(IMAGE_NODES):
+            raise ValueError(f'{name}: 无法解析旧版 827 图片数量，请重建 jobs')
+        values = {key: node.get('fieldValue') for key, node in keyed_nodes}
+        if any(empty_media(values.get((node_id, 'image'))) for node_id in IMAGE_NODES[:count]):
+            raise ValueError(f'{name}: 旧版 827 图片数量与实际参考槽不符，请重建 jobs')
+        unused.update((node_id, 'image') for node_id in IMAGE_NODES[count:])
+        unused.add(LEGACY_IMAGE_COUNT)
+    if not unused:
+        return job
+    return {**job, 'nodeInfoList': [node for key, node in keyed_nodes if key not in unused]}
 
 
 def validate_jobs(jobs):
@@ -338,6 +380,13 @@ def run_one(job, out, max_wait):
         raise
     try:
         submitted = post_json('/openapi/v2/run/ai-app/' + app_id, payload, timeout=SUBMIT_TIMEOUT)
+    except NodeInfoMismatch as error:
+        record.update(status='REJECTED', error=str(error)[:300])
+        try:
+            save_json(pending, record)
+        finally:
+            queue.release(owner=owner)
+        raise RuntimeError(f'{name}: RunningHub 拒绝提交，未生成任务 ID。{error}') from error
     except Exception as error:
         record.update(status='SUBMIT_UNKNOWN', error=str(error)[:300])
         save_json(pending, record)
@@ -417,6 +466,10 @@ def main():
     jobs = data.get('jobs')
     if not isinstance(jobs, list) or not jobs:
         parser.error('jobs_json 须包含非空 jobs 数组')
+    try:
+        jobs = [normalize_job(job) for job in jobs]
+    except ValueError as error:
+        parser.error(str(error))
     problems = validate_jobs(jobs)
     if problems:
         raise SystemExit('提交前检查未通过：\n- ' + '\n- '.join(problems))

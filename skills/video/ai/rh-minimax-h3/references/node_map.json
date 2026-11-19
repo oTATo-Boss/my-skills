@@ -1,7 +1,7 @@
 {
   "appId": "2101232638873858050",
-  "snapshot_date": "2026-10-28",
-  "source": "用户提供小白版 V2 API 示例与 2026-10-28 指定参数；已排除示例媒体、提示词和凭据。",
+  "snapshot_date": "2026-11-19",
+  "source": "RunningHub apiCallDemo 的当前字段与用户指定的默认值。示例媒体、提示词和凭据已剔除。source_sha256 对应 2026-10-28 的原始示例。",
   "source_sha256": "cd7c983c620e0459b600ef6d97231c63bada5a5b5fb31ebc84da86594a644dff",
   "nodeInfoList": [
     {
@@ -41,12 +41,6 @@
       "description": null
     },
     {
-      "nodeId": "827",
-      "fieldName": "value",
-      "fieldValue": "1",
-      "description": null
-    },
-    {
       "nodeId": "841",
       "fieldName": "audio",
       "fieldValue": "None",
@@ -82,6 +76,12 @@
       "fieldName": "value",
       "fieldValue": "true",
       "description": null
+    },
+    {
+      "nodeId": "892",
+      "fieldName": "value",
+      "fieldValue": "true",
+      "description": "自动提示词"
     },
     {
       "nodeId": "456",

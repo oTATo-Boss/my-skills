@@ -22,10 +22,14 @@ class H(BaseHTTPRequestHandler):
         if self.path.endswith('/media/upload/binary'):
             return self._send({'code': 0, 'data': {'fileName': 'openapi/up.png'}})
         if '/run/ai-app/' in self.path:
+            payload = json.loads(raw)
             with LOCK:
-                STATE['runs'] += 1; STATE['inflight'] += 1; STATE['peak'] = max(STATE['peak'], STATE['inflight'])
+                STATE['runs'] += 1
                 STATE['apps'].append(self.path.rsplit('/', 1)[-1])
-                STATE['payloads'].append(json.loads(raw))
+                STATE['payloads'].append(payload)
+                if MODE['run'] == 'rejected' or any(n['nodeId']=='827' for n in payload['nodeInfoList']):
+                    return self._send({'errorCode': '803', 'errorMessage': 'NODE_INFO_MISMATCH'})
+                STATE['inflight'] += 1; STATE['peak'] = max(STATE['peak'], STATE['inflight'])
             if MODE['run'] == 'hang': time.sleep(3)
             if MODE['run'] == 'notaskid': return self._send({'status': 'RUNNING'})
             return self._send({'taskId': f"T{STATE['runs']}", 'status': 'RUNNING'})
@@ -37,6 +41,8 @@ class H(BaseHTTPRequestHandler):
             if MODE['query'] == 'never':
                 return self._send({'taskId': tid, 'status': 'RUNNING'})
             with LOCK: STATE['inflight'] = max(0, STATE['inflight'] - 1)
+            if MODE['query'] == 'failed':
+                return self._send({'status': 'FAILED', 'errorCode': '803', 'errorMessage': 'NODE_INFO_MISMATCH'})
             return self._send({'taskId': tid, 'status': 'SUCCESS', 'usage': {'consumeCoins': '1'},
                                'results': [{'url': f'http://127.0.0.1:{PORT}/f.mp4', 'outputType': 'mp4'}]})
         self._send({}, 404)
@@ -90,8 +96,62 @@ chk=json.loads(next((t/'o').glob('j0_T*.json')).read_text()); check('ffprobe inf
 check('pending record has payload, no key', rec['status'] == 'DONE' and 'testkey' not in json.dumps(rec) and rec['payload']['nodeInfoList'])
 check('current app and default to plus', rec['appId'] == '2101232638873858050' and
       STATE['apps'] == ['2101232638873858050'] and rec['payload']['instanceType'] == 'plus')
+# Legacy jobs for the current app use the old count to distinguish real references from padding.
+reset(); t = Path(tempfile.mkdtemp())
+legacy = Path(jobs(t))
+data = json.loads(legacy.read_text())
+data['jobs'][0]['nodeInfoList'].extend([
+    {'nodeId': node, 'fieldName': field, 'fieldValue': value}
+    for node, field, value in [('827','value','2'), ('438','image','openapi/first.png'),
+                               ('435','image','openapi/second.png'), ('437','image','openapi/second.png'),
+                               ('841','audio','openapi/voice.wav'), ('842','audio','None')]
+])
+legacy.write_text(json.dumps(data))
+r = run([str(legacy), '--output', str(t/'o')])
+sent = {(n['nodeId'], n['fieldName']): n['fieldValue']
+        for n in STATE['payloads'][0]['nodeInfoList']} if STATE['payloads'] else {}
+check('legacy same-app job keeps real references and drops obsolete slots',
+      r.returncode == 0 and sent == {('456','text'):'hi', ('438','image'):'openapi/first.png',
+      ('435','image'):'openapi/second.png', ('841','audio'):'openapi/voice.wav'}, r.stdout+r.stderr)
+check('legacy job file remains unchanged', ('827','value','2') in
+      [(n['nodeId'],n['fieldName'],n['fieldValue']) for n in
+       json.loads(legacy.read_text())['jobs'][0]['nodeInfoList']])
+# API-derived jobs may still include empty optional fields without the old count.
+reset(); t = Path(tempfile.mkdtemp())
+current = Path(jobs(t))
+data = json.loads(current.read_text())
+data['jobs'][0]['nodeInfoList'].extend([
+    {'nodeId': node, 'fieldName': field, 'fieldValue': value}
+    for node, field, value in [('438','image','openapi/first.png'), ('435','image',''),
+                               ('437','image','null'), ('841','audio',None), ('842','audio','None')]
+])
+current.write_text(json.dumps(data))
+r = run([str(current), '--output', str(t/'o')])
+sent = {(n['nodeId'], n['fieldName']) for n in STATE['payloads'][0]['nodeInfoList']} if STATE['payloads'] else set()
+check('unused optional media is omitted from API-derived jobs without 827',
+      r.returncode == 0 and sent == {('456','text'), ('438','image')}, r.stdout+r.stderr)
+# A confirmed parameter rejection leaves no task to recover and frees only its own slot.
+reset(run='rejected'); t = Path(tempfile.mkdtemp())
+r = run([jobs(t), '--output', str(t/'o')])
+rec = json.loads((t/'o'/'j0_submitting.json').read_text())
+queue_file, = (t/'o'/'.test-queue').glob('*.json')
+check('803 confirmed rejection releases its reservation',
+      r.returncode != 0 and rec['status'] == 'REJECTED' and not rec.get('taskId') and
+      '803' in rec.get('error','') and not json.loads(queue_file.read_text()) and STATE['runs'] == 1,
+      r.stdout+r.stderr)
+reset(); r = run([jobs(t), '--output', str(t/'o')])
+check('corrected job may submit after confirmed rejection', r.returncode == 0 and STATE['runs'] == 1,
+      r.stdout+r.stderr)
 # 4 resubmit same name after DONE allowed; but open state refused
 r = run([jobs(t), '--output', str(t / 'o')]); check('rerun after DONE allowed', r.returncode == 0)
+# A query can return a terminal failure without repeating the task ID supplied in the request.
+reset(query='failed'); t = Path(tempfile.mkdtemp())
+r = run([jobs(t), '--output', str(t/'o')])
+rec = json.loads((t/'o'/'j0_submitting.json').read_text())
+queue_file, = (t/'o'/'.test-queue').glob('*.json')
+check('803 in terminal query still records the known task and releases its reservation',
+      r.returncode != 0 and rec['status'] == 'FAILED' and rec.get('taskId') == 'T1' and
+      not json.loads(queue_file.read_text()), r.stdout+r.stderr)
 # Old apps are rejected before requests are sent.
 reset(); t = Path(tempfile.mkdtemp()); unknown = t/'old.json'
 unknown.write_text(json.dumps({'jobs':[{'name':'old','appId':'2104753059472990209',

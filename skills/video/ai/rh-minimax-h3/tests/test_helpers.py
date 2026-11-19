@@ -76,13 +76,14 @@ class Helpers(unittest.TestCase):
             for node, file in zip(('438','435','437','439'), images):
                 self.assertEqual(nodes[(node,'image')], {'$upload': str(file.resolve())})
             for node in ('431','429'):
-                self.assertEqual(nodes[(node,'image')], {'$upload': str(images[-1].resolve())})
+                self.assertNotIn((node,'image'), nodes)
             for node, file in zip(('841','842'), audios):
                 self.assertEqual(nodes[(node,'audio')], {'$upload': str(file.resolve())})
             for key, value in [(('456','text'),'test prompt'),(('462','megapixels'),'1.0'),
-                               (('804','value'),'15'),(('827','value'),'4'),(('881','value'),'true'),
+                               (('804','value'),'15'),(('892','value'),'true'),(('881','value'),'true'),
                                (('824','value'),'false'),(('816','text'),'dynv2,r34l1sm')]:
                 self.assertEqual(nodes[key], value)
+            self.assertNotIn(('827','value'), nodes)
             expected=[('813','MysticXXX_MMH3-V5.1.safetensors',0.4),
                       ('817','Minimax-H3-Digicam-Realism Improve Lora.safetensors',0.6),
                       ('815','h3-realism-people-t2v-i2v-r2v_new.safetensors',0.4),
@@ -111,11 +112,20 @@ class Helpers(unittest.TestCase):
             self.assertNotEqual(run(['--seconds','16'], 'bad-length.json').returncode, 0)
             self.assertNotEqual(run(['--quality','1080P','--instance','plus'], 'bad-instance.json').returncode, 0)
             self.assertNotEqual(run(['--audio',str(image),'--audio',str(image),'--audio',str(image)], 'too-many-audio.json').returncode, 0)
-            r=run(['--output-format','zip','--lora-4-strength','0','--lora-trigger','custom','--version-switch','false'],'custom.json')
+            r=run(['--output-format','zip','--lora-4-strength','0','--lora-trigger','custom',
+                   '--version-switch','false','--auto-prompt','false'],'custom.json')
             self.assertEqual(r.returncode,0,r.stderr)
             n={(str(x['nodeId']),x['fieldName']):x['fieldValue'] for x in json.loads((tmp/'custom.json').read_text())['jobs'][0]['nodeInfoList']}
             self.assertEqual(n[('824','value')],'true');self.assertEqual(n[('881','value')],'false')
+            self.assertEqual(n[('892','value')],'false')
             self.assertEqual(float(n[('888','strength_model')]),0);self.assertEqual(n[('816','text')],'custom')
+            self.assertEqual({key for key in n if key[1] in ('image','audio')}, {('438','image')})
+            images = [('435','image'),('437','image'),('439','image'),('431','image'),('429','image')]
+            r = run(['--image', str(image)] * 5, 'six-images.json')
+            self.assertEqual(r.returncode, 0, r.stderr)
+            six = json.loads((tmp/'six-images.json').read_text())['jobs'][0]['nodeInfoList']
+            self.assertEqual([(n['nodeId'], n['fieldName']) for n in six if n['fieldName']=='image'],
+                             [('438','image'), *images])
 
     def test_reject_other_app_and_high_resolution_on_plus(self):
         with tempfile.TemporaryDirectory() as tmp:

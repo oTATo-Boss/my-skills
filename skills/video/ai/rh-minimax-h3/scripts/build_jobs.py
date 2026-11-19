@@ -7,6 +7,9 @@ from pathlib import Path
 
 MAP = Path(__file__).resolve().parents[1] / 'references/node_map.json'
 APP_ID = '2101232638873858050'
+IMAGE_NODES = ('438', '435', '437', '439', '431', '429')
+AUDIO_NODES = ('841', '842')
+LEGACY_IMAGE_COUNT = ('827', 'value')
 ASPECTS = {
     '1:1': '1:1 (Square)', '2:3': '2:3 (Portrait Photo)', '3:2': '3:2 (Photo)',
     '3:4': '3:4 (Portrait Standard)', '4:3': '4:3 (Standard)',
@@ -31,6 +34,7 @@ def main():
     parser.add_argument('--audio', type=Path, action='append', default=[])
     parser.add_argument('--output-format', choices=('video', 'zip'), default='video')
     parser.add_argument('--version-switch', choices=('true', 'false'), help='应用 v1/v2 布尔开关，默认沿用已测示例 true')
+    parser.add_argument('--auto-prompt', choices=('true', 'false'), help='自动提示词开关，默认开启')
     for number in (1, 2, 3, 4):
         parser.add_argument(f'--lora-{number}-name')
         parser.add_argument(f'--lora-{number}-strength', type=float)
@@ -39,7 +43,7 @@ def main():
     args = parser.parse_args()
     if not 5 <= args.seconds <= 15:
         parser.error('时长须为 5–15 秒')
-    if not 1 <= len(args.image) <= 6 or len(args.audio) > 2:
+    if not 1 <= len(args.image) <= len(IMAGE_NODES) or len(args.audio) > len(AUDIO_NODES):
         parser.error('须提供 1–6 张参考图，最多 2 段音频；纯文生未验证')
     megapixels = args.megapixels if args.megapixels is not None else QUALITY_MP.get(args.quality or '720P')
     if not math.isfinite(megapixels) or not 0.1 <= megapixels <= 16:
@@ -54,7 +58,8 @@ def main():
     if mapping.get('appId') != APP_ID:
         parser.error('节点映射的应用 ID 不匹配')
     nodes = [{k: n[k] for k in ('nodeId', 'fieldName', 'fieldValue')}
-             for n in mapping['nodeInfoList']]
+             for n in mapping['nodeInfoList']
+             if (str(n['nodeId']), n['fieldName']) != LEGACY_IMAGE_COUNT]
     by_key = {(str(n['nodeId']), n['fieldName']): n for n in nodes}
 
     def set_value(node_id, field, value):
@@ -72,22 +77,19 @@ def main():
 
     for node in nodes:
         if node['fieldName'] in ('image', 'audio'):
-            node['fieldValue'] = 'None'
+            node['fieldValue'] = None
     set_value('456', 'text', prompt)
     set_value('804', 'value', args.seconds)
     set_value('462', 'megapixels', megapixels)
     set_value('462', 'aspect_ratio', ASPECTS[args.aspect])
-    set_value('827', 'value', len(args.image))
     set_value('824', 'value', str(args.output_format == 'zip').lower())
     if args.version_switch is not None:
         set_value('881', 'value', args.version_switch)
-    image_nodes = ('438', '435', '437', '439', '431', '429')
-    for node_id, path in zip(image_nodes, args.image):
+    if args.auto_prompt is not None:
+        set_value('892', 'value', args.auto_prompt)
+    for node_id, path in zip(IMAGE_NODES, args.image):
         media(node_id, 'image', path)
-    # The user's successful V2 task used the last real image for unused sockets.
-    for node_id in image_nodes[len(args.image):]:
-        media(node_id, 'image', args.image[-1])
-    for node_id, path in zip(('841', '842'), args.audio):
+    for node_id, path in zip(AUDIO_NODES, args.audio):
         media(node_id, 'audio', path)
     for number, node_id in enumerate(('813', '817', '815', '888'), 1):
         name = getattr(args, f'lora_{number}_name')
@@ -100,6 +102,7 @@ def main():
             set_value(node_id, 'strength_model', strength)
     if args.lora_trigger is not None:
         set_value('816', 'text', args.lora_trigger)
+    nodes = [n for n in nodes if n['fieldName'] not in ('image', 'audio') or n['fieldValue'] is not None]
     job = {'name': args.name, 'appId': APP_ID, 'instanceType': instance,
            'usePersonalQueue': False, 'nodeInfoList': nodes}
     args.output.parent.mkdir(parents=True, exist_ok=True)

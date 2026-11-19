@@ -4,7 +4,7 @@
 - kind: `local`
 - status: `confirmed`
 - source: 已确认的用户二创／整合版本；本地开发／维护目录 `skills/video/ai/rh-minimax-h3`；当前维护仓库 https://github.com/oTATo-Boss/my-skills
-- version: 4.1.0
+- version: 4.2.0
 - author: oTATo-Boss（用户本人）；2026-10-30 在当前对话明确确认本人制作，Agent 辅助编写／整理。
 - license: MIT（2026-10-14 本人决定，见 [LICENSE](<LICENSE>)）
 - collected_at: unknown；没有可靠安装／导入日期。
@@ -44,3 +44,7 @@
 ## 4.1.0 · 跨 Skill 共享并发
 
 2026-10-31：按用户指定，同一 RunningHub API Key 合计最多3个远端在途任务，默认并发与滚动补位。新增两包一致的 rh_queue.py 协议实现，使用本机文件锁和持久预约协调多个进程；确认终态后释放，提交不明或查询失败保留预约。Qwen 新增 jobs 批量入口，H3 沿用原批量入口；下载阶段不占远端名额。离线5进程混合测试、Qwen批量测试与H3假服务回归通过，未新增收费生成；本机队列不覆盖未接入的其他工具或机器。
+
+## 4.2.0 · RunningHub 小白版 V2 节点更新
+
+2026-11-19：对照同一应用的 `apiCallDemo` 核实 `827/value` 已移除、未使用参考图槽为空、自动提示词节点为 `892/value`。先前一笔单图任务使用修正字段成功出片。此次更新验证采用离线构造器和本地假服务，不含新的收费视频任务。来源与字段说明见 [api.md](references/api.md)。
