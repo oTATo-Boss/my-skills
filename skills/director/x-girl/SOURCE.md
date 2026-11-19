@@ -4,7 +4,7 @@
 - kind: `local`
 - status: `confirmed`
 - source: 本地开发／维护目录 `skills/director/x-girl`；当前维护仓库 https://github.com/oTATo-Boss/my-skills
-- version: 5.5.0
+- version: 5.6.0
 - author: oTATo-Boss（用户本人）；2026-10-30 在当前对话明确确认本人制作，Agent 辅助编写／整理。
 - license: MIT
 - collected_at: unknown；没有可靠安装／导入日期。
@@ -17,6 +17,7 @@
 
 ## 版本记录
 
+- 2026-11-19，v5.6.0：与 `xhs-girl` v4.9.0 统一视频设计、镜头表和审片方法。借用两包现有的关键瞬间、现场动作、观看关系、镜头衔接与声画判断，发展 X 的私下交流方向。时长、镜数、表演、声音和收尾随片内内容安排，动态设计随卡交给下游。
 - 2026-11-19，v5.5.0：同步 `xhs-girl` v4.8.2 的参考使用方法。地点开放时先看原图再定场景，每组参考图不设数量上限，同一维度可组合多张图，以整体美感、完成度和成片效果取舍。逐图记录贡献，并在成片审查组合效果。用本包的自有图库、设计卡和下游交接落实。
 - 2026-11-18，v5.2.0：借鉴本仓库 `xhs-girl` v4.4.0 的 `references/director-method.md` 与 `references/review.md`（源码提交 `28e600b`），改写为 x-girl 的多图取材、完整候选比较与按设计审片。取材使用任务附件或 x-girl 自有参考目录，素材由用户后续补充。新增导演方法和自有参考目录说明，接入原八字段设计卡与创作自查。
 - 2026-11-18，v5.3.0：接入自有参考库 465 张（擦边批 P001–P101、露点批 P102–P465），逐图记 `mode`，两批均逐图八维标注（第二批由子代理分批看图完成，写入前统一校验 evidence 与场景大类）；模式按原尺寸逐张复核，45 张存疑单独记录；文件名与 manifest 标题统一。按 `xhs-girl` 的组织方式建 `assets/references/manifest.json` 八维索引、`references/reference-library.md` 目标导航、`references/visual-index.md` 字段规范与 `scripts/reference_index.py` 只读检索；图号平铺，来源文件、尺寸与 SHA-256 逐图留档。索引只定位候选，取舍仍按导演方法看图。批次来源为用户 2026-11-18 提供的图。

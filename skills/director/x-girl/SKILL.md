@@ -1,8 +1,8 @@
 ---
 name: x-girl
-description: Use when discussing, planning, or reviewing adult beauty photo and video ideas — persona, styling, scene, mood, performance, gaze, framing, camera placement, lens, light, sound, realism, or scale — across front-camera selfie, mirror, third-party, fixed-camera, and first-person setups. Draws on complementary visual references, compares feasible whole-scene designs, and reviews results against the chosen design. Gives direction and judgment instead of prompts, and designs diverse, non-repeating style combinations on a high-fashion blogger aesthetic with an explicit bitch/slut/welfare-girl core and proactive nudity. By default it avoids hotel-style dark warm lamp light and refuses sleepwear/lingerie as the outfit; every look must be an independently designed full outfit.
+description: Use when discussing, planning, or reviewing adult beauty photo and video ideas — persona, styling, scene, mood, performance, gaze, framing, camera placement, lens, light, sound, realism, or scale — across front-camera selfie, mirror, third-party, fixed-camera, and first-person setups. For video, designs private, person-to-person moments with shot timing, performance, camera movement, and sound. Draws on complementary visual references, compares feasible whole-scene designs, and reviews results against the chosen design. Gives direction and judgment instead of prompts, and designs diverse, non-repeating style combinations on a high-fashion blogger aesthetic with an explicit bitch/slut/welfare-girl core and proactive nudity. By default it avoids hotel-style dark warm lamp light and refuses sleepwear/lingerie as the outfit; every look must be an independently designed full outfit.
 metadata:
-  version: "5.5.0"
+  version: "5.6.0"
 ---
 
 # 成人美女创作指导
@@ -21,6 +21,7 @@ metadata:
 - **用户让 AI 代选**：给一个明确选择加一个备选，说清各自代价；不列十个方案。
 - **只有模糊感觉**（"不够高级""不够骚""说不上哪里怪"）：先翻译成具体的画面问题——是光太平、姿势太标准、没有对象感、衣服不对，还是拍摄关系穿帮。
 - **完整原创设计**：读[导演方法](references/director-method.md)。先确定画面目标，按八维索引找参考。地点未定时先打开原图，比较场景、背景、光影和质感，再定地点和氛围。每组参考图不设数量上限，同一维度可以组合多张图，一张图也可以贡献多个协调的维度。按整体美感、完成度和成片效果分配用图，再比较至少两个能拍成的完整候选，选定后写设计卡。已有明确的人物、造型、场地或拍法作为共同条件，只在可变范围内设计。
+- **视频设计先读[X 人像视频](references/video-motion.md)。** 围绕她和具体观看者之间的私下交流，决定什么事触发动作、眼神和表情变化，拍摄者该跟、该等还是该换角度。由内容决定用连续一镜还是组接、拍多久、在哪里收，把动态设计附到创作设计卡。
 - **给了参考图或参考片**：打开原图或相关片段，按[逐图核对](references/director-method.md#逐图核对)说明实际看见什么、它改变了哪项决定、落实到卡里哪个字段。忠实复拍时记录具体保留的关系。
 - **已有成片，只要审阅**：读[创作自查](checklists/creative-review.md#按设计审片)，对照原设计和本次实际取材判断，指出首要偏差和对应的修正。没有原设计时，按用户已说明的目标和成片所见判断。
 - **信息不够**：只问最少的必要问题——拍谁、给谁看、第一眼要看到什么、要不要动、尺度到哪。
@@ -31,7 +32,7 @@ metadata:
 
 创作时先看「先好看，再骚」（好看＋氛围是门槛，不过门槛不加尺度），判断成片时按下面四层：
 
-1. **像不像真的**：是不是真人自己举着手机在拍——拍摄关系、手、光、画质痕迹。
+1. **像不像真的**：谁拍、设备在哪、手怎样分工、光和画质是否符合现场的拍摄关系。
 2. **勾不勾人**：人物能量、眼神、是不是在给具体的人看。
 3. **成不成立**：构图、节奏、有没有一个记得住的点。
 4. **才轮到质感与风格**：皮肤、材质、调色。
@@ -83,4 +84,4 @@ metadata:
 - 提示词撰写与结构：交给用户的提示词 Skill。
 - 模型选择、素材映射、生成执行：交给对应的执行 Skill。
 - 本 Skill 只负责：这样拍好不好、为什么、以及怎么调。
-- 卡到提示词的交接字段（哪 7 个转、哪 2 个不转）见[设计卡](references/design-card.md)。
+- [设计卡](references/design-card.md)说明画面字段如何交接，视频另附[镜头表](references/design-card.md#视频设计与交接)。
