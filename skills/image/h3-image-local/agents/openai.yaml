@@ -1,0 +1,4 @@
+interface:
+  display_name: "H3 Image Local"
+  short_description: "用本机 MiniMax H3 Image 原版六步生成和编辑 PNG 图片"
+  default_prompt: "用 $h3-image-local 在本机生成一张 3:4 的写实图片，并保存 PNG。"

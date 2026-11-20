@@ -1,6 +1,6 @@
 # image 项目技能索引
 
-技能数量：8
+技能数量：9
 
 [返回项目总索引](../../SKILLS_INDEX.md)
 
@@ -13,6 +13,7 @@
 - [json-prompt-system](json-prompt-system/SKILL.md) — 生成对镜自拍、前置自拍、他拍与时尚大片的完整生图提示词，支持仅输出动作 JSON，参考图规则按任务编写；v3.1.0（已撤回显式摄影设计分支）。
 - [Character Design（character-design）](character-design/SKILL.md) — 完成角色参考板、服装造型与状态裂变；v1.7.1，五模式各五模板；可扩充的文字预设模块含“正常人体比例3D动画预设”1.0.1，已修正偏写实倾向；宫格3:4、独立全身9:16横向三视。
 - [codex-imagegen](codex-imagegen/SKILL.md) — 供其他 Agent 通过本机已登录的 Codex CLI 调用生图与图片编辑能力。
+- [h3-image-local](h3-image-local/SKILL.md) — 通过本机 MiniMax H3 Image MLX 原版六步生成 PNG 和参考图编辑。
 
 ## Midjourney 执行
 
