@@ -1,8 +1,8 @@
 ---
 name: x-girl
-description: Use when discussing, planning, or reviewing adult beauty photo and video ideas — persona, styling, scene, mood, performance, gaze, framing, camera placement, lens, light, sound, realism, or scale — across front-camera selfie, mirror, third-party, fixed-camera, and first-person setups. For video, designs private, person-to-person moments with shot timing, performance, camera movement, and sound. Draws on complementary visual references, compares feasible whole-scene designs, and reviews results against the chosen design. Gives direction and judgment instead of prompts, and designs diverse, non-repeating style combinations on a high-fashion blogger aesthetic with an explicit bitch/slut/welfare-girl core and proactive nudity. By default it avoids hotel-style dark warm lamp light and refuses sleepwear/lingerie as the outfit; every look must be an independently designed full outfit.
+description: "Use to design or review adult beauty photos and videos with a high-fashion blogger aesthetic. Develops one detailed design grounded in eight facets of visual reference, from styling and performance to framing, lighting, and finish. For video, designs private person-to-person moments and their shots. Delivers creative direction through a design card, with prompt writing handed downstream."
 metadata:
-  version: "5.6.0"
+  version: "5.7.0"
 ---
 
 # 成人美女创作指导
@@ -17,10 +17,11 @@ metadata:
 
 按问题选择路径，创作方向和修改建议落到「创作设计卡」（见下文「输出」）。
 
+**一次调用只做深一个方案。** 从观看关系和一个记忆点出发，把妆造、空间、表演、机位与光色做到可拍。多案探索、比较与选案在本 Skill 之外完成，本 Skill 接收已定方向或直接深化一个设计。组图的各张和短片的各镜共同实现这个方案。
+
 - **只问一句**：直接给判断和理由，一两句说清，不铺开。
-- **用户让 AI 代选**：给一个明确选择加一个备选，说清各自代价；不列十个方案。
 - **只有模糊感觉**（"不够高级""不够骚""说不上哪里怪"）：先翻译成具体的画面问题——是光太平、姿势太标准、没有对象感、衣服不对，还是拍摄关系穿帮。
-- **完整原创设计**：读[导演方法](references/director-method.md)。先确定画面目标，按八维索引找参考。地点未定时先打开原图，比较场景、背景、光影和质感，再定地点和氛围。每组参考图不设数量上限，同一维度可以组合多张图，一张图也可以贡献多个协调的维度。按整体美感、完成度和成片效果分配用图，再比较至少两个能拍成的完整候选，选定后写设计卡。已有明确的人物、造型、场地或拍法作为共同条件，只在可变范围内设计。
+- **完整原创设计**：读[导演方法](references/director-method.md)。妆造、场景、背景、表情、动作、构图、光影与质感八个维度都要有实际查看且用上的参考，同一张图可支撑多个维度。逐图写清所见与设计卡落点，按缺口补查，仍缺证据时如实标明并记录原创补足。沿用已确认的人物、造型、场地或拍法。
 - **视频设计先读[X 人像视频](references/video-motion.md)。** 围绕她和具体观看者之间的私下交流，决定什么事触发动作、眼神和表情变化，拍摄者该跟、该等还是该换角度。由内容决定用连续一镜还是组接、拍多久、在哪里收，把动态设计附到创作设计卡。
 - **给了参考图或参考片**：打开原图或相关片段，按[逐图核对](references/director-method.md#逐图核对)说明实际看见什么、它改变了哪项决定、落实到卡里哪个字段。忠实复拍时记录具体保留的关系。
 - **已有成片，只要审阅**：读[创作自查](checklists/creative-review.md#按设计审片)，对照原设计和本次实际取材判断，指出首要偏差和对应的修正。没有原设计时，按用户已说明的目标和成片所见判断。
@@ -64,9 +65,9 @@ metadata:
 | 婊子／骚货／福利姬内核、卖／要／发、主动露点、高级感落点 | [福利姬内核](references/slut-core.md)（必读） |
 | 高级名媛／擦边网红级造型语言、廓形／领口／露肤／配饰、露点递出 | [造型库](references/lookbook.md)（必读） |
 | 先好看再骚、氛围、骚四变量、人设、造型设计、场景、网黄质感、表演关系、美感、尺度 | [创作方向](references/direction-core.md)（必读） |
-| 组装器：人设气质、原料轴、正反例、禁用清单、氛围方向、状态，随机组装新搭配 | [风格库](references/style-library.md)（必读） |
+| 人设气质、服装原料、正反例、禁用清单、氛围方向与状态 | [风格库](references/style-library.md)（必读） |
 | 设计卡模板、字段填写与反套路自检 | [设计卡](references/design-card.md)（必读） |
-| 完整原创、多图或多片段取材、完整候选比较 | [导演方法](references/director-method.md) |
+| 八维取材、深化一个设计、设计卡落点 | [导演方法](references/director-method.md) |
 | 谁在拍、手机在哪、画幅、机位、焦段、手怎么分工 | [拍摄与镜头](references/capture-and-lens.md) |
 | 照片、一组图、封面、姿势、光比、皮肤质感 | [图片创作](references/stills.md) |
 | 短视频、镜头运动、表演、节奏、声音、收尾 | [视频创作](references/video-motion.md) |
@@ -77,7 +78,7 @@ metadata:
 
 福利姬内核、造型库、创作方向、风格库和设计卡是必读，其余按问题取一份到两份；不要为了完整而全部加载，也不要把参考里的默认值当成用户没说的硬指标。
 
-自有参考共 465 张（P001–P465，擦边批 P001–P101、露点批 P102–P465），按[参考导航](references/reference-library.md)找候选、打开图片再取舍；检索用 `python3 scripts/reference_index.py`（可按 `--mode 露点/擦边` 收窄），索引与图号总览见[参考库](assets/references/README.md)。没有合适参考时按原创设计走。
+自有参考共 465 张（P001–P465，擦边批 P001–P101、露点批 P102–P465）。按[参考导航](references/reference-library.md)找素材并打开原图核对。检索用 `python3 scripts/reference_index.py`（可按 `--mode 露点/擦边` 收窄），图号总览见[参考库](assets/references/README.md)。
 
 ## 与其他 Skill 的分工
 

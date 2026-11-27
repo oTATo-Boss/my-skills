@@ -4,11 +4,11 @@
 - kind: `local`
 - status: `confirmed`
 - source: 本地开发／维护目录 `skills/director/x-girl`；当前维护仓库 https://github.com/oTATo-Boss/my-skills
-- version: 5.6.0
+- version: 5.7.0
 - author: oTATo-Boss（用户本人）；2026-10-30 在当前对话明确确认本人制作，Agent 辅助编写／整理。
 - license: MIT
 - collected_at: unknown；没有可靠安装／导入日期。
-- recorded_at: `2026-11-02`
+- recorded_at: `2026-11-27`
 - evidence: [SOURCE_NOTES.md](</Users/griffith/Desktop/AI/我的项目/my skills/SOURCE_NOTES.md>)、[INSTALL_MAP.json](</Users/griffith/Desktop/AI/我的项目/my skills/INSTALL_MAP.json>)、包内声明 [package.json](<package.json>)。历史 v4.1.0 入口快照 SHA-256 为 `ea04e4beaedcc41269ee7cae7106b3e1e79762dd554362bff08a63dfe50241f4`。
 
 ## 本地调整与边界
@@ -17,6 +17,7 @@
 
 ## 版本记录
 
+- 2026-11-27，v5.7.0：按用户要求一次深化一个方案，移除候选设计、代选与随机组装流程。完整原创在设计卡和视频镜头表追溯八维参考及其落点。
 - 2026-11-19，v5.6.0：与 `xhs-girl` v4.9.0 统一视频设计、镜头表和审片方法。借用两包现有的关键瞬间、现场动作、观看关系、镜头衔接与声画判断，发展 X 的私下交流方向。时长、镜数、表演、声音和收尾随片内内容安排，动态设计随卡交给下游。
 - 2026-11-19，v5.5.0：同步 `xhs-girl` v4.8.2 的参考使用方法。地点开放时先看原图再定场景，每组参考图不设数量上限，同一维度可组合多张图，以整体美感、完成度和成片效果取舍。逐图记录贡献，并在成片审查组合效果。用本包的自有图库、设计卡和下游交接落实。
 - 2026-11-18，v5.2.0：借鉴本仓库 `xhs-girl` v4.4.0 的 `references/director-method.md` 与 `references/review.md`（源码提交 `28e600b`），改写为 x-girl 的多图取材、完整候选比较与按设计审片。取材使用任务附件或 x-girl 自有参考目录，素材由用户后续补充。新增导演方法和自有参考目录说明，接入原八字段设计卡与创作自查。

@@ -1,10 +1,10 @@
 # x-girl
 
-当前版本为 5.6.0。成人美女题材的创作指导：图片与视频，前置自拍、镜面自拍、他拍、架机固定与第一人称被拍；基准是"高级出片感的福利姬"——高级名媛／穿搭博主／颜值博主／擦边网红级审美的底子，婊子／骚货／福利姬的内核，主动露点；两种模式：默认「露点模式」＋「擦边模式」（不漏点，最极致擦边）；给判断和方向、也给出随机风格化设计；固定产出八字段「创作设计卡」＋自检，不写提示词。
+当前版本为 5.7.0。成人美女图片和视频创作指导，覆盖自拍、镜拍、他拍、固定机位与第一人称。每次深化一个完整方案，以八字段「创作设计卡」交接。视频加镜头表，提示词由下游负责。
 
 按问题取用：福利姬内核、造型库、创作方向、风格库和设计卡是必读，拍摄与画面读一份，图片或视频只读相关的那份。默认值只是起点，用户说了别的就跟用户走。
 
-完整原创按[导演方法](references/director-method.md)取材并比较完整候选，选定后写设计卡。每组按画面需要选参考图，同一维度可组合多个来源。地点开放时先看图再定场景。有成片时按[创作自查](checklists/creative-review.md#按设计审片)回看选定关系。自备素材可放在 [x-girl 自有参考目录](assets/references/README.md)。
+完整原创按[导演方法](references/director-method.md)落实八维参考。同一来源可支撑多个维度，按缺口补查。一份设计卡统筹造型、表演和拍摄细节。有成片时按[创作自查](checklists/creative-review.md#按设计审片)核对设计的兑现情况。自备素材可放在 [x-girl 自有参考目录](assets/references/README.md)。
 
 有入选参考时附[逐图简表](references/director-method.md#逐图核对)，说明它实际改变了哪项设计，以及该决定写入设计卡的哪个字段。下游生成后回填实际 Prompt 原句和成片兑现证据。
 
@@ -23,7 +23,7 @@ skills/director/x-girl/
 │   ├── direction-core.md         # 必读③ 创作方向（判断内核）
 │   ├── style-library.md          # 必读④ 风格库（组装器：原料轴＋正反例）
 │   ├── design-card.md            # 必读⑤ 创作设计卡（固定输出＋自检）
-│   ├── director-method.md        # 完整原创：多图取材、候选比较、验收条件
+│   ├── director-method.md        # 完整原创：八维取材、深化方案、验收条件
 │   ├── safe-mode.md              # 擦边模式（不漏点，单独一套完整模式）
 │   ├── capture-and-lens.md       # 按需：拍摄与镜头
 │   ├── stills.md                 # 按需：图片
@@ -35,7 +35,7 @@ skills/director/x-girl/
 三层分工：
 
 - **入口 `SKILL.md`**：只做「怎么接话 + 去哪读」——讨论方式、判断顺序、边界、路由。
-- **必读五份（每次都读）**：`slut-core.md`（福利姬内核：卖／要／发、主动露点、高级感落点）＋ `lookbook.md`（造型库：廓形／领口／露肤／配饰、露点递出）＋ `direction-core.md`（判断内核：先好看再骚 → 氛围调子 → 骚四变量 → 表演关系／真实感／主动能量 → 不露也骚 → 尺度）＋ `style-library.md`（组装器：人设气质、原料轴、正反例、禁用清单，随机组装新搭配）＋ `design-card.md`（固定输出：八字段创作设计卡＋露点必达／造型骚感／露点方式／博主感＋高级感／防重复自检）。
+- **必读五份（每次都读）**：`slut-core.md`（创作基准）＋ `lookbook.md`（造型语言）＋ `direction-core.md`（画面判断）＋ `style-library.md`（人设、服装原料与氛围）＋ `design-card.md`（八字段交接与自检）。
 - **按需（按问题取一份到两份）**：谈拍摄读 `capture-and-lens.md`（五种拍摄方式），谈图读 `stills.md`，谈片读 `video-motion.md`，要判断行不行读 `creative-review.md`，要进不漏点／擦边读 `safe-mode.md`（擦边模式，单独一套完整模式）。
 
 | 文件 | 职责 | 层级 |
@@ -44,15 +44,17 @@ skills/director/x-girl/
 | `references/slut-core.md` | 婊子／骚货／福利姬内核、卖／要／发、主动露点、高级感落点 | 必读 |
 | `references/lookbook.md` | 高级名媛／擦边网红级造型语言、廓形／领口／露肤／配饰、露点递出 | 必读 |
 | `references/direction-core.md` | 先好看再骚、氛围、骚四变量、人设、造型设计、场景、网黄质感、表演关系、真实感、美感、尺度 | 必读 |
-| `references/style-library.md` | 人设气质、原料轴、正反例、禁用清单、氛围方向、状态，随机组装新搭配 | 必读 |
+| `references/style-library.md` | 人设气质、服装原料、正反例、禁用清单、氛围方向与状态 | 必读 |
 | `references/design-card.md` | 创作设计卡模板、字段填写与露点必达／造型骚感／露点方式／博主感＋高级感／防重复自检 | 必读 |
-| `references/director-method.md` | 分配参考贡献、比较两个完整候选、记录验收条件 | 完整原创 |
+| `references/director-method.md` | 八维参考贡献、深化一个设计及验收条件 | 完整原创 |
 | `references/safe-mode.md` | 擦边模式（不漏点）：边界、七个杠杆、卖／要／发落点、造型、拍摄、判断顺序、设计卡适配 | 按需（擦边时必读） |
 | `references/capture-and-lens.md` | 五种拍摄方式、手机物理、手部契约、画幅、机位、焦段、手机画质、穿帮 | 按需 |
 | `references/stills.md` | 单张、一组图、封面、姿势、构图、光比、皮肤、质感、发布形态 | 按需 |
 | `references/video-motion.md` | 私下观看关系、表演与镜头设计、声画、镜头表和审片 | 按需 |
 | `checklists/creative-review.md` | 按设计审片、定位返修环节、通用与分媒介自查 | 审阅成片或按需 |
 | `SOURCE.md` | 来源与版本记录 | — |
+
+v5.7.0 改为一次深化一个方案，落实八维参考，移除多案比较与随机搭配流程。
 
 v5.6.0 与 xhs-girl 统一视频设计和镜头交接，按片内动作与私下交流选择拍法、节奏和声音。
 

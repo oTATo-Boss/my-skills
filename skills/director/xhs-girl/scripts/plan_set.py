@@ -1,17 +1,6 @@
-"""Optional random exploration for an explicitly requested xhs-girl candidate set.
+"""Legacy standalone random planner retained for existing direct CLI callers.
 
-Run from the skill root:
-  python3 scripts/plan_set.py --look-only            # 只抽造型（出造型板时）
-  python3 scripts/plan_set.py --count 4
-  python3 scripts/plan_set.py --count 3 --mode mixed
-  python3 scripts/plan_set.py --count 4 --scene "便利店门口" --type 怼脸自拍
-
---focus face (default) favours close-ups; --focus outfit favours mirror, seated and full-body.
-post  (default): one post, same makeup/hair/outfit/finish, every shot a different picture type.
-mixed: independent images, each with its own look, scene and finish.
-The default creative workflow uses director-method.md and reference_index.py instead.
-Use this draw only for explicit random/exploratory requests; inspect and reconcile candidates.
-Pass --seed only to reproduce a plan.
+The skill's creative workflow uses director-method.md and reference_index.py.
 """
 import argparse
 import datetime

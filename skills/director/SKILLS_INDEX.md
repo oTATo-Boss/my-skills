@@ -6,5 +6,5 @@
 
 - [direct-video](direct-video/SKILL.md) — 统筹视频创意、制作路线、分镜、节奏、声音和成片验收。
 - [visual-creative-director](visual-creative-director/SKILL.md) — 为视频、人物、品牌、界面及 3D 建立统一视觉创意方向。
-- [x-girl](x-girl/SKILL.md) — 成人向图片与视频创作，视频侧重私下交流与观看距离，用设计卡和镜头方案交接。v5.6.0。
-- [xhs-girl](xhs-girl/SKILL.md) — 小红书手机人像照片与视频，八维选图，视频侧重精美出片与现场氛围。v4.9.0。
+- [x-girl](x-girl/SKILL.md) — 用八维参考深化一个成人向图片或视频方案，以设计卡和镜头表交接。v5.7.0。
+- [xhs-girl](xhs-girl/SKILL.md) — 用八维参考深化一个小红书手机人像或视频方案，侧重精美出片与现场氛围。v4.10.0。
