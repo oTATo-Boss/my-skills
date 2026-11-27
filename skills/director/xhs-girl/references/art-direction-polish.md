@@ -75,25 +75,42 @@
 
 ---
 
-## 四、3 连拍组图节奏与终稿自然语言检查
+## 四、3 连拍组图节奏与提交前 4 项硬门槛
 
 - **3 张组图节奏**：在角色、服装、场景与主光保持一致的前提下，按以下节奏拉开变化（不覆盖用户指定拍法）：
   1. **Shot 1（确立）**：七分身／中景，交代完整穿搭比例、人物情绪主向量与真实环境。
   2. **Shot 2（互动／侧转）**：换角度侧身轮廓或与道具／空间互动（靠扶手、拿杯子、拨碎发、挑衣服等）。
   3. **Shot 3（特写／对镜）**：近景面部与肩颈特写、对镜或亲密道具瞬间，放大妆容光泽、眼神光与衣料肌理。
-- **终稿自然语言自检**：
-  - 已写清具体镜头景深（手机主摄／CCD 小底深景深）、光源方向与性质、布料材质与受力、1–2 件克制首饰、3–4 个连贯生活微瑕疵；
-  - 已剔除全部质量空词（`8k`、`masterpiece`、`cinematic` 等）和默认路线禁用摄影特效；
-  - 人物五官、发型、体态数值与参考职责按当前真实任务展开，不照抄下方蓝本的人物或套装。
+
+### 提交前 4 项硬门槛（缺一不可）
+写完最终自然语言提示词准备提交前，必须逐条核对以下 4 项，未达标先补改再提交：
+1. **单向量张力是否推满**：是否锁定了一个清晰向量（纯欲／超甜／高奢／清爽运动），且机位距离、体态重心、微表情、妆发剪裁全部朝同一方向发力（不是礼貌微笑的 75 分安全摆拍）。
+2. **朋友相机光学与 3 类真实布光**：默认路线下是否明确写出 24–28mm 手机主摄或复古 CCD 小底深景深（背景自然可辨），并落入 3 类讨喜真实布光之一（直闪／干净自然日光／室内暖射灯）。
+3. **3–4 个连贯生活微瑕疵**：场景是否避开破旧脏乱与无菌白房，并在画面中落入 3–4 个真实、连贯的生活细节物件（而非空荡摆拍）。
+4. **0 个 AI 味禁用词**：确认全文已清除 `f/1.4` 奶油虚化、慢门霓虹拖影、百叶窗光栅、`0.5x` 建筑畸变、发灰阴天／冷荧光，以及 `8k`、`masterpiece`、`cinematic`、`editorial photography`、`atmospheric lighting` 等质量空词。
 
 ---
 
-## 五、实测自然语言结构蓝本（仅作写法参考）
+## 五、实测 90+ 分自然语言完整蓝本（原版颗粒度参考）
 
-以下 5 例仅示范「镜头景深＋布光＋张力＋3–4 个生活微瑕疵」的自然语言组织方式，落地时一律替换为本次角色的真实身份、发型、体态与已定服装／场景：
+以下 5 则为实测高分结构蓝本，完整保留英文摄影微词颗粒度，供撰写英文或双语细节提示词时直接参照。**仅参考镜头景深、布光、张力与生活微瑕疵的写法密度；角色五官、发型、体态数值与服装场景一律以本次真实任务与参考为准，不照抄示例人物或套装。**
 
-1. **纯欲深色丝绒酒廊（便携机直闪）**：近距微俯拍便携数码相机直闪抓拍，保持参考人物五官、发型与身材比例；水光肌与锁骨高光、微晕棕眼线、微张浆果水光唇；象牙白垂坠缎面束腰上衣配细蕾丝鸡心领、单侧细肩带轻滑落肩头、高腰深色短裙与极细银色锁骨链；前倾轻倚昏暗高质感酒廊深色丝绒沙发扶手，微弓背转腰，指尖轻搭锁骨，透过睫毛直视镜头带呼吸感凝视（无礼貌微笑）；机顶直闪混合暖琥珀壁灯，让肤质、唇光、缎面光泽与眼神光突出于深暗卡座阴影，深色桌面清晰可见喝了一半的鸡尾酒与迷你手拿包，真实小底深景深、轻微复古直闪高光晕染与细腻颗粒，3:4 竖版。
-2. **超甜双丝带甜品卡座（近距高机位直闪）**：24mm 便携相机近距高机位直闪抓拍；眼下至鼻梁草莓腮红、卧蚕微闪、果冻唇，毛绒浅粉马海毛大毛衣超长袖半遮手背、微露单肩白蕾丝吊带蝴蝶结配珍珠爱心颈链；在柔和甜品卡座朝镜头轻快前倾，歪头轻嘟嘴、指尖轻戳脸颊、亮眼仰望镜头；画面下方真实小底深景深清晰呈现吃到一半的草莓奶油蛋糕与叉子、插着条纹吸管的冰草莓牛奶、贴满贴纸的手机壳与背景暖色串灯，直闪复古高光晕染与细腻 CCD 颗粒，无奶油单反虚化，3:4 竖版。
-3. **高奢大理石酒廊（回眸直闪）**：夜间昏暗大理石黄铜鸡尾酒廊便携机直闪抓拍；光泽肌配细闪眼线与深浆果釉感唇，黑色丝绒鸡心领束腰短裙配水钻细肩带、水钻珍珠耳坠与闪钻锁骨链；立于深色大理石吧台旁，身旁放着香槟碟杯与迷你晚宴包，身体四分之三侧背展现腰背轮廓，隔裸肩回眸直视镜头，冷静自信微张唇；直闪在钻饰与丝绒表面激起细碎星光，背景黄铜壁灯与酒架自然可辨，小底深景深无奶油虚化，3:4 竖版。
-4. **买手店试衣间对镜自拍（暖色顶射灯）**：买手店试衣间未精修手机对镜自拍；清透水光日妆，修身灰粉罗纹一字肩褶皱短连衣裙配极细银锁骨链与珍珠耳钉；身后半拉米色厚布帘、墙面木钩挂着其他待试衣服、角落木凳搭着挎包与脱下的外套、地面放着纸质购物袋；一手胸前持机一手轻搭胯部，含笑看镜中自己；头顶暖色试衣间射灯投下自然真实阴影与轻微镜面反光，手机深景深无奶油虚化，3:4 竖版。
-5. **阳光白色游艇甲板（26mm 手机自然日光）**：午后阳光下白色休闲游艇甲板由朋友用 26mm 手机抓拍；发丝被海风轻吹、玳瑁窄墨镜架在头顶，清透日晒妆；修身白色镂空系带露腰挂脖上衣、浅蓝毛边超短牛仔裤与珍珠金链；随性坐在不锈钢护栏旁的白色软垫甲板长椅上，一手后撑、另一手轻撩被风吹起的碎发，转向镜头明快大笑；身旁长椅放着编织沙滩包与折叠毛巾，身后深蓝波光海面与晴空清晰可辨；明亮自然午后日光与利落阴影，真实直出手机色彩与锐度，无奶油虚化，3:4 竖版。
+### 1. Pure-Desire Dark Velvet Lounge (Direct Compact Flash)
+
+Intimate, magnetic candid compact digital camera flash portrait taken from a close slightly high angle of the exact same young woman from the reference image, keeping her identical facial features, hair, and slender hourglass proportions. High-allure evening makeup: luminous dewy skin with glistening highlight along her cheekbones, shoulder, and collarbone, flushed warm-rose blush, softly smudged brown eyeliner with curled wispy lashes, and plump glossy cherry-rose lips slightly parted. She wears a figure-hugging ivory-cream draped satin corset-style top with delicate floral lace along the plunging sweetheart neckline and one thin strap slipping casually off her shoulder, paired with a high-waisted dark mini skirt and a fine sparkling silver clavicle chain. Leaning forward over the plush dark velvet armrest of a dimly lit upscale lounge sofa, her back softly arched and torso angled to accentuate her waist-to-hip curve and collarbone, she rests her fingertips lightly near her collarbone and looks straight up through her lashes into the camera with an intense, heavy-lidded, breathless, teasing gaze—no polite smile. Crisp direct on-camera flash mixed with warm low amber ambient lamp light makes her skin, glossy lips, satin sheen, and eye catchlights glow dramatically against the deep shadows of the real lounge booth, with a half-finished cocktail glass and her mini clutch visible on the dark table in authentic small-sensor focus, slight vintage flash bloom and subtle grain, 3:4 vertical.
+
+### 2. Ultra-Cute Twin-Ribbon Dessert Booth (Close High-Angle Flash)
+
+Ultra-cute candid close-up high-angle 24mm compact digital camera flash snapshot of the exact same young woman from the reference image, hair styled in adorable fluffy low twin pigtails tied with oversized cream velvet ribbons and wispy face-framing curls. Maximum-charm sweet doll-like makeup: radiant porcelain skin, prominent rosy strawberry igari blush swept across her under-eyes and nose bridge, sparkling aegyo-sal shimmer, extra-curled wispy lashes, and ultra-glossy plump strawberry-jelly lips. She wears an oversized fluffy baby-pink mohair sweater with extra-long cozy sleeves covering half her hands, slipped slightly off one shoulder to show a white lace camisole bow underneath, plus a dainty pearl-and-heart choker necklace. Shot from a close, playful high-angle perspective looking down at her as she leans eagerly toward the lens at a cozy pastel dessert cafe booth, tilting her head with a cheeky adorable soft pout while lightly poking one rosy cheek with her fingertip and looking straight up into the camera with huge, sparkling puppy eyes. Real lived-in table details surround the lower frame in crisp deep focus: a half-eaten strawberry cream cake with a fork, an iced strawberry milk with a striped straw, cute stickers on her phone case, and warm fairy lights in the shop behind her. Direct compact-camera flash with authentic highlight bloom and subtle CCD grain, zero creamy DSLR bokeh, 3:4 vertical.
+
+### 3. High-Glamour Marble Cocktail Lounge (Over-the-Shoulder Flash)
+
+Ultra-refined, glamorous candid compact digital camera flash snapshot taken at night in an upscale dimly lit marble-and-brass cocktail lounge of the exact same young woman from the reference image, hair styled in glossy sculpted waves swept dramatically over one shoulder. Breathless high-glamour makeup: luminous dewy skin with shimmering highlight across her cheekbones, bare shoulder, and collarbone, sleek winged eyeliner, and lacquered deep-berry glossy lips. She wears a structured black velvet mini dress with a fitted sweetheart corset bodice, sparkling crystal straps, sparkling crystal-and-pearl drop earrings, and a gleaming diamond-style tennis clavicle necklace. Standing beside a polished dark marble bar table with a crystal coupe glass of champagne and her structured mini evening bag, she turns her body three-quarters away to show off her sculpted back-and-waist silhouette while glancing back over her bare shoulder straight into the camera with a poised, cool, confident siren gaze and slightly parted lips. Direct compact-camera flash catches dazzling micro-sparkles on her crystal jewelry and velvet texture against warm brass wall sconces and softly lit glass shelves in authentic small-sensor focus, zero creamy DSLR bokeh, 3:4 vertical.
+
+### 4. Boutique Fitting-Room Mirror Selfie (Warm Spotlights)
+
+Candid unedited smartphone mirror selfie inside a real boutique fitting room of the exact same young woman from the reference image. Radiant fresh daytime makeup: dewy skin, soft rosy peach blush, subtle under-eye shimmer, curled wispy lashes, and glossy berry-pink lips. Trying on a flattering fitted dusty-pink ribbed off-shoulder mini dress with delicate ruched bust detail and long sleeves, dainty silver clavicle necklace, and pearl stud earrings. Standing in a compact boutique fitting room with a heavy beige fabric curtain partly drawn behind her, other tried-on clothes on wooden hangers hanging from wall hooks, her handbag and discarded jacket tossed on a small wooden stool in the corner, and paper shopping bags on the floor. Holding her smartphone at chest height with one hand while resting the other lightly on her hip, looking at her reflection with a pleased, playful expression. Warm overhead fitting-room spotlights casting realistic natural shadows, slight mirror reflections, deep smartphone focus, zero creamy bokeh, 3:4 vertical.
+
+### 5. Sunlit White Yacht Deck (26mm Smartphone Natural Daylight)
+
+Candid unedited 26mm smartphone snapshot taken by a friend on a sunny afternoon aboard a clean white leisure boat deck of the exact same young woman from the reference image, hair gently blown by the ocean breeze with narrow tortoiseshell sunglasses pushed up onto her head. Radiant sun-kissed daytime makeup: dewy skin, fresh peach-pink blush, curled lashes, and glossy coral-rose lips. Wearing a fitted white eyelet-lace tie-front cropped halter blouse, ultra-short light-wash frayed blue denim shorts, and a dainty gold-and-pearl clavicle necklace. Sitting casually on the cushioned white deck bench beside the polished stainless-steel boat railing, leaning back on one hand while raising her other hand lightly to catch windblown strands of hair, turning toward the phone camera with a bright carefree smile. A woven beach tote and folded towel rest on the bench beside her, with sparkling deep-blue ocean waves and clear blue sky in crisp deep focus. Bright natural afternoon sunlight with clean shadows, authentic unedited iPhone color and sharpness, zero creamy DSLR bokeh, 3:4 vertical.
